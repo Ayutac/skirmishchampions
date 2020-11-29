@@ -1,0 +1,7 @@
+/bin/
+/binTest/
+*.jar
+*.zip
+*.sav
+*.png
+*.svg
