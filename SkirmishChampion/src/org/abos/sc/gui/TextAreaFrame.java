@@ -42,6 +42,8 @@ public class TextAreaFrame extends JFrame {
 		super(title);
 		initComponents();
 		initLayout();
+		if (!GUIUtilities.LOGOS.isEmpty())
+			setIconImages(GUIUtilities.LOGOS);
 	}
 	
 	public String getText() {

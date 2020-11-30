@@ -44,6 +44,8 @@ public class PartySelectionFrame extends JFrame {
 		this.companionPool = companionPool;
 		initComponents();
 		initLayout();
+		if (!GUIUtilities.LOGOS.isEmpty())
+			setIconImages(GUIUtilities.LOGOS);
 	}
 	
 	public BattleFormation getFormation() {

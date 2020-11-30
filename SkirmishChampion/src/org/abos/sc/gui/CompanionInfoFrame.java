@@ -39,11 +39,12 @@ public class CompanionInfoFrame extends JFrame {
 	 */
 	public CompanionInfoFrame(Player player) throws HeadlessException {
 		super(TITLE);
-		if (player == null)
-			throw new NullPointerException("player must be specified!");
+		Utilities.requireNonNull(player, "player");
 		this.player = player;
 		initComponents();
 		initLayout();
+		if (!GUIUtilities.LOGOS.isEmpty())
+			setIconImages(GUIUtilities.LOGOS);
 	}
 	
 	@Override

@@ -1,16 +1,20 @@
 package org.abos.sc.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
@@ -39,6 +43,8 @@ public class MainMenu extends JFrame {
 	
 	protected StageSelectionFrame stageSelectionFrame;
 	
+	protected ImagePanel titleScreen;
+	
 	protected JButton newGameButton;
 	
 	protected JButton continueGameButton;
@@ -66,6 +72,8 @@ public class MainMenu extends JFrame {
 		super(TITLE);
 		initComponents();
 		initLayout();
+		if (!GUIUtilities.LOGOS.isEmpty())
+			setIconImages(GUIUtilities.LOGOS);
 	}
 	
 	public Player getNewPlayer() {
@@ -103,7 +111,7 @@ public class MainMenu extends JFrame {
 				JOptionPane.showMessageDialog(this, "Saved game!", "Saving...", JOptionPane.INFORMATION_MESSAGE);
 			}
 			catch (IOException ex) {
-				JOptionPane.showMessageDialog(this, "Saving game failed!", "Saving...", JOptionPane.ERROR_MESSAGE);
+				GUIUtilities.errorMessage(this, "Saving...", "Saving game failed!", ex);
 			}
 		}
 	}
@@ -116,7 +124,7 @@ public class MainMenu extends JFrame {
 				loadedPlayer = Player.loadFromFile(saveGame);
 			}
 			catch (IOException ex) {
-				JOptionPane.showMessageDialog(this, "Loading save game failed!", "Loading...", JOptionPane.ERROR_MESSAGE);
+				GUIUtilities.errorMessage(this, "Loading...", "Loading save game failed!", ex);
 			}
 			if (loadedPlayer != null) {
 				setPlayer(loadedPlayer);
@@ -136,6 +144,11 @@ public class MainMenu extends JFrame {
 	}
 
 	private void initComponents() {
+		try {
+			titleScreen = new ImagePanel(GUIUtilities.getTitleScreenPath(), new Dimension(325, 325));
+		} catch (IOException ex) {
+			GUIUtilities.errorMessage("Image Loading Failure", "Title screen image couldn't be loaded!", ex);
+		}
 		newGameButton = new JButton("New Game");
 		newGameButton.addActionListener(e -> newGame());
 		continueGameButton = new JButton("Continue");
@@ -210,6 +223,7 @@ public class MainMenu extends JFrame {
 	
 	private void initLayout() {
 		setLayout(new BorderLayout());
+		add(titleScreen, BorderLayout.PAGE_START);
 		JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
 		buttonPanel.add(newGameButton);
 		buttonPanel.add(continueGameButton);
@@ -228,12 +242,7 @@ public class MainMenu extends JFrame {
 			ConfigManager.loadConfig();
 		}
 		catch (IOException ex) {
-			StringBuilder message = new StringBuilder("Config couldn't be loaded! Error:");
-			message.append(System.lineSeparator());
-			message.append(ex.getMessage() == null ? "-no error message-" : ex.getMessage());
-			message.append(System.lineSeparator());
-			message.append("For more information see console.");
-			JOptionPane.showMessageDialog(null, message.toString(), "Config Failure", JOptionPane.ERROR_MESSAGE);
+			GUIUtilities.errorMessage("Config Failure", "Config couldn't be loaded!", ex);
 		}
 		try {
 			Path path = Utilities.getBinaryDirectory().resolveSibling("resources");
@@ -243,20 +252,17 @@ public class MainMenu extends JFrame {
 			Utilities.loadFromFile(path.resolve("fandoms.txt"), FandomBase::parse);
 		}
 		catch (IOException ex) {
-			StringBuilder message = new StringBuilder("A file couldn't be loaded! Error:");
-			message.append(System.lineSeparator());
-			message.append(ex.getMessage() == null ? "-no error message-" : ex.getMessage());
-			message.append(System.lineSeparator());
-			message.append("For more information see console.");
-			JOptionPane.showMessageDialog(null, message.toString(), "Startup Failure", JOptionPane.ERROR_MESSAGE);
+			GUIUtilities.errorMessage("Startup Failure", "A file couldn't be loaded!", ex);
 		}
 		catch (ParseException ex) {
-			StringBuilder message = new StringBuilder("A file seems to be invalid! Parsing error:");
-			message.append(System.lineSeparator());
-			message.append(ex.getMessage() == null ? "-no error message-" : ex.getMessage());
-			message.append(System.lineSeparator());
-			message.append("For more information see console.");
-			JOptionPane.showMessageDialog(null, message.toString(), "Startup Failure", JOptionPane.ERROR_MESSAGE);
+			GUIUtilities.errorMessage("Startup Failure", "A file seems to be invalid!", ex);
+		}
+		try {
+			GUIUtilities.loadLogos();
+		}
+		catch (IOException ex) {
+			GUIUtilities.LOGOS.clear();
+			GUIUtilities.errorMessage("Logo Loading Failure", "The logos couldn't be loaded!", ex);
 		}
 		MainMenu game = new MainMenu();
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

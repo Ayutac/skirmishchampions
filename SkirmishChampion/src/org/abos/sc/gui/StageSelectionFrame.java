@@ -62,6 +62,8 @@ public class StageSelectionFrame extends JFrame {
 		this.leftToRight = leftToRight;
 		initComponents();
 		initLayout();
+		if (!GUIUtilities.LOGOS.isEmpty())
+			setIconImages(GUIUtilities.LOGOS);
 	}
 	
 	/**

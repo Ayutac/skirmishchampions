@@ -64,6 +64,8 @@ public class StageBattleFrame extends JFrame {
 		super(TITLE);
 		initComponents();
 		initLayout();
+		if (!GUIUtilities.LOGOS.isEmpty())
+			setIconImages(GUIUtilities.LOGOS);
 	}
 	
 	/**
