@@ -3,3 +3,5 @@
 *.jar
 *.zip
 *.sav
+/skirmishChampion.cfg
+/.settings/
