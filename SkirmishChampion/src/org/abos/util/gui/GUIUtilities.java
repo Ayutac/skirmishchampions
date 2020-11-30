@@ -2,12 +2,13 @@ package org.abos.util.gui;
 
 import java.awt.Component;
 import java.awt.Image;
-import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import org.abos.util.Utilities;
@@ -30,23 +31,40 @@ public class GUIUtilities {
 	 */
 	private GUIUtilities() {}
 	
+	/**
+	 * If {@link #LOGOS} is unloaded, loads logos of sizes 16, 32, 64 and 128 from
+	 * <code>resources/logoX.png</code> (where <code>X</code> is the size) relative to the
+	 * directory where the application is located.
+	 * @throws IOException If loading is attempted and the application directory couldn't be located 
+	 * or at least one image couldn't be read in.
+	 */
 	public static void loadLogos() throws IOException {
 		if (!LOGOS.isEmpty())
 			return;
 		String path = Utilities.getApplicationDirectory().resolve("resources").resolve("logo").toString();
 		for (int i = 16; i < 256; i *= 2) {
-			LOGOS.add(Toolkit.getDefaultToolkit().getImage(path+i+".png"));
+			LOGOS.add(ImageIO.read(new File(path+i+".png")));
 		}
 	}
 	
+	/**
+	 * Returns a path to <code>resources/title_screen.png</code>.
+	 * @return the path to the title screen image
+	 * @throws IOException If the application directory couldn't be located.
+	 */
 	public static Path getTitleScreenPath() throws IOException {
 		return Utilities.getApplicationDirectory().resolve("resources").resolve("title_screen.png");
 	}
 	
-	public static Image loadTitleScreen() throws IOException {
-		return Toolkit.getDefaultToolkit().getImage(getTitleScreenPath().toString());
-	}
-	
+	/**
+	 * Displays an error message based on an exception and prints the stacktrace to the console.
+	 * @param parent the parent component for the error message
+	 * @param title the title of the error message
+	 * @param messageStart Start of the error message. Will be followed by the error message from the exception.
+	 * @param ex the exception to display
+	 * @see JOptionPane#showMessageDialog(Component, Object, String, int)
+	 * @see Throwable#printStackTrace()
+	 */
 	public static void errorMessage(Component parent, String title, String messageStart, Exception ex) {
 		StringBuilder message = new StringBuilder(messageStart);
 		message.append(" Error:");
@@ -58,6 +76,15 @@ public class GUIUtilities {
 		JOptionPane.showMessageDialog(parent, message.toString(), title, JOptionPane.ERROR_MESSAGE);
 	}
 	
+	/**
+	 * Displays an error message without a parent based on an exception and prints the stacktrace to the console.
+	 * @param title the title of the error message
+	 * @param messageStart Start of the error message. Will be followed by the error message from the exception.
+	 * @param ex the exception to display
+	 * @see #errorMessage(Component, String, String, Exception)
+	 * @see JOptionPane#showMessageDialog(Component, Object, String, int)
+	 * @see Throwable#printStackTrace()
+	 */
 	public static void errorMessage(String title, String messageStart, Exception ex) {
 		errorMessage(null, title, messageStart, ex);
 	}
