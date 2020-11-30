@@ -2,6 +2,8 @@ package org.abos.sc.core;
 
 import java.util.Arrays;
 
+import org.abos.util.Utilities;
+
 /**
  * Contains the attack pattern for a single character.
  * @author Sebastian Koch

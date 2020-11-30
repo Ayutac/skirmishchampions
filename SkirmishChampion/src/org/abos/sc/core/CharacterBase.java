@@ -6,6 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 
+import org.abos.util.Id;
+import org.abos.util.IllegalArgumentRangeException;
+import org.abos.util.IllegalArgumentTypeException;
+import org.abos.util.IllegalNumberOfArgumentsException;
+import org.abos.util.Name;
+import org.abos.util.Registry;
+import org.abos.util.Utilities;
+
 /**
  * Contains the basic information for characters. The information provided by this class is not supposed to change.
  * For information that can change, use {@link Character} or a subclass thereof.

@@ -1,5 +1,7 @@
 package org.abos.sc.core;
 
+import org.abos.util.Utilities;
+
 /**
  * Contains a battle formation together with an accompanying strategy.
  * @author Sebastian Koch

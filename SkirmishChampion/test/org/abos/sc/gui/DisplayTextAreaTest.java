@@ -7,7 +7,8 @@ import java.nio.file.Files;
 
 import javax.swing.JFrame;
 
-import org.abos.sc.core.Utilities;
+import org.abos.util.Utilities;
+import org.abos.util.gui.TextAreaFrame;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

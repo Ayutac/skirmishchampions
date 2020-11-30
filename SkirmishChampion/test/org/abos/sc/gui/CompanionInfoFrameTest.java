@@ -10,10 +10,10 @@ import org.abos.sc.core.Companion;
 import org.abos.sc.core.FandomBase;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.RegionBase;
-import org.abos.sc.core.Registry;
 import org.abos.sc.core.StageBase;
 import org.abos.sc.core.StatsPrimary;
 import org.abos.sc.core.StatsSecondary;
+import org.abos.util.Registry;
 import org.junit.jupiter.api.Test;
 
 /**

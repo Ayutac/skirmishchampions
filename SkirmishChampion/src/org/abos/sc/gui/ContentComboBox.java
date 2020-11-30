@@ -11,9 +11,9 @@ import java.util.Vector;
 import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 
-import org.abos.sc.core.Id;
-import org.abos.sc.core.Registry;
-import org.abos.sc.core.Utilities;
+import org.abos.util.Id;
+import org.abos.util.Registry;
+import org.abos.util.Utilities;
 
 /**
  * @author Sebastian Koch

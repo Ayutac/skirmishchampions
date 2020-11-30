@@ -1,5 +1,7 @@
 package org.abos.sc.core;
 
+import org.abos.util.Utilities;
+
 /**
  * An enumeration to differ between several predefined battle strategies and the custom ones.
  * @author Sebastian Koch

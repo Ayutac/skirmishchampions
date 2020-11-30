@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
+import org.abos.util.Utilities;
+
 /**
  * @author Sebastian Koch
  * @version %I%

@@ -1,4 +1,4 @@
-package org.abos.sc.core;
+package org.abos.util;
 
 /**
  * Thrown when the wrong number of arguments is detected during parsing.

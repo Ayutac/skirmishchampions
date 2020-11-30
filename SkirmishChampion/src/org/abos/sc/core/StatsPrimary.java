@@ -1,5 +1,7 @@
 package org.abos.sc.core;
 
+import org.abos.util.Utilities;
+
 /**
  * An enumeration to differ between the primary stats of a character.
  * @author Sebastian Koch

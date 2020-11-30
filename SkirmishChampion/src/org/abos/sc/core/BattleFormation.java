@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.abos.util.Utilities;
+
 /**
  * Contains a bunch of character in a battle formation.
  * The formation is a deciding factor in battles to find

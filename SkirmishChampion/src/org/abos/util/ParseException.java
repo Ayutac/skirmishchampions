@@ -1,4 +1,4 @@
-package org.abos.sc.core;
+package org.abos.util;
 
 /**
  * Thrown when a parsing error occurs.

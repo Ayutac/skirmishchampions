@@ -1,12 +1,9 @@
-package org.abos.sc.core;
+package org.abos.util;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.hamcrest.core.IsEqual;
 
 /**
  * @author Sebastian Koch

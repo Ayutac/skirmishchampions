@@ -24,11 +24,14 @@ import org.abos.sc.core.CharacterBase;
 import org.abos.sc.core.Companion;
 import org.abos.sc.core.ConfigManager;
 import org.abos.sc.core.FandomBase;
-import org.abos.sc.core.ParseException;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.RegionBase;
 import org.abos.sc.core.StageBase;
-import org.abos.sc.core.Utilities;
+import org.abos.util.ParseException;
+import org.abos.util.Utilities;
+import org.abos.util.gui.GUIUtilities;
+import org.abos.util.gui.ImagePanel;
+import org.abos.util.gui.TextAreaFrame;
 
 /**
  * @author Sebastian Koch
@@ -185,7 +188,7 @@ public class MainMenu extends JFrame {
 		loadGameButton.addActionListener(e -> loadGame());
 		creditsFrame = new TextAreaFrame("Credits");
 		try {
-			creditsFrame.setTextPath(Utilities.getApplicationDirectory().resolve("credits.txt"));
+			creditsFrame.setTextFilePath(Utilities.getApplicationDirectory().resolve("credits.txt"));
 		}
 		catch (IOException ex) {
 			creditsFrame.setText(ex.toString());
@@ -194,7 +197,7 @@ public class MainMenu extends JFrame {
 		creditsButton.addActionListener(e -> creditsFrame.setVisible(true));
 		licenseFrame = new TextAreaFrame("License");
 		try {
-			licenseFrame.setTextPath(Utilities.getApplicationDirectory().resolve("license.txt"));
+			licenseFrame.setTextFilePath(Utilities.getApplicationDirectory().resolve("license.txt"));
 		}
 		catch (IOException ex) {
 			licenseFrame.setText(ex.toString());

@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 
+import org.abos.util.Utilities;
 import org.junit.jupiter.api.Test;
 
 public class CharacterTest {

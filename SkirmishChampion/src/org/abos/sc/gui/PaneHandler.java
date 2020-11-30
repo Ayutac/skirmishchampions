@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.abos.sc.core.Utilities;
+import org.abos.util.Utilities;
 
 /**
  * @author Sebastian Koch

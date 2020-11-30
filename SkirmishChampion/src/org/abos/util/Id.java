@@ -1,4 +1,4 @@
-package org.abos.sc.core;
+package org.abos.util;
 
 /**
  * For denoting an object has an ID that is (supposed to be) unique.

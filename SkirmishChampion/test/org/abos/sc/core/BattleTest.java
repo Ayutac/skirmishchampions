@@ -6,6 +6,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.StreamHandler;
 
+import org.abos.util.Utilities;
 import org.junit.jupiter.api.Test;
 
 public class BattleTest {

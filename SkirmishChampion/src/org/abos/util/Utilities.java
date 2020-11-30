@@ -1,4 +1,4 @@
-package org.abos.sc.core;
+package org.abos.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,13 +16,16 @@ import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
 /**
- * Contains several utility methods for Skirmish Champion.
+ * Contains several utility methods.
  * @author Sebastian Koch
  * @version %I%
- * @since 0.1
+ * @since Skirmish Champions 0.1
  */
 public class Utilities {
 	
+	/**
+	 * The default encoding.
+	 */
 	public static final Charset ENCODING = StandardCharsets.UTF_8;
 	
 	/**

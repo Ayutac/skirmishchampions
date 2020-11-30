@@ -13,7 +13,7 @@ import org.abos.sc.core.FandomBase;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.RegionBase;
 import org.abos.sc.core.StageBase;
-import org.abos.sc.core.Utilities;
+import org.abos.util.Utilities;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

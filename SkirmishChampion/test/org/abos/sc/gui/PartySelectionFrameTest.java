@@ -10,10 +10,10 @@ import javax.swing.JFrame;
 import org.abos.sc.core.Character;
 import org.abos.sc.core.CharacterBase;
 import org.abos.sc.core.Companion;
-import org.abos.sc.core.Registry;
 import org.abos.sc.core.StatsPrimary;
 import org.abos.sc.core.StatsSecondary;
-import org.abos.sc.core.Utilities;
+import org.abos.util.Registry;
+import org.abos.util.Utilities;
 import org.junit.jupiter.api.Test;
 
 /**

@@ -1,9 +1,8 @@
-package org.abos.sc.gui;
+package org.abos.util.gui;
 
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -11,19 +10,23 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import org.abos.sc.core.Utilities;
+import org.abos.util.Utilities;
 
 /**
+ * Contains several utility methods related to graphical user interfaces.
  * @author Sebastian Koch
  * @version %I%
- * @since 0.1.1
+ * @since Skirmish Champions 0.1.1
  */
 public class GUIUtilities {
 
+	/**
+	 * Main logos for the currently running application. 
+	 */
 	public final static List<Image> LOGOS = new ArrayList<>(5);
 	
 	/**
-	 * 
+	 * Private constructor to avoid instantiation.
 	 */
 	private GUIUtilities() {}
 	

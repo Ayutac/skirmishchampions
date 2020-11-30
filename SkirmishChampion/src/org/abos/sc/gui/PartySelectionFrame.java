@@ -13,8 +13,9 @@ import javax.swing.JPanel;
 
 import org.abos.sc.core.BattleFormation;
 import org.abos.sc.core.Companion;
-import org.abos.sc.core.Registry;
-import org.abos.sc.core.Utilities;
+import org.abos.util.Registry;
+import org.abos.util.Utilities;
+import org.abos.util.gui.GUIUtilities;
 
 /**
  * @author Sebastian Koch

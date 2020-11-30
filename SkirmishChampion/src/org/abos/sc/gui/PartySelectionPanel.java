@@ -19,9 +19,9 @@ import org.abos.sc.core.Character;
 import org.abos.sc.core.Companion;
 import org.abos.sc.core.Fandom;
 import org.abos.sc.core.Region;
-import org.abos.sc.core.Registry;
 import org.abos.sc.core.Stage;
-import org.abos.sc.core.Utilities;
+import org.abos.util.Registry;
+import org.abos.util.Utilities;
 
 /**
  * @author Sebastian Koch

@@ -2,6 +2,7 @@ package org.abos.sc.core;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.abos.util.Utilities;
 import org.junit.jupiter.api.Test;
 
 /**

@@ -1,5 +1,9 @@
 package org.abos.sc.core;
 
+import org.abos.util.IllegalArgumentRangeException;
+import org.abos.util.IllegalNumberOfArgumentsException;
+import org.abos.util.Utilities;
+
 /**
  * This subclass of {@link Character} saves additional information of a character that is only relevant as
  * a collectable for the player, e.g. their level.

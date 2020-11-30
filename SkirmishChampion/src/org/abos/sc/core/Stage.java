@@ -4,6 +4,9 @@ import java.util.logging.Handler;
 
 import javax.swing.JOptionPane;
 
+import org.abos.util.IllegalArgumentRangeException;
+import org.abos.util.Utilities;
+
 /**
  * @author Sebastian Koch
  * @version %I%

@@ -4,6 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+import org.abos.util.Utilities;
+
 /**
  * A timer task to manage attacks of a single character.
  * @author Sebastian Koch

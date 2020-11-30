@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.abos.util.Utilities;
+
 /**
  * Contains the attack order for a complete formation
  * @author Sebastian Koch

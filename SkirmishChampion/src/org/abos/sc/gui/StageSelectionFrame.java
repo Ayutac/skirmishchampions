@@ -22,7 +22,8 @@ import org.abos.sc.core.Fandom;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.Region;
 import org.abos.sc.core.Stage;
-import org.abos.sc.core.Utilities;
+import org.abos.util.Utilities;
+import org.abos.util.gui.GUIUtilities;
 
 /**
  * @author Sebastian Koch

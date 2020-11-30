@@ -4,6 +4,8 @@ import java.util.Timer;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
+import org.abos.util.Utilities;
+
 /**
  * Simulates a battle. Note that on construction the underlying timer will be started immediatly.
  * @author Sebastian Koch

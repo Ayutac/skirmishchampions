@@ -23,6 +23,7 @@ import org.abos.sc.core.BattleConclusion;
 import org.abos.sc.core.BattleEncounter;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.Stage;
+import org.abos.util.gui.GUIUtilities;
 
 /**
  * @author Sebastian Koch

@@ -1,8 +1,7 @@
-package org.abos.sc.gui;
+package org.abos.util.gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.LayoutManager;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -10,12 +9,12 @@ import java.nio.file.Path;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import org.abos.sc.core.Utilities;
+import org.abos.util.Utilities;
 
 /**
  * @author Sebastian Koch
  * @version %I%
- * @since 0.1.1
+ * @since Skirmish Champions 0.1.1
  */
 public class ImagePanel extends JPanel {
 	
