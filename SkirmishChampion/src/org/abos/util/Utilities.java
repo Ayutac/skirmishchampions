@@ -216,10 +216,13 @@ public class Utilities {
 	}
 	
 	/**
-	 * Returns the binary folder where Utilities.class is located if the current program wasn't started from a jar.
+	 * Returns the directory of binaries where Utilities.class is located if the currently running application wasn't started from a JAR.
+	 * If the currently running application was started from a JAR, the behaviour of this method is undefined.
 	 * @return the path to the binary folder
 	 * @throws IOException If the location of the source is especially badly malformed. 
 	 * @throws SecurityException if a security manager exists and its checkPermission method doesn't allow getting the Protection Domain of <code>Utilities</code>.
+	 * @see #getJarDirectory()
+	 * @see #getApplicationDirectory()
 	 */
 	public static Path getBinaryDirectory() throws IOException {
 		try {
@@ -230,10 +233,29 @@ public class Utilities {
 		}
 	}
 	
+	/**
+	 * Returns the directory of the JAR of the currently running application, if it was started from a JAR.
+	 * If the currently running application wasn't started from a JAR, the behaviour of this method is undefined.
+	 * @return the path to the JAR folder
+	 * @throws IOException If the location of the source is especially badly malformed. 
+	 * @throws SecurityException if a security manager exists and its checkPermission method doesn't allow getting the Protection Domain of <code>Utilities</code>.
+	 * @see #getBinaryDirectory()
+	 * @see #getApplicationDirectory()
+	 */
 	public static Path getJarDirectory() throws IOException {
 		return getBinaryDirectory().getParent();
 	}
 	
+	/**
+	 * Returns the directory of the currently running application. If it was started from a JAR,
+	 * this is the folder where the JAR is in. Else it is the parent folder of the binary folder.
+	 * If the currently running application wasn't started from a JAR, the behaviour of this method is undefined.
+	 * @return the path to the application folder
+	 * @throws IOException If the location of the source is especially badly malformed. 
+	 * @throws SecurityException if a security manager exists and its checkPermission method doesn't allow getting the Protection Domain of <code>Utilities</code>.
+	 * @see #getBinaryDirectory()
+	 * @see #getJarDirectory()
+	 */
 	public static Path getApplicationDirectory() throws IOException {
 		if ("jar".equals(Utilities.class.getResource("").getProtocol()))
 			return getJarDirectory();
