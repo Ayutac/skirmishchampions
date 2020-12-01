@@ -1,14 +1,26 @@
 package org.abos.util;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
+ * Collection of objects having a (unique) ID. Internally a hash map is
+ * used for fast access of the items via their ID. Adding <code>null</code> or entries 
+ * with an <code>null</code> ID will cause exceptions. Since the entries can
+ * also be accessed via their IDs, the remove operations of {@link Collection}
+ * are not supported, instead there are remove operations for either the entries or their IDs.
+ * @param <T> the type of entries
  * @author Sebastian Koch
  * @version %I%
- * @since 0.1
+ * @since Skirmish Champions 0.1
+ * @see #add(T)
+ * @see #lookup(String)
+ * @see #remove(T)
+ * @see #remove(String)
+ * @see #iterator()
  */
 public class Registry<T extends Id> implements Collection<T> {
 	
@@ -17,13 +29,31 @@ public class Registry<T extends Id> implements Collection<T> {
 	 */
 	private final Map<String,T> content = new HashMap<>();
 	
+	/**
+	 * Creates an empty registry.
+	 */
 	public Registry() {}
 	
+	/**
+	 * Creates a registry with all the elements in the collection.
+	 * @param c the collection with the elements to add
+	 * @throws NullPointerException If <code>c</code>, any of its element or
+	 * any of the element's IDs refers to <code>null</code>.
+	 * @throws IllegalArgumentException If <code>c</code> contains multiple elements with the same ID.
+	 */
 	public Registry(Collection<? extends T> c) {
 		this();
+		Utilities.requireNonNull(c, "c");
 		addAll(c);
 	}
 	
+	/**
+	 * Creates a registry with the specified elements.
+	 * @param objects the elements to add to the registry
+	 * @throws NullPointerException if any object to add or their ID refers to <code>null</code>.
+	 * @throws IllegalArgumentException If there are multiple objects with the same ID.
+	 */
+	@SafeVarargs
 	public Registry(T... objects) {
 		this();
 		for (T object : objects)
@@ -47,15 +77,6 @@ public class Registry<T extends Id> implements Collection<T> {
 		content.put(id, item);
 		return true;
 	}
-	
-//	public boolean addIfMissing(T item) {
-//		if (item == null)
-//			throw new NullPointerException("item must be specified!");
-//		if (lookup(item.getId()) == null)
-//			return add(item);
-//		else
-//			return false;
-//	}
 	
 	/**
 	 * Removes the registry entry with the specified ID.
@@ -147,14 +168,20 @@ public class Registry<T extends Id> implements Collection<T> {
 	 * There are no guarantees concerning the order in which the entries are returned;
 	 * especially the order of the iterator is almost guarantied to differ from the order
 	 * in which the entries were added to this registry.
-	 * @return an {@link Iterator} over the lements in this collection 
+	 * @return an {@link Iterator} over the elements in this collection 
 	 */
 	@Override
 	public Iterator<T> iterator() {
 		return content.values().iterator();
 	}
 	
-	
+	/**
+	 * Iterates over the elements of this registry and puts their ID into a string,
+	 * similarily to {@link Arrays#toString()} but without whitespaces.
+	 * So for example with three entries it would be <code>"[itemAID,itemBID,itemCID]"</code>.
+	 * @return the registry content as a string
+	 * @see #iterator()
+	 */
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
@@ -171,21 +198,69 @@ public class Registry<T extends Id> implements Collection<T> {
 		return s.toString();
 	}
 
+	/**
+	 * Returns an array containing all of the entries in this registry in no particular order
+	 * by calling <code>toArray(T[] a)</code> on <code>values()</code> of the underlying map.
+	 * @return the registry entries as an {@link Object} array
+	 * @see #iterator()
+	 * @see #toArray(T[])
+	 * @see Map#values()
+	 * @see Collection#toArray()
+	 */
 	@Override
 	public Object[] toArray() {
 		return content.values().toArray();
 	}
 
+	/**
+	 * Returns an array containing all of the entries in this registry in no particular order
+	 * by calling <code>toArray(T[] a)</code> on <code>values()</code> of the underlying map;
+	 * the runtime type of the returned array is that of the specified array.
+	 * If the collection fits in the specified array, it is returned therein.
+	 * Otherwise, a new array is allocated with the runtime type of the
+	 * specified array and the size of this collection.
+	 * <br/><br/>
+	 * If this collection fits in the specified array with room to spare 
+	 * (i.e., the array has more elements than this collection), the element
+	 * in the array immediately following the end of the collection is set to <code>null</code>.
+	 * @param <T> the component type of the array to contain the registry
+	 * @param a The array into which the entries of this registration are to bestored, if it is big enough; 
+	 * otherwise, a new array of the same runtime type is allocated for this purpose.
+	 * @return an array containing all of the elements in this registry
+	 * @see #iterator()
+	 * @see #toArray()
+	 * @see Map#values()
+	 * @see Collection#toArray(T[])
+	 */
+	@SuppressWarnings("hiding")
 	@Override
 	public <T> T[] toArray(T[] a) {
 		return content.values().toArray(a);
 	}
 
+	/**
+	 * Checks if the registry contains all the objects given by the collection
+	 * by calling <code>containsAll</code> on <code>values()</code> of the underlying map.
+	 * @param c Collection to be checked for containment in this registry. 
+	 * Note that the collection should contain elements of type <code>T</code> and not of <code>Entry&lt;String, T&gt;</code>, 
+	 * as the keys of the underlying map are ignored.
+	 * @return <code>true</code> if this registry contains all of the elements in the specified collection, else <code>false</code>
+	 */
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		return content.values().containsAll(c);
 	}
 
+	/**
+	 * Adds all elements in the specified collection to this registry.
+	 * @param c the collection with the elements to add
+	 * @return <code>false</code> if <code>c</code> refers to <code>null</code> or is empty,
+	 * otherwise <code>true</code> (as the registry will always be changed unless an exception is thrown).
+	 * @throws NullPointerException If <code>c</code> contains <code>null</code> or an element with
+	 * <code>null</code> as an ID.
+	 * @throws IllegalArgumentException If <code>c</code> contains multiple elements with the same ID
+	 * or an element with an ID already registered in this registry.
+	 */
 	@Override
 	public boolean addAll(Collection<? extends T> c) {
 		if (c == null || c.isEmpty())
