@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 public class StageSelectionFrameTest {
 
 	public static void main(String[] args) throws IOException {
-		Path path = Utilities.getBinaryDirectory().resolveSibling("resources");
+		Path path = Utilities.loadBinaryDirectory().resolveSibling("resources");
 		Utilities.loadFromFile(path.resolve("chars_twi.txt"), CharacterBase::parse);
 		Utilities.loadFromFile(path.resolve("stages_twi.txt"), StageBase::parse);
 		Utilities.loadFromFile(path.resolve("regions_twi.txt"), RegionBase::parse);

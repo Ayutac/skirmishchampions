@@ -42,11 +42,13 @@ public class MainMenu extends JFrame {
 
 	public final static String TITLE = "Skirmish Champion";
 	
+	public final static Dimension TITLE_SCREEN_DIMENSION = new Dimension(325, 325);
+	
 	protected Player player;
 	
 	protected StageSelectionFrame stageSelectionFrame;
 	
-	protected ImagePanel titleScreen;
+	protected JPanel titleScreen;
 	
 	protected JButton newGameButton;
 	
@@ -146,11 +148,23 @@ public class MainMenu extends JFrame {
 		super.dispose();
 	}
 
+	/**
+	 * 
+	 */
 	private void initComponents() {
+		boolean applicationPath = true;
 		try {
-			titleScreen = new ImagePanel(GUIUtilities.getTitleScreenPath(), new Dimension(325, 325));
+			titleScreen = new ImagePanel(GUIUtilities.getTitleScreenPath(), TITLE_SCREEN_DIMENSION);
+		} catch (IllegalStateException ex) {
+			applicationPath = false;
+			GUIUtilities.errorMessage("Utility Failure", "Application path not found, no image loaded!", ex);
 		} catch (IOException ex) {
 			GUIUtilities.errorMessage("Image Loading Failure", "Title screen image couldn't be loaded!", ex);
+		}
+		if (titleScreen == null) { // fallback screen
+			titleScreen = new JPanel();
+			// following line is explicitly not done in initLayout to avoid confusion 
+			titleScreen.setPreferredSize(TITLE_SCREEN_DIMENSION);
 		}
 		newGameButton = new JButton("New Game");
 		newGameButton.addActionListener(e -> newGame());
@@ -187,40 +201,32 @@ public class MainMenu extends JFrame {
 		loadGameButton = new JButton("Load Game");
 		loadGameButton.addActionListener(e -> loadGame());
 		creditsFrame = new TextAreaFrame("Credits");
-		try {
+		if (applicationPath)
 			creditsFrame.setTextFilePath(Utilities.getApplicationDirectory().resolve("credits.txt"));
-		}
-		catch (IOException ex) {
-			creditsFrame.setText(ex.toString());
-		}
+		else
+			creditsFrame.setText("Application path not found, no credits loaded!");
 		creditsButton = new JButton("Credits");
 		creditsButton.addActionListener(e -> creditsFrame.setVisible(true));
 		licenseFrame = new TextAreaFrame("License");
-		try {
+		if (applicationPath)
 			licenseFrame.setTextFilePath(Utilities.getApplicationDirectory().resolve("license.txt"));
-		}
-		catch (IOException ex) {
-			licenseFrame.setText(ex.toString());
-		}
+		else
+			licenseFrame.setText("Application path not found, no license loaded!"+System.lineSeparator()+
+					"(Note that this game is licensed nonetheless.)");
 		licenseButton = new JButton("License");
 		licenseButton.addActionListener(e -> licenseFrame.setVisible(true));
 		exitButton = new JButton("Exit");
 		exitButton.addActionListener(e -> System.exit(0));
 		stageSelectionFrame = new StageSelectionFrame(player, true);
 		stageSelectionFrame.setAfterHiding(() -> setVisible(true));
-		try {
+		if (applicationPath) {
 			saveGameChooser = new JFileChooser(Utilities.getApplicationDirectory().toFile());
-		}
-		catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, "Save Game access is broken!", "Error", JOptionPane.ERROR_MESSAGE);
-			saveGameChooser = null;
-		}
-		if (saveGameChooser == null) {
-			saveGameButton.setEnabled(false);
-			loadGameButton.setEnabled(false);
+			saveGameChooser.setFileFilter(new FileNameExtensionFilter("Skirmish Champion save game", "sav"));
 		}
 		else {
-			saveGameChooser.setFileFilter(new FileNameExtensionFilter("Skirmish Champion save game", "sav"));
+			saveGameButton.setEnabled(false);
+			loadGameButton.setEnabled(false);
+			GUIUtilities.errorMessage("Utility Failure", "Application path not found, saving/loading disabled!", null);
 		}
 	}
 	
@@ -242,26 +248,44 @@ public class MainMenu extends JFrame {
 	
 	public static void main(String[] args) {
 		try {
+			Utilities.loadApplicationDirectory();
+		} catch (IOException ex) {
+			GUIUtilities.errorMessage("Utility Failure", "Could access path to the application directory!", ex);
+		}
+		try {
 			ConfigManager.loadConfig();
+		}
+		catch (IllegalStateException ex) {
+			GUIUtilities.errorMessage("Utility Failure", "Application path not found, config not loaded!", ex);
 		}
 		catch (IOException ex) {
 			GUIUtilities.errorMessage("Config Failure", "Config couldn't be loaded!", ex);
 		}
 		try {
-			Path path = Utilities.getBinaryDirectory().resolveSibling("resources");
+			Utilities.checkApplicationDirectory();
+			Path path = Utilities.getApplicationDirectory().resolve("resources");
 			Utilities.loadFromFile(path.resolve("chars_twi.txt"), CharacterBase::parse);
 			Utilities.loadFromFile(path.resolve("stages_twi.txt"), StageBase::parse);
 			Utilities.loadFromFile(path.resolve("regions_twi.txt"), RegionBase::parse);
 			Utilities.loadFromFile(path.resolve("fandoms.txt"), FandomBase::parse);
 		}
+		catch (IllegalStateException ex) {
+			GUIUtilities.errorMessage("Startup Failure", "Application path not found, game files not loaded!", ex);
+			return;
+		}
 		catch (IOException ex) {
 			GUIUtilities.errorMessage("Startup Failure", "A file couldn't be loaded!", ex);
+			return;
 		}
 		catch (ParseException ex) {
 			GUIUtilities.errorMessage("Startup Failure", "A file seems to be invalid!", ex);
+			return;
 		}
 		try {
 			GUIUtilities.loadLogos();
+		}
+		catch (IllegalStateException ex) {
+			GUIUtilities.errorMessage("Utility Failure", "Application path not found, no logos loaded!", ex);
 		}
 		catch (IOException ex) {
 			GUIUtilities.LOGOS.clear();

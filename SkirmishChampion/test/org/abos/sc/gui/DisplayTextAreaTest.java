@@ -23,7 +23,7 @@ public class DisplayTextAreaTest {
 	public static void main(String[] args) throws IOException {
 		TextAreaFrame credits = new TextAreaFrame("Credits");
 		credits.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		credits.setText(Files.readString(Utilities.getApplicationDirectory().resolve("credits.txt"), Utilities.ENCODING));
+		credits.setText(Files.readString(Utilities.loadApplicationDirectory().resolve("credits.txt"), Utilities.ENCODING));
 		credits.setVisible(true);
 	}
 

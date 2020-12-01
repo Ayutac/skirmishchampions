@@ -32,7 +32,13 @@ public class ConfigManager {
 		return CONFIG.setProperty(key, value);
 	}
 	
+	/**
+	 * 
+	 * @throws IllegalStateException If {@link Utilities#loadApplicationDirectory()} hasn't successfully been called yet.
+	 * @throws IOException
+	 */
 	public static void loadConfig() throws IOException {
+		Utilities.checkApplicationDirectory();
 		FileReader fr = null;
 		Properties newConfig = null;
 		try {
@@ -51,7 +57,13 @@ public class ConfigManager {
 		CONFIG = newConfig;
 	}
 	
+	/**
+	 * 
+	 * @throws IllegalStateException If {@link Utilities#loadApplicationDirectory()} hasn't successfully been called yet.
+	 * @throws IOException
+	 */
 	public static void saveConfig() throws IOException {
+		Utilities.checkApplicationDirectory();
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(Utilities.getApplicationDirectory().resolve(CONFIG_NAME).toFile(), Utilities.ENCODING, false);

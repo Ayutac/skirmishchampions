@@ -35,10 +35,11 @@ public class GUIUtilities {
 	 * If {@link #LOGOS} is unloaded, loads logos of sizes 16, 32, 64 and 128 from
 	 * <code>resources/logoX.png</code> (where <code>X</code> is the size) relative to the
 	 * directory where the application is located.
-	 * @throws IOException If loading is attempted and the application directory couldn't be located 
-	 * or at least one image couldn't be read in.
+	 * @throws IllegalStateException If {@link Utilities#loadApplicationDirectory()} hasn't successfully been called yet.
+	 * @throws IOException If at least one image couldn't be read in.
 	 */
 	public static void loadLogos() throws IOException {
+		Utilities.checkApplicationDirectory();
 		if (!LOGOS.isEmpty())
 			return;
 		String path = Utilities.getApplicationDirectory().resolve("resources").resolve("logo").toString();
@@ -50,9 +51,10 @@ public class GUIUtilities {
 	/**
 	 * Returns a path to <code>resources/title_screen.png</code>.
 	 * @return the path to the title screen image
-	 * @throws IOException If the application directory couldn't be located.
+	 * @throws IllegalStateException If {@link Utilities#loadApplicationDirectory()} hasn't successfully been called yet.
 	 */
-	public static Path getTitleScreenPath() throws IOException {
+	public static Path getTitleScreenPath() {
+		Utilities.checkApplicationDirectory();
 		return Utilities.getApplicationDirectory().resolve("resources").resolve("title_screen.png");
 	}
 	
@@ -67,12 +69,14 @@ public class GUIUtilities {
 	 */
 	public static void errorMessage(Component parent, String title, String messageStart, Exception ex) {
 		StringBuilder message = new StringBuilder(messageStart);
-		message.append(" Error:");
-		message.append(System.lineSeparator());
-		message.append(ex.getMessage() == null ? "-no error message-" : ex.getMessage());
-		message.append(System.lineSeparator());
-		message.append("For more information see console.");
-		ex.printStackTrace();
+		if (ex != null) {
+			message.append(" Error:");
+			message.append(System.lineSeparator());
+			message.append(ex.getMessage() == null ? "-no error message-" : ex.getMessage());
+			message.append(System.lineSeparator());
+			message.append("For more information see console.");
+			ex.printStackTrace();
+		}
 		JOptionPane.showMessageDialog(parent, message.toString(), title, JOptionPane.ERROR_MESSAGE);
 	}
 	

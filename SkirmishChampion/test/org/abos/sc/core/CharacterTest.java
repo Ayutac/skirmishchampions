@@ -35,7 +35,7 @@ public class CharacterTest {
 	
 	@Test
 	public void testParseData() throws IOException {
-		Path path = Utilities.getBinaryDirectory().resolveSibling("resources").resolve("chars_twi.txt");
+		Path path = Utilities.loadBinaryDirectory().resolveSibling("resources").resolve("chars_twi.txt");
 		Utilities.loadFromFile(path, CharacterBase::parse);
 		System.out.println(String.format("%d: %s", Character.CHARACTERS.size(), Character.CHARACTERS));
 		//System.out.println(Character.CHARACTERS.lookup("twi_erin").getPreferredAttackStat());

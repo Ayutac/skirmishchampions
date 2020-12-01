@@ -29,6 +29,24 @@ public class Utilities {
 	public static final Charset ENCODING = StandardCharsets.UTF_8;
 	
 	/**
+	 * the path to the binary folder
+	 * @see #getBinaryDirectory()
+	 */
+	private static Path BINARY_DIRECTORY = null;
+	
+	/**
+	 * the path to the JAR folder
+	 * @see #getJarDirectory()
+	 */
+	private static Path JAR_DIRECTORY = null;
+	
+	/**
+	 * the path to the application folder
+	 * @see #getApplicationDirectory()
+	 */
+	private static Path APPLICATION_DIRECTORY = null;
+	
+	/**
 	 * Private constructor to avoid instantiation.
 	 */
 	private Utilities() {}
@@ -221,16 +239,43 @@ public class Utilities {
 	 * @return the path to the binary folder
 	 * @throws IOException If the location of the source is especially badly malformed. 
 	 * @throws SecurityException if a security manager exists and its checkPermission method doesn't allow getting the Protection Domain of <code>Utilities</code>.
-	 * @see #getJarDirectory()
-	 * @see #getApplicationDirectory()
+	 * @see #loadJarDirectory()
+	 * @see #loadApplicationDirectory()
 	 */
-	public static Path getBinaryDirectory() throws IOException {
+	public static Path loadBinaryDirectory() throws IOException {
 		try {
-		  return new File(Utilities.class.getProtectionDomain().getCodeSource().getLocation().toURI()).toPath();
+			BINARY_DIRECTORY = new File(Utilities.class.getProtectionDomain().getCodeSource().getLocation().toURI()).toPath();
+			return BINARY_DIRECTORY;
 		}
 		catch (URISyntaxException ex) {
 			throw new IOException(ex);
 		}
+	}
+	
+	/**
+	 * Returns the directory of binaries where Utilities.class is located if the currently running application wasn't started from a JAR.
+	 * If the currently running application was started from a JAR, the behaviour of this method is undefined.
+	 * @return the path to the binary folder, might be <code>null</code> if the directory wasn't loaded with {@link #loadBinaryDirectory()}
+	 * @see #loadBinaryDirectory()
+	 * @see #checkBinaryDirectory()
+	 * @see #getJarDirectory()
+	 * @see #getApplicationDirectory()
+	 */
+	public static Path getBinaryDirectory() {
+		return BINARY_DIRECTORY;
+	}
+	
+	/**
+	 * Checks if the binary folder has been loaded yet and throws an exception if not.
+	 * @throws IllegalStateException If the binary folder hasn't been loaded yet.
+	 * @see #loadBinaryDirectory()
+	 * @see #getBinaryDirectory()
+	 * @see #checkJarDirectory()
+	 * @see #checkApplicationDirectory()
+	 */
+	public static void checkBinaryDirectory() {
+		if (BINARY_DIRECTORY == null)
+			throw new IllegalStateException("Binary folder hasn't been located yet!");
 	}
 	
 	/**
@@ -239,11 +284,39 @@ public class Utilities {
 	 * @return the path to the JAR folder
 	 * @throws IOException If the location of the source is especially badly malformed. 
 	 * @throws SecurityException if a security manager exists and its checkPermission method doesn't allow getting the Protection Domain of <code>Utilities</code>.
+	 * @see #loadBinaryDirectory()
+	 * @see #loadApplicationDirectory()
+	 */
+	public static Path loadJarDirectory() throws IOException {
+		if (BINARY_DIRECTORY == null)
+			loadBinaryDirectory();
+		JAR_DIRECTORY = BINARY_DIRECTORY.getParent();
+		return JAR_DIRECTORY;
+	}
+	
+	/**
+	 * Returns the directory of the JAR of the currently running application, if it was started from a JAR.
+	 * If the currently running application wasn't started from a JAR, the behaviour of this method is undefined.
+	 * @return the path to the JAR folder, might be <code>null</code> if the directory wasn't loaded with {@link #loadJarDirectory()}
+	 * @see #loadJarDirectory()
 	 * @see #getBinaryDirectory()
 	 * @see #getApplicationDirectory()
 	 */
-	public static Path getJarDirectory() throws IOException {
-		return getBinaryDirectory().getParent();
+	public static Path getJarDirectory() {
+		return JAR_DIRECTORY;
+	}
+	
+	/**
+	 * Checks if the JAR folder has been loaded yet and throws an exception if not.
+	 * @throws IllegalStateException If the JAR folder hasn't been loaded yet.
+	 * @see #loadJarDirectory()
+	 * @see #getJarDirectory()
+	 * @see #checkBinaryDirectory()
+	 * @see #checkApplicationDirectory()
+	 */
+	public static void checkJarDirectory() {
+		if (JAR_DIRECTORY == null)
+			throw new IllegalStateException("JAR folder hasn't been located yet!");
 	}
 	
 	/**
@@ -253,14 +326,47 @@ public class Utilities {
 	 * @return the path to the application folder
 	 * @throws IOException If the location of the source is especially badly malformed. 
 	 * @throws SecurityException if a security manager exists and its checkPermission method doesn't allow getting the Protection Domain of <code>Utilities</code>.
+	 * @see #loadBinaryDirectory()
+	 * @see #loadJarDirectory()
+	 */
+	public static Path loadApplicationDirectory() throws IOException {
+		if ("jar".equals(Utilities.class.getResource("").getProtocol())) {
+			if (JAR_DIRECTORY == null)
+				loadJarDirectory();
+			APPLICATION_DIRECTORY = JAR_DIRECTORY;
+		}
+		else {
+			if (BINARY_DIRECTORY == null)
+				loadBinaryDirectory();
+			APPLICATION_DIRECTORY = BINARY_DIRECTORY;
+		}
+		return APPLICATION_DIRECTORY;
+	}
+	
+	/**
+	 * Returns the directory of the currently running application. If it was started from a JAR,
+	 * this is the folder where the JAR is in. Else it is the parent folder of the binary folder.
+	 * If the currently running application wasn't started from a JAR, the behaviour of this method is undefined.
+	 * @return the path to the application folder, might be <code>null</code> if the directory wasn't loaded with {@link #loadApplicationDirectory()}
 	 * @see #getBinaryDirectory()
 	 * @see #getJarDirectory()
+	 * @see #loadApplicationDirectory()
 	 */
-	public static Path getApplicationDirectory() throws IOException {
-		if ("jar".equals(Utilities.class.getResource("").getProtocol()))
-			return getJarDirectory();
-		else
-			return getBinaryDirectory().getParent();
+	public static Path getApplicationDirectory() {
+		return APPLICATION_DIRECTORY;
+	}
+	
+	/**
+	 * Checks if the application folder has been loaded yet and throws an exception if not.
+	 * @throws IllegalStateException If the application folder hasn't been loaded yet.
+	 * @see #loadApplicationDirectory()
+	 * @see #getApplicationDirectory()
+	 * @see #checkBinaryDirectory()
+	 * @see #checkJarDirectory()
+	 */
+	public static void checkApplicationDirectory() {
+		if (APPLICATION_DIRECTORY == null)
+			throw new IllegalStateException("Application folder hasn't been located yet!");
 	}
 	
 	/**
