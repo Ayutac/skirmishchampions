@@ -4,7 +4,7 @@ package org.abos.util;
  * Thrown when the wrong number of arguments is detected during parsing.
  * @author Sebastian Koch
  * @version %I%
- * @since 0.1
+ * @since Skirmish Champions 0.1
  * @see ParseException
  */
 public class IllegalNumberOfArgumentsException extends ParseException {

@@ -5,7 +5,7 @@ package org.abos.util;
  * This includes wrong types.
  * @author Sebastian Koch
  * @version %I%
- * @since 0.1
+ * @since Skirmish Champions 0.1
  * @see ParseException
  * @see IllegalArgumentTypeException
  */

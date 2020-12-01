@@ -6,7 +6,7 @@ package org.abos.util;
  * @author Sebastian Koch
  * @version %I%
  * @since 0.1
- * @see ParseException
+ * @see Skirmish Champions ParseException
  * @see NumberFormatException
  */
 public class IllegalArgumentTypeException extends IllegalArgumentRangeException {

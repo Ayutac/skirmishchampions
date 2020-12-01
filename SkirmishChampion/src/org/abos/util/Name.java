@@ -4,7 +4,7 @@ package org.abos.util;
  * For denoting an object has a name.
  * @author Sebastian Koch
  * @version %I%
- * @since 0.1
+ * @since Skirmish Champions 0.1
  */
 public interface Name {
 	

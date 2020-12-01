@@ -4,7 +4,7 @@ package org.abos.util;
  * Thrown when a parsing error occurs.
  * @author Sebastian Koch
  * @version %I%
- * @since 0.1
+ * @since Skirmish Champions 0.1
  * @see IllegalNumberOfArgumentsException
  * @see IllegalArgumentTypeException
  */
