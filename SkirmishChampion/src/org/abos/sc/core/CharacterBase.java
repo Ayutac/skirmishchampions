@@ -392,9 +392,6 @@ public class CharacterBase implements Cloneable, Id, Name {
 	 * 
 	 * @param s
 	 * @return
-	 * @throws NullPointerException
-	 * @throws NumberFormatException
-	 * @throws ArrayIndexOutOfBoundsException
 	 */
 	public static CharacterBase parse(String s, boolean register) {
 		Utilities.requireNonNull(s, "s");
@@ -402,6 +399,8 @@ public class CharacterBase implements Cloneable, Id, Name {
 		if (parts.length != PARSE_PARAM_NUM)
 			throw new IllegalNumberOfArgumentsException(String.format("Character \"%s\" to parse contained %d arguments instead of %d", s, parts.length, PARSE_PARAM_NUM));
 		int[] primaryStats = Utilities.arrayToInt(parts[4].split(String.valueOf(PRIMARY_SEPARATOR)));
+		if (primaryStats.length != PRIMARY_STATS.length)
+			throw new IllegalNumberOfArgumentsException(String.format("Character \"%s\" to parse contained %d primary stats instead of %d", s, primaryStats.length, PRIMARY_STATS.length));
 		StatsPrimary attackStat  = null;
 		StatsSecondary damageStat = null;
 		try {

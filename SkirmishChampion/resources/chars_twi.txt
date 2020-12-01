@@ -33,9 +33,9 @@ twi_pisces;Pisces Jealnet;twi;Humans,Mages,Horns,Necromancers,Adventurers;60,70,
 twi_yvlon;Yvlon Byres;twi;Humans,Nobility,Byres,Warriors,Adventurers;150,100,70,60,40,70,30,50;0;0
 twi_ksmvr;Ksmvr;twi;Antinium,Free Antinium,Warriors,Adventurers;100,150,50,30,10,50,50,80;1;0
 // Liscor Watch
-twi_tkrn;Tkrn Silverfang;twi;Gnolls,Liscor,Silverfang,Liscor's Watch,Watch;70,60,40,30,20,40;0;0
-twi_jerci;Jerci;twi;Drakes,Liscor,Liscor's Watch,Watch;50,50,40,30,20,40;0;0
-twi_zevara;Zevara Sunderscale;twi;Drakes,Liscor,Liscor's Watch,Watch;130,110,120,130,100,70;0;0
+twi_tkrn;Tkrn Silverfang;twi;Gnolls,Liscor,Silverfang,Liscor's Watch,Watch;70,60,40,30,50,40,20,40;0;0
+twi_jerci;Jerci;twi;Drakes,Liscor,Liscor's Watch,Watch;50,50,40,30,40,40,20,40;0;0
+twi_zevara;Zevara Sunderscale;twi;Drakes,Liscor,Liscor's Watch,Watch;130,110,120,130,60,90,100,70;0;0
 // Pallass
 twi_noass;Noass;twi;Drakes,Pallass;40,40,60,50,40,70,10,40;5;2
 twi_relz;Sir Relz;twi;Drakes,Nobility,Pallass;40,40,60,50,40,70,10,40;5;2
