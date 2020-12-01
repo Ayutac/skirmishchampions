@@ -1,14 +1,18 @@
+// Wandering Inn
 twi_erins_room;Erin's room;twi_twi;twi_common_room,twi_garden_of_sanctuary,twi_birds_tower;;;twi_mrsha|ROW
 twi_garden_of_sanctuary;The Garden of Sanctuary;twi_twi;twi_kitchen,twi_common_room,twi_lyons_room,twi_erins_room,twi_earth_room;;;twi_ekirra,,twi_visma|ROW
 twi_lyons_room;Lyonette's room;twi_twi;twi_common_room,twi_erins_room,twi_garden_of_sanctuary,twi_birds_tower;;;twi_pawn,twi_lyon|ROW
 twi_birds_tower;Bird's tower;twi_twi;twi_erins_room,twi_lyons_room;;;,twi_bird|COL
 twi_earth_room;Secret Earther room;twi_twi;twi_garden_of_sanctuary;;;twi_kevin,,twi_troy,twi_galina,twi_leon,twi_rose|ROW
-twi_common_room;Common Room of the Wandering Inn;twi_twi;twi_high_passes,twi_pallass,twi_marketstreet,twi_bar,twi_kitchen,twi_redfang_five_tg,twi_garden_of_sanctuary,twi_lyons_room,twi_erins_room;twi_liscor,twi_nizril,twi_sizril;;,twi_ishkr|ROW
+twi_common_room;Common Room of the Wandering Inn;twi_twi;twi_high_passes,twi_pallass,twi_stables,twi_bar,twi_kitchen,twi_redfang_five_tg,twi_garden_of_sanctuary,twi_lyons_room,twi_erins_room;twi_nizril,twi_sizril;;,twi_ishkr|ROW
 twi_bar;Wandering Inn Bar;twi_twi;twi_common_room;;;,twi_joseph,,,twi_drassi|ROW
-twi_redfang_five_tg;Redfang Five Training Ground;twi_twi;twi_common_room;twi_liscor;;twi_headscratcher,twi_rabbiteater,twi_shorthilt,twi_badarrow,twi_numbtongue|CONCENTRATED;
+twi_redfang_five_tg;Redfang Five Training Ground;twi_twi;twi_stables,twi_common_room;twi_liscor;;twi_headscratcher,twi_rabbiteater,twi_shorthilt,twi_badarrow,twi_numbtongue|CONCENTRATED;
 twi_kitchen;Kitchen of the Wandering Inn;twi_twi;twi_common_room,twi_garden_of_sanctuary;;;,twi_imani|ROW
-// market street is in lieu of proper gates or something
-twi_marketstreet;Liscor's market street;twi_liscor;twi_redfang_five_tg,twi_common_room;twi_twi;;twi_lism,,twi_krshia|COL
+twi_stables;Stables of the Wandering Inn;twi_twi;twi_common_room,twi_liscor_gate,twi_redfang_five_tg;twi_liscor;;,twi_termin|ROW
+// Liscor
+twi_liscor_gate;Liscor's Gate;twi_liscor;twi_stables,twi_watch_barracks,twi_marketstreet;twi_twi;;twi_jerci,twi_tkrn|ROW
+twi_watch_barracks;Liscor's Watch Barracks;twi_liscor;twi_marketstreet,twi_liscor_gate;;;,twi_zevara|COL
+twi_marketstreet;Liscor's market street;twi_liscor;twi_liscor_gate;;;twi_lism,,twi_krshia|COL
 // same with northern and southern izril
 twi_pallass;Pallass;twi_sizril;twi_common_room;twi_twi;;,twi_noass,,twi_relz|ROW
 twi_high_passes;High Passes;twi_nizril;twi_common_room;twi_twi;;,twi_teriarch|COL
