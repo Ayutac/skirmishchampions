@@ -338,7 +338,7 @@ public class Utilities {
 		else {
 			if (BINARY_DIRECTORY == null)
 				loadBinaryDirectory();
-			APPLICATION_DIRECTORY = BINARY_DIRECTORY;
+			APPLICATION_DIRECTORY = BINARY_DIRECTORY.getParent();
 		}
 		return APPLICATION_DIRECTORY;
 	}
