@@ -18,5 +18,5 @@ twi_esthelm;Esthelm;twi_nizril;twi_stables,twi_high_passes,twi_celum;twi_twi;;tw
 twi_celum;Celum;twi_nizril;twi_high_passes,twi_esthelm;;;twi_jasi,twi_wesle|ROW
 twi_high_passes;High Passes;twi_nizril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
 // Southern Izril
-twi_pallass_door;Pallass;twi_sizril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
+twi_pallass_door;Pallass' Door;twi_sizril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
 twi_pallass;Pallass;twi_sizril;twi_pallass_door;;;,twi_noass,,twi_relz|ROW
