@@ -19,7 +19,7 @@ public class RegionTest {
 	
 	@Test
 	public void testParseData() throws IOException {
-		Path path = Utilities.loadBinaryDirectory().resolveSibling("resources").resolve("regions_twi.txt");
+		Path path = Utilities.loadApplicationDirectory().resolve("resources").resolve("regions_twi.txt");
 		Utilities.loadFromFile(path, RegionBase::parse);
 		System.out.println(String.format("%d: %s", Region.REGIONS.size(), Region.REGIONS));
 		//System.out.println(Character.CHARACTERS.lookup("twi_erin").getPreferredAttackStat());

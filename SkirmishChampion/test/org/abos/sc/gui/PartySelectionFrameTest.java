@@ -28,7 +28,7 @@ public class PartySelectionFrameTest {
 //				new int[] {50,40,40,40,10,60,80,30}, StatsPrimary.CHARISMA, StatsSecondary.ELOQUENCE, false));
 //		Companion mrsha = new Companion(new CharacterBase("twi_mrsha", "Mrsha", "TWI", new String[] {"Inn"}, 
 //				new int[] {20,20,20,10,0,30,40,50}, StatsPrimary.CHARISMA, StatsSecondary.ELOQUENCE, false));
-		Path path = Utilities.loadBinaryDirectory().resolveSibling("resources").resolve("chars_twi.txt");
+		Path path = Utilities.loadApplicationDirectory().resolve("resources").resolve("chars_twi.txt");
 		Utilities.loadFromFile(path, CharacterBase::parse);
 		Registry<Companion> companionPool = new Registry<>();
 		for (CharacterBase character : Character.CHARACTERS)
