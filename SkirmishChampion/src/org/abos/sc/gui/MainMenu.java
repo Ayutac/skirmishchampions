@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ToolTipManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -291,6 +292,7 @@ public class MainMenu extends JFrame {
 			GUIUtilities.LOGOS.clear();
 			GUIUtilities.errorMessage("Logo Loading Failure", "The logos couldn't be loaded!", ex);
 		}
+		ToolTipManager.sharedInstance().setInitialDelay(300);
 		MainMenu game = new MainMenu();
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);

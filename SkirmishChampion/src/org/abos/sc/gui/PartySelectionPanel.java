@@ -12,6 +12,7 @@ import java.util.Set;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.abos.sc.core.BattleFormation;
@@ -186,12 +187,18 @@ public class PartySelectionPanel extends JPanel {
 				positionSelector[row][col] = new ContentComboBox<>(companionPool, Utilities.createNameComparator());
 				// automatically change to selected if combobox is used
 				positionSelector[row][col].addItemListener(new ItemListener() {
+					@SuppressWarnings("rawtypes")
 					@Override public void itemStateChanged(ItemEvent e) {
-						if (e.getStateChange() == ItemEvent.SELECTED && ((JComboBox)e.getSource()).isPopupVisible())
-							for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-								for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
-									if (e.getSource() == positionSelector[row][col])
-										positionCheckBox[row][col].setSelected(true);
+						if (e.getStateChange() == ItemEvent.SELECTED) {
+							// refresh the tooltip
+							((JComponent)e.getSource()).setToolTipText(((Companion)e.getItem()).toHintString());
+							// check the appropiate checkbox
+							if (((JComboBox)e.getSource()).isPopupVisible())
+								for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
+									for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+										if (e.getSource() == positionSelector[row][col])
+											positionCheckBox[row][col].setSelected(true);
+						}
 					}
 				});
 				// also enable toggle selection with right mouse click

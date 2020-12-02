@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -131,7 +132,16 @@ public class StageSelectionPanel extends JPanel {
 		regionSelector.addItemListener(e -> refreshStages(e));
 		stageLabel = new JLabel("Stage:");
 		stageSelector = new ContentComboBox<>(getRegion().getStages(), Utilities.createNameComparator());
-		//stageSelector.addItemListener(e -> refreshStages());
+		stageSelector.addItemListener(new ItemListener() {
+			@Override public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) { 
+					if (((Stage)e.getItem()).isCleared())
+						stageSelector.setToolTipText("cleared");
+					else
+						stageSelector.setToolTipText("not cleared yet");
+				}
+			}
+		});
 	}
 	
 	private void initLayout() {
