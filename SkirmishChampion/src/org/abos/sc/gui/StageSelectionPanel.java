@@ -1,8 +1,11 @@
 package org.abos.sc.gui;
 
 import java.awt.GraphicsConfiguration;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.Insets;
 import java.awt.event.ItemEvent;
 
 import javax.swing.JComboBox;
@@ -132,23 +135,39 @@ public class StageSelectionPanel extends JPanel {
 	}
 	
 	private void initLayout() {
-		GridLayout layout = new GridLayout(0, 2);
+		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
+		final double weightxForLabels = 0.0;
+		final double weightxForChoosers = 0.7;
+		final Insets chooserInsets = new Insets(0, 0, 0, 0);
+		final Insets labelInsets = new Insets(0, 1, 0, 2);
 		if (leftToRight) {
-			add(fandomLabel);
-			add(fandomSelector);
-			add(regionLabel);
-			add(regionSelector);
-			add(stageLabel);
-			add(stageSelector);
+			add(fandomLabel, new GridBagConstraints(0, 0, 1, 1, weightxForLabels, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
+			add(fandomSelector, new GridBagConstraints(1, 0, 1, 1, weightxForChoosers, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
+			add(regionLabel, new GridBagConstraints(0, 1, 1, 1, weightxForLabels, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
+			add(regionSelector, new GridBagConstraints(1, 1, 1, 1, weightxForChoosers, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
+			add(stageLabel, new GridBagConstraints(0, 2, 1, 1, weightxForLabels, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
+			add(stageSelector, new GridBagConstraints(1, 2, 1, 1, weightxForChoosers, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
 		}
 		else {
-			add(fandomSelector);
-			add(fandomLabel);
-			add(regionSelector);
-			add(regionLabel);
-			add(stageSelector);
-			add(stageLabel);
+			add(fandomLabel, new GridBagConstraints(1, 0, 1, 1, weightxForLabels, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
+			add(fandomSelector, new GridBagConstraints(0, 0, 1, 1, weightxForChoosers, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
+			add(regionLabel, new GridBagConstraints(1, 1, 1, 1, weightxForLabels, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
+			add(regionSelector, new GridBagConstraints(0, 1, 1, 1, weightxForChoosers, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
+			add(stageLabel, new GridBagConstraints(1, 2, 1, 1, weightxForLabels, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
+			add(stageSelector, new GridBagConstraints(0, 2, 1, 1, weightxForChoosers, 1d, 
+					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
 		}
 	}
 
