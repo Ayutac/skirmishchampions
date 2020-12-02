@@ -1,0 +1,12 @@
+## Version changelog
+
+# 0.1.0-early-access
+Initial published version.
+
+# 0.2.0-early-access
+- added characters Tkrn, Jerci, Zevara, Wesle, Jasi, Grunter, Flower Girl, Kel
+- added locations Stables of the Inn, Liscor's gate, Liscor's watch barracks, Pallass' door, Celum, Esthelm
+- fixed the fighting bugs
+- added title screen image and logos
+- improved the stage GUI
+- some technical refactoring
