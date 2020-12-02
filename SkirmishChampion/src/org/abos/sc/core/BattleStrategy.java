@@ -180,7 +180,7 @@ public class BattleStrategy implements Iterable<BattleTactic> {
 
 	@Override
 	public String toString() {
-		return "BattleStrategy [type=" + type + ", battleTactics=" + Arrays.toString(battleTactics) + "]";
+		return "BattleStrategy [type=" + type + ", battleTactics=" + Arrays.deepToString(battleTactics) + "]";
 	}
 	
 	public static BattleStrategy parse(String s) {

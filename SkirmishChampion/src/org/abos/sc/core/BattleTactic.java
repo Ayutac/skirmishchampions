@@ -64,9 +64,9 @@ public class BattleTactic implements Cloneable {
 	public static BattleTactic createColAssault(int col) {
 		int[] alteratingCols = Utilities.createAlteratingLowerFirst(col,BattleFormation.COL_NUMBER);
 		BattleTactic tactic = new BattleTactic();
-		for (int i = 0; i  < alteratingCols.length; i++)
+		for (int i = 0; i < alteratingCols.length; i++)
 			for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-				tactic.attackOrder[i*BattleFormation.ROW_NUMBER+row] = alteratingCols[i]*BattleFormation.ROW_NUMBER+row;
+				tactic.attackOrder[i*BattleFormation.ROW_NUMBER+row] = row*BattleFormation.COL_NUMBER+alteratingCols[i];
 		return tactic;
 	}
 	
