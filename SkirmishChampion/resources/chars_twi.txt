@@ -14,7 +14,7 @@ twi_lism;Lism Swifttail;twi;Drakes,Swifttail,Liscor,Liscor's Council;40,50,100,7
 twi_visma;Visma;twi;Drakes,Liscor;10,20,10,0,0,20,10,40;5;2
 twi_ekirra;Ekirra Silverfang;twi;Gnolls,Silverfang,Liscor;20,20,10,0,0,20,10,50;5;2
 // Redfang Five
-twi_headscratcher;Headscratcher;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;220,150,40,40,20,20,80,120;0;0
+twi_headscratcher;Headscratcher;twi;Goblins,Hobgoblins,Warriors,Redfangs,Redfang,Redfang Five,Innfamily,Liscor;220,150,40,40,20,20,80,120;0;0
 twi_shorthilt;Shorthilt;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;200,180,40,40,20,20,50,150;0;0
 twi_rabbiteater;Rabbiteater;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;180,160,50,50,20,80,30,130;0;0
 twi_numbtongue;Numbtongue;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;170,170,60,50,20,120,70,140;0;0
@@ -33,10 +33,14 @@ twi_pisces;Pisces Jealnet;twi;Humans,Mages,Horns,Necromancers,Adventurers;60,70,
 twi_yvlon;Yvlon Byres;twi;Humans,Nobility,Byres,Warriors,Adventurers;150,100,70,60,40,70,30,50;0;0
 twi_ksmvr;Ksmvr;twi;Antinium,Free Antinium,Warriors,Adventurers;100,150,50,30,10,50,50,80;1;0
 // Liscor Watch
-twi_tkrn;Tkrn Silverfang;twi;Gnolls,Liscor,Silverfang,Liscor's Watch,Watch;70,60,40,30,50,40,20,40;0;0
-twi_jerci;Jerci;twi;Drakes,Liscor,Liscor's Watch,Watch;50,50,40,30,40,40,20,40;0;0
-twi_zevara;Zevara Sunderscale;twi;Drakes,Liscor,Liscor's Watch,Watch;130,110,120,130,60,90,100,70;0;0
+twi_tkrn;Tkrn Silverfang;twi;Gnolls,Liscor,Silverfang,Watch;70,60,40,30,50,40,20,40;0;0
+twi_jerci;Jerci;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_zevara;Zevara Sunderscale;twi;Drakes,Liscor,Watch;130,110,120,130,60,90,100,70;0;0
+// Players of Celum
+twi_wesle;Wesle Salkis;twi;Humans,Players of Celum;60,60,50,60,40,300,50,90;5;2
+twi_jasi;Jasi;twi;Drakes,Players of Celum;40,40,50,50,40,330,50,80;5;2
 // Pallass
+twi_kel;Kel;twi;Drakes,Pallass,Watch;80,80,60,80,40,60,50,70;0;0
 twi_noass;Noass;twi;Drakes,Pallass;40,40,60,50,40,70,10,40;5;2
 twi_relz;Sir Relz;twi;Drakes,Nobility,Pallass;40,40,60,50,40,70,10,40;5;2
 // Northern Izril
@@ -50,5 +54,7 @@ twi_niers;Niers;twi;Fraerling,Forgotten Wing Company;40,60,1000,800,40,200,100,7
 twi_foliana;Foliana;twi;Beastkin,Forgotten Wing Company;750,850,350,250,50,100,150,250;1;0
 // other gobbos
 twi_rags;Rags;twi;Goblins,Flooded Plains Tribe;40,60,120,50,10,60,80,60;1;0
-twi_pyrite;Pyrite;twi;Goblins;150,120,70,140,40,60,80,50;0;0
+twi_pyrite;Pyrite;twi;Goblins,Hobgoblins,Warriors;350,220,70,140,40,60,80,50;0;0
+twi_grunter;Grunter;twi;Goblins,Redfangs,Hobgoblins,Warriors;150,120,60,60,50,50,30,40;0;0
 // misc
+twi_flower_girl;Flower Girl;twi;Monsters;90,100,40,30,50,20,30,50;0;0
