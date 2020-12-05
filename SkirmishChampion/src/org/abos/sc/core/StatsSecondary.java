@@ -59,5 +59,13 @@ public enum StatsSecondary {
 	public String getDisplayName() {
 		return displayName;
 	}
+	
+	/**
+	 * Returns {@link #name()} but with only the first character being upper case.
+	 * @return {@link #name()} but with only the first character being upper case.
+	 */
+	public String getCapitalizedName() {
+		return name().substring(0, 1).concat(name().substring(1).toLowerCase());
+	}
 
 }

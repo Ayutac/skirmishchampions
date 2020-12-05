@@ -6,13 +6,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Vector;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 
 import org.abos.util.Id;
-import org.abos.util.Registry;
 import org.abos.util.Utilities;
 
 /**
@@ -70,6 +67,21 @@ public class ContentComboBox<T extends Id> extends JComboBox<T> {
 				addItem(item);
 		}
 		repaint();
+	}
+	
+	/**
+	 * @return the comparator
+	 */
+	public Comparator<T> getComparator() {
+		return comparator;
+	}
+	
+	/**
+	 * @param comparator the comparator to set
+	 */
+	public void setComparator(Comparator<T> comparator) {
+		this.comparator = comparator;
+		refreshContent();
 	}
 
 }

@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import org.abos.util.Id;
 import org.abos.util.IllegalArgumentRangeException;
@@ -425,6 +426,42 @@ public class CharacterBase implements Cloneable, Id, Name {
 	public static void linkFandomsToCharacters() {
 		for (CharacterBase character : CHARACTERS)
 			FandomBase.FANDOMS.lookup(character.getFandomId()).addCharacter(character);
+	}
+	
+	public static <T extends CharacterBase> Comparator<T> createPrimaryComparator(StatsPrimary type) {
+		return new Comparator<T>() {
+			@Override public int compare(T o1, T o2) {
+				if (o1 == o2)
+					return 0;
+				if (o1 == null)
+					return Integer.MIN_VALUE;
+				if (o2 == null)
+					return Integer.MAX_VALUE;
+				if (o1.getPrimaryStat(type) == o2.getPrimaryStat(type))
+					return 0;
+				if (o1.getPrimaryStat(type) < o2.getPrimaryStat(type))
+					return -1;
+				return 1;
+			}
+		};
+	}
+	
+	public static <T extends CharacterBase> Comparator<T> createSecondaryComparator(StatsSecondary type) {
+		return new Comparator<T>() {
+			@Override public int compare(T o1, T o2) {
+				if (o1 == o2)
+					return 0;
+				if (o1 == null)
+					return Integer.MIN_VALUE;
+				if (o2 == null)
+					return Integer.MAX_VALUE;
+				if (o1.getSecondaryStat(type) == o2.getSecondaryStat(type))
+					return 0;
+				if (o1.getSecondaryStat(type) < o2.getSecondaryStat(type))
+					return -1;
+				return 1;
+			}
+		};
 	}
 
 }

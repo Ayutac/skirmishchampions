@@ -2,11 +2,11 @@ package org.abos.sc.gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,9 +18,6 @@ import javax.swing.JPanel;
 import org.abos.sc.core.BattleFormation;
 import org.abos.sc.core.Character;
 import org.abos.sc.core.Companion;
-import org.abos.sc.core.Fandom;
-import org.abos.sc.core.Region;
-import org.abos.sc.core.Stage;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
 
@@ -32,6 +29,8 @@ import org.abos.util.Utilities;
 public class PartySelectionPanel extends JPanel {
 	
 	protected BattleFormation formation;
+	
+	protected Comparator<Companion> comparator = null;
 	
 	protected boolean facesLineEnd;
 	
@@ -63,6 +62,24 @@ public class PartySelectionPanel extends JPanel {
 	public void setFormation(BattleFormation formation) {
 		this.formation = formation;
 		resetFormation();
+	}
+	
+	public void setComparator(Comparator<Companion> comparator) {
+		if (this.comparator == comparator)
+			return;
+		this.comparator = comparator;
+		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
+			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+				positionSelector[row][col].setComparator(comparator);
+			}
+		resetFormation();
+	}
+	
+	/**
+	 * @return the comparator
+	 */
+	public Comparator<Companion> getComparator() {
+		return comparator;
 	}
 	
 	/**

@@ -1,15 +1,20 @@
 package org.abos.sc.gui;
 
 import java.awt.BorderLayout;
-import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import org.abos.sc.core.BattleFormation;
 import org.abos.sc.core.Companion;
@@ -29,6 +34,12 @@ public class PartySelectionFrame extends JFrame {
 	protected Registry<Companion> companionPool;
 	
 	protected Runnable afterHiding = null;
+	
+	protected CompanionSortComboBox sortComboBox;
+	
+	protected JRadioButton ascButton;
+	
+	protected JRadioButton descButton;
 	
 	protected PartySelectionPanel selectionPanel;
 	
@@ -112,7 +123,32 @@ public class PartySelectionFrame extends JFrame {
 	}
 	
 	private void initComponents() {
+		sortComboBox = new CompanionSortComboBox();
+		ascButton = new JRadioButton("Asc", true);
+		descButton = new JRadioButton("Desc", false);
+		ButtonGroup orderSelectionGroup = new ButtonGroup();
+		orderSelectionGroup.add(ascButton);
+		orderSelectionGroup.add(descButton);
 		selectionPanel = new PartySelectionPanel(companionPool);
+		sortComboBox.addItemListener(new ItemListener() {
+			@Override public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					selectionPanel.setComparator(sortComboBox.getComparator());
+				}
+			}
+		});
+		ascButton.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				sortComboBox.setReversed(false);
+				selectionPanel.setComparator(sortComboBox.getComparator());
+			}
+		});
+		descButton.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				sortComboBox.setReversed(true);
+				selectionPanel.setComparator(sortComboBox.getComparator());
+			}
+		});
 		confirmButton = new JButton("Confirm");
 		confirmButton.addActionListener(e -> confirmFormation());
 		cancelButton = new JButton("Cancel");
@@ -122,6 +158,12 @@ public class PartySelectionFrame extends JFrame {
 	private void initLayout() {
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
+		JPanel sortPanel = new JPanel();
+		sortPanel.add(new JLabel("Sort by:"));
+		sortPanel.add(sortComboBox);
+		sortPanel.add(ascButton);
+		sortPanel.add(descButton);
+		add(sortPanel, BorderLayout.PAGE_START);
 		add(selectionPanel, BorderLayout.CENTER);
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
 		buttonPanel.add(confirmButton);
