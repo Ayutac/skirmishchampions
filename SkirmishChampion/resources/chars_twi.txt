@@ -47,6 +47,7 @@ twi_kilkran;Kilkran;twi;Players of Celum;40,50,70,50,50,280,40,70;5;2
 twi_kel;Kel;twi;Drakes,Pallass,Watch;80,80,60,80,40,60,50,70;0;0
 twi_noass;Noass;twi;Drakes,Pallass;40,40,60,50,40,70,10,40;5;2
 twi_relz;Sir Relz;twi;Drakes,Nobility,Pallass;40,40,60,50,40,70,10,40;5;2
+twi_saliss;Saliss Oliwing;twi;Drakes,Pallass;1000,1000,300,300,100,50,100,150;1;0
 // Northern Izril
 twi_bethal;Bethal Walchais;twi;Nobility,Humans,Izril;40,70,140,100,150,300,70,60;5;2
 twi_pryde;Pryde Ulta;twi;Nobility,Humans,Izril;70,70,160,120,80,280,70,60;5;2

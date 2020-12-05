@@ -23,4 +23,5 @@ twi_high_passes;High Passes;twi_nizril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
 twi_bloodfields;Bloodfields;twi_nizril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
 // Southern Izril
 twi_pallass_door;Pallass' Door;twi_sizril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
-twi_pallass;Pallass;twi_sizril;twi_pallass_door;;;,twi_noass,,twi_relz|ROW
+twi_pallass;Pallass;twi_sizril;twi_saliss_lab,twi_pallass_door;;;,twi_noass,,twi_relz|ROW
+twi_saliss_lab;Saliss' laboratory;twi_sizril;twi_pallass;;;,twi_saliss|COL
