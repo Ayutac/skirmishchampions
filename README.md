@@ -2,4 +2,4 @@
 A hero collection, idle battle game, but better than the whole branch of such browser games because no one needs microtransactions.
 
 ## Version
-0.1 Early Access
+0.2.0 Early Access
