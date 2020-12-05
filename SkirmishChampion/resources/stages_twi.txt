@@ -9,7 +9,7 @@ twi_common_room;Common Room of the Wandering Inn;twi_twi;twi_pallass_door,twi_st
 twi_bar;Wandering Inn Bar;twi_twi;twi_common_room;;;,twi_joseph,,,twi_drassi|ROW
 twi_redfang_five_tg;Redfang Five Training Ground;twi_twi;twi_stables,twi_common_room;twi_liscor;;twi_headscratcher,twi_rabbiteater,twi_shorthilt,twi_badarrow,twi_numbtongue|CONCENTRATED;
 twi_kitchen;Kitchen of the Wandering Inn;twi_twi;twi_common_room,twi_garden_of_sanctuary;;;,twi_imani|ROW
-twi_stables;Stables of the Wandering Inn;twi_twi;twi_esthelm,twi_common_room,twi_liscor_gate,twi_redfang_five_tg;twi_liscor,twi_nizril;;,twi_termin|ROW
+twi_stables;Stables of the Wandering Inn;twi_twi;twi_bloodfields,twi_esthelm,twi_common_room,twi_liscor_gate,twi_redfang_five_tg;twi_liscor,twi_nizril;;,twi_termin|ROW
 // Liscor
 twi_liscor_gate;Liscor's gate;twi_liscor;twi_stables,twi_watch_barracks,twi_marketstreet;twi_twi;;twi_jerci,twi_tkrn,twi_silt,twi_bersa,twi_kelli,twi_geils|ROW
 twi_watch_barracks;Liscor's watch barracks;twi_liscor;twi_prison,twi_watch_captain,twi_marketstreet,twi_liscor_gate;;;twi_belsc,twi_mersh,twi_tells,twi_tessil,twi_lassil,twi_merka|COL
@@ -20,7 +20,7 @@ twi_marketstreet;Liscor's market street;twi_liscor;twi_liscor_gate;;;twi_lism,,t
 twi_esthelm;Esthelm;twi_nizril;twi_stables,twi_high_passes,twi_celum;twi_twi;;twi_flower_girl,twi_grunter|CONCENTRATED
 twi_celum;Celum;twi_nizril;twi_high_passes,twi_esthelm;;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
 twi_high_passes;High Passes;twi_nizril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
-twi_bloodfields;Bloodfields;twi_nizril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,twi_pisces,twi_ceria|CONCENTRATED
+twi_bloodfields;Bloodfields;twi_nizril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
 // Southern Izril
 twi_pallass_door;Pallass' Door;twi_sizril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
 twi_pallass;Pallass;twi_sizril;twi_pallass_door;;;,twi_noass,,twi_relz|ROW
