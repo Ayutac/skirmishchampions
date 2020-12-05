@@ -38,7 +38,11 @@ twi_jerci;Jerci;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
 twi_zevara;Zevara Sunderscale;twi;Drakes,Liscor,Watch;130,110,120,130,60,90,100,70;0;0
 // Players of Celum
 twi_wesle;Wesle Salkis;twi;Humans,Players of Celum;60,60,50,60,40,300,50,90;5;2
-twi_jasi;Jasi;twi;Drakes,Players of Celum;40,40,50,50,40,330,50,80;5;2
+twi_jasi;Jasi Redigal;twi;Drakes,Players of Celum;40,40,50,50,40,330,50,80;5;2
+twi_emme;Emme;twi;Dwarfs,Humans,Players of Celum;50,40,80,50,40,120,40,70;5;2
+twi_grev;Grev Redigal;twi;Humans,Players of Celum;40,90,80,50,60,60,30,60;1;0
+twi_temile;Temile;twi;Humans,Players of Celum;40,50,70,50,50,250,40,70;5;2
+twi_kilkran;Kilkran;twi;Players of Celum;40,50,70,50,50,280,40,70;5;2
 // Pallass
 twi_kel;Kel;twi;Drakes,Pallass,Watch;80,80,60,80,40,60,50,70;0;0
 twi_noass;Noass;twi;Drakes,Pallass;40,40,60,50,40,70,10,40;5;2
@@ -58,3 +62,26 @@ twi_pyrite;Pyrite;twi;Goblins,Hobgoblins,Warriors;350,220,70,140,40,60,80,50;0;0
 twi_grunter;Grunter;twi;Goblins,Redfangs,Hobgoblins,Warriors;150,120,60,60,50,50,30,40;0;0
 // misc
 twi_flower_girl;Flower Girl;twi;Monsters;90,100,40,30,50,20,30,50;0;0
+// down here are the characters I only invested 20% of my brain into :'(
+// Chess club
+twi_knight;Knight;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
+twi_bishop;Bishop;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
+twi_vladimir;Vladimir;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
+twi_calabrian;Calabrian;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
+twi_emanuel;Emanuel;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
+twi_jose;Jose;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
+twi_milner-barry;Milner-Barry;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
+// Liscor Watch
+// copied from Jerci
+twi_paiss;Paiss;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_ulkel;Ulkel;twi;Gnolls,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_belsc;Belsc;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_mersh;Mersh;twi;Gnolls,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_tells;Tells;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_tessil;Tessil;twi;Gnolls,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_lassil;Lassil;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_merka;Merka;twi;Gnolls,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_silt;Silt;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_bersa;Bersa;twi;Gnolls,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_kelli;Kelli;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
+twi_geils;Geils;twi;Gnolls,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
