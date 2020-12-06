@@ -7,10 +7,12 @@ import java.util.logging.Logger;
 import org.abos.util.Utilities;
 
 /**
- * Simulates a battle. Note that on construction the underlying timer will be started immediatly.
+ * Simulates a battle. Note that the underlying timer will be started immediatly upon creation. 
  * @author Sebastian Koch
  * @version %I%
  * @since 0.1
+ * @see #Battle(BattleEncounter, BattleEncounter, Handler)
+ * @see #run()
  */
 public class Battle extends Timer implements Runnable {
 	
@@ -32,31 +34,41 @@ public class Battle extends Timer implements Runnable {
 	 */
 	protected BattleEncounter party2;
 	
-	protected Logger attackLogger;
+	/**
+	 * logger for the battle
+	 */
+	protected Logger battleLogger;
 	
-	protected Handler attackHandler;
+	/**
+	 * The primary handler for the logger. The handler is saved internally so it
+	 * can be removed once the battle is over.
+	 * @see #Battle(BattleEncounter, BattleEncounter, Handler)
+	 * @see #waitForEnd()
+	 */
+	protected Handler battleHandler;
 
 	/**
 	 * Creates a new battle. The underlying timer will be started as a daemon immediatly upon creation, 
 	 * but the attack tasks need to be sheduled seperately with {@link #run()}. 
-	 * @param party1 the frst party, usually the player's
+	 * @param party1 the first party, usually the player's
 	 * @param party2 the second party, usually the computer's
+	 * @param battleHandler the primary handler for this battle's logger
 	 * @param strategy1 the first party's strategy, usually the player's
 	 * @param strategy2 the second party's strategy, usually the computers's
-	 * @throws NullPointerException If any argument refers to <code>null</code>.
+	 * @throws NullPointerException If <code>party1</code> or <code>party2</code> refers to <code>null</code>.
 	 * @see #run()
 	 */
-	public Battle(BattleEncounter party1, BattleEncounter party2, Handler attackHandler) {
+	public Battle(BattleEncounter party1, BattleEncounter party2, Handler battleHandler) {
 		super(true); // run as daemon
 		Utilities.requireNonNull(party1, "party1");
 		Utilities.requireNonNull(party2, "party2");
 		this.party1 = party1;
 		this.party2 = party2;
-		this.attackHandler = attackHandler;
-		attackLogger = Logger.getAnonymousLogger();
-		attackLogger.setUseParentHandlers(false);
-		if (attackHandler != null)
-			attackLogger.addHandler(attackHandler);
+		this.battleHandler = battleHandler;
+		battleLogger = Logger.getAnonymousLogger();
+		battleLogger.setUseParentHandlers(false);
+		if (battleHandler != null)
+			battleLogger.addHandler(battleHandler);
 	}
 	
 	/**
@@ -64,18 +76,20 @@ public class Battle extends Timer implements Runnable {
 	 * 
 	 * The order is: First the first's party, their first row and then the first column.
 	 * @see AttackTask
+	 * @see #cancel()
+	 * @see #waitForEnd()
 	 */
 	@Override
 	public void run() {
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
 				if (party1.getCharacter(row, col) != null)
-					scheduleAtFixedRate(new AttackTask(party1.getCharacter(row, col), party1.getTactic(row, col), party2.getFormation(), this,attackLogger), 
+					scheduleAtFixedRate(new AttackTask(party1.getCharacter(row, col), party1.getTactic(row, col), party2.getFormation(), this,battleLogger), 
 							party1.getCharacter(row, col).getAttackSpeed(), party1.getCharacter(row, col).getAttackSpeed());
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
 				if (party2.getCharacter(row, col) != null)
-					scheduleAtFixedRate(new AttackTask(party2.getCharacter(row, col), party2.getTactic(row, col), party1.getFormation(), this,attackLogger), 
+					scheduleAtFixedRate(new AttackTask(party2.getCharacter(row, col), party2.getTactic(row, col), party1.getFormation(), this,battleLogger), 
 							party2.getCharacter(row, col).getAttackSpeed(), party2.getCharacter(row, col).getAttackSpeed());
 	}
 	
@@ -96,6 +110,7 @@ public class Battle extends Timer implements Runnable {
 	/**
 	 * Returns <code>true</code> if the timer has been cancelled.
 	 * @return <code>true</code> if the timer has been cancelled
+	 * @see #cancel()
 	 */
 	public boolean isCancelled() {
 		return cancelled;
@@ -103,6 +118,7 @@ public class Battle extends Timer implements Runnable {
 	
 	/**
 	 * Waits for the battle to end, i.e. uses {@link Thread#onSpinWait()} in a loop until the timer has been cancelled.
+	 * @see #run()
 	 * @see #cancel()
 	 * @see #isCancelled()
 	 * @see Thread#onSpinWait()
@@ -111,30 +127,75 @@ public class Battle extends Timer implements Runnable {
 		while (!isCancelled()) {
 			Thread.onSpinWait();
 		}
-		if (attackHandler != null)
-			attackLogger.removeHandler(attackHandler);
+		if (battleHandler != null)
+			battleLogger.removeHandler(battleHandler);
 	}
 	
+	/**
+	 * Returns <code>true</code> if the first party is not defeated but the second party is.
+	 * @return <code>true</code> if the first party is not defeated but the second party is, else <code>false</code>.
+	 * @see #party1Lost()
+	 * @see #party2Won()
+	 * @see #party2Lost()
+	 * @see #tieOccurred()
+	 */
 	public boolean party1Won() {
 		return !party1.isDefeated() && party2.isDefeated();
 	}
 	
+	/**
+	 * Returns <code>true</code> if the first party is defeated but the second party is not.
+	 * @return <code>true</code> if the first party is defeated but the second party is not, else <code>false</code>.
+	 * @see #party1Won()
+	 * @see #party2Won()
+	 * @see #party2Lost()
+	 * @see #tieOccurred()
+	 */
 	public boolean party1Lost() {
 		return party1.isDefeated() && !party2.isDefeated();
 	}
 	
+	/**
+	 * Returns <code>true</code> if the second party is not defeated but the first party is.
+	 * @return <code>true</code> if the second party is not defeated but the first party is, else <code>false</code>.
+	 * @see #party1Won()
+	 * @see #party1Lost()
+	 * @see #party2Lost()
+	 * @see #tieOccurred()
+	 */
 	public boolean party2Won() {
 		return party1Lost();
 	}
 	
+	/**
+	 * Returns <code>true</code> if the second party is defeated but the first party is not.
+	 * @return <code>true</code> if the second party is defeated but the first party is not, else <code>false</code>.
+	 * @see #party1Won()
+	 * @see #party1Lost()
+	 * @see #party2Won()
+	 * @see #tieOccurred()
+	 */
 	public boolean party2Lost() {
 		return party1Won();
 	}
 	
+	/**
+	 * Returns <code>true</code> if both parties are defeated.
+	 * @return <code>true</code> if both parties are defeated, else <code>false</code>.
+	 * @see #party1Won()
+	 * @see #party1Lost()
+	 * @see #party2Won()
+	 * @see #party2Lost()
+	 */
 	public boolean tieOccurred() {
 		return party1.isDefeated() && party2.isDefeated();
 	}
 	
+	/**
+	 * Restores the formations and resets the strategies.
+	 * @see BattleFormation#restoreAll()
+	 * @see BattleStrategy#reset()
+	 */
 	public void restoreCombatants() {
 		party1.getFormation().restoreAll();
 		party1.getStrategy().reset();
