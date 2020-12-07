@@ -24,7 +24,7 @@ import org.abos.sc.core.BattleEncounter;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.Stage;
 import org.abos.util.gui.GUIUtilities;
-import org.abos.util.gui.PaneHandler;
+import org.abos.util.gui.TextAreaHandler;
 
 /**
  * @author Sebastian Koch
@@ -53,7 +53,7 @@ public class StageBattleFrame extends JFrame {
 	
 	protected JScrollPane battleLogWrapper;
 	
-	protected PaneHandler handler;
+	protected TextAreaHandler handler;
 	
 	protected JButton fightButton;
 	
@@ -199,7 +199,7 @@ public class StageBattleFrame extends JFrame {
 		DefaultCaret caret = (DefaultCaret)battleLog.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		battleLogWrapper = new JScrollPane(battleLog);
-		handler = new PaneHandler(battleLog);
+		handler = new TextAreaHandler(battleLog);
 		fightButton = new JButton("Fight");
 		fightButton.addActionListener(e -> commenceBattle());
 		returnButton = new JButton("Return");
