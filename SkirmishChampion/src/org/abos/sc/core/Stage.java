@@ -264,7 +264,7 @@ public class Stage extends StageBase {
 	
 	@Override
 	public String toString() {
-		return getName();
+		return cleared ? getName() + " ✓": getName();
 	}
 	
 	@Override

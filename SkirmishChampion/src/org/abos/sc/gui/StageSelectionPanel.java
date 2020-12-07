@@ -1,5 +1,6 @@
 package org.abos.sc.gui;
 
+import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -26,6 +27,12 @@ import org.abos.util.Utilities;
  * @since 0.1
  */
 public class StageSelectionPanel extends JPanel {
+	
+	public static final int PREFERRED_CB_HEIGHT = ContentComboBox.PREFERRED_HEIGHT;
+	
+	public static final int PREFERRED_CB_WIDTH = 2 * ContentComboBox.PREFERRED_WIDTH + 1;
+	
+	public static final Dimension PREFERRED_CB_SIZE = new Dimension(PREFERRED_CB_WIDTH, PREFERRED_CB_HEIGHT);
 	
 	protected Player player;
 	
@@ -132,19 +139,12 @@ public class StageSelectionPanel extends JPanel {
 		regionSelector.addItemListener(e -> refreshStages(e));
 		stageLabel = new JLabel("Stage:");
 		stageSelector = new ContentComboBox<>(getRegion().getStages(), Utilities.createNameComparator());
-		stageSelector.addItemListener(new ItemListener() {
-			@Override public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) { 
-					if (((Stage)e.getItem()).isCleared())
-						stageSelector.setToolTipText("cleared");
-					else
-						stageSelector.setToolTipText("not cleared yet");
-				}
-			}
-		});
 	}
 	
 	private void initLayout() {
+		fandomSelector.setPreferredSize(PREFERRED_CB_SIZE);
+		regionSelector.setPreferredSize(PREFERRED_CB_SIZE);
+		stageSelector.setPreferredSize(PREFERRED_CB_SIZE);
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
 		final double weightxForLabels = 0.0;
