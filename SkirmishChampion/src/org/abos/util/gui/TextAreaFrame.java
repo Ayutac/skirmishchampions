@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.text.DefaultCaret;
 
 /**
  * A frame that only contains a text area and a button to hide the frame.
@@ -90,6 +91,8 @@ public class TextAreaFrame extends JFrame {
 	 */
 	public void setText(String text) {
 		textArea.setText(text);
+		DefaultCaret caret = (DefaultCaret)textArea.getCaret();
+		caret.setDot(0);
 	}
 	
 	/**
@@ -148,6 +151,8 @@ public class TextAreaFrame extends JFrame {
 	private void initComponents() {
 		textArea = new JTextArea();
 		textArea.setEditable(false);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
 		textAreaWrapper = new JScrollPane(textArea);
 		closeButton = new JButton("Close");
 		closeButton.addActionListener(e -> setVisible(false));
