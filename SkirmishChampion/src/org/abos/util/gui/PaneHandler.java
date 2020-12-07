@@ -1,4 +1,4 @@
-package org.abos.sc.gui;
+package org.abos.util.gui;
 
 import java.awt.Component;
 import java.util.logging.Formatter;
@@ -14,7 +14,7 @@ import org.abos.util.Utilities;
 /**
  * @author Sebastian Koch
  * @version %I%
- * @since 0.1
+ * @since Skirmish Champions 0.1
  */
 public class PaneHandler extends Handler {
 	

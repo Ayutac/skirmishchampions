@@ -24,6 +24,7 @@ import org.abos.sc.core.BattleEncounter;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.Stage;
 import org.abos.util.gui.GUIUtilities;
+import org.abos.util.gui.PaneHandler;
 
 /**
  * @author Sebastian Koch
