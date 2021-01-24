@@ -170,7 +170,7 @@ public class PartySelectionPanel extends JPanel {
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
 				if (positionCheckBox[row][col].isSelected())
-					characters[row][col] = (Character)positionSelector[row][col].getSelectedItem();
+					characters[row][col] = new Character((Character)positionSelector[row][col].getSelectedItem());
 			}
 		formation = new BattleFormation(characters);
 	}
