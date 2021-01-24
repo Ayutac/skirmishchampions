@@ -141,7 +141,7 @@ public class BattleFormation implements Iterable<Character> {
 	 * @param row the row of the character
 	 * @param col the column of the character
 	 * @return the character at the specified position, may be <code>null</code>
-	 * @throws IndexOutOfBoundsException If <code>row</code> or <code>col</code> is out of bounds.
+	 * @throws ArrayIndexOutOfBoundsException If <code>row</code> or <code>col</code> is out of bounds.
 	 */
 	public Character getCharacter(int row, int col) {
 		return characters[row][col]; // throws AIOOBE
@@ -191,7 +191,12 @@ public class BattleFormation implements Iterable<Character> {
 		for (Character character : this)
 			character.restore();
 	}
-	
+
+
+	/**
+	 * Returns a hash code value for this formation.
+	 * @return a hash code value for this formation
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;

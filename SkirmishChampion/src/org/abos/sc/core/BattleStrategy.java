@@ -123,6 +123,13 @@ public class BattleStrategy implements Iterable<BattleTactic> {
 		return new BattleStrategyIterator();
 	}
 	
+	/**
+	 * Returns the tactic at the specified position.
+	 * @param row the row of the tactic
+	 * @param col the column of the tactic
+	 * @return the tactic at the specified position, never <code>null</code>
+	 * @throws ArrayIndexOutOfBoundsException If <code>row</code> or <code>col</code> is out of bounds.
+	 */
 	public BattleTactic getTactic(int row, int col) {
 		return battleTactics[row][col];
 	}
@@ -131,7 +138,12 @@ public class BattleStrategy implements Iterable<BattleTactic> {
 		for (BattleTactic tactic : this)
 			tactic.reset();
 	}
-	
+
+
+	/**
+	 * Returns a hash code value for this strategy.
+	 * @return a hash code value for this strategy
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;

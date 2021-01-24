@@ -16,12 +16,24 @@ import org.abos.util.Utilities;
  */
 public class ConfigManager {
 	
+	/**
+	 * the name of the configuration
+	 */
 	public final static String CONFIG_NAME = "skirmishChampion.cfg";
 	
+	/**
+	 * the key for the last save location
+	 */
 	public final static String LAST_SAVE_LOCATION = "last_save_location";
 
+	/**
+	 * the configuration of this application instance
+	 */
 	protected static Properties CONFIG = new Properties(); 
-	
+
+	/**
+	 * Private constructor to avoid instantiation.
+	 */
 	private ConfigManager() {}
 	
 	public static String getProperty(String key) {
