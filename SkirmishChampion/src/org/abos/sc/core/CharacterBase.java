@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.function.BinaryOperator;
 
 import org.abos.util.Id;
 import org.abos.util.IllegalArgumentRangeException;
@@ -421,6 +422,110 @@ public class CharacterBase implements Cloneable, Id, Name {
 	
 	public static CharacterBase parse(String s) {
 		return parse(s, true);
+	}
+	
+	/**
+	 * Iterates over a number of characters and applies a binary operation on all their stats seperately.
+	 * @param chars The characters to interate over. <code>null</code> entries will be ignored.
+	 * @param op the binary operation to apply
+	 * @param startVals The start values for the binary operation. Length must match the corresponding number of stats. 
+	 * If <code>chars</code> doesn't contain non <code>null</code> entries, a copy of this array will be returned.
+	 * @param primary if <code>true</code> the operation will be done over the primary stats, else over the secondary stats 
+	 * @return An integer array containing the end results of the operation. The order matches the order of the corresponding stats enum.
+	 * @throws NullPointerException If <code>chars</code>, <code>op</code> or <code>startVals</code> refers to <code>null</code>.
+	 * @throws IllegalArgumentException If <code>startsVals.length</code> doesn't match the corresponding number of stats.
+	 * @see #getStatsMax(Iterable, boolean)
+	 * @see #getStatsMin(Iterable, boolean)
+	 * @see #getStatsAverage(Iterable, int, boolean)
+	 */
+	public static int[] getStatsEval(Iterable<? extends CharacterBase> chars, BinaryOperator<Integer> op, int[] startVals, boolean primary) {
+		Utilities.requireNonNull(chars, "chars");
+		Utilities.requireNonNull(op, "op");
+		Utilities.requireNonNull(startVals, "startVals");
+		if (primary) {
+			if (startVals.length != StatsPrimary.SIZE)
+				throw new IllegalArgumentException("startVals has wrong number of arguments, must match number of primary stats!");
+		}
+		else {
+			if (startVals.length != StatsSecondary.SIZE)
+				throw new IllegalArgumentException("startVals has wrong number of arguments, must match number of secondary stats!");
+		}
+		
+		int[] result = Arrays.copyOf(startVals, startVals.length);
+		for (CharacterBase base : chars) {
+			if (base == null)
+				continue;
+			if (primary) {
+				for (int i = 0; i < StatsPrimary.SIZE; i++)
+					result[i] = op.apply(result[i], base.getPrimaryStat(i));
+			}
+			else {
+				for (int i = 0; i < StatsSecondary.SIZE; i++)
+					result[i] = op.apply(result[i], base.getSecondaryStat(i));
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Iterates over a number of characters and returns the maximum of all their stats seperately.
+	 * @param chars The characters to interate over. <code>null</code> entries will be ignored.
+	 * @param primary if <code>true</code> the operation will be done over the primary stats, else over the secondary stats 
+	 * @return An integer array containing the maximum of all the characters' stats seperately. The order matches the order of the corresponding stats enum.
+	 * If <code>chars</code> doesn't contain non <code>null</code> entries, an array full of {@link Integer#MIN_VALUE} will be returned.
+	 * @throws NullPointerException If <code>chars</code> refers to <code>null</code>.
+	 * @see #getStatsEval(Iterable, BinaryOperator, int[], boolean)
+	 * @see #getStatsMin(Iterable, boolean)
+	 * @see #getStatsAverage(Iterable, int, boolean)
+	 */
+	public static int[] getStatsMax(Iterable<? extends CharacterBase> chars, boolean primary) {
+		int[] startVals = new int[primary ? StatsPrimary.SIZE : StatsSecondary.SIZE];
+		Arrays.fill(startVals, Integer.MIN_VALUE);
+		return getStatsEval(chars, (a, b) -> Math.max(a, b), startVals, primary);
+	}
+	
+	/**
+	 * Iterates over a number of characters and returns the minimum of all their stats seperately.
+	 * @param chars The characters to interate over. <code>null</code> entries will be ignored.
+	 * @param primary if <code>true</code> the operation will be done over the primary stats, else over the secondary stats 
+	 * @return An integer array containing the minimum of all the characters' stats seperately. The order matches the order of the corresponding stats enum.
+	 * If <code>chars</code> doesn't contain non <code>null</code> entries, an array full of {@link Integer#MAX_VALUE} will be returned.
+	 * @throws NullPointerException If <code>chars</code> refers to <code>null</code>.
+	 * @see #getStatsEval(Iterable, BinaryOperator, int[], boolean)
+	 * @see #getStatsMax(Iterable, boolean)
+	 * @see #getStatsAverage(Iterable, int, boolean)
+	 */
+	public static int[] getStatsMin(Iterable<? extends CharacterBase> chars, boolean primary) {
+		int[] startVals = new int[primary ? StatsPrimary.SIZE : StatsSecondary.SIZE];
+		Arrays.fill(startVals, Integer.MAX_VALUE);
+		return getStatsEval(chars, (a, b) -> Math.min(a, b), startVals, primary);
+	}
+	
+	/**
+	 * Iterates over a number of characters and returns the average of all their stats seperately.
+	 * @param chars The characters to interate over. <code>null</code> entries will be ignored.
+	 * @param size The number to divide the sum of the characters' stats by. Should be the number of non <code>null</code> entries in <code>chars</code>.
+	 * @param primary if <code>true</code> the operation will be done over the primary stats, else over the secondary stats 
+	 * @return An integer array containing the average of all the characters' stats seperately. The order matches the order of the corresponding stats enum.
+	 * If <code>chars</code> doesn't contain non <code>null</code> entries, an array full of <code>0</code> will be returned.
+	 * @throws NullPointerException If <code>chars</code> refers to <code>null</code>.
+	 * @throws IllegalArgumentException If <code>size</code> is smaller than or equal to <code>0</code>.
+	 * @see #getStatsEval(Iterable, BinaryOperator, int[], boolean)
+	 * @see #getStatsMax(Iterable, boolean)
+	 * @see #getStatsMin(Iterable, boolean)
+	 */
+	// size is provided so we can simply make use of getStatsEval
+	public static int[] getStatsAverage(Iterable<? extends CharacterBase> chars, int size, boolean primary) {
+		if (size <= 0)
+			throw new IllegalArgumentException("size must be positive!");
+		int statsSize = primary ? StatsPrimary.SIZE : StatsSecondary.SIZE;
+		int[] startVals = new int[statsSize];
+		// Arrays.fill(startVals, 0); // done automatically
+		startVals = getStatsEval(chars, (a, b) -> a + b, startVals, primary);
+		for (int i = 0; i < statsSize; i++) {
+			startVals[i] /= size;
+		}
+		return startVals;
 	}
 	
 	public static void linkFandomsToCharacters() {
