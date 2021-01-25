@@ -2,15 +2,14 @@ package org.abos.util.gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
-import org.abos.util.Utilities;
 
 /**
  * A panel for displaying an image.
@@ -32,7 +31,7 @@ public class ImagePanel extends JPanel {
 	 * @see #isLoaded()
 	 * @see #paintComponent(Graphics)
 	 */
-	protected BufferedImage image = null;
+	protected Image image = null;
 
 	/**
 	 * Creates an empty image panel.
@@ -58,21 +57,42 @@ public class ImagePanel extends JPanel {
 	 * Sets the image for this panel.
 	 * @param image the image to set
 	 */
-	public void setImage(BufferedImage image) {
+	public void setImage(Image image) {
 		this.image = image;
 		repaint();
 	}
 	
 	/**
-	 * Loads an image from the given path if one is provided.
+	 * Loads an image from the given path if one is provided. This method will always attempt to load the
+	 * specified image anew, using {@link ImageIO#read(java.io.File)}, and throw an {@link IOException}
+	 * if that doesn't work.
 	 * @param path The path to load the image from. If <code>null</code>, the current image will vanish.
 	 * @throws IOException If the image specified by <code>path</code> couldn't be loaded.
+	 * @see #loadImageLazy(Path)
+	 * @see ImageIO#read(java.io.File)
 	 */
 	public void loadImage(Path path) throws IOException {
 		if (path == null)
 			setImage(null);
 		else {
 			setImage(ImageIO.read(path.toFile()));
+		}
+	}
+	
+	/**
+	 * Loads an image from the given path if one is provided. This method will attempt to look up
+	 * if the image has already been loaded into the memory and use that one. If there is none,
+	 * an attempt will be made to load the image using {@link Toolkit#getImage(String)}.
+	 * If that fails, the current image vanishes. No exception will be thrown.
+	 * @param path The path to load the image from. If <code>null</code>, the current image will vanish.
+	 * @see #loadImage(Path)
+	 * @see Toolkit#getImage(String)
+	 */
+	public void loadImageLazy(Path path) {
+		if (path == null)
+			setImage(null);
+		else {
+			setImage(Toolkit.getDefaultToolkit().getImage(path.toString()));
 		}
 	}
 	
