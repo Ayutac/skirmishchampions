@@ -2,6 +2,7 @@ package org.abos.sc.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
@@ -210,16 +211,18 @@ public class StageBattleFrame extends JFrame {
 		BorderLayout layout = new BorderLayout();
 		setLayout(layout);
 		JPanel labelCenter = new JPanel();
+		labelCenter.setPreferredSize(ContentComboBox.PREFERRED_SIZE);
 		labelCenter.add(stageLabel, SwingConstants.CENTER);
 		add(labelCenter, BorderLayout.PAGE_START);
 		add(firstParty, BorderLayout.LINE_START);
 		add(secondParty, BorderLayout.LINE_END);
-		add(battleLogWrapper, BorderLayout.CENTER);
 		battleLogWrapper.setPreferredSize(firstParty.getPreferredSize());
+		add(battleLogWrapper, BorderLayout.CENTER);
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
 		buttonPanel.add(fightButton);
 		buttonPanel.add(returnButton);
 		add(buttonPanel, BorderLayout.PAGE_END);
+		//setPreferredSize(new Dimension(battleLogWrapper.getPreferredSize().width+2*ContentComboBox.WI, height));
 		pack();
 		setLocationRelativeTo(null);
 	}

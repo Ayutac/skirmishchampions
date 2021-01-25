@@ -2,6 +2,8 @@ package org.abos.sc.gui;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 import org.abos.sc.core.BattleEncounter;
@@ -11,6 +13,7 @@ import org.abos.sc.core.Character;
 import org.abos.sc.core.CharacterBase;
 import org.abos.sc.core.StatsPrimary;
 import org.abos.sc.core.StatsSecondary;
+import org.abos.util.Utilities;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -20,7 +23,8 @@ import org.junit.jupiter.api.Test;
  */
 public class StageBattleFrameTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		Utilities.loadApplicationDirectory();
 //		Character erin = new Character(new CharacterBase("twi_erin", "Erin Solstice", "TWI", new String[] {"Inn"}, 
 //				new int[] {50,40,40,40,10,60,80,30}, StatsPrimary.CHARISMA, StatsSecondary.ELOQUENCE, false));
 //		Character mrsha = new Character(new CharacterBase("twi_mrsha", "Mrsha", "TWI", new String[] {"Inn"}, 

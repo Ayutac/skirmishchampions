@@ -1,14 +1,18 @@
 package org.abos.sc.gui;
 
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.abos.sc.core.BattleEncounter;
 import org.abos.sc.core.BattleFormation;
+import org.abos.sc.core.Character;
+import org.abos.util.Utilities;
 
 /**
  * @author Sebastian Koch
@@ -21,9 +25,7 @@ public class EncounterInfoPanel extends JPanel {
 	
 	protected BattleEncounter encounter;
 	
-	protected JLabel[][] formation;
-	
-	protected JLabel[][] formationHealth;
+	protected CharacterBattlePanel[][] formation;
 	
 	/**
 	 * 
@@ -56,26 +58,13 @@ public class EncounterInfoPanel extends JPanel {
 	public void refreshEncounter() {
 		if (encounter == null) {
 			for (int row = 0; row < formation.length; row++)
-				for (int col = 0; col < formation[0].length; col++) {
-					formation[row][col].setText("");
-					formationHealth[row][col].setText("");
-				}
-			repaint();
+				for (int col = 0; col < formation[0].length; col++)
+					formation[row][col].setCharacter(null);
 			return;
 		}
-		org.abos.sc.core.Character character;
 		for (int row = 0; row < formation.length; row++)
-			for (int col = 0; col < formation[0].length; col++) {
-				character = encounter.getCharacter(row, col);
-				if (character == null) {
-					formation[row][col].setText("");
-					formationHealth[row][col].setText("");
-				}
-				else {
-					formation[row][col].setText(character.toString());
-					formationHealth[row][col].setText(character.healthToString());
-				}
-			}
+			for (int col = 0; col < formation[0].length; col++)
+				formation[row][col].setCharacter(encounter.getCharacter(row, col));
 		repaint();
 	}
 	
@@ -83,54 +72,46 @@ public class EncounterInfoPanel extends JPanel {
 		if (encounter == null) {
 			return;
 		}
-		org.abos.sc.core.Character character;
 		for (int row = 0; row < formation.length; row++)
-			for (int col = 0; col < formation[0].length; col++) {
-				character = encounter.getCharacter(row, col);
-				if (character != null) {
-					formationHealth[row][col].setText(character.healthToString());
-				}
-			}
+			for (int col = 0; col < formation[0].length; col++)
+				formation[row][col].refreshCharacter(true);
 		repaint();
 	}
 
+	/**
+	 * Initializes the components.
+	 * @see #initLayout()
+	 */
 	private void initComponents() {
-		formation = new JLabel[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
-		formationHealth = new JLabel[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
+		formation = new CharacterBattlePanel[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
 		for (int row = 0; row < formation.length; row++)
 			for (int col = 0; col < formation[0].length; col++) {
-				formation[row][col] = new JLabel();
-				formationHealth[row][col] = new JLabel();
+				formation[row][col] = new CharacterBattlePanel();
 			}
 	}
 	
+	/**
+	 * Initializes the layout. Only call directly after {@link #initComponents()} has been called.
+	 * @see #initComponents()
+	 */
 	private void initLayout() {
 		// note that grid is rotated
-		GridLayout layout = new GridLayout(2 * BattleFormation.COL_NUMBER, BattleFormation.ROW_NUMBER);
+		//GridLayout layout = new GridLayout(BattleFormation.COL_NUMBER, BattleFormation.ROW_NUMBER);
+		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
 		if (atLineStart) {
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
-				for (int row = BattleFormation.ROW_NUMBER - 1; row >= 0; row--) {
+			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+				for (int row = BattleFormation.ROW_NUMBER - 1; row >= 0; row--)
 					add(formation[row][col]);
-				}
-				for (int row = BattleFormation.ROW_NUMBER - 1; row >= 0; row--) {
-					add(formationHealth[row][col]);
-				}
-			}
 		}
 		else {
-			for (int col = BattleFormation.COL_NUMBER - 1; col >= 0; col--) {
-				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
+			for (int col = BattleFormation.COL_NUMBER - 1; col >= 0; col--)
+				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 					add(formation[row][col]);
-				}
-				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
-					add(formationHealth[row][col]);
-				}
-			}
 		}
 		setPreferredSize(new Dimension(
-				BattleFormation.ROW_NUMBER*ContentComboBox.PREFERRED_WIDTH, 
-				2*BattleFormation.COL_NUMBER*ContentComboBox.PREFERRED_HEIGHT));
+				BattleFormation.ROW_NUMBER*CharacterBattlePanel.PREFERRED_WIDTH, 
+				BattleFormation.COL_NUMBER*CharacterBattlePanel.PREFERRED_HEIGHT));
 	}
 
 }
