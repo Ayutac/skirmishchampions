@@ -31,6 +31,8 @@ public class Region extends RegionBase {
 		}
 	}
 	
+	// TODO clone is missing
+	
 	@Override
 	public String toString() {
 		return getName();

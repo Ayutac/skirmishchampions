@@ -53,7 +53,7 @@ public class Companion extends Character {
 	}
 	
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() {
 		return new Companion(this, this.level);
 	}
 

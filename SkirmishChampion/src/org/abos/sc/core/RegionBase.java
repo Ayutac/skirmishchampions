@@ -92,7 +92,7 @@ public class RegionBase implements Cloneable, Id, Name {
 	}
 	
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() {
 		return new RegionBase(this);
 	}
 

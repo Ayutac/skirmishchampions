@@ -89,7 +89,7 @@ public class Character extends CharacterBase {
 	 * @see #Character(Character)
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() {
 		return new Character(this);
 	}
 

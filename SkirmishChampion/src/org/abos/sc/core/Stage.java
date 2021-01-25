@@ -262,6 +262,8 @@ public class Stage extends StageBase {
 			setCleared(true);
 	}
 	
+	// TODO clone() is missing
+	
 	@Override
 	public String toString() {
 		return cleared ? getName() + " ✓": getName();

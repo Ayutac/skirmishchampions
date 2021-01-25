@@ -38,6 +38,8 @@ public class Fandom extends FandomBase {
 		}
 	}
 	
+	// TODO clone is missing
+	
 	@Override
 	public String toString() {
 		return getName();
