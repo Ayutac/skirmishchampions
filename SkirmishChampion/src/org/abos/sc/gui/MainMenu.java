@@ -8,6 +8,7 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javax.swing.ImageIcon;
@@ -262,24 +263,40 @@ public class MainMenu extends JFrame {
 		catch (IOException ex) {
 			GUIUtilities.errorMessage("Config Failure", "Config couldn't be loaded!", ex);
 		}
+		String current = "";
 		try {
 			Utilities.checkApplicationDirectory();
 			Path path = Utilities.getApplicationDirectory().resolve("resources");
-			Utilities.loadFromFile(path.resolve("chars_twi.txt"), CharacterBase::parse);
-			Utilities.loadFromFile(path.resolve("stages_twi.txt"), StageBase::parse);
-			Utilities.loadFromFile(path.resolve("regions_twi.txt"), RegionBase::parse);
-			Utilities.loadFromFile(path.resolve("fandoms.txt"), FandomBase::parse);
+			for (Path file : Files.newDirectoryStream(path.resolve("characters"))) {
+				current = file.toString();
+				Utilities.loadFromFile(file, CharacterBase::parse);
+			}
+			for (Path file : Files.newDirectoryStream(path.resolve("stages"))) {
+				current = file.toString();
+				Utilities.loadFromFile(file, StageBase::parse);
+			}
+			for (Path file : Files.newDirectoryStream(path.resolve("regions"))) {
+				current = file.toString();
+				Utilities.loadFromFile(file, RegionBase::parse);
+			}
+			for (Path file : Files.newDirectoryStream(path.resolve("fandoms"))) {
+				current = file.toString();
+				Utilities.loadFromFile(file, FandomBase::parse);
+			}
+//			Utilities.loadFromFile(path.resolve("stages_twi.txt"), StageBase::parse);
+//			Utilities.loadFromFile(path.resolve("regions_twi.txt"), RegionBase::parse);
+//			Utilities.loadFromFile(path.resolve("fandoms.txt"), FandomBase::parse);
 		}
 		catch (IllegalStateException ex) {
 			GUIUtilities.errorMessage("Startup Failure", "Application path not found, game files not loaded!", ex);
 			return;
 		}
 		catch (IOException ex) {
-			GUIUtilities.errorMessage("Startup Failure", "A file couldn't be loaded!", ex);
+			GUIUtilities.errorMessage("Startup Failure", "File "+current+" couldn't be loaded!", ex);
 			return;
 		}
 		catch (ParseException ex) {
-			GUIUtilities.errorMessage("Startup Failure", "A file seems to be invalid!", ex);
+			GUIUtilities.errorMessage("Startup Failure", "File "+current+" seems to be invalid!", ex);
 			return;
 		}
 		try {

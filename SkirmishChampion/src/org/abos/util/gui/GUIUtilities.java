@@ -42,7 +42,7 @@ public class GUIUtilities {
 		Utilities.checkApplicationDirectory();
 		if (!LOGOS.isEmpty())
 			return;
-		String path = Utilities.getApplicationDirectory().resolve("resources").resolve("logo").toString();
+		String path = Utilities.getApplicationDirectory().resolve("resources").resolve("images").resolve("logo").toString();
 		for (int i = 16; i < 256; i *= 2) {
 			LOGOS.add(ImageIO.read(new File(path+i+".png")));
 		}
@@ -55,7 +55,7 @@ public class GUIUtilities {
 	 */
 	public static Path getTitleScreenPath() {
 		Utilities.checkApplicationDirectory();
-		return Utilities.getApplicationDirectory().resolve("resources").resolve("title_screen.png");
+		return Utilities.getApplicationDirectory().resolve("resources").resolve("images").resolve("title_screen.png");
 	}
 	
 	/**
