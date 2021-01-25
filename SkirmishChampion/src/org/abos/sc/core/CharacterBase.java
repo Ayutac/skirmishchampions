@@ -400,7 +400,13 @@ public class CharacterBase implements Cloneable, Id, Name {
 		String[] parts = s.split(";"); 
 		if (parts.length != PARSE_PARAM_NUM)
 			throw new IllegalNumberOfArgumentsException(String.format("Character \"%s\" to parse contained %d arguments instead of %d", s, parts.length, PARSE_PARAM_NUM));
-		int[] primaryStats = Utilities.arrayToInt(parts[4].split(String.valueOf(PRIMARY_SEPARATOR)));
+		int[] primaryStats = null;
+		try {
+			primaryStats = Utilities.arrayToInt(parts[4].split(String.valueOf(PRIMARY_SEPARATOR)));
+		}
+		catch (NumberFormatException ex) {
+			throw new IllegalArgumentTypeException(ex);
+		}
 		if (primaryStats.length != PRIMARY_STATS.length)
 			throw new IllegalNumberOfArgumentsException(String.format("Character \"%s\" to parse contained %d primary stats instead of %d", s, primaryStats.length, PRIMARY_STATS.length));
 		StatsPrimary attackStat  = null;
