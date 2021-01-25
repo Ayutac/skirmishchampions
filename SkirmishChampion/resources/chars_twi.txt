@@ -1,4 +1,6 @@
 // <- can be used for one line comments
+// character line is given as follow:
+// ID (must be unique); displayed name; fandom ID; group associations (divided by ,);STR,DEX,INT,WIS,ROM,CHA,SPE,SPD;attack stat;damage stat 
 // Liscor
 twi_erin;Erin Solstice;twi;Humans,Earthers,Liscor,Innfamily;50,40,40,40,10,60,80,30;5;2
 twi_mrsha;Mrsha;twi;Gnolls,Liscor,Innfamily;20,20,20,10,0,30,40,50;5;2

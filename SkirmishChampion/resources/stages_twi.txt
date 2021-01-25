@@ -1,3 +1,11 @@
+// stages line is given as follow:
+// ID (must be unique); displayed name; region ID; reachable stages (divided by ,); reachable regions (divided by ,); reachable fandoms (divided by ,);encounter
+// encounter string is given as follow:
+// characters (divided by ,)|attack pattern
+// attack pattern is either a recognized name (COL,ROW,CONCENTRATED) or given as follow:
+// character attack pattern (divided by ,)
+// character attack pattern is given as follow:
+// positions to attack in order (divided by /) 
 // Wandering Inn
 twi_erins_room;Erin's room;twi_twi;twi_common_room,twi_garden_of_sanctuary,twi_birds_tower;;;twi_mrsha|ROW
 twi_garden_of_sanctuary;The Garden of Sanctuary;twi_twi;twi_gos_hill,twi_kitchen,twi_common_room,twi_lyons_room,twi_erins_room,twi_earth_room;;;twi_ekirra,,twi_visma|ROW
