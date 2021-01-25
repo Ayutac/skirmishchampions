@@ -1,7 +1,9 @@
 ## Version changelog
 
 # 0.1.0-early-access
-Initial published version.
+Initial published version including
+- 39 TWI characters (not all accessable) 
+- 14 TWI locations
 
 # 0.2.0-early-access
 - added characters Tkrn, Jerci, Zevara, Wesle, Jasi, Grunter, Flower Girl, Kel
@@ -9,4 +11,13 @@ Initial published version.
 - fixed the fighting bugs
 - added title screen image and logos
 - improved the stage GUI
+- some technical refactoring
+
+# 0.3.0-early-access
+- added 64 new TWI characters, though not all might be accessable right now
+- added 8 new TWI locations
+- added checkmarks for cleared stages
+- added a sorter for the party selection screen
+- improved the stage selection GUI
+- fixed another fighting bug that only occurred when you fought on a cleared stage and had one of the enemies in your party
 - some technical refactoring
