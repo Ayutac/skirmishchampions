@@ -33,7 +33,7 @@ public class GUIUtilities {
 	
 	/**
 	 * If {@link #LOGOS} is unloaded, loads logos of sizes 16, 32, 64 and 128 from
-	 * <code>resources/logoX.png</code> (where <code>X</code> is the size) relative to the
+	 * <code>resources/images/logoX.png</code> (where <code>X</code> is the size) relative to the
 	 * directory where the application is located.
 	 * @throws IllegalStateException If {@link Utilities#loadApplicationDirectory()} hasn't successfully been called yet.
 	 * @throws IOException If at least one image couldn't be read in.
@@ -49,13 +49,23 @@ public class GUIUtilities {
 	}
 	
 	/**
-	 * Returns a path to <code>resources/title_screen.png</code>.
+	 * Returns a path to <code>resources/images/title_screen.png</code>.
 	 * @return the path to the title screen image
 	 * @throws IllegalStateException If {@link Utilities#loadApplicationDirectory()} hasn't successfully been called yet.
 	 */
 	public static Path getTitleScreenPath() {
 		Utilities.checkApplicationDirectory();
 		return Utilities.getApplicationDirectory().resolve("resources").resolve("images").resolve("title_screen.png");
+	}
+	
+	/**
+	 * Returns a path to <code>resources/images/characters</code>.
+	 * @return the path to the character images
+	 * @throws IllegalStateException If {@link Utilities#loadApplicationDirectory()} hasn't successfully been called yet.
+	 */
+	public static Path getCharacterImagesPath() {
+		Utilities.checkApplicationDirectory();
+		return Utilities.getApplicationDirectory().resolve("resources").resolve("images").resolve("characters");
 	}
 	
 	/**
