@@ -35,6 +35,14 @@ public class ImagePanel extends JPanel {
 	protected BufferedImage image = null;
 
 	/**
+	 * Creates an empty image panel.
+	 * @param size the preferred size for images, likely to be the images' dimensions
+	 */
+	public ImagePanel(Dimension size) {
+		setPreferredSize(size);
+	}
+
+	/**
 	 * Creates a new image panel with the specified image.
 	 * @param path the path to the image
 	 * @param size the preferred size for the image, likely to be the image's dimensions
@@ -42,9 +50,30 @@ public class ImagePanel extends JPanel {
 	 * @throws IOException If the image specified by <code>path</code> couldn't be loaded.
 	 */
 	public ImagePanel(Path path, Dimension size) throws IOException {
-		Utilities.requireNonNull(path, "path");
-		setPreferredSize(size);
-		image = ImageIO.read(path.toFile());
+		this(size);
+		loadImage(path);
+	}
+	
+	/**
+	 * Sets the image for this panel.
+	 * @param image the image to set
+	 */
+	public void setImage(BufferedImage image) {
+		this.image = image;
+		repaint();
+	}
+	
+	/**
+	 * Loads an image from the given path if one is provided.
+	 * @param path The path to load the image from. If <code>null</code>, the current image will vanish.
+	 * @throws IOException If the image specified by <code>path</code> couldn't be loaded.
+	 */
+	public void loadImage(Path path) throws IOException {
+		if (path == null)
+			setImage(null);
+		else {
+			setImage(ImageIO.read(path.toFile()));
+		}
 	}
 	
 	/**
@@ -62,7 +91,8 @@ public class ImagePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters            
+        if (image != null)
+        	g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters            
     }
 
 }
