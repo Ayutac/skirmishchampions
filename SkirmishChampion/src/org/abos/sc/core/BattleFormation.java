@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.abos.util.IllegalArgumentRangeException;
+import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Utilities;
 
 /**
@@ -267,12 +269,13 @@ public class BattleFormation implements Iterable<Character> {
 	}
 	
 	public static BattleFormation parse(String s) {
+		Utilities.requireNonNull(s, "s");
 		Character[][] characters = new Character[ROW_NUMBER][COL_NUMBER];
 		String[] split = s.split(String.valueOf(CHARACTER_SEPARATOR));
 		if (split.length > MAX_CHAR_NUMBER)
-			throw new IllegalArgumentException("Too many characters in formation, are "+split.length+" instead of "+MAX_CHAR_NUMBER+" or less!");
+			throw new IllegalNumberOfArgumentsException("Too many characters in formation, are "+split.length+" instead of "+MAX_CHAR_NUMBER+" or less!");
 		if (split.length == 0)
-			throw new IllegalArgumentException("At least one character must be specified for formation!");
+			throw new IllegalNumberOfArgumentsException("At least one character must be specified for formation!");
 		split = Arrays.copyOf(split, MAX_CHAR_NUMBER);
 		int index = 0;
 		CharacterBase base;
@@ -281,7 +284,7 @@ public class BattleFormation implements Iterable<Character> {
 				if (split[index] != null && !split[index].isEmpty()) {
 					base = CharacterBase.CHARACTERS.lookup(split[index]);
 					if (base == null)
-						throw new IllegalArgumentException("Unregistered character "+split[index]+" detected for formation!");
+						throw new IllegalArgumentRangeException("Unregistered character "+split[index]+" detected for formation!");
 					characters[row][col] = new Character(base);
 				}
 				index++;

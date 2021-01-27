@@ -1,16 +1,14 @@
 package org.abos.sc.core;
 
-import java.util.logging.Handler;
-
-import javax.swing.JOptionPane;
-
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.Utilities;
 
 /**
+ * 
  * @author Sebastian Koch
  * @version %I%
  * @since 0.1
+ * @see StageBase
  */
 public class Stage extends StageBase {
 	

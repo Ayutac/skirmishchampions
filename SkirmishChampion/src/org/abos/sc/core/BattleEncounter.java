@@ -1,5 +1,6 @@
 package org.abos.sc.core;
 
+import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Utilities;
 
 /**
@@ -162,9 +163,10 @@ public class BattleEncounter {
 	}
 	
 	public static BattleEncounter parse(String s) {
-		String[] split = s.split(FIELD_SEPARATOR_REGEX); // throws NPE
+		Utilities.requireNonNull(s, "s");
+		String[] split = s.split(FIELD_SEPARATOR_REGEX);
 		if (split.length != 2)
-			throw new IllegalArgumentException("s must consist of a BattleFormation and a BattleStrategy separated by "+FIELD_SEPARATOR+"!");
+			throw new IllegalNumberOfArgumentsException("s must consist of a BattleFormation and a BattleStrategy separated by "+FIELD_SEPARATOR+"!");
 		return new BattleEncounter(BattleFormation.parse(split[0]), BattleStrategy.parse(split[1]));
 	}
 	

@@ -1,9 +1,5 @@
 package org.abos.sc.core;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 
 import org.abos.util.Id;
@@ -13,9 +9,12 @@ import org.abos.util.Registry;
 import org.abos.util.Utilities;
 
 /**
+ * Contains the basic information for stages. The information provided by this class is not supposed to change.
+ * For information that can change, use {@link Stage} or a subclass thereof.
  * @author Sebastian Koch
  * @version %I%
  * @since 0.1
+ * @see Stage
  */
 public class StageBase implements Cloneable, Id, Name {
 	
@@ -66,17 +65,25 @@ public class StageBase implements Cloneable, Id, Name {
 	
 	/**
 	 * the encoded encounter of this stage
+	 * @see #createEncounter()
 	 */
 	protected final String encounterString;
 	
 	/**
-	 * @param id
-	 * @param name
-	 * @param regionId
-	 * @param nextStages
-	 * @param nextRegions
-	 * @param nextFandoms
-	 * @param encounterString
+	 * Creates a new stage base.
+	 * @param id the ID of this stage
+	 * @param name the display name of this stage
+	 * @param regionId the ID of the associated region of this stage
+	 * @param nextStages IDs of stages that will become available by beating this stage. <code>null</code> is treated as empty array.
+	 * @param nextRegions IDs of regions that will become available by beating this stage. <code>null</code> is treated as empty array.
+	 * @param nextFandoms IDs of fandoms that will become available by beating this stage. <code>null</code> is treated as empty array.
+	 * @param encounterString the encoded encounter of this stage
+	 * @param register if this stage should be registered in {@link StageBase#STAGES} or not
+	 * @throws NullPointerException If any one of <code>id</code>, <code>name</code>, 
+	 * <code>regionId</code> or <code>encounterString</code> refers to <code>null</code>.
+	 * @throws IllegalArgumentException If <code>register</code> is <code>true</code> but a stage
+	 * with ID <code>id</code> is already registered in {@link StageBase#STAGES}.
+	 * @see #StageBase(StageBase)
 	 */
 	public StageBase(String id, String name, String regionId, String[] nextStages, String[] nextRegions,
 			String[] nextFandoms, String encounterString, boolean register) {
@@ -90,43 +97,71 @@ public class StageBase implements Cloneable, Id, Name {
 		if (nextStages == null)
 			this.nextStages = new String[0];
 		else
-			this.nextStages = nextStages;
+			this.nextStages = Arrays.copyOf(nextStages, nextStages.length);
 		if (nextRegions == null)
 			this.nextRegions = new String[0];
 		else
-			this.nextRegions = nextRegions;
+			this.nextRegions = Arrays.copyOf(nextRegions, nextRegions.length);
 		if (nextFandoms == null)
 			this.nextFandoms = new String[0];
 		else
-			this.nextFandoms = nextFandoms;
+			this.nextFandoms = Arrays.copyOf(nextFandoms, nextFandoms.length);
 		this.encounterString = encounterString;
 		if (register)
 			STAGES.add(this);
 	}
 	
+	/**
+	 * Copy constructor for this class, creates a deep copy on the stage base level.
+	 * @param stage the stage base to copy
+	 * @throws NullPointerException If <code>stage</code> refers to <code>null</code>.
+	 * @see #StageBase(String, String, String, String[], String[], String[], String, boolean)
+	 * @see #clone()
+	 */
 	public StageBase(StageBase stage) {
 		// throws NPE
 		this(stage.id, stage.name, stage.regionId, stage.nextStages, stage.nextRegions, stage.nextFandoms, stage.encounterString, false);
 	}
 
+	/**
+	 * Returns the ID of this stage.
+	 * @return the ID of this stage
+	 */
 	@Override
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * Returns the display name of this stage.
+	 * @return the display name of this stage
+	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Returns the ID of the associated region of this stage.
+	 * @return the ID of the associated region of this stage
+	 */
 	public String getRegionId() {
 		return regionId;
 	}
 	
+	/**
+	 * Returns the associated region of this stage by looking it up in {@link RegionBase#REGIONS}.
+	 * @return the associated region of this stage, or <code>null</code> if the ID couldn't be found in the registry
+	 */
 	public RegionBase getRegion() {
 		return RegionBase.REGIONS.lookup(regionId);
 	}
 	
+	/**
+	 * Returns the encounter of this stage by parsing its encounter string.
+	 * @return the encounter of this stage
+	 * 
+	 */
 	public BattleEncounter createEncounter() {
 		return BattleEncounter.parse(encounterString);
 	}

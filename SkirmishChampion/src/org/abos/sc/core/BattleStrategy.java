@@ -196,7 +196,8 @@ public class BattleStrategy implements Iterable<BattleTactic> {
 	}
 	
 	public static BattleStrategy parse(String s) {
-		if (!java.lang.Character.isDigit(s.charAt(0))) { // throws NPE
+		Utilities.requireNonNull(s, "s");
+		if (!java.lang.Character.isDigit(s.charAt(0))) {
 			return createStrategy(BattleStrategyType.valueOf(s)); // throws IAE
 		}
 		BattleTactic[][] tactics = new BattleTactic[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
