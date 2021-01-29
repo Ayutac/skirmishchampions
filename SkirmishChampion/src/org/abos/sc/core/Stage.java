@@ -67,11 +67,19 @@ public class Stage extends StageBase {
 		return encounter;
 	}
 
+	public boolean isEngaged() {
+		return encounter != null;
+	}
+	
 	public void engageStage() {
+		if (encounter != null)
+			throw new IllegalStateException("Cannot engage already engaged stage!");
 		encounter = createEncounter();
 	}
 	
 	public void disengageStage() {
+		if (encounter == null)
+			throw new IllegalStateException("Cannot disengage unengaged stage!");
 		encounter = null;
 	}
 	
@@ -261,7 +269,12 @@ public class Stage extends StageBase {
 			setCleared(true);
 	}
 	
-	// TODO clone() is missing
+	@Override
+	public Object clone() {
+		Stage clone = new Stage(this, accessable, cleared);
+		clone.encounter = this.encounter;
+		return clone;
+	}
 	
 	@Override
 	public String toString() {

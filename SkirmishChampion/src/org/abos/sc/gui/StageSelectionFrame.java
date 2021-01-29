@@ -135,6 +135,7 @@ public class StageSelectionFrame extends JFrame {
 	}
 	
 	public void afterBattle() {
+		selectionPanel.getStage().disengageStage();
 		selectionPanel.refreshSelectors();
 		afterHidingSubframe();
 	}
