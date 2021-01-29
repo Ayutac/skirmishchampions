@@ -334,13 +334,17 @@ public class Player {
 				unreachableStages.add(stage);
 		// put it in a string
 		StringBuilder s = new StringBuilder();
-		s.append(String.format("%d unreachable characters: %s", unreachableCharacters.size(), unreachableCharacters));
+		s.append(String.format("%d characters out of %d unreachable: %s", 
+				unreachableCharacters.size(), CharacterBase.CHARACTERS.size(), unreachableCharacters));
 		s.append(System.lineSeparator());
-		s.append(String.format("%d unreachable fandoms: %s", unreachableFandoms.size(), unreachableFandoms));
+		s.append(String.format("%d fandoms out of %d unreachable: %s", 
+				unreachableFandoms.size(), FandomBase.FANDOMS.size(), unreachableFandoms));
 		s.append(System.lineSeparator());
-		s.append(String.format("%d unreachable regions: %s", unreachableRegions.size(), unreachableRegions));
+		s.append(String.format("%d regions out of %d unreachable: %s", 
+				unreachableRegions.size(), RegionBase.REGIONS.size(), unreachableRegions));
 		s.append(System.lineSeparator());
-		s.append(String.format("%d unreachable stages: %s", unreachableStages.size(), unreachableStages));
+		s.append(String.format("%d stages out of %d unreachable: %s", 
+				unreachableStages.size(), StageBase.STAGES.size(), unreachableStages));
 		s.append(System.lineSeparator());
 		return s.toString();
 	}
