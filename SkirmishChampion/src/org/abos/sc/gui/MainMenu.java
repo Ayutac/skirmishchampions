@@ -308,13 +308,6 @@ public class MainMenu extends JFrame {
 			return;
 		}
 		try {
-			StageBase.validateEncouterStrings();
-		}
-		catch (ParseException ex) {
-			GUIUtilities.errorMessage("Startup Failure", "Invalid encounter string discovered!", ex);
-			return;
-		}
-		try {
 			GUIUtilities.loadLogos();
 		}
 		catch (IllegalStateException ex) {
