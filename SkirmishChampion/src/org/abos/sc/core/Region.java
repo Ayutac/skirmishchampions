@@ -1,5 +1,6 @@
 package org.abos.sc.core;
 
+import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
 
@@ -47,6 +48,8 @@ public class Region extends RegionBase {
 	public static Region parse(String s, Player player) {
 		Utilities.requireNonNull(s, "s");
 		RegionBase base = RegionBase.REGIONS.lookup(s);
+		if (base == null)
+			throw new ParsedIdNotFoundException(String.format("Unknown region ID %s!", s));
 		Region region = new Region(base);
 		if (player != null)
 			player.getRegions().add(region);

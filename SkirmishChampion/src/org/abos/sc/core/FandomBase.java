@@ -172,7 +172,7 @@ public class FandomBase implements Cloneable, Id, Name {
 		final int NUMBER_OF_ARGUMENTS = 4;
 		if (parts.length != NUMBER_OF_ARGUMENTS)
 			throw new IllegalNumberOfArgumentsException(String.format("Fandom \"%s\" to parse contained %d arguments instead of %d", s, parts.length, NUMBER_OF_ARGUMENTS));
-		return new FandomBase (parts[0], parts[1], parts[2], parts[3], register);
+		return new FandomBase(parts[0], parts[1], parts[2], parts[3], register);
 	}
 	
 	public static FandomBase parse(String s) {

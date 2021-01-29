@@ -2,6 +2,10 @@ package org.abos.sc.core;
 
 import java.util.Arrays;
 
+import org.abos.util.IllegalArgumentRangeException;
+import org.abos.util.IllegalArgumentTypeException;
+import org.abos.util.IllegalNumberOfArgumentsException;
+import org.abos.util.ParseException;
 import org.abos.util.Utilities;
 
 /**
@@ -88,8 +92,7 @@ public class BattleTactic implements Cloneable {
 	}
 	
 	public BattleTactic(BattleTactic tactic) {
-		if (tactic == null)
-			throw new NullPointerException("tactic must be specified!");
+		Utilities.requireNonNull(tactic, "tactic");
 		attackOrder = Arrays.copyOf(tactic.attackOrder, tactic.attackOrder.length);
 	}
 	
@@ -174,12 +177,34 @@ public class BattleTactic implements Cloneable {
 		return "BattleTactic [attackOrder=" + Arrays.toString(attackOrder) + "]";
 	}
 
+	/**
+	 * Parses a string representation of a battle tactic into a proper tactic.
+	 * The tactic is given by a list of exactly {@link BattleFormation#MAX_CHAR_NUMBER} 
+	 * positions being a permutation of 1 to {@link BattleFormation#MAX_CHAR_NUMBER}, 
+	 * separated by the {@value #INDEX_SEPARATOR} character without additional whitespaces. 
+	 * A {@link ParseException} will be thrown if the string cannot be parsed correctly.
+	 * @param s the string to parse
+	 * @return a battle tactic matching the string
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @throws IllegalNumberOfArgumentsException If the number of positions isn't {@link BattleFormation#MAX_CHAR_NUMBER}.
+	 * @throws IllegalArgumentTypeException If any position isn't a number.
+	 * @throws IllegalArgumentRangeException If the {@link BattleFormation#MAX_CHAR_NUMBER} numeric positions
+	 * don't constitute a permutation of the numbers from 1 to {@link BattleFormation#MAX_CHAR_NUMBER}.
+	 */
 	public static BattleTactic parse(String s) {
-		String[] split = s.split(String.valueOf(INDEX_SEPARATOR)); // throws NPE
-		int[] order = new int[split.length];
-		for (int i = 0; i < order.length; i++)
-			order[i] = Integer.valueOf(split[i]);
-		return new BattleTactic(order);
+		Utilities.requireNonNull(s, "s");
+		String[] split = s.split(String.valueOf(INDEX_SEPARATOR));
+		if (split.length != BattleFormation.MAX_CHAR_NUMBER)
+			throw new IllegalNumberOfArgumentsException("Number of targets is "+split.length+" instead of maximum "+BattleFormation.MAX_CHAR_NUMBER+"!");
+		try {
+			return new BattleTactic(Utilities.arrayToInt(split));
+		}
+		catch (NumberFormatException ex) {
+			throw new IllegalArgumentTypeException(ex);
+		}
+		catch (IllegalArgumentException ex) {
+			throw new IllegalArgumentRangeException(ex);
+		}
 	}
 	
 }

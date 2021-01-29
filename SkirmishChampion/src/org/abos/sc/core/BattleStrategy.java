@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.abos.util.IllegalNumberOfArgumentsException;
+import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Utilities;
 
 /**
@@ -197,12 +199,21 @@ public class BattleStrategy implements Iterable<BattleTactic> {
 	
 	public static BattleStrategy parse(String s) {
 		Utilities.requireNonNull(s, "s");
+		if (s.isEmpty())
+			throw new ParsedIdNotFoundException("Unkown strategy identifier !");
 		if (!java.lang.Character.isDigit(s.charAt(0))) {
-			return createStrategy(BattleStrategyType.valueOf(s)); // throws IAE
+			try {
+				return createStrategy(BattleStrategyType.valueOf(s)); // throws IAE
+			}
+			catch (IllegalArgumentException ex) {
+				throw new ParsedIdNotFoundException("Unkown strategy identifier "+s+"!", ex);
+			}
 		}
 		BattleTactic[][] tactics = new BattleTactic[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
 		String[] split = s.split(String.valueOf(TACTIC_SEPARATOR));
-		for (int row = 0; row < tactics.length; row++) 
+		if (split.length != BattleFormation.MAX_CHAR_NUMBER)
+			throw new IllegalNumberOfArgumentsException("Number of targets is "+split.length+" instead of maximum "+BattleFormation.MAX_CHAR_NUMBER+"!");
+		for (int row = 0; row < tactics.length; row++)
 			for (int col = 0; col < tactics[0].length; col++)
 				tactics[row][col] = BattleTactic.parse(split[row*BattleFormation.COL_NUMBER+col]);
 		return new BattleStrategy(tactics);

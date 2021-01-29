@@ -2,6 +2,7 @@ package org.abos.sc.core;
 
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalNumberOfArgumentsException;
+import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Utilities;
 
 /**
@@ -127,7 +128,7 @@ public class Companion extends Character {
 			throw new IllegalNumberOfArgumentsException(String.format("Companion has %d parameters instead of %d!", params.length, PARAM_NUMBER));
 		CharacterBase base = CharacterBase.CHARACTERS.lookup(params[0]);
 		if (base == null)
-			throw new IllegalArgumentRangeException(String.format("Unknown character ID %s!", params[0]));
+			throw new ParsedIdNotFoundException(String.format("Unknown character ID %s!", params[0]));
 		int level = 0;
 		try {
 			level = Integer.valueOf(params[1]);

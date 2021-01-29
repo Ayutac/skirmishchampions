@@ -422,7 +422,7 @@ public class CharacterBase implements Cloneable, Id, Name {
 			throw new IllegalArgumentRangeException(ex);
 		}
 		return new CharacterBase(parts[0], parts[1], parts[2], 
-				parts[3].split(String.valueOf(AFFILIATION_SEPARATOR)), 
+				parts[3].isEmpty() ? null : parts[3].split(String.valueOf(AFFILIATION_SEPARATOR)), 
 				primaryStats, attackStat, damageStat, register);
 	}
 	

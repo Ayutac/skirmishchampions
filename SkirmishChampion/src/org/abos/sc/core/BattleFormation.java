@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalNumberOfArgumentsException;
+import org.abos.util.ParseException;
+import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Utilities;
 
 /**
@@ -268,14 +270,25 @@ public class BattleFormation implements Iterable<Character> {
 		return s.toString();
 	}
 	
+	/**
+	 * Parses a string representation of a battle formation into a proper formation.
+	 * The formation is given by a list of at least 1 and up to {@value #MAX_CHAR_NUMBER} 
+	 * character IDs, separated by the {@value #CHARACTER_SEPARATOR} character without additional
+	 * whitespaces. A {@link ParseException} will be thrown if the string cannot be parsed correctly.
+	 * @param s the string to parse
+	 * @return a battle formation matching the string
+	 * @see #toSaveString()
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @throws IllegalNumberOfArgumentsException If are more than {@value #MAX_CHAR_NUMBER} characters defined.
+	 * @throws ParsedIdNotFoundException If a character ID supplied by the string isn't found in {@link CharacterBase#CHARACTERS}.
+	 */
 	public static BattleFormation parse(String s) {
 		Utilities.requireNonNull(s, "s");
 		Character[][] characters = new Character[ROW_NUMBER][COL_NUMBER];
 		String[] split = s.split(String.valueOf(CHARACTER_SEPARATOR));
+		assert split.length != 0;
 		if (split.length > MAX_CHAR_NUMBER)
 			throw new IllegalNumberOfArgumentsException("Too many characters in formation, are "+split.length+" instead of "+MAX_CHAR_NUMBER+" or less!");
-		if (split.length == 0)
-			throw new IllegalNumberOfArgumentsException("At least one character must be specified for formation!");
 		split = Arrays.copyOf(split, MAX_CHAR_NUMBER);
 		int index = 0;
 		CharacterBase base;
@@ -284,7 +297,7 @@ public class BattleFormation implements Iterable<Character> {
 				if (split[index] != null && !split[index].isEmpty()) {
 					base = CharacterBase.CHARACTERS.lookup(split[index]);
 					if (base == null)
-						throw new IllegalArgumentRangeException("Unregistered character "+split[index]+" detected for formation!");
+						throw new ParsedIdNotFoundException("Unregistered character "+split[index]+" detected for formation!");
 					characters[row][col] = new Character(base);
 				}
 				index++;

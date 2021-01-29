@@ -1,12 +1,14 @@
 package org.abos.util;
 
 /**
- * Thrown when a parsing error occurs.
+ * Thrown when a parsing error occurs. In opposite to {@link java.text.ParseException}
+ * this class doesn't force an offset and is also unchecked.
  * @author Sebastian Koch
  * @version %I%
  * @since Skirmish Champions 0.1
  * @see IllegalNumberOfArgumentsException
  * @see IllegalArgumentTypeException
+ * @see ParsedIdNotFoundException
  */
 public class ParseException extends RuntimeException {
 

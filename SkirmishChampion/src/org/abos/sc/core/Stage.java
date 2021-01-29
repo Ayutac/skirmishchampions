@@ -1,6 +1,7 @@
 package org.abos.sc.core;
 
 import org.abos.util.IllegalArgumentRangeException;
+import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Utilities;
 
 /**
@@ -284,7 +285,7 @@ public class Stage extends StageBase {
 		String id = s.substring(start, end);
 		StageBase base = StageBase.STAGES.lookup(id);
 		if (base == null)
-			throw new IllegalArgumentRangeException(String.format("Unknown stage ID %s!", id));
+			throw new ParsedIdNotFoundException(String.format("Unknown stage ID %s!", id));
 		Stage stage = new Stage(base, start != 0, end != s.length());
 		if (player != null)
 			player.getStages().add(stage);
