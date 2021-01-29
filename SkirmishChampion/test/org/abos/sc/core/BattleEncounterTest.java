@@ -21,7 +21,7 @@ public class BattleEncounterTest {
 	 */
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
-		Path path = Utilities.loadApplicationDirectory().resolve("resources").resolve("chars_twi.txt");
+		Path path = Utilities.loadApplicationDirectory().resolve("resources").resolve("characters").resolve("chars_twi.txt");
 		Utilities.loadFromFile(path, CharacterBase::parse);
 	}
 

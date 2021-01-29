@@ -22,7 +22,7 @@ public class StageTest {
 	
 	@Test
 	public void testParseData() throws IOException {
-		Path path = Utilities.loadApplicationDirectory().resolve("resources").resolve("stages_twi.txt");
+		Path path = Utilities.loadApplicationDirectory().resolve("resources").resolve("stages").resolve("stages_twi.txt");
 		Utilities.loadFromFile(path, StageBase::parse);
 		System.out.println(String.format("%d: %s", Stage.STAGES.size(), Stage.STAGES));
 		//System.out.println(Character.CHARACTERS.lookup("twi_erin").getPreferredAttackStat());
