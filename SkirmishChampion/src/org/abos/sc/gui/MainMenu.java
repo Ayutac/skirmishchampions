@@ -46,6 +46,11 @@ public class MainMenu extends JFrame {
 	
 	public final static Dimension TITLE_SCREEN_DIMENSION = new Dimension(325, 325);
 	
+	// the code assumes that this is in lowercase
+	public final static String SAVE_GAME_EXT = "sav";
+	
+	public final static String SAVE_GAME_EXT_D = "." + SAVE_GAME_EXT;
+	
 	protected Player player;
 	
 	protected StageSelectionFrame stageSelectionFrame;
@@ -112,6 +117,12 @@ public class MainMenu extends JFrame {
 		if (saveGameChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 			try {
 				Path saveGame = saveGameChooser.getSelectedFile().toPath();
+				// if the filter for save games is selected, automatically add the extension if missing
+				if (!GUIUtilities.isAcceptAllFilterSelected(saveGameChooser)) {
+					String path = saveGame.toString();
+					if (!path.toLowerCase().endsWith(SAVE_GAME_EXT_D))
+						saveGame = Path.of(path+SAVE_GAME_EXT_D);
+				}
 				player.saveToFile(saveGame, true);
 				ConfigManager.setProperty(ConfigManager.LAST_SAVE_LOCATION, saveGame.toString());
 				try {ConfigManager.saveConfig();} catch (IOException ex) {/* ignore */}
@@ -223,7 +234,7 @@ public class MainMenu extends JFrame {
 		stageSelectionFrame.setAfterHiding(() -> setVisible(true));
 		if (applicationPath) {
 			saveGameChooser = new JFileChooser(Utilities.getApplicationDirectory().toFile());
-			saveGameChooser.setFileFilter(new FileNameExtensionFilter("Skirmish Champion save game", "sav"));
+			saveGameChooser.setFileFilter(new FileNameExtensionFilter("Skirmish Champion save game", SAVE_GAME_EXT));
 		}
 		else {
 			saveGameButton.setEnabled(false);

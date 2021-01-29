@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import org.abos.util.Utilities;
@@ -66,6 +67,18 @@ public class GUIUtilities {
 	public static Path getCharacterImagesPath() {
 		Utilities.checkApplicationDirectory();
 		return Utilities.getApplicationDirectory().resolve("resources").resolve("images").resolve("characters");
+	}
+	
+	/**
+	 * Tells if the given JFileChooser has its accept all filter currently selected.
+	 * @param chooser the chooser to check
+	 * @return <code>true</code> if <code>chooser</code> is not <code>null</code> and has its accept all filter
+	 * currently selected, else <code>false</code>.
+	 */
+	public static boolean isAcceptAllFilterSelected(JFileChooser chooser) {
+		if (chooser == null)
+			return false;
+		return chooser.getFileFilter().equals(chooser.getAcceptAllFileFilter());
 	}
 	
 	/**
