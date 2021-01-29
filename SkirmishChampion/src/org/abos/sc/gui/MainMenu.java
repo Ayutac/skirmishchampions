@@ -294,9 +294,6 @@ public class MainMenu extends JFrame {
 				current = file.toString();
 				Utilities.loadFromFile(file, FandomBase::parse);
 			}
-//			Utilities.loadFromFile(path.resolve("stages_twi.txt"), StageBase::parse);
-//			Utilities.loadFromFile(path.resolve("regions_twi.txt"), RegionBase::parse);
-//			Utilities.loadFromFile(path.resolve("fandoms.txt"), FandomBase::parse);
 		}
 		catch (IllegalStateException ex) {
 			GUIUtilities.errorMessage("Startup Failure", "Application path not found, game files not loaded!", ex);
@@ -308,6 +305,13 @@ public class MainMenu extends JFrame {
 		}
 		catch (ParseException ex) {
 			GUIUtilities.errorMessage("Startup Failure", "File "+current+" seems to be invalid!", ex);
+			return;
+		}
+		try {
+			StageBase.validateEncouterStrings();
+		}
+		catch (ParseException ex) {
+			GUIUtilities.errorMessage("Startup Failure", "Invalid encounter string discovered!", ex);
 			return;
 		}
 		try {

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.abos.util.Id;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Name;
+import org.abos.util.ParseException;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
 
@@ -160,7 +161,8 @@ public class StageBase implements Cloneable, Id, Name {
 	/**
 	 * Returns the encounter of this stage by parsing its encounter string.
 	 * @return the encounter of this stage
-	 * 
+	 * @throws ParseException If the encounter string cannot be parsed.
+	 * @see BattleEncounter#parse(String)
 	 */
 	public BattleEncounter createEncounter() {
 		return BattleEncounter.parse(encounterString);
@@ -252,21 +254,37 @@ public class StageBase implements Cloneable, Id, Name {
 				+ Arrays.toString(nextFandoms) + ", encounterString=" + encounterString + "]";
 	}
 	
-	public static StageBase parse(String s, boolean register) {
+	public static StageBase parse(String s, boolean register, boolean checkEncounter) {
 		Utilities.requireNonNull(s, "s");
 		String[] parts = s.split(";");
 		final int NUMBER_OF_ARGUMENTS = 7;
 		if (parts.length != NUMBER_OF_ARGUMENTS)
 			throw new IllegalNumberOfArgumentsException(String.format("Stage \"%s\" to parse contained %d arguments instead of %d", s, parts.length, NUMBER_OF_ARGUMENTS));
-		return new StageBase(parts[0], parts[1], parts[2], 
+		StageBase result = new StageBase(parts[0], parts[1], parts[2], 
 				parts[3].isEmpty() ? null : parts[3].split(String.valueOf(LIST_SEPARATOR)), 
 				parts[4].isEmpty() ? null : parts[4].split(String.valueOf(LIST_SEPARATOR)), 
 				parts[5].isEmpty() ? null : parts[5].split(String.valueOf(LIST_SEPARATOR)), 
 				parts[6], register);
+		if (checkEncounter)
+			result.createEncounter();
+		return result;
 	}
 	
 	public static StageBase parse(String s) {
-		return parse(s,true);
+		return parse(s, true, true);
+	}
+	
+	/**
+	 * Calls {@link #createEncounter()} on all stages in {@link #STAGES}, causing a {@link ParseException} whenever an invalid encounter string is encountered. 
+	 * Since a lot of instances are created by this call, {@link System#gc()} is called afterwards.
+	 * @throws ParseException If any registered stage has an invalid encounter string.
+	 * @see #createEncounter()
+	 * @see BattleEncounter#parse(String)
+	 */
+	public static void validateEncouterStrings() {
+		for (StageBase stage : STAGES)
+			stage.createEncounter();
+		System.gc();
 	}
 	
 }
