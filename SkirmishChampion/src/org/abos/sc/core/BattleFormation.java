@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.ParseException;
 import org.abos.util.ParsedIdNotFoundException;
@@ -228,9 +227,9 @@ public class BattleFormation implements Iterable<Character> {
 			for (int col = 0; col < COL_NUMBER; col++) {
 				if (characters[row][col] != null)
 					s.append(characters[row][col].getId());
-				if (row+1 < ROW_NUMBER && col+1 < COL_NUMBER)
-					s.append(CHARACTER_SEPARATOR);
-				}
+				// note that the last separator gets ignored by String.split
+				s.append(CHARACTER_SEPARATOR);
+			}
 	}
 	
 	public String toSaveString() {
@@ -268,6 +267,24 @@ public class BattleFormation implements Iterable<Character> {
 		else
 			toSaveString(s);
 		return s.toString();
+	}
+	
+	public static BattleFormation createFormation(Character... characters) {
+		Utilities.requireNonNull(characters, "characters");
+		if (characters.length == 0)
+			throw new IllegalArgumentException("At least one character must be given!");
+		Character[][] chars = new Character[ROW_NUMBER][COL_NUMBER];
+		int index = 0;
+		for (int row = 0; row < ROW_NUMBER; row++) {
+			for (int col = 0; col < COL_NUMBER; col++) {
+				chars[row][col] = characters[index];
+				if (++index >= characters.length)
+					break;
+			}
+			if (index >= characters.length)
+				break;
+		}
+		return new BattleFormation(chars);
 	}
 	
 	/**

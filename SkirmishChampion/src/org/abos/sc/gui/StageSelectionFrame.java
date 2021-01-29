@@ -120,8 +120,18 @@ public class StageSelectionFrame extends JFrame {
 		subframe.setVisible(true);
 	}
 	
+	public void showPartySelectionFrame() {
+		partySelectionFrame.setFormation(player.getParty());
+		showSubframe(partySelectionFrame);
+	}
+	
 	public void afterHidingSubframe() {
 		setEnabled(true);
+	}
+	
+	public void afterHidingPartySelectionFrame() {
+		player.setParty(partySelectionFrame.getFormation());
+		afterHidingSubframe();
 	}
 	
 	public void afterBattle() {
@@ -133,7 +143,7 @@ public class StageSelectionFrame extends JFrame {
 		Stage stage = selectionPanel.getStage();
 		stageBattleFrame.setStage(stage);
 		stage.engageStage();
-		stageBattleFrame.setFirstParty(new BattleEncounter(partySelectionFrame.getFormation(), BattleStrategy.createConcentratedAssault()));
+		stageBattleFrame.setFirstParty(new BattleEncounter(player.getParty(), BattleStrategy.createConcentratedAssault()));
 		stageBattleFrame.setSecondParty(stage.getEncounter());
 		showSubframe(stageBattleFrame);
 	}
@@ -141,9 +151,9 @@ public class StageSelectionFrame extends JFrame {
 	private void initComponents() {
 		selectionPanel = new StageSelectionPanel(player,leftToRight);
 		partySelectionFrame = new PartySelectionFrame(player.getCompanions());
-		partySelectionFrame.setAfterHiding(() -> afterHidingSubframe());
+		partySelectionFrame.setAfterHiding(() -> afterHidingPartySelectionFrame());
 		partySelectionButton = new JButton("Party");
-		partySelectionButton.addActionListener(e -> showSubframe(partySelectionFrame));
+		partySelectionButton.addActionListener(e -> showPartySelectionFrame());
 		stageBattleFrame = new StageBattleFrame();
 		stageBattleFrame.setPlayer(player);
 		stageBattleFrame.setAfterHiding(() -> afterBattle());
