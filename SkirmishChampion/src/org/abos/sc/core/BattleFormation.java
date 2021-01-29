@@ -319,7 +319,12 @@ public class BattleFormation implements Iterable<Character> {
 				}
 				index++;
 			}
-		return new BattleFormation(characters);
+		try {
+			return new BattleFormation(characters);
+		}
+		catch (IllegalArgumentException ex) {
+			throw new IllegalNumberOfArgumentsException("At least one character must be specified!");
+		}
 	}
 
 }
