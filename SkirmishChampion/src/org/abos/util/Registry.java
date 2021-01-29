@@ -19,7 +19,7 @@ import java.util.Map;
  * @see #add(T)
  * @see #lookup(String)
  * @see #remove(T)
- * @see #remove(String)
+ * @see #removeById(String)
  * @see #iterator()
  */
 public class Registry<T extends Id> implements Collection<T> {
@@ -85,7 +85,7 @@ public class Registry<T extends Id> implements Collection<T> {
 	 * <code>false</code> if the entry wasn't found.
 	 * @throws NullPointerException If <code>id</code> refers to <code>null</code>.
 	 */
-	public boolean remove(String id) {
+	public boolean removeById(String id) {
 		Utilities.requireNonNull(id, "id");
 		return content.remove(id) != null;
 	}
@@ -102,7 +102,7 @@ public class Registry<T extends Id> implements Collection<T> {
 	 */
 	public boolean remove(T entry) {
 		Utilities.requireNonNull(entry, "entry");
-		return remove(entry.getId());
+		return removeById(entry.getId());
 	}
 	
 	/**
@@ -142,6 +142,18 @@ public class Registry<T extends Id> implements Collection<T> {
 			return false;
 		T lookup = lookup(id);
 		return lookup != null && lookup.equals(entry);
+	}
+
+	/**
+	 * Checks if the registry contains a specified ID.
+	 * @param id the ID of the entry to check
+	 * @return <code>true</code> if the registry contains an object with the same ID as the given
+	 * one, else <code>false</code>.
+	 */
+	public boolean containsId(String id) {
+		if (id == null)
+			return false;
+		return content.containsKey(id);
 	}
 	
 	/**
@@ -276,7 +288,7 @@ public class Registry<T extends Id> implements Collection<T> {
 	 * is the name of the entry to be removed or the entry itself. Use one of the other two
 	 * remove operations instead
 	 * @throws UnsupportedOperationException Always.
-	 * @see #remove(String)
+	 * @see #removeById(String)
 	 * @see #remove(T)
 	 */
 	@Override

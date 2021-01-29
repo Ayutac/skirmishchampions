@@ -88,7 +88,7 @@ public class MainMenu extends JFrame {
 			setIconImages(GUIUtilities.LOGOS);
 	}
 	
-	public Player getNewPlayer() {
+	public static Player createNewPlayer() {
 		return new Player(FandomBase.FANDOMS.lookup("twi"), new Companion(CharacterBase.CHARACTERS.lookup("twi_erin")));
 		// TODO maybe better default? 
 	}
@@ -103,7 +103,7 @@ public class MainMenu extends JFrame {
 	}
 	
 	public void newGame() {
-		setPlayer(getNewPlayer());
+		setPlayer(createNewPlayer());
 		continueGameButton.setEnabled(true);
 		continueGame();
 	}
@@ -187,24 +187,24 @@ public class MainMenu extends JFrame {
 		File lastSaveLocationFile = null;
 		if (lastSaveLocation == null) {
 			continueGameButton.setEnabled(false);
-			player = getNewPlayer();
+			player = createNewPlayer();
 		}
 		else {
 			lastSaveLocationFile = new File(lastSaveLocation);
 			if (!lastSaveLocationFile.isFile()) {
 				continueGameButton.setEnabled(false);
-				player = getNewPlayer();
+				player = createNewPlayer();
 			}
 			else {
 				try {
 					player = Player.loadFromFile(lastSaveLocationFile.toPath());
 				}
 				catch (ParseException ex) {
-					player = getNewPlayer();
+					player = createNewPlayer();
 					continueGameButton.setEnabled(false);
 				}
 				catch (IOException ex) {
-					player = getNewPlayer();
+					player = createNewPlayer();
 					continueGameButton.setEnabled(false);
 				}
 			}
@@ -321,6 +321,8 @@ public class MainMenu extends JFrame {
 		MainMenu game = new MainMenu();
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);
+		// TODO this needs to be put somewhere else:
+		System.out.print(Player.unreachablesToString(createNewPlayer()));
 	}
 
 }

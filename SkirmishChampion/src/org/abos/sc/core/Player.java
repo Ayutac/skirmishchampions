@@ -280,5 +280,69 @@ public class Player {
 			if (fr != null) try {br.close();} catch (IOException ex) {/* ignore */}
 		}
 	}
+	
+	public static String unreachablesToString(Player player) {
+		Utilities.requireNonNull(player, "player");
+		Registry<Companion> companions = new Registry<>(player.companions);
+		Registry<Fandom> fandoms = new Registry<>(player.fandoms);
+		Registry<Region> regions = new Registry<>(player.regions);
+		Registry<Stage> uncheckedStages = new Registry<>();
+		Registry<Stage> checkedStages = new Registry<>();
+		for (Stage stage : player.stages)
+			uncheckedStages.add((Stage)stage.clone());
+		// collect all theoretically reachable stages etc via their IDs
+		Stage currentStage = null;
+		while (!uncheckedStages.isEmpty()) {
+			currentStage = uncheckedStages.iterator().next();
+			currentStage.engageStage();
+			for (Companion companion : currentStage.rewardCompanions(BattleConclusion.WON)) {
+				if (!companions.containsId(companion.getId()))
+					companions.add(companion);
+			}
+			for (Fandom fandom : currentStage.rewardFandoms(BattleConclusion.WON)) {
+				if (!fandoms.containsId(fandom.getId()))
+					fandoms.add(fandom);
+			}
+			for (Region region : currentStage.rewardRegions(BattleConclusion.WON)) {
+				if (!regions.containsId(region.getId()))
+					regions.add(region);
+			}
+			for (Stage stage : currentStage.rewardStages(BattleConclusion.WON)) {
+				if (!uncheckedStages.containsId(stage.getId()) && !checkedStages.containsId(stage.getId()))
+					uncheckedStages.add(stage);
+			}
+			currentStage.disengageStage();
+			uncheckedStages.removeById(currentStage.getId());
+			checkedStages.add(currentStage);
+		}
+		// get the remaining entries 
+		Registry<CharacterBase> unreachableCharacters = new Registry<>();
+		Registry<FandomBase> unreachableFandoms = new Registry<>();
+		Registry<RegionBase> unreachableRegions = new Registry<>();
+		Registry<StageBase> unreachableStages = new Registry<>();
+		for (CharacterBase character : CharacterBase.CHARACTERS)
+			if (!companions.containsId(character.getId()))
+				unreachableCharacters.add(character);
+		for (FandomBase fandom : FandomBase.FANDOMS)
+			if (!fandoms.containsId(fandom.getId()))
+				unreachableFandoms.add(fandom);
+		for (RegionBase region : RegionBase.REGIONS)
+			if (!regions.containsId(region.getId()))
+				unreachableRegions.add(region);
+		for (StageBase stage : StageBase.STAGES)
+			if (!checkedStages.containsId(stage.getId()))
+				unreachableStages.add(stage);
+		// put it in a string
+		StringBuilder s = new StringBuilder();
+		s.append(String.format("%d unreachable characters: %s", unreachableCharacters.size(), unreachableCharacters));
+		s.append(System.lineSeparator());
+		s.append(String.format("%d unreachable fandoms: %s", unreachableFandoms.size(), unreachableFandoms));
+		s.append(System.lineSeparator());
+		s.append(String.format("%d unreachable regions: %s", unreachableRegions.size(), unreachableRegions));
+		s.append(System.lineSeparator());
+		s.append(String.format("%d unreachable stages: %s", unreachableStages.size(), unreachableStages));
+		s.append(System.lineSeparator());
+		return s.toString();
+	}
 
 }
