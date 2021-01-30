@@ -2,6 +2,8 @@ package org.abos.sc.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.abos.util.Id;
 import org.abos.util.IdCloneable;
@@ -53,12 +55,17 @@ public class FandomBase implements IdCloneable, Name {
 			FANDOMS.add(this);
 	}
 	
-	/**
-	 * 
-	 */
-	public FandomBase(FandomBase fandom) {
+	public FandomBase(FandomBase fandom, boolean cloneCharacters) {
 		this(fandom.id, fandom.name, fandom.startRegionId, fandom.startCompanionId, false);
-		characters.addAll(fandom.characters);
+		if (!cloneCharacters)
+			characters.addAll(fandom.characters);
+		else 
+			for (CharacterBase character : fandom.characters)
+				characters.add((CharacterBase)character.clone());
+	}
+
+	public FandomBase(FandomBase fandom) {
+		this(fandom, false);
 	}
 
 	@Override
@@ -88,6 +95,13 @@ public class FandomBase implements IdCloneable, Name {
 		return startCompanionId;
 	}
 	
+	public Set<String> collectAssociatedRegionIds() {
+		return RegionBase.REGIONS.stream()
+				.filter(base -> id.equals(base.getFandomId()))
+				.map(base -> base.getId())
+				.collect(Collectors.toSet());
+	}
+	
 	protected boolean addCharacter(CharacterBase character) {
 		Utilities.requireNonNull(character, "character");
 		if (!character.getFandomId().equals(id))
@@ -100,7 +114,7 @@ public class FandomBase implements IdCloneable, Name {
 	
 	@Override
 	public Object clone() {
-		return new Fandom(this);
+		return new FandomBase(this, true);
 	}
 
 	@Override

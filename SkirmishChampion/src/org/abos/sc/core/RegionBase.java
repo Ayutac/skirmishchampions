@@ -1,11 +1,8 @@
 package org.abos.sc.core;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.abos.util.Id;
 import org.abos.util.IdCloneable;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Name;
@@ -90,6 +87,13 @@ public class RegionBase implements IdCloneable, Name {
 	
 	public StageBase getStartStage() {
 		return StageBase.STAGES.lookup(startStageId);
+	}
+	
+	public Set<String> collectAssociatedStageIds() {
+		return StageBase.STAGES.stream()
+				.filter(base -> id.equals(base.getRegionId()))
+				.map(base -> base.getId())
+				.collect(Collectors.toSet());
 	}
 	
 	@Override
