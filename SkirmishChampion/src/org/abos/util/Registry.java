@@ -322,6 +322,9 @@ public class Registry<T extends Id> implements Collection<T> {
 	 * @param registry the registry to clone
 	 * @return A clone of the specified registry. 
 	 * Will only be <code>null</code> if <code>registry</code> refers to <code>null</code>.
+	 * @throws ClassCastException If <code>.clone()</code> any entry of <code>registry</code>
+	 * doesn't at least return an object of type <code>T</code>, which indicates a programming
+	 * error in that clone method.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends IdCloneable> Registry<T> deepClone(Registry<T> registry) {
