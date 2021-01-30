@@ -11,10 +11,15 @@ import org.abos.util.Utilities;
  */
 public class Region extends RegionBase {
 	
-	protected final Registry<Stage> stages = new Registry();
+	protected final Registry<Stage> stages;
 
-	public Region(RegionBase base) {
+	private Region(RegionBase base, Registry<Stage> stages) {
 		super(base);
+		this.stages = stages;
+	}
+	
+	public Region(RegionBase base) {
+		this(base, new Registry<>());
 	}
 	
 	/**
@@ -32,7 +37,10 @@ public class Region extends RegionBase {
 		}
 	}
 	
-	// TODO clone is missing
+	@Override
+	public Object clone() {
+		return new Region(this, Registry.deepClone(stages));
+	}
 	
 	@Override
 	public String toString() {

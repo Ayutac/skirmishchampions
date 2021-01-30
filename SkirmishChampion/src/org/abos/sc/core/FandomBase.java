@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.abos.util.Id;
+import org.abos.util.IdCloneable;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Name;
 import org.abos.util.Registry;
@@ -14,7 +15,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class FandomBase implements Cloneable, Id, Name {
+public class FandomBase implements IdCloneable, Name {
 	
 	public static final Registry<FandomBase> FANDOMS = new Registry<>();
 	

@@ -11,13 +11,15 @@ import org.abos.util.Utilities;
  */
 public class Fandom extends FandomBase {
 	
-	protected final Registry<Region> regions = new Registry<>();
+	protected final Registry<Region> regions;
 
-	/**
-	 * 
-	 */
-	public Fandom(FandomBase base) {
+	public Fandom(FandomBase base, Registry<Region> regions) {
 		super(base);
+		this.regions = regions;
+	}
+	
+	public Fandom(FandomBase base) {
+		this(base, new Registry<>());
 	}
 	
 	/**
@@ -39,7 +41,10 @@ public class Fandom extends FandomBase {
 		}
 	}
 	
-	// TODO clone is missing
+	@Override
+	public Object clone() {
+		return new Fandom(this, Registry.deepClone(regions));
+	}
 	
 	@Override
 	public String toString() {

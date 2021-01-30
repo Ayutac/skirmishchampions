@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.function.BinaryOperator;
 
 import org.abos.util.Id;
+import org.abos.util.IdCloneable;
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.IllegalNumberOfArgumentsException;
@@ -25,7 +26,7 @@ import org.abos.util.Utilities;
  * @see Character
  * @see Companion
  */
-public class CharacterBase implements Cloneable, Id, Name {
+public class CharacterBase implements IdCloneable, Name {
 	
 	/**
 	 * An array of the primary stats, should equal {@link StatsPrimary}<code>.values()</code>. Saved here to reduce overhead.

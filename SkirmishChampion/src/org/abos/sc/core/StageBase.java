@@ -3,6 +3,7 @@ package org.abos.sc.core;
 import java.util.Arrays;
 
 import org.abos.util.Id;
+import org.abos.util.IdCloneable;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Name;
 import org.abos.util.ParseException;
@@ -17,7 +18,7 @@ import org.abos.util.Utilities;
  * @since 0.1
  * @see Stage
  */
-public class StageBase implements Cloneable, Id, Name {
+public class StageBase implements IdCloneable, Name {
 	
 	/**
 	 * separator character for the lists

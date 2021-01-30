@@ -272,7 +272,8 @@ public class Stage extends StageBase {
 	@Override
 	public Object clone() {
 		Stage clone = new Stage(this, accessable, cleared);
-		clone.encounter = this.encounter;
+		if (encounter != null)
+			clone.encounter = (BattleEncounter)encounter.clone();
 		return clone;
 	}
 	

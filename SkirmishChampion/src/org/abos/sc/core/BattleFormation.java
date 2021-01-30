@@ -19,7 +19,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class BattleFormation implements Iterable<Character> {
+public class BattleFormation implements Iterable<Character>, Cloneable {
 	
 	/**
 	 * The maximum number of rows in formations.
@@ -220,6 +220,16 @@ public class BattleFormation implements Iterable<Character> {
 		if (!Arrays.deepEquals(characters, other.characters))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public Object clone() {
+		Character[][] clonedChars = new Character[ROW_NUMBER][COL_NUMBER];
+		for (int row = 0; row < ROW_NUMBER; row++)
+			for (int col = 0; col < COL_NUMBER; col++)
+				if (characters[row][col] != null)
+					clonedChars[row][col] = (Character)characters[row][col].clone();
+		return new BattleFormation(clonedChars);
 	}
 	
 	public void toSaveString(StringBuilder s) {

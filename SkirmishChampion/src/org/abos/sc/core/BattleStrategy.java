@@ -14,7 +14,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class BattleStrategy implements Iterable<BattleTactic> {
+public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
 	
 	/**
 	 * The separator character for different tactics
@@ -169,6 +169,13 @@ public class BattleStrategy implements Iterable<BattleTactic> {
 		if (type != other.type)
 			return false;
 		return true;
+	}
+	
+	@Override
+	public Object clone() {
+		if (!BattleStrategyType.CUSTOM.equals(type))
+			return createStrategy(type);
+		return new BattleStrategy(battleTactics);
 	}
 	
 	public void toSaveString(StringBuilder s) {

@@ -12,7 +12,7 @@ import java.util.Map;
  * with an <code>null</code> ID will cause exceptions. Since the entries can
  * also be accessed via their IDs, the remove operations of {@link Collection}
  * are not supported, instead there are remove operations for either the entries or their IDs.
- * @param <T> the type of entries
+ * @param <T> the type of entries, must have an ID
  * @author Sebastian Koch
  * @version %I%
  * @since Skirmish Champions 0.1
@@ -314,6 +314,24 @@ public class Registry<T extends Id> implements Collection<T> {
 	@Override
 	public boolean retainAll(Collection<?> c) {
 		throw new UnsupportedOperationException("Use remove instead.");
+	}
+	
+	/**
+	 * Creates a deep clone of a registry.
+	 * @param <T> the type of entries, must have an ID and be cloneable
+	 * @param registry the registry to clone
+	 * @return A clone of the specified registry. 
+	 * Will only be <code>null</code> if <code>registry</code> refers to <code>null</code>.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends IdCloneable> Registry<T> deepClone(Registry<T> registry) {
+		if (registry == null)
+			return null;
+		Registry<T> clone = new Registry<>();
+		for (T item : registry) {
+			clone.add((T)item.clone());
+		}
+		return clone;
 	}
 
 }

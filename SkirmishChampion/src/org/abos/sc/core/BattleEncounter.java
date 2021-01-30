@@ -9,7 +9,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class BattleEncounter {
+public class BattleEncounter implements Cloneable {
 	
 	/**
 	 * the separator char between the formation and strategy of an encounter in string form
@@ -143,6 +143,11 @@ public class BattleEncounter {
 		} else if (!strategy.equals(other.strategy))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public Object clone() {
+		return new BattleEncounter((BattleFormation)formation.clone(), (BattleStrategy)strategy.clone());
 	}
 	
 	public void toSaveString(StringBuilder s) {
