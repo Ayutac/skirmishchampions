@@ -535,11 +535,6 @@ public class CharacterBase implements IdCloneable, Name {
 		return startVals;
 	}
 	
-	public static void linkFandomsToCharacters() {
-		for (CharacterBase character : CHARACTERS)
-			FandomBase.FANDOMS.lookup(character.getFandomId()).addCharacter(character);
-	}
-	
 	public static <T extends CharacterBase> Comparator<T> createPrimaryComparator(StatsPrimary type) {
 		return new Comparator<T>() {
 			@Override public int compare(T o1, T o2) {

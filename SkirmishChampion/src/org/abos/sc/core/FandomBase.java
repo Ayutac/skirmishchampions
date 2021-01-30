@@ -30,13 +30,6 @@ public class FandomBase implements IdCloneable, Name {
 	protected final String startCompanionId;
 	
 	/**
-	 * List of characters in this fandom for sorting purposes.
-	 * This list may only contain one character per ID, and only these of this fandom.
-	 * This list is <code>null</code>-free.
-	 */
-	protected final List<CharacterBase> characters;
-	
-	/**
 	 * @param id
 	 * @param name
 	 * @param startRegionId
@@ -50,22 +43,12 @@ public class FandomBase implements IdCloneable, Name {
 		this.name = name;
 		this.startRegionId = startRegionId;
 		this.startCompanionId = startCompanionId;
-		characters = new ArrayList<>();
 		if (register)
 			FANDOMS.add(this);
 	}
 	
-	public FandomBase(FandomBase fandom, boolean cloneCharacters) {
-		this(fandom.id, fandom.name, fandom.startRegionId, fandom.startCompanionId, false);
-		if (!cloneCharacters)
-			characters.addAll(fandom.characters);
-		else 
-			for (CharacterBase character : fandom.characters)
-				characters.add((CharacterBase)character.clone());
-	}
-
 	public FandomBase(FandomBase fandom) {
-		this(fandom, false);
+		this(fandom.id, fandom.name, fandom.startRegionId, fandom.startCompanionId, false);
 	}
 
 	@Override
@@ -102,19 +85,16 @@ public class FandomBase implements IdCloneable, Name {
 				.collect(Collectors.toSet());
 	}
 	
-	protected boolean addCharacter(CharacterBase character) {
-		Utilities.requireNonNull(character, "character");
-		if (!character.getFandomId().equals(id))
-			throw new IllegalArgumentException("character "+character.getId()+" doesn't belong to this fandom!");
-		for (CharacterBase entry : characters)
-			if (character.getId().equals(entry.getId()))
-				throw new IllegalArgumentException("Only one entry per ID is permitted! "+character.getId()+" is already used!");
-		return characters.add(character);
+	public Set<String> collectAssociatedCharacterIds() {
+		return CharacterBase.CHARACTERS.stream()
+				.filter(base -> id.equals(base.getFandomId()))
+				.map(base -> base.getId())
+				.collect(Collectors.toSet());
 	}
 	
 	@Override
 	public Object clone() {
-		return new FandomBase(this, true);
+		return new FandomBase(this);
 	}
 
 	@Override
@@ -124,7 +104,6 @@ public class FandomBase implements IdCloneable, Name {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((startRegionId == null) ? 0 : startRegionId.hashCode());
-		result = prime * result + ((characters == null) ? 0 : characters.hashCode());
 		return result;
 	}
 
@@ -151,11 +130,6 @@ public class FandomBase implements IdCloneable, Name {
 			if (other.startRegionId != null)
 				return false;
 		} else if (!startRegionId.equals(other.startRegionId))
-			return false;
-		if (characters == null) {
-			if (other.characters != null)
-				return false;
-		} else if (!characters.equals(other.id))
 			return false;
 		return true;
 	}
