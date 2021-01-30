@@ -83,6 +83,7 @@ twi_priya;Priya;twi;Humans,Earthers,UN;40,50,50,50,20,40,10,40;2;1
 // other gobbos
 twi_rags;Rags;twi;Goblins,Flooded Plains Tribe;40,60,120,50,10,60,80,60;1;0
 twi_pyrite;Pyrite;twi;Goblins,Hobgoblins,Warriors;350,220,70,140,40,60,80,50;0;0
+twi_garen;Garen Redfang;twi;Goblins,Redfangs,Hobgoblins,Warriors;420,380,50,60,90,10,20,200;0;0
 twi_grunter;Grunter;twi;Goblins,Redfangs,Hobgoblins,Warriors;150,120,60,60,50,50,30,40;0;0
 // misc
 twi_flower_girl;Flower Girl;twi;Monsters;90,100,40,30,50,20,30,50;0;0
@@ -130,6 +131,6 @@ twi_amoli;Amoli;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_anders;Anders;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_filip;Filip;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_michael;Michael;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
-twi_Sofie;Sofie;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
+twi_sofie;Sofie;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_ben;Ben;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_myron;Myron;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
