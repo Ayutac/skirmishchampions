@@ -322,7 +322,7 @@ public class MainMenu extends JFrame {
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);
 		// TODO this needs to be put somewhere else:
-		System.out.print(Player.unreachablesToString(createNewPlayer()));
+		System.out.print(Player.validateGameData(createNewPlayer()));
 	}
 
 }

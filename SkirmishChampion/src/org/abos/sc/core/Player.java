@@ -281,7 +281,7 @@ public class Player {
 		}
 	}
 	
-	public static String unreachablesToString(Player player) {
+	public static String validateGameData(Player player) {
 		Utilities.requireNonNull(player, "player");
 		Registry<Companion> companions = new Registry<>(player.companions);
 		Registry<Fandom> fandoms = new Registry<>(player.fandoms);
