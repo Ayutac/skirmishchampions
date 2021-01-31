@@ -136,37 +136,23 @@ public class CharacterBattlePanel extends JPanel {
 	 * @see #initComponents()
 	 */
 	private void initLayout() {
-		//BoxLayout layout = new BoxLayout(this, BoxLayout.LINE_AXIS);
-		
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
 		GridBagConstraints c = new GridBagConstraints();
+		c.gridheight = 2;
+		c.anchor = GridBagConstraints.LINE_START;
+		add(imagePanel, c);
 		c.gridx = 1;
+		c.gridheight = 1;
+		c.weightx = 1.0;
 		c.gridy = 0;
+		c.weighty = 0.5;
 		c.anchor = GridBagConstraints.LAST_LINE_START;
 		add(characterLabel, c);
 		c.gridy = 1;
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(characterHealthLabel, c);
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridheight = 2;
-		c.anchor = GridBagConstraints.LINE_START;
-		add(imagePanel, c);
 		setPreferredSize(PREFERRED_SIZE);
-		
-//		GridBagLayout layout = new GridBagLayout();
-//		setLayout(getLayout());
-//		JPanel labelPanel = new JPanel();
-//		labelPanel.setLayout(new GridLayout(2, 1));
-//		labelPanel.add(characterLabel);
-//		labelPanel.add(characterHealthLabel);
-//		GridBagConstraints c = new GridBagConstraints();
-//		c.gridx = 0;
-//		add(imagePanel, c);
-//		c.gridx = 1;
-//		add(labelPanel, c);
-//		setPreferredSize(PREFERRED_SIZE);
 	}
 	
 }
