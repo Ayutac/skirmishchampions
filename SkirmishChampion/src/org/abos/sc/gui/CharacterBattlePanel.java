@@ -40,12 +40,12 @@ public class CharacterBattlePanel extends JPanel {
 	/**
 	 * the preferred height of the character battle panel
 	 */
-	public static final int PREFERRED_HEIGHT = Math.max(IMAGE_HEIGHT, 2*ContentComboBox.PREFERRED_HEIGHT);
+	public static final int PREFERRED_HEIGHT = IMAGE_HEIGHT + 2*ContentComboBox.PREFERRED_HEIGHT;
 	
 	/**
 	 * the preferred width of the character battle panel
 	 */
-	public static final int PREFERRED_WIDTH = IMAGE_WIDTH + ContentComboBox.PREFERRED_WIDTH;
+	public static final int PREFERRED_WIDTH = Math.max(IMAGE_WIDTH,ContentComboBox.PREFERRED_WIDTH);
 	
 	/**
 	 * the preferred size of the character battle panel
@@ -139,18 +139,16 @@ public class CharacterBattlePanel extends JPanel {
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
 		GridBagConstraints c = new GridBagConstraints();
-		c.gridheight = 2;
-		c.anchor = GridBagConstraints.LINE_START;
-		add(imagePanel, c);
-		c.gridx = 1;
-		c.gridheight = 1;
-		c.weightx = 1.0;
-		c.gridy = 0;
 		c.weighty = 0.5;
-		c.anchor = GridBagConstraints.LAST_LINE_START;
-		add(characterLabel, c);
+		c.anchor = GridBagConstraints.PAGE_END;
+		add(imagePanel, c);
 		c.gridy = 1;
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.weighty = 0;
+		c.anchor = GridBagConstraints.CENTER;
+		add(characterLabel, c);
+		c.gridy = 2;
+		c.weighty = 0.5;
+		c.anchor = GridBagConstraints.PAGE_START;
 		add(characterHealthLabel, c);
 		setPreferredSize(PREFERRED_SIZE);
 	}
