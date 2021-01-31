@@ -1,6 +1,7 @@
 package org.abos.sc.gui;
 
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
@@ -90,6 +91,14 @@ public class EncounterInfoPanel extends JPanel {
 			}
 	}
 	
+	protected GridBagConstraints createConstraint(int gridx, int gridy) {
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridx = gridx;
+		c.gridy = gridy;
+		return c;
+	}
+	
 	/**
 	 * Initializes the layout. Only call directly after {@link #initComponents()} has been called.
 	 * @see #initComponents()
@@ -101,13 +110,15 @@ public class EncounterInfoPanel extends JPanel {
 		setLayout(layout);
 		if (atLineStart) {
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
-				for (int row = BattleFormation.ROW_NUMBER - 1; row >= 0; row--)
-					add(formation[row][col]);
+				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
+					add(formation[row][col], createConstraint(BattleFormation.ROW_NUMBER-1-row, col));
+				}
 		}
 		else {
 			for (int col = BattleFormation.COL_NUMBER - 1; col >= 0; col--)
-				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-					add(formation[row][col]);
+				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
+					add(formation[row][col], createConstraint(row, col));
+				}
 		}
 		setPreferredSize(new Dimension(
 				BattleFormation.ROW_NUMBER*CharacterBattlePanel.PREFERRED_WIDTH, 
