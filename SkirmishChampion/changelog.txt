@@ -21,3 +21,11 @@ Initial published version including
 - improved the stage selection GUI
 - fixed another fighting bug that only occurred when you fought on a cleared stage and had one of the enemies in your party
 - some technical refactoring
+
+# 0.4.0-early-access
+- added Garen Redfang (currently not accessable)
+- added the possibility of displaying character images
+- added 15 character images
+- the current party is now saved
+- added validation of stage encounter strings and on console unreachable characters are now listed
+- fixed some minor bugs
