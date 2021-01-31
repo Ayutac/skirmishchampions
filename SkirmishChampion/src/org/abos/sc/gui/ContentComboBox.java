@@ -38,7 +38,7 @@ public class ContentComboBox<T extends Id> extends JComboBox<T> {
 		this.content = content;
 		this.comparator = comparator;
 		setPreferredSize(PREFERRED_SIZE);
-		refreshContent();
+		refreshContent(false);
 	}
 	
 	public ContentComboBox(Collection<T> content) {
@@ -52,10 +52,11 @@ public class ContentComboBox<T extends Id> extends JComboBox<T> {
 	public void setContent(Collection<T> content) {
 		Utilities.requireNonNull(content, "content");
 		this.content = content;
-		refreshContent();
+		refreshContent(true);
 	}
 	
-	public void refreshContent() {
+	public void refreshContent(boolean keepCurrentItemSelected) {
+		Object selected = getSelectedItem();
 		removeAllItems();
 		if (comparator == null)
 			for (T item : content)
@@ -66,6 +67,10 @@ public class ContentComboBox<T extends Id> extends JComboBox<T> {
 			for (T item : input)
 				addItem(item);
 		}
+		if (keepCurrentItemSelected && containsItem(selected))
+			setSelectedItem(selected);
+		else
+			setSelectedIndex(0);
 		repaint();
 	}
 	
@@ -79,9 +84,9 @@ public class ContentComboBox<T extends Id> extends JComboBox<T> {
 	/**
 	 * @param comparator the comparator to set
 	 */
-	public void setComparator(Comparator<T> comparator) {
+	public void setComparator(Comparator<T> comparator, boolean keepCurrentItemSelected) {
 		this.comparator = comparator;
-		refreshContent();
+		refreshContent(keepCurrentItemSelected);
 	}
 
 }

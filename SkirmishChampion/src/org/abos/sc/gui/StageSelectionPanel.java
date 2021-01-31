@@ -114,11 +114,7 @@ public class StageSelectionPanel extends JPanel {
 	}
 	
 	public void refreshFandoms(Fandom oldFandom, Region oldRegion, Stage oldStage) {
-		fandomSelector.refreshContent();
-		if (fandomSelector.containsItem(oldFandom))
-			fandomSelector.setSelectedItem(oldFandom);
-		else
-			fandomSelector.setSelectedIndex(0);
+		fandomSelector.refreshContent(true);
 		refreshRegions(oldRegion, oldStage);
 	}
 	

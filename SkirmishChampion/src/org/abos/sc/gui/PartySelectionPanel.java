@@ -70,9 +70,8 @@ public class PartySelectionPanel extends JPanel {
 		this.comparator = comparator;
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
-				positionSelector[row][col].setComparator(comparator);
+				positionSelector[row][col].setComparator(comparator, positionCheckBox[row][col].isSelected());
 			}
-		resetFormation();
 	}
 	
 	/**
@@ -125,7 +124,6 @@ public class PartySelectionPanel extends JPanel {
 					positionCheckBox[row][col].setSelected(true);
 					assert positionSelector[row][col].containsItem(currentCharacter);
 					positionSelector[row][col].setSelectedItem(currentCharacter);
-					
 				}
 			}
 	}
@@ -180,11 +178,7 @@ public class PartySelectionPanel extends JPanel {
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
 				companion = (Companion)positionSelector[row][col].getSelectedItem();
-				positionSelector[row][col].refreshContent();
-				if (positionSelector[row][col].containsItem(companion))
-					positionSelector[row][col].setSelectedItem(companion);
-				else
-					positionSelector[row][col].setSelectedIndex(0);
+				positionSelector[row][col].refreshContent(true);
 			}
 	}
 	
