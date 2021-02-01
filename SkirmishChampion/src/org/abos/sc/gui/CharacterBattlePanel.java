@@ -114,7 +114,7 @@ public class CharacterBattlePanel extends JPanel {
 			characterHealthLabel.setText("");
 		}
 		else {
-			imagePanel.loadImageLazy(GUIUtilities.getCharacterImagesPath().resolve(character.getId()+".png"));
+			imagePanel.loadImageLazy(GUIUtilities.getCharacterImagesPath().resolve(character.getFandomId()).resolve(character.getId()+".png"));
 			characterLabel.setText(character.toString());
 			characterHealthLabel.setText(character.healthToString());
 		}
