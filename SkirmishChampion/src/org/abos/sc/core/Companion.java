@@ -127,6 +127,7 @@ public class Companion extends Character {
 		}
 		s.append("Level: ");
 		s.append(getLevel());
+		s.append("<br>");
 		s.append("CR: ");
 		s.append(challengeRating());
 		s.append("</html>");
