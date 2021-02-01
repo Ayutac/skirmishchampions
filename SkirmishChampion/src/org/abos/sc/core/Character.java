@@ -137,6 +137,14 @@ public class Character extends CharacterBase {
 		return new Character(this);
 	}
 	
+	/**
+	 * Generates a hash code for this instance, taking into account all fields. It's guarantied that
+	 * the hash codes of two character are equal if the characters are equal. This message
+	 * calls {@link CharacterBase#hashCode()}.
+	 * @return a hash code for this character
+	 * @see #equals(Object)
+	 * @see CharacterBase#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -146,6 +154,18 @@ public class Character extends CharacterBase {
 		return result;
 	}
 
+	/**
+	 * Checks if the specified object is the same as this character, i.e. the other object
+	 * must be or inherit from {@link Character}, be the same class as the object this method is called from
+	 * and all its <code>Character</code> fields must be the same as the fields of this character
+	 * to return <code>true</code>. The underlying array of damages is compared by values, not reference, as well.
+	 * This method calls {@link CharacterBase#equals(Object)}.
+	 * If the other object is equal to this character, then their hash codes return the same number, if called on <code>Character</code>.
+	 * @param obj the object to check
+	 * @return <code>true</code> if this character is equal to the object, else <code>false</code>.
+	 * @see #hashCode()
+	 * @see CharacterBase#equals(Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

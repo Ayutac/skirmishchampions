@@ -380,6 +380,12 @@ public class CharacterBase implements IdCloneable, Name {
 		return new CharacterBase(this);
 	}
 	
+	/**
+	 * Generates a hash code for this instance, taking into account all fields. It's guarantied that
+	 * the hash codes of two character bases are equal if the character bases are equal.
+	 * @return a hash code for this character base
+	 * @see #equals(Object)
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -394,6 +400,16 @@ public class CharacterBase implements IdCloneable, Name {
 		return result;
 	}
 
+	/**
+	 * Checks if the specified object is the same as this character base, i.e. the other object
+	 * must be or inherit from {@link CharacterBase}, be the same class as the object this method is called from
+	 * and all its <code>CharacterBase</code> fields must be the same as the fields of this character base
+	 * to return <code>true</code>. The underlying arrays of affiliations and primary stats are compared by values, not reference, as well.
+	 * If the other object is equal to this character base, then their hash codes return the same number, if called on <code>CharacterBase</code>.
+	 * @param obj the object to check
+	 * @return <code>true</code> if this character base is equal to the object, else <code>false</code>.
+	 * @see #hashCode()
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -432,9 +448,13 @@ public class CharacterBase implements IdCloneable, Name {
 	/**
 	 * Saves the character base to a string builder.
 	 * @param s the string builder to append to
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
 	 * @see #toSaveString()
+	 * @see #parse(String, boolean)
 	 */
 	public void toSaveString(StringBuilder s) {
+		Utilities.requireNonNull(s, "s");
+		// if changed, also change the parse function and the documentation of it
 		s.append(id);
 		s.append(';');
 		s.append(name);
@@ -453,6 +473,8 @@ public class CharacterBase implements IdCloneable, Name {
 	/**
 	 * Returns the character base as a string for saving purposes, i.e. in the form needed for {@link #parse(String)}.
 	 * @return the character base as a string for saving purposes
+	 * @see #toSaveString(StringBuilder)
+	 * @see #parse(String, boolean)
 	 */
 	public String toSaveString() {
 		StringBuilder s = new StringBuilder();
