@@ -39,9 +39,21 @@ public class Companion extends Character {
 	 * @param level
 	 * @throws NullPointerException If <code>base</code> refers to <code>null</code>.
 	 */
-	public Companion(CharacterBase base, int level) {
+	public Companion(CharacterBase base, int level, boolean healUp) {
 		super(base);
 		this.level = level;
+		if (healUp)
+			restore();
+	}
+	
+	/**
+	 * 
+	 * @param base
+	 * @param level
+	 * @throws NullPointerException If <code>base</code> refers to <code>null</code>.
+	 */
+	public Companion(CharacterBase base, int level) {
+		this(base, level, true);
 	}
 	
 	/**

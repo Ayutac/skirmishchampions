@@ -1,26 +1,17 @@
 package org.abos.sc.gui;
 
 import java.awt.BorderLayout;
-import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.plaf.basic.BasicDesktopPaneUI;
 
 import org.abos.sc.core.BattleEncounter;
+import org.abos.sc.core.BattleFormation;
 import org.abos.sc.core.BattleStrategy;
-import org.abos.sc.core.Fandom;
 import org.abos.sc.core.Player;
-import org.abos.sc.core.Region;
 import org.abos.sc.core.Stage;
 import org.abos.util.Utilities;
 import org.abos.util.gui.GUIUtilities;
@@ -145,7 +136,7 @@ public class StageSelectionFrame extends JFrame {
 		Stage stage = selectionPanel.getStage();
 		stageBattleFrame.setStage(stage);
 		stage.engageStage();
-		stageBattleFrame.setFirstParty(new BattleEncounter(player.getParty(), BattleStrategy.createConcentratedAssault()));
+		stageBattleFrame.setFirstParty(new BattleEncounter((BattleFormation)player.getParty().clone(), BattleStrategy.createConcentratedAssault()));
 		stageBattleFrame.setSecondParty(stage.getEncounter());
 		showSubframe(stageBattleFrame);
 	}
