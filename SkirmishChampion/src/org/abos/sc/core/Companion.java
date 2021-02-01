@@ -1,5 +1,7 @@
 package org.abos.sc.core;
 
+import java.time.Duration;
+
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.ParsedIdFoundException;
@@ -16,6 +18,14 @@ import org.abos.util.Utilities;
  * @see Character
  */
 public class Companion extends Character {
+	
+	/**
+	 * How long level ups take. <code>LEVEL_UP_DURATION[level]</code> returns the time needed for a companion 
+	 * to go from <code>level</code> to level <code>level+1</code>. Since companions usually start at level 1,
+	 * <code>LEVEL_UP_DURATION[0]</code> is set to {@link Duration#ZERO}.
+	 */
+	public static final Duration[] LEVEL_UP_DURATION = new Duration[]
+			{Duration.ZERO, Duration.ofHours(1L), Duration.ofDays(1L), Duration.ofDays(3L), Duration.ofDays(7L)};
 	
 	/**
 	 * The companion's level.
