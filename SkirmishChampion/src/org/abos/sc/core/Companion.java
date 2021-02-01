@@ -100,38 +100,15 @@ public class Companion extends Character {
 	}
 	
 	/**
-	 * Creates a string listening this companion's properties one under the other,
-	 * @return a string with this companion's properties in HTML
+	 * {@inheritDoc} Level included.
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
 	 */
-	public String toHintString() {
-		StringBuilder s = new StringBuilder("<html>");
-		for (StatsPrimary ps : PRIMARY_STATS) {
-			if (ps == getAttackStat())
-				s.append("<u>");
-			s.append(ps.getDisplayName());
-			s.append(": ");
-			s.append(getPrimaryStat(ps));
-			if (ps == getAttackStat())
-				s.append("</u>");
-			s.append("<br>");
-		}
-		for (StatsSecondary ss : SECONDARY_STATS) {
-			if (ss == getDamageStat())
-				s.append("<u>");
-			s.append(ss.getDisplayName());
-			s.append(": ");
-			s.append(getSecondaryStat(ss));
-			if (ss == getDamageStat())
-				s.append("</u>");
-			s.append("<br>");
-		}
+	@Override
+	protected void innerHintString(StringBuilder s) {
+		super.innerHintString(s);
+		s.append("<br>");
 		s.append("Level: ");
 		s.append(getLevel());
-		s.append("<br>");
-		s.append("CR: ");
-		s.append(challengeRating());
-		s.append("</html>");
-		return s.toString();
 	}
 	
 	public static Companion parse(String s, Player player) {

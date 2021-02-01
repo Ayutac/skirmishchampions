@@ -190,6 +190,49 @@ public class Character extends CharacterBase {
 	public String toBattleStatString() {
 		return getName()+" "+healthToString();
 	}
+	
+	/**
+	 * Writes the text within the HTML tags of {@link #toHintString()} in the provided string builder.
+	 * @param s the string builder to append the inner html to
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 */
+	protected void innerHintString(StringBuilder s) {
+		Utilities.requireNonNull(s, "s");
+		for (StatsPrimary ps : PRIMARY_STATS) {
+			if (ps == getAttackStat())
+				s.append("<u>");
+			s.append(ps.getDisplayName());
+			s.append(": ");
+			s.append(getPrimaryStat(ps));
+			if (ps == getAttackStat())
+				s.append("</u>");
+			s.append("<br>");
+		}
+		for (StatsSecondary ss : SECONDARY_STATS) {
+			if (ss == getDamageStat())
+				s.append("<u>");
+			s.append(ss.getDisplayName());
+			s.append(": ");
+			s.append(getSecondaryStat(ss));
+			if (ss == getDamageStat())
+				s.append("</u>");
+			s.append("<br>");
+		}
+		s.append("CR: ");
+		s.append(challengeRating());
+	}
+	
+	/**
+	 * Creates a string listening some of this character's properties one under the other,
+	 * @return a string with this characters's properties in HTML
+	 * @see #innerHintString(StringBuilder)
+	 */
+	public String toHintString() {
+		StringBuilder s = new StringBuilder("<html>");
+		innerHintString(s);
+		s.append("</html>");
+		return s.toString();
+	}
 
 	/**
 	 * Returns the name of this character for displaying purposes. This is identical to calling {@link #getName()}.

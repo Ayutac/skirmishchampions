@@ -111,11 +111,13 @@ public class CharacterBattlePanel extends JPanel {
 		if (character == null) {
 			imagePanel.setImage(null);
 			characterLabel.setText("");
+			characterLabel.setToolTipText(null);
 			characterHealthLabel.setText("");
 		}
 		else {
 			imagePanel.loadImageLazy(GUIUtilities.getCharacterImagesPath().resolve(character.getFandomId()).resolve(character.getId()+".png"));
 			characterLabel.setText(character.toString());
+			characterLabel.setToolTipText(character.toHintString());
 			characterHealthLabel.setText(character.healthToString());
 		}
 		repaint();
