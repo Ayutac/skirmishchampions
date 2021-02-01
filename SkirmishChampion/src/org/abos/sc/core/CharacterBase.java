@@ -1,19 +1,16 @@
 package org.abos.sc.core;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.BinaryOperator;
 
-import org.abos.util.Id;
 import org.abos.util.IdCloneable;
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Name;
+import org.abos.util.ParsedIdFoundException;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
 
@@ -47,21 +44,21 @@ public class CharacterBase implements IdCloneable, Name {
 	public static final int PARSE_PARAM_NUM = 6 + 1; 
 
 	/**
-	 * the separator char between primary stats for saving/parsing
+	 * The separator char between primary stats for saving/parsing.
 	 * @see #toSaveString()
 	 * @see #parse(String, boolean)
 	 */
 	public static final char PRIMARY_SEPARATOR = ',';
 	
 	/**
-	 * the separator char between different affiliations for saving/parsing
+	 * The separator char between different affiliations for saving/parsing.
 	 * @see #toSaveString()
 	 * @see #parse(String, boolean)
 	 */
 	public static final char AFFILIATION_SEPARATOR = ',';
 	
 	/**
-	 * a registry for character bases
+	 * The global registry for character bases.
 	 * @see #parse(String)
 	 * @see #loadCharactersFromFile(Path)
 	 */
@@ -112,18 +109,19 @@ public class CharacterBase implements IdCloneable, Name {
 	protected final StatsSecondary preferredDamageStat;
 
 	/**
-	 * 
-	 * @param id
-	 * @param name
-	 * @param fandomId
-	 * @param affiliations
-	 * @param primaryStats
-	 * @param preferredAttackStat
-	 * @param preferredDamageStat
-	 * @param register
+	 * Creates a new character base with the specified parameters.
+	 * @param id The ID of the character. Should be unique insofar <code>register</code> is set to <code>true</code>, or an exception will be thrown.
+	 * @param name the display name of the character
+	 * @param fandomId the ID of the fandom associated to this character
+	 * @param affiliations An array of affiliations for this character. <code>null</code> is treaded as empty array.
+	 * @param primaryStats an array containing the primary stats for this character
+	 * @param preferredAttackStat the character's preferred primary stat to attack with
+	 * @param preferredDamageStat the character's preferred secondary stat to do damage to
+	 * @param register If this character should be registered in {@link #CHARACTERS} after construction. Will throw an exception if this character's ID is already registered there.
 	 * @throws NullPointerException If any argument except <code>affiliations</code> refers to <code>null</code>.
 	 * @throws IllegalArgumentException If the length of <code>primaryStats</code> doesn't match the number
 	 * of the different primary stats, more specifically {@link StatsPrimary#SIZE}.
+	 * @throws IllegalStateException If <code>register</code> is <code>true</code> but the <code>id</code> is already registered in {@link #CHARACTERS}.
 	 */
 	public CharacterBase(String id, String name, String fandomId, String[] affiliations, int[] primaryStats,
 			StatsPrimary preferredAttackStat, StatsSecondary preferredDamageStat, boolean register) {
@@ -214,6 +212,27 @@ public class CharacterBase implements IdCloneable, Name {
 	public int getPrimaryStat(int index) {
 		return primaryStats[index]; // throws AIOOBE
 	}
+	
+	/**
+	 * Returns the sum of all primary stats.
+	 * @return the sum of all primary stats
+	 */
+	public int sumPrimaryStats() {
+		int sum = 0;
+		for (StatsPrimary stat : StatsPrimary.values()) {
+			sum += getPrimaryStat(stat); // it's important we call this method for overriding later
+		}
+		return sum;
+	}
+	
+	/**
+	 * Returns the average of all primary stats (with integer division).
+	 * @return the average of all primary stats (within 0.5 accurancy)
+	 */
+	public int averagePrimaryStats() {
+		assert StatsPrimary.SIZE != 0;
+		return sumPrimaryStats() / StatsPrimary.SIZE;
+	}
 
 	/**
 	 * Returns the value of the specified secondary stat.
@@ -246,6 +265,27 @@ public class CharacterBase implements IdCloneable, Name {
 	public int getSecondaryStat(int index) {
 		return getSecondaryStat(SECONDARY_STATS[index]);
 	}
+	
+	/**
+	 * Returns the sum of all secondary stats.
+	 * @return the sum of all secondary stats
+	 */
+	public int sumSecondaryStats() {
+		int sum = 0;
+		for (StatsSecondary stat : StatsSecondary.values()) {
+			sum += getSecondaryStat(stat);
+		}
+		return sum;
+	}
+	
+	/**
+	 * Returns the average of all secondary stats (with integer division).
+	 * @return the average of all secondary stats (within 0.5 accurancy)
+	 */
+	public int averageSecondaryStats() {
+		assert StatsSecondary.SIZE != 0;
+		return sumSecondaryStats() / StatsSecondary.SIZE;
+	}
 
 	/**
 	 * Returns the character's preferred primary stat to attack with.
@@ -268,10 +308,12 @@ public class CharacterBase implements IdCloneable, Name {
 	 * Returns the current attack power of the specified primary stat.
 	 * @param type the primary stat to return the attack power of
 	 * @return the current attack power of the specified primary stat
+	 * @throws NullPointerException If <code>type</code> refers to <code>null</code>.
 	 * @see #getPrimaryStat(StatsPrimary)
 	 * @see #getAttackPower()
 	 */
 	public int getAttackPower(StatsPrimary type) {
+		Utilities.requireNonNull(type, "type");
 		return getPrimaryStat(type) / 10;
 	}
 	
@@ -297,6 +339,21 @@ public class CharacterBase implements IdCloneable, Name {
 		return 10L*Math.round(5000d / getPrimaryStat(StatsPrimary.SPEED));
 	}
 	
+	/**
+	 * This method returns a challenge rating for this character. Characters tougher to beat are supposed to have a higher challenge rating.
+	 * <br>
+	 * <br>
+	 * This method is central for game balancing, so it may change a lot between versions. Hence no documention of the exact calculation here.
+	 * @return a challenge rating for this character
+	 */
+	public int challengeRating() {
+		return (getPrimaryStat(getPreferredAttackStat())+2*getPrimaryStat(StatsPrimary.SPEED)+sumSecondaryStats())/(3*(1+StatsSecondary.SIZE));
+	}
+	
+	/**
+	 * Returns a deep copy of this character base by calling the copy constructor.
+	 * @see #CharacterBase(CharacterBase)
+	 */
 	@Override
 	public Object clone() {
 		return new CharacterBase(this);
@@ -392,9 +449,23 @@ public class CharacterBase implements IdCloneable, Name {
 	}
 	
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * Parses a string representation of a character base into a object.
+	 * The format is<br>
+	 * "<code>ID;name;fandomID;affiliations;primaryStats;preferredAttack;preferredDamage</code>"<br>
+	 * where <code>affiliations</code> is a list of strings separated by {@value #AFFILIATION_SEPARATOR} without whitespaces,
+     * <code>primaryStats</code> is a list of {@link StatsPrimary#SIZE} many integers separated by {@value #PRIMARY_SEPARATOR} without whitespaces,
+     * and <code>preferredAttack</code> and <code>preferredDamage</code> are valid indices of a {@link StatsPrimary} and {@link StatsSecondary} respectively.
+	 * @param s the string to parse
+	 * @param register If the parsed character should be registered in {@link #CHARACTERS} after parsing. 
+	 * Will throw an exception if this character could be parsed successfully, but their ID is already registered there.
+	 * @return a character base matching the string
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @throws IllegalNumberOfArgumentsException If the number of arguments in the string separated by <code>;</code> or the number of specified primary stats is wrong.
+	 * @throws IllegalArgumentTypeException If any primary stat value or one of the two indices at the end is not a number.
+	 * @throws IllegalArgumentRangeException If any of the two indices at the end is out of bounds.
+	 * @throws ParsedIdFoundException If <code>register</code> is set to <code>true</code> and the string is parsed successfully, but the ID is already registered in {@link #CHARACTERS}.
+	 * @see #CharacterBase(String, String, String, String[], int[], StatsPrimary, StatsSecondary, boolean)
+	 * @see #toSaveString()
 	 */
 	public static CharacterBase parse(String s, boolean register) {
 		Utilities.requireNonNull(s, "s");
@@ -408,13 +479,16 @@ public class CharacterBase implements IdCloneable, Name {
 		catch (NumberFormatException ex) {
 			throw new IllegalArgumentTypeException(ex);
 		}
-		if (primaryStats.length != PRIMARY_STATS.length)
+		if (primaryStats.length != StatsPrimary.SIZE)
 			throw new IllegalNumberOfArgumentsException(String.format("Character \"%s\" to parse contained %d primary stats instead of %d", s, primaryStats.length, PRIMARY_STATS.length));
 		StatsPrimary attackStat  = null;
 		StatsSecondary damageStat = null;
 		try {
 			attackStat = PRIMARY_STATS[Integer.parseInt(parts[5])];
 			damageStat = SECONDARY_STATS[Integer.parseInt(parts[6])];
+			return new CharacterBase(parts[0], parts[1], parts[2], 
+					parts[3].isEmpty() ? null : parts[3].split(String.valueOf(AFFILIATION_SEPARATOR)), 
+					primaryStats, attackStat, damageStat, register);
 		}
 		catch (NumberFormatException ex) {
 			throw new IllegalArgumentTypeException(ex);
@@ -422,11 +496,28 @@ public class CharacterBase implements IdCloneable, Name {
 		catch (ArrayIndexOutOfBoundsException ex) {
 			throw new IllegalArgumentRangeException(ex);
 		}
-		return new CharacterBase(parts[0], parts[1], parts[2], 
-				parts[3].isEmpty() ? null : parts[3].split(String.valueOf(AFFILIATION_SEPARATOR)), 
-				primaryStats, attackStat, damageStat, register);
+		catch (IllegalStateException ex) {
+			throw new ParsedIdFoundException(ex);
+		}
 	}
 	
+	/**
+	 * Parses a string representation of a character base into a object.
+	 * The format is<br>
+	 * "<code>ID;name;fandomID;affiliations;primaryStats;preferredAttack;preferredDamage</code>"<br>
+	 * where <code>affiliations</code> is a list of strings separated by {@value #AFFILIATION_SEPARATOR} without whitespaces,
+     * <code>primaryStats</code> is a list of {@link StatsPrimary#SIZE} many integers separated by {@value #PRIMARY_SEPARATOR} without whitespaces,
+     * and <code>preferredAttack</code> and <code>preferredDamage</code> are valid indices of a {@link StatsPrimary} and {@link StatsSecondary} respectively.
+	 * @param s the string to parse
+	 * @return a character base matching the string
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @throws IllegalNumberOfArgumentsException If the number of arguments in the string separated by <code>;</code> or the number of specified primary stats is wrong.
+	 * @throws IllegalArgumentTypeException If any primary stat value or one of the two indices at the end is not a number.
+	 * @throws IllegalArgumentRangeException If any of the two indices at the end is out of bounds.
+	 * @throws ParsedIdFoundException If the string is parsed successfully, but the ID is already registered in {@link #CHARACTERS}.
+	 * @see #CharacterBase(String, String, String, String[], int[], StatsPrimary, StatsSecondary, boolean)
+	 * @see #toSaveString()
+	 */
 	public static CharacterBase parse(String s) {
 		return parse(s, true);
 	}
@@ -535,7 +626,16 @@ public class CharacterBase implements IdCloneable, Name {
 		return startVals;
 	}
 	
+	/**
+	 * Creates a comparator for character bases or subclasses thereof, sorting them by a specified primary type
+	 * from smallest to biggest value. <code>null</code> objects are allowed and sorted as smaller than any non <code>null</code> object.
+	 * @param <T> a subclass of {@link CharacterBase}
+	 * @param type the primary stat to create a comparator for
+	 * @return a comparator for the specified primary stat
+	 * @throws NullPointerException If <code>type</code> refers to <code>null</code>.
+	 */
 	public static <T extends CharacterBase> Comparator<T> createPrimaryComparator(StatsPrimary type) {
+		Utilities.requireNonNull(type, "type");
 		return new Comparator<T>() {
 			@Override public int compare(T o1, T o2) {
 				if (o1 == o2)
@@ -553,7 +653,16 @@ public class CharacterBase implements IdCloneable, Name {
 		};
 	}
 	
+	/**
+	 * Creates a comparator for character bases or subclasses thereof, sorting them by a specified secondary type
+	 * from smallest to biggest value. <code>null</code> objects are allowed and sorted as smaller than any non <code>null</code> object.
+	 * @param <T> a subclass of {@link CharacterBase}
+	 * @param type the secondary stat to create a comparator for
+	 * @return a comparator for the specified secondary stat
+	 * @throws NullPointerException If <code>type</code> refers to <code>null</code>.
+	 */
 	public static <T extends CharacterBase> Comparator<T> createSecondaryComparator(StatsSecondary type) {
+		Utilities.requireNonNull(type, "type");
 		return new Comparator<T>() {
 			@Override public int compare(T o1, T o2) {
 				if (o1 == o2)

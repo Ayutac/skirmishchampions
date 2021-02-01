@@ -1,6 +1,7 @@
 package org.abos.sc.core;
 
 import org.abos.util.IllegalArgumentRangeException;
+import org.abos.util.ParsedIdFoundException;
 import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Utilities;
 
@@ -301,8 +302,11 @@ public class Stage extends StageBase {
 		if (base == null)
 			throw new ParsedIdNotFoundException(String.format("Unknown stage ID %s!", id));
 		Stage stage = new Stage(base, start != 0, end != s.length());
-		if (player != null)
+		if (player != null) {
+			if (player.getStages().containsId(stage.getId()))
+				throw new ParsedIdFoundException("Stage "+stage.getId()+" already registered with this player!");
 			player.getStages().add(stage);
+		}
 		return stage;
 	}
 

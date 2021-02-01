@@ -1,5 +1,6 @@
 package org.abos.sc.core;
 
+import org.abos.util.ParsedIdFoundException;
 import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
@@ -63,8 +64,11 @@ public class Fandom extends FandomBase {
 		if (base == null)
 			throw new ParsedIdNotFoundException("Fandom ID + "+s+" couldn't be found in the fandom registry!");
 		Fandom fandom = new Fandom(base);
-		if (player != null)
+		if (player != null) {
+			if (player.getFandoms().containsId(fandom.getId()))
+				throw new ParsedIdFoundException("Fandom "+fandom.getId()+" already registered with this player!");
 			player.getFandoms().add(fandom);
+		}
 		return fandom;
 	}
 	

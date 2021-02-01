@@ -51,7 +51,7 @@ public class Registry<T extends Id> implements Collection<T> {
 	 * Creates a registry with the specified elements.
 	 * @param objects the elements to add to the registry
 	 * @throws NullPointerException if any object to add or their ID refers to <code>null</code>.
-	 * @throws IllegalArgumentException If there are multiple objects with the same ID.
+	 * @throws IllegalStateException If there are multiple objects with the same ID.
 	 */
 	@SafeVarargs
 	public Registry(T... objects) {
@@ -66,14 +66,14 @@ public class Registry<T extends Id> implements Collection<T> {
 	 * @param item the item to be added
 	 * @return <code>true</code> as this registry is always changed when no exception is thrown
 	 * @throws NullPointerException If <code>item</code> or its ID refers to <code>null</code>.
-	 * @throws IllegalArgumentException If the ID is already within the registry.
+	 * @throws IllegalStateException If the ID is already within the registry.
 	 */
 	public boolean add(T item) {
 		Utilities.requireNonNull(item, "item");
 		String id = item.getId();
 		Utilities.requireNonNull(id, "ID of item");
 		if (content.containsKey(id))
-			throw new IllegalArgumentException("ID "+id+" has already been registered!");
+			throw new IllegalStateException("ID "+id+" has already been registered!");
 		content.put(id, item);
 		return true;
 	}
@@ -270,7 +270,7 @@ public class Registry<T extends Id> implements Collection<T> {
 	 * otherwise <code>true</code> (as the registry will always be changed unless an exception is thrown).
 	 * @throws NullPointerException If <code>c</code> contains <code>null</code> or an element with
 	 * <code>null</code> as an ID.
-	 * @throws IllegalArgumentException If <code>c</code> contains multiple elements with the same ID
+	 * @throws IllegalStateException If <code>c</code> contains multiple elements with the same ID
 	 * or an element with an ID already registered in this registry.
 	 */
 	@Override

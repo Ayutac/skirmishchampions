@@ -2,6 +2,7 @@ package org.abos.sc.core;
 
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalNumberOfArgumentsException;
+import org.abos.util.ParsedIdFoundException;
 import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Utilities;
 
@@ -131,14 +132,17 @@ public class Companion extends Character {
 			throw new ParsedIdNotFoundException(String.format("Unknown character ID %s!", params[0]));
 		int level = 0;
 		try {
-			level = Integer.valueOf(params[1]);
+			level = Integer.valueOf(params[1]); // throws NFE
 		}
 		catch (NumberFormatException ex) {
 			throw new IllegalArgumentRangeException(String.format("Level of %s is invalid: %s!", params[0], params[1]), ex);
 		}
 		Companion companion = new Companion(base,level);
-		if (player != null)
+		if (player != null) {
+			if (player.getCompanions().containsId(companion.getId()))
+				throw new ParsedIdFoundException("Companion "+companion.getId()+" already registered with this player!");
 			player.getCompanions().add(companion);
+		}
 		return companion;
 	}
 	
