@@ -12,30 +12,37 @@ import org.abos.util.Utilities;
 public class BattleEncounter implements Cloneable {
 	
 	/**
-	 * the separator char between the formation and strategy of an encounter in string form
+	 * The separator char between the formation and strategy of an encounter in string form.
 	 * @see #FIELD_SEPARATOR_REGEX
 	 * @see #toSaveString()
 	 */
 	public static final char FIELD_SEPARATOR = '|';
 	
 	/**
-	 * a regex compatible String version of {@link #FIELD_SEPARATOR}
+	 * A regex compatible String version of {@link #FIELD_SEPARATOR}.
 	 * @see #parse(String)
 	 */
 	public static final String FIELD_SEPARATOR_REGEX = "\\|";
 
 	/**
-	 * the underlying formation
+	 * The underlying formation.
 	 * @see #getFormation()
 	 */
 	protected BattleFormation formation;
 	
 	/**
-	 * the underlying strategy
+	 * The underlying strategy.
 	 * @see #getStrategy()
 	 */
 	protected BattleStrategy strategy;
 
+	/**
+	 * Creates a new battle encounter from a given formation and strategy. Note that the formation and
+	 * strategy are copied by reference.
+	 * @param formation the formation for this encounter
+	 * @param strategy the strategy for this encounter
+	 * @throws NullPointerException If <code>formation</code> or <code>strategy</code> refers to <code>null</code>.
+	 */
 	public BattleEncounter(BattleFormation formation, BattleStrategy strategy) {
 		Utilities.requireNonNull(formation, "formation");
 		Utilities.requireNonNull(strategy, "strategy");
@@ -145,28 +152,60 @@ public class BattleEncounter implements Cloneable {
 		return true;
 	}
 	
+	/**
+	 * Returns a deep clone of this encounter.
+	 * @return a deep clone of this encounter
+	 * @see BattleFormation#clone()
+	 * @see BattleStrategy#clone()
+	 */
 	@Override
 	public Object clone() {
 		return new BattleEncounter((BattleFormation)formation.clone(), (BattleStrategy)strategy.clone());
 	}
 	
+	/**
+	 * Saves the battle encounter to a string builder.
+	 * @param s the string builder to append to
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @see #toSaveString()
+	 * @see #parse(String)
+	 */
 	public void toSaveString(StringBuilder s) {
+		Utilities.requireNonNull(s, "s");
+		// if changed, also change the parse function and the documentation of it
 		formation.toSaveString(s);
 		s.append(FIELD_SEPARATOR);
 		strategy.toSaveString(s);
 	}
 	
+	/**
+	 * Returns the battle encounter as a string for saving purposes, i.e. in the form needed for {@link #parse(String)}.
+	 * @return the battle encounter as a string for saving purposes
+	 * @see #toSaveString(StringBuilder)
+	 * @see #parse(String)
+	 */
 	public String toSaveString() {
 		StringBuilder s = new StringBuilder();
 		toSaveString(s);
 		return s.toString();
 	}
 
+	/**
+	 * Returns a string representation of the battle encounter. This is identical to
+	 * calling {@link #toSaveString()}.
+	 * @return a string representation of the battle encounter
+	 */
 	@Override
 	public String toString() {
-		return "BattleEncounter [formation=" + formation + ", strategy=" + strategy + "]";
+		return toSaveString();
 	}
 	
+	/**
+	 * Parses a string representation of a battle encounter into a object.
+	 * The format is "<code>formation{@value #FIELD_SEPARATOR}strategy</code>".
+	 * @param s the string to parse
+	 * @return a battle encounter matching the string
+	 */
 	public static BattleEncounter parse(String s) {
 		Utilities.requireNonNull(s, "s");
 		String[] split = s.split(FIELD_SEPARATOR_REGEX);

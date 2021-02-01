@@ -100,7 +100,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 	private final int size;
 	
 	/**
-	 * Creates a new battle formation with the given characters.
+	 * Creates a new battle formation with the given characters. The characters are copied by reference, the array is not.
 	 * @param characters A two-dimensional array of characters in this formation, non <code>null</code>, rectangular and must contain at least one non <code>null</code> entry (formations can't be empty).
 	 * <code>character[i][j]</code> is treated as the character on row <code>i</code> and column <code>j</code>, where <code>i == 0</code> indicates the front and <code>j == 0</code> indicates the left flank of the formation.
 	 * @throws NullPointerException If <code>characters</code> or any of its one-dimensional subarrays refers to <code>null</code>.
@@ -197,8 +197,11 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 
 
 	/**
-	 * Returns a hash code value for this formation.
+	 * Returns a hash code value for this formation, computed based on the hash code values
+	 * of the underlying characters. Two equal formations will return the same hash code value.
 	 * @return a hash code value for this formation
+	 * @see #equals(Object)
+	 * @see Character#hashCode()
 	 */
 	@Override
 	public int hashCode() {
@@ -208,6 +211,13 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 		return result;
 	}
 
+	/**
+	 * Tests if another object is equal to this encounter. Two encounters are equal if and only if
+	 * their underlying characters are equal.
+	 * @return <code>true</code> if the other object is an encounter equal to this one, else <code>false</code>
+	 * @see #hashCode()
+	 * @see Character#equals(Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -222,6 +232,11 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 		return true;
 	}
 	
+	/**
+	 * Returns a deep clone of this formation.
+	 * @return a deep clone of this formation
+	 * @see Character#clone()
+	 */
 	@Override
 	public Object clone() {
 		Character[][] clonedChars = new Character[ROW_NUMBER][COL_NUMBER];
@@ -232,35 +247,67 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 		return new BattleFormation(clonedChars);
 	}
 	
+	/**
+	 * Saves the battle formation to a string builder.
+	 * @param s the string builder to append to
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @see #toSaveString()
+	 * @see #parse(String)
+	 */
 	public void toSaveString(StringBuilder s) {
+		Utilities.requireNonNull(s, "s");
+		// if changed, also change the parse function and the documentation of it
 		for (int row = 0; row < ROW_NUMBER; row++)
 			for (int col = 0; col < COL_NUMBER; col++) {
 				if (characters[row][col] != null)
 					s.append(characters[row][col].getId());
-				// note that the last separator gets ignored by String.split
+				// note that the last separator gets ignored by String#split()
 				s.append(CHARACTER_SEPARATOR);
 			}
 	}
 	
+	/**
+	 * Returns the battle formation as a string for saving purposes, i.e. in the form needed for {@link #parse(String)}.
+	 * @return the battle formation as a string for saving purposes
+	 * @see #toSaveString(StringBuilder)
+	 * @see #parse(String)
+	 */
 	public String toSaveString() {
 		StringBuilder s = new StringBuilder();
 		toSaveString(s);
 		return s.toString();
 	}
 
+	/**
+	 * Adds the specified character with their health to the string builder. 
+	 * @param row the row of the character in the formation
+	 * @param col the column of the character in the formation
+	 * @param s the string builder to append to
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @throws ArrayIndexOutOfBoundsException If either <code>row</code> or <code>col</code> is out of bounds.
+	 * @see Character#toBattleStatString()
+	 * @see #toString()
+	 */
 	protected void appendToStringBuilder(int row, int col, StringBuilder s) {
+		Utilities.requireNonNull(s, "s");
 		if (characters[row][col] == null) {
-			s.append("-empty-"); // throws NPE
+			s.append("-empty-");
 			return;
 		}
 		s.append(characters[row][col].toBattleStatString());
 	}
 	
-	@SuppressWarnings("unused")
+	/**
+	 * Returns a string representing this formation, which is especially nice if
+	 * {@link #ROW_NUMBER} equals 2 and {@link #COL_NUMBER} equals 3, else same as
+	 * calling {@link #toSaveString()}.
+	 * @return a string representing this formation
+	 */
 	@Override
 	public String toString() {
-		StringBuilder s = new StringBuilder();
-		if (MAX_CHAR_NUMBER == 6) {
+		// a bit convoluted way to check that ROW == 2 && COL == 3 but this way there is no compiler warning :D
+		if (ROW_NUMBER < COL_NUMBER && Math.min(ROW_NUMBER, COL_NUMBER) == 2 && Math.max(ROW_NUMBER, COL_NUMBER) == 3) {
+			StringBuilder s = new StringBuilder();
 			s.append("Front Left: ");
 			appendToStringBuilder(0, 0, s);
 			s.append("; Front Middle: ");
@@ -273,12 +320,22 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 			appendToStringBuilder(1, 1, s);
 			s.append("; Back Right: ");
 			appendToStringBuilder(1, 2, s);
+			return s.toString();
 		}
 		else
-			toSaveString(s);
-		return s.toString();
+			return toSaveString();
 	}
 	
+	/**
+	 * Creates a battle formation with the first {@value #MAX_CHAR_NUMBER} specified characters. Any additional character will be ignored.
+	 * First the first row will be filled starting from first column, then the second row etc.
+	 * If not enough characters are supplied, the rest will be filled with <code>null</code>.
+	 * @param characters the characters to put into the battle formation
+	 * @return a battle formation with the first {@value #MAX_CHAR_NUMBER} specified characters
+	 * @throws NullPointerException If the array of characters refers to <code>null</code>.
+	 * @throws IllegalArgumentException If no character is given or all characters refer to <code>null</code>.
+	 * @see #BattleFormation(Character[][])
+	 */
 	public static BattleFormation createFormation(Character... characters) {
 		Utilities.requireNonNull(characters, "characters");
 		if (characters.length == 0)
@@ -287,26 +344,26 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 		int index = 0;
 		for (int row = 0; row < ROW_NUMBER; row++) {
 			for (int col = 0; col < COL_NUMBER; col++) {
-				chars[row][col] = characters[index];
-				if (++index >= characters.length)
+				chars[row][col] = characters[index++];
+				if (index >= characters.length)
 					break;
 			}
 			if (index >= characters.length)
 				break;
 		}
-		return new BattleFormation(chars);
+		return new BattleFormation(chars); // throws IAE if all characters are null
 	}
 	
 	/**
 	 * Parses a string representation of a battle formation into a proper formation.
 	 * The formation is given by a list of at least 1 and up to {@value #MAX_CHAR_NUMBER} 
 	 * character IDs, separated by the {@value #CHARACTER_SEPARATOR} character without additional
-	 * whitespaces. A {@link ParseException} will be thrown if the string cannot be parsed correctly.
+	 * whitespaces (a trailing {@value #CHARACTER_SEPARATOR} is allowed). A {@link ParseException} will be thrown if the string cannot be parsed correctly.
 	 * @param s the string to parse
 	 * @return a battle formation matching the string
 	 * @see #toSaveString()
 	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
-	 * @throws IllegalNumberOfArgumentsException If are more than {@value #MAX_CHAR_NUMBER} characters defined.
+	 * @throws IllegalNumberOfArgumentsException If there are more than {@value #MAX_CHAR_NUMBER} characters supplied or none at all.
 	 * @throws ParsedIdNotFoundException If a character ID supplied by the string isn't found in {@link CharacterBase#CHARACTERS}.
 	 */
 	public static BattleFormation parse(String s) {
