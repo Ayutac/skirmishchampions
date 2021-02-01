@@ -4,7 +4,7 @@ package org.abos.util;
  * Thrown when an identifier is parsed and expected not to be known/registered already, but is.
  * @author Sebastian Koch
  * @version %I%
- * @since Skirmish Champions 0.4
+ * @since Skirmish Champions 0.5
  * @see ParseException
  * @see ParsedIdNotFoundException
  */
@@ -13,7 +13,7 @@ public class ParsedIdFoundException extends ParseException {
 	/**
 	 * the serial version UID
 	 */
-	private static final long serialVersionUID = -6458879856207071158L;
+	private static final long serialVersionUID = -3368056881046670577L;
 
 	/**
 	 * Constructs a {@link ParsedIdFoundException} with no detail message.
