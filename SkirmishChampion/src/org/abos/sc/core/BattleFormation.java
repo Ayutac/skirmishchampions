@@ -48,7 +48,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 	 * Provides an iterator over all non <code>null</code> characters in a formation.
 	 * @author Sebastian Koch
 	 * @version %I%
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	protected class BattleFormationIterator implements Iterator<Character> {
 		
