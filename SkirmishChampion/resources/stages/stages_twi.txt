@@ -31,9 +31,14 @@ twi_esthelm;Esthelm;twi_nizril;twi_stables,twi_high_passes,twi_celum;twi_twi;;tw
 twi_celum;Celum;twi_nizril;twi_invrisil,twi_high_passes,twi_esthelm;;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
 twi_high_passes;High Passes;twi_nizril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
 twi_bloodfields;Bloodfields;twi_nizril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
-twi_invrisil;Invrisil;twi_nizril;twi_celum,twi_invrisil_ag;;;twi_bethal,twi_magnolia,twi_pryde|ROW
+twi_invrisil;Invrisil;twi_nizril;twi_celum,twi_invrisil_ag,twi_first_landing;;;twi_bethal,twi_magnolia,twi_pryde|ROW
 twi_invrisil_ag;Invrisil's Adventurer's Guild;twi_nizril;twi_invrisil;;;twi_todi,twi_jewel|ROW
+twi_first_landing;First Landing;twi_nizril;twi_invrisil,twi_elvallian;twi_baleros;;twi_erin|ROW
+twi_reizmelt;Reizmelt;twi_nizril;twi_invrisil;;;twi_erin|ROW
+twi_riverfarm;Riverfarm;twi_nizril;twi_invrisil;;;twi_erin|ROW
 // Southern Izril
 twi_pallass_door;Pallass' Door;twi_sizril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
 twi_pallass;Pallass;twi_sizril;twi_saliss_lab,twi_pallass_door;;;,twi_noass,,twi_relz|ROW
 twi_saliss_lab;Saliss' laboratory;twi_sizril;twi_pallass;;;,twi_saliss|COL
+// Baleros
+twi_elvallian;Elvallian;twi_baleros;twi_first_landing;twi_nizril;;twi_erin|ROW
