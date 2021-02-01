@@ -88,15 +88,6 @@ public class Character extends CharacterBase {
 	}
 	
 	/**
-	 * Returns the primary stat of this character to attack with.
-	 * @return the primary stat of this character to attack with
-	 * @see #getPreferredAttackStat()
-	 */
-	public StatsPrimary getAttackStat() {
-		return getPreferredAttackStat();
-	}
-	
-	/**
 	 * Returns the current attack power of the attack stat.
 	 * @return the current attack power of the attack stat
 	 * @see #getAttackStat()
@@ -105,15 +96,6 @@ public class Character extends CharacterBase {
 	@Override
 	public int getAttackPower() {
 		return getAttackPower(getAttackStat());
-	}
-
-	/**
-	 * Returns the character's secondary stat to damage.
-	 * @return the character's secondary stat to damage
-	 * @see #getPreferredDamageStat()
-	 */
-	public StatsSecondary getDamageStat() {
-		return getPreferredDamageStat();
 	}
 	
 	/**

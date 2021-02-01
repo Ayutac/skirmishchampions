@@ -290,10 +290,20 @@ public class CharacterBase implements IdCloneable, Name {
 	/**
 	 * Returns the character's preferred primary stat to attack with.
 	 * @return the character's preferred primary stat to attack with
-	 * @see #getAttackPower()
+	 * @see #getAttackStat()
 	 */
 	public StatsPrimary getPreferredAttackStat() {
 		return preferredAttackStat;
+	}
+	
+	/**
+	 * Returns the primary stat of this character to attack with.
+	 * @return the primary stat of this character to attack with
+	 * @see #getPreferredAttackStat()
+	 * @see #getAttackPower()
+	 */
+	public StatsPrimary getAttackStat() {
+		return getPreferredAttackStat();
 	}
 
 	/**
@@ -303,6 +313,15 @@ public class CharacterBase implements IdCloneable, Name {
 	public StatsSecondary getPreferredDamageStat() {
 		return preferredDamageStat;
 	}
+
+	/**
+	 * Returns the character's secondary stat to damage.
+	 * @return the character's secondary stat to damage
+	 * @see #getPreferredDamageStat()
+	 */
+	public StatsSecondary getDamageStat() {
+		return getPreferredDamageStat();
+	}
 	
 	/**
 	 * Returns the current attack power of the specified primary stat.
@@ -311,6 +330,7 @@ public class CharacterBase implements IdCloneable, Name {
 	 * @throws NullPointerException If <code>type</code> refers to <code>null</code>.
 	 * @see #getPrimaryStat(StatsPrimary)
 	 * @see #getAttackPower()
+	 * @see #getAttackSpeed()
 	 */
 	public int getAttackPower(StatsPrimary type) {
 		Utilities.requireNonNull(type, "type");
@@ -322,9 +342,10 @@ public class CharacterBase implements IdCloneable, Name {
 	 * @return the current attack power of the preferred primary stat
 	 * @see #getPreferredAttackStat()
 	 * @see #getAttackPower(StatsPrimary)
+	 * @see #getAttackSpeed()
 	 */
 	public int getAttackPower() {
-		return getAttackPower(preferredAttackStat);
+		return getAttackPower(getPreferredAttackStat());
 	}
 	
 	
@@ -347,7 +368,7 @@ public class CharacterBase implements IdCloneable, Name {
 	 * @return a challenge rating for this character
 	 */
 	public int challengeRating() {
-		return (getPrimaryStat(getPreferredAttackStat())+2*getPrimaryStat(StatsPrimary.SPEED)+sumSecondaryStats())/(3*(1+StatsSecondary.SIZE));
+		return (getPrimaryStat(getAttackStat())+2*getPrimaryStat(StatsPrimary.SPEED)+sumSecondaryStats())/(3*(1+StatsSecondary.SIZE));
 	}
 	
 	/**
