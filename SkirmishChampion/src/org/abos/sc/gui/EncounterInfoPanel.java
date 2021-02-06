@@ -28,6 +28,8 @@ public class EncounterInfoPanel extends JPanel {
 	
 	protected CharacterBattlePanel[][] formation;
 	
+	protected JLabel challengeRatingLabel;
+	
 	/**
 	 * 
 	 */
@@ -61,11 +63,13 @@ public class EncounterInfoPanel extends JPanel {
 			for (int row = 0; row < formation.length; row++)
 				for (int col = 0; col < formation[0].length; col++)
 					formation[row][col].setCharacter(null);
+			challengeRatingLabel.setText("");
 			return;
 		}
 		for (int row = 0; row < formation.length; row++)
 			for (int col = 0; col < formation[0].length; col++)
 				formation[row][col].setCharacter(encounter.getCharacter(row, col));
+		challengeRatingLabel.setText(String.format("Challenge Rating: %d", encounter.getChallengeRating()));
 		repaint();
 	}
 	
@@ -89,6 +93,7 @@ public class EncounterInfoPanel extends JPanel {
 			for (int col = 0; col < formation[0].length; col++) {
 				formation[row][col] = new CharacterBattlePanel();
 			}
+		challengeRatingLabel = new JLabel();
 	}
 	
 	protected GridBagConstraints createConstraint(int gridx, int gridy) {
@@ -120,9 +125,14 @@ public class EncounterInfoPanel extends JPanel {
 					add(formation[row][col], createConstraint(row, col));
 				}
 		}
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridy = BattleFormation.COL_NUMBER;
+		c.gridwidth = BattleFormation.ROW_NUMBER;
+		c.anchor = GridBagConstraints.CENTER;
+		add(challengeRatingLabel, c);
 		setPreferredSize(new Dimension(
 				BattleFormation.ROW_NUMBER*CharacterBattlePanel.PREFERRED_WIDTH, 
-				BattleFormation.COL_NUMBER*CharacterBattlePanel.PREFERRED_HEIGHT));
+				BattleFormation.COL_NUMBER*CharacterBattlePanel.PREFERRED_HEIGHT+ContentComboBox.PREFERRED_HEIGHT));
 	}
 
 }

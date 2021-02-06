@@ -43,6 +43,8 @@ public class PartySelectionFrame extends JFrame {
 	
 	protected PartySelectionPanel selectionPanel;
 	
+	protected JLabel challengeRatingLabel;
+	
 	protected JButton confirmButton;
 	
 	protected JButton cancelButton;
@@ -149,6 +151,7 @@ public class PartySelectionFrame extends JFrame {
 				selectionPanel.setComparator(sortComboBox.getComparator());
 			}
 		});
+		challengeRatingLabel = new JLabel("Challenge Rating coming soon");
 		confirmButton = new JButton("Confirm");
 		confirmButton.addActionListener(e -> confirmFormation());
 		cancelButton = new JButton("Cancel");
@@ -165,10 +168,15 @@ public class PartySelectionFrame extends JFrame {
 		sortPanel.add(descButton);
 		add(sortPanel, BorderLayout.PAGE_START);
 		add(selectionPanel, BorderLayout.CENTER);
+		JPanel pageEndPanel = new JPanel(new GridLayout(2,1));
+		JPanel centeredLabel = new JPanel();
+		centeredLabel.add(challengeRatingLabel);
+		pageEndPanel.add(centeredLabel);
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
-		add(buttonPanel, BorderLayout.PAGE_END);
+		pageEndPanel.add(buttonPanel);
+		add(pageEndPanel, BorderLayout.PAGE_END);
 		pack();
 		setLocationRelativeTo(null);
 	}

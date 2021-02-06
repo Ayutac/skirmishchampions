@@ -367,7 +367,7 @@ public class CharacterBase implements IdCloneable, Name {
 	 * This method is central for game balancing, so it may change a lot between versions. Hence no documention of the exact calculation here.
 	 * @return a challenge rating for this character
 	 */
-	public int challengeRating() {
+	public int calculateChallengeRating() {
 		return (getPrimaryStat(getAttackStat())+2*getPrimaryStat(StatsPrimary.SPEED)+sumSecondaryStats())/(3*(1+StatsSecondary.SIZE));
 	}
 	

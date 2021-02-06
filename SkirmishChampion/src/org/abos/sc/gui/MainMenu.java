@@ -25,6 +25,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.abos.sc.core.CharacterBase;
 import org.abos.sc.core.Companion;
 import org.abos.sc.core.ConfigManager;
+import org.abos.sc.core.Difficulty;
 import org.abos.sc.core.FandomBase;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.RegionBase;
@@ -89,7 +90,7 @@ public class MainMenu extends JFrame {
 	}
 	
 	public static Player createNewPlayer() {
-		return new Player(FandomBase.FANDOMS.lookup("twi"), new Companion(CharacterBase.CHARACTERS.lookup("twi_erin")));
+		return new Player(Difficulty.MEDIUM, FandomBase.FANDOMS.lookup("twi"), new Companion(CharacterBase.CHARACTERS.lookup("twi_erin")));
 		// TODO maybe better default? 
 	}
 	

@@ -27,6 +27,13 @@ public class Character extends CharacterBase {
 	protected boolean defeated = false;
 	
 	/**
+	 * Store the challenge rating internally.
+	 * @see #calculateChallengeRating()
+	 * @see #getChallengeRating()
+	 */
+	protected Integer challengeRating = null;
+	
+	/**
 	 * Creates a new character instance from a given base.
 	 * @param base the base of this character
 	 * @throws NullPointerException If <code>base</code> refers to <code>null</code>.
@@ -129,6 +136,16 @@ public class Character extends CharacterBase {
 	}
 	
 	/**
+	 * Returns the challenge rating of this character.
+	 * @return the challenge rating of this character
+	 */
+	public int getChallengeRating() {
+		if (challengeRating == null) 
+			challengeRating = calculateChallengeRating();
+		return challengeRating;
+	}
+	
+	/**
 	 * Returns a deep copy of this character by calling the copy constructor.
 	 * @see #Character(Character)
 	 */
@@ -175,6 +192,8 @@ public class Character extends CharacterBase {
 		if (getClass() != obj.getClass())
 			return false;
 		Character other = (Character) obj;
+		// note that the challengeRating is just saved for memory purposes and would get 
+		// usually calculated, so it is not part of the comparison
 		if (!Arrays.equals(damages, other.damages))
 			return false;
 		if (defeated != other.defeated)
@@ -239,7 +258,7 @@ public class Character extends CharacterBase {
 			s.append("<br>");
 		}
 		s.append("CR: ");
-		s.append(challengeRating());
+		s.append(getChallengeRating());
 	}
 	
 	/**

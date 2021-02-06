@@ -18,7 +18,11 @@ public class Stage extends StageBase {
 	
 	protected boolean cleared;
 	
+	protected boolean showChallengeRating;
+	
 	protected BattleEncounter encounter = null;
+	
+	protected Integer challengeRating = null;
 	
 	/**
 	 * 
@@ -26,18 +30,19 @@ public class Stage extends StageBase {
 	 * @param accessable
 	 * @param cleared
 	 */
-	public Stage(StageBase base, boolean accessable, boolean cleared) {
+	public Stage(StageBase base, boolean accessable, boolean cleared, boolean showChallengeRating) {
 		super(base); // throws NPE
 		this.accessable = accessable;
 		this.cleared = cleared;
+		this.showChallengeRating = showChallengeRating;
 	}
 	
 	/**
 	 * 
 	 * @param base
 	 */
-	public Stage(StageBase base) {
-		this(base, true, false); // throws NPE
+	public Stage(StageBase base, boolean showChallengeRating) {
+		this(base, true, false, showChallengeRating); // throws NPE
 	}
 	
 	/**
@@ -66,6 +71,23 @@ public class Stage extends StageBase {
 	 */
 	public BattleEncounter getEncounter() {
 		return encounter;
+	}
+	
+	@Override
+	public BattleEncounter createEncounter() {
+		BattleEncounter encounter = super.createEncounter();
+		challengeRating = encounter.getChallengeRating();
+		return encounter;
+	}
+	
+	/**
+	 * Returns the challenge rating of this stage.
+	 * @return the challenge rating of this stage
+	 */
+	public int getChallengeRating() {
+		if (challengeRating == null) 
+			createEncounter();
+		return challengeRating;
 	}
 
 	public boolean isEngaged() {
@@ -119,14 +141,14 @@ public class Stage extends StageBase {
 		return new Companion[0];
 	}
 	
-	public Stage[] rewardStages(BattleConclusion conclusion) {
+	public Stage[] rewardStages(BattleConclusion conclusion, boolean showChallengeRating) {
 		Utilities.requireNonNull(conclusion, "conclusion");
 		if (encounter == null) 
 			throw new IllegalStateException("Encounter cannot be gone before the battle is resolved!");
 		if (conclusion == BattleConclusion.WON) {
 			Stage[] reward = new Stage[nextStages.length];
 			for (int i = 0; i < reward.length; i++)
-				reward[i] = new Stage(STAGES.lookup(nextStages[i]));
+				reward[i] = new Stage(STAGES.lookup(nextStages[i]), showChallengeRating);
 			return reward;
 		}
 		return new Stage[0];
@@ -194,7 +216,7 @@ public class Stage extends StageBase {
 	protected void acknowledgeStageChange(StringBuilder message, BattleConclusion conclusion, Player player) {
 		Utilities.requireNonNull(message, "message");
 		Utilities.requireNonNull(conclusion, "conclusion");
-		Stage[] rewardStages = rewardStages(conclusion);
+		Stage[] rewardStages = rewardStages(conclusion, player == null ? true : player.getDifficulty().showChallengeRatings());
 		if (player == null)
 			return;
 		if (rewardStages.length > 0) {
@@ -272,15 +294,27 @@ public class Stage extends StageBase {
 	
 	@Override
 	public Object clone() {
-		Stage clone = new Stage(this, accessable, cleared);
+		Stage clone = new Stage(this, accessable, cleared, showChallengeRating);
 		if (encounter != null)
 			clone.encounter = (BattleEncounter)encounter.clone();
+		if (challengeRating != null)
+			clone.challengeRating = challengeRating;
 		return clone;
 	}
 	
+	// TODO hashCode and equals
+	
 	@Override
 	public String toString() {
-		return cleared ? getName() + " ✓": getName();
+		StringBuilder s = new StringBuilder(getName());
+		if (showChallengeRating) {
+			s.append(" (CR: ");
+			s.append(getChallengeRating());
+			s.append(")");
+		}
+		if (cleared)
+			s.append(" ✓");
+		return s.toString();
 	}
 	
 	@Override
@@ -301,7 +335,7 @@ public class Stage extends StageBase {
 		StageBase base = StageBase.STAGES.lookup(id);
 		if (base == null)
 			throw new ParsedIdNotFoundException(String.format("Unknown stage ID %s!", id));
-		Stage stage = new Stage(base, start != 0, end != s.length());
+		Stage stage = new Stage(base, start != 0, end != s.length(), player == null ? true : player.getDifficulty().showChallengeRatings());
 		if (player != null) {
 			if (player.getStages().containsId(stage.getId()))
 				throw new ParsedIdFoundException("Stage "+stage.getId()+" already registered with this player!");

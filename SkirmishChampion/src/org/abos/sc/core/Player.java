@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
 
+import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.ParseException;
 import org.abos.util.Registry;
@@ -20,6 +21,8 @@ import org.abos.util.Utilities;
 public class Player {
 	
 	protected Instant creationTime = Instant.now();
+	
+	protected Difficulty difficulty;
 	
 	protected Registry<Companion> companions = new Registry<>();
 	
@@ -37,32 +40,41 @@ public class Player {
 	
 	private Player() {}
 	
-	protected Player(FandomBase startFandom) {
+	protected Player(Difficulty difficulty, FandomBase startFandom) {
+		Utilities.requireNonNull(difficulty, "difficulty");
 		Utilities.requireNonNull(startFandom, "startFandom");
+		this.difficulty = difficulty;
 		Fandom fandom = new Fandom(startFandom);
 		fandoms.add(fandom);
 		Region region = new Region(RegionBase.REGIONS.lookup(fandom.getStartRegionId()));
 		regions.add(region);
-		Stage stage = new Stage(StageBase.STAGES.lookup(region.getStartStageId()));
+		Stage stage = new Stage(StageBase.STAGES.lookup(region.getStartStageId()), difficulty.showChallengeRatings());
 		stages.add(stage);
 		updateRegionStages();
 		updateFandomRegions();
 	}
 	
-	public Player(FandomBase startFandom, Companion startCompanion) {
-		this(startFandom);
+	public Player(Difficulty difficulty, FandomBase startFandom, Companion startCompanion) {
+		this(difficulty, startFandom);
 		Utilities.requireNonNull(startCompanion, "startCompanion");
 		companions.add(startCompanion);
 		party = BattleFormation.createFormation(startCompanion);
 	}
 
-	public Player(FandomBase startFandom, Registry<? extends Companion> startCompanions) {
-		this(startFandom);
+	public Player(Difficulty difficulty, FandomBase startFandom, Registry<? extends Companion> startCompanions) {
+		this(difficulty, startFandom);
 		Utilities.requireNonNull(startCompanions, "startCompanions");
 		if (startCompanions.isEmpty())
 			throw new IllegalArgumentException("At least one start companion must be given!");
 		companions.addAll(startCompanions);
 		party = BattleFormation.createFormation(companions.iterator().next());
+	}
+	
+	/**
+	 * @return the difficulty
+	 */
+	public Difficulty getDifficulty() {
+		return difficulty;
 	}
 	
 	public Registry<Companion> getCompanions() {
@@ -197,6 +209,8 @@ public class Player {
 		s.append(System.lineSeparator());
 		party.toSaveString(s);
 		s.append(System.lineSeparator());
+		s.append(difficulty.name());
+		s.append(System.lineSeparator());
 	}
 	
 	public String toSaveString() {
@@ -226,18 +240,32 @@ public class Player {
 			
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 1));
+			
+			// difficulty is optional to transfer save states from version up to 0.4 
+			// optionality might be removed in future releases
+			boolean extraLine = false;
+			try {
+				player.difficulty = Difficulty.valueOf(line);
+				extraLine = true;
+				if ((line = br.readLine()) == null)
+					throw new ParseException(String.format(eofMsg, 2));
+			}
+			catch (IllegalArgumentException ex) {
+				player.difficulty = Difficulty.MEDIUM;
+			}
+			
 			for (String s : line.split(";"))
 				Companion.parse(s, player);
 			if ((line = br.readLine()) == null)
-				throw new ParseException(String.format(eofMsg, 2));
+				throw new ParseException(String.format(eofMsg, extraLine ? 3 : 2));
 			for (String s : line.split(";"))
 				Stage.parse(s, player);
 			if ((line = br.readLine()) == null)
-				throw new ParseException(String.format(eofMsg, 3));
+				throw new ParseException(String.format(eofMsg, extraLine ? 4 : 3));
 			for (String s : line.split(";"))
 				Region.parse(s, player);
 			if ((line = br.readLine()) == null)
-				throw new ParseException(String.format(eofMsg, 4));
+				throw new ParseException(String.format(eofMsg, extraLine ? 5 : 4));
 			for (String s : line.split(";"))
 				Fandom.parse(s, player);
 			
@@ -307,7 +335,7 @@ public class Player {
 				if (!regions.containsId(region.getId()))
 					regions.add(region);
 			}
-			for (Stage stage : currentStage.rewardStages(BattleConclusion.WON)) {
+			for (Stage stage : currentStage.rewardStages(BattleConclusion.WON, player.getDifficulty().showChallengeRatings())) {
 				if (!uncheckedStages.containsId(stage.getId()) && !checkedStages.containsId(stage.getId()))
 					uncheckedStages.add(stage);
 			}

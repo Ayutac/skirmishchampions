@@ -194,7 +194,17 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 		for (Character character : this)
 			character.restore();
 	}
-
+	
+	/**
+	 * Returns the challenge rating of this formation.
+	 * @return the challenge rating of this formation
+	 */
+	public int getChallengeRating() {
+		int sum = 0;
+		for (Character character : this)
+			sum += character.getChallengeRating();
+		return sum;
+	}
 
 	/**
 	 * Returns a hash code value for this formation, computed based on the hash code values

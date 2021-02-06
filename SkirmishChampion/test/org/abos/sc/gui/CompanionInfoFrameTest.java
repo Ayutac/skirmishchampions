@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import org.abos.sc.core.Character;
 import org.abos.sc.core.CharacterBase;
 import org.abos.sc.core.Companion;
+import org.abos.sc.core.Difficulty;
 import org.abos.sc.core.FandomBase;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.RegionBase;
@@ -31,7 +32,7 @@ public class CompanionInfoFrameTest {
 		new FandomBase("twi", "The Wandering Inn", "twi_twi", "twi_erin", true);
 		new RegionBase("twi_twi", "The Wandering Inn", "twi", "twi_erins_bedroom", true);
 		new StageBase("twi_erins_bedroom", "Erin's Bedroom", "twi_twi", new String[0], new String[0], new String[0], "twi_mrsha|ROW", true);
-		Player player = new Player(FandomBase.FANDOMS.lookup("twi"), new Registry<Companion>(erin, mrsha));
+		Player player = new Player(Difficulty.MEDIUM, FandomBase.FANDOMS.lookup("twi"), new Registry<Companion>(erin, mrsha));
 		CompanionInfoFrame frame = new CompanionInfoFrame(player);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

@@ -37,14 +37,14 @@ public class CharacterTest {
 	public void testParseData() throws IOException {
 		Path path = Utilities.loadApplicationDirectory().resolve("resources").resolve("characters").resolve("chars_twi.txt");
 		Utilities.loadFromFile(path, CharacterBase::parse);
-		System.out.println(CharacterBase.CHARACTERS.lookup("twi_teriarch").challengeRating());
+		System.out.println(CharacterBase.CHARACTERS.lookup("twi_teriarch").calculateChallengeRating());
 		System.out.println("vs");
-		System.out.println(CharacterBase.CHARACTERS.lookup("twi_saliss").challengeRating());
-		System.out.println(CharacterBase.CHARACTERS.lookup("twi_klbkch").challengeRating());
-		System.out.println(CharacterBase.CHARACTERS.lookup("twi_relc").challengeRating());
-		System.out.println(CharacterBase.CHARACTERS.lookup("twi_facestealer").challengeRating());
-		System.out.println(CharacterBase.CHARACTERS.lookup("twi_bird").challengeRating());
-		System.out.println(CharacterBase.CHARACTERS.lookup("twi_shorthilt").challengeRating());
+		System.out.println(CharacterBase.CHARACTERS.lookup("twi_saliss").calculateChallengeRating());
+		System.out.println(CharacterBase.CHARACTERS.lookup("twi_klbkch").calculateChallengeRating());
+		System.out.println(CharacterBase.CHARACTERS.lookup("twi_relc").calculateChallengeRating());
+		System.out.println(CharacterBase.CHARACTERS.lookup("twi_facestealer").calculateChallengeRating());
+		System.out.println(CharacterBase.CHARACTERS.lookup("twi_bird").calculateChallengeRating());
+		System.out.println(CharacterBase.CHARACTERS.lookup("twi_shorthilt").calculateChallengeRating());
 		//System.out.println(String.format("%d: %s", Character.CHARACTERS.size(), Character.CHARACTERS));
 		//System.out.println(Character.CHARACTERS.lookup("twi_erin").getPreferredAttackStat());
 		//System.out.println(Character.CHARACTERS.lookup("twi_erin").getPreferredDamageStat());

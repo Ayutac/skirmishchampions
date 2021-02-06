@@ -106,6 +106,14 @@ public class BattleEncounter implements Cloneable {
 	}
 
 	/**
+	 * Returns the challenge rating of this encounter.
+	 * @return the challenge rating of this encounter
+	 */
+	public int getChallengeRating() {
+		return formation.getChallengeRating();
+	}
+
+	/**
 	 * Returns a hash code value for this encounter, computed based on the hash code values
 	 * of the underlying formation and strategy. Two equal encounters will return the same hash code value.
 	 * @return a hash code value for this encounter
