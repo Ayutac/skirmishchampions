@@ -1,5 +1,6 @@
 package org.abos.sc.core;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 import org.abos.util.IllegalArgumentRangeException;
@@ -150,6 +151,8 @@ public class Stage extends StageBase {
 			throw new IllegalStateException("Encounter cannot be gone before the battle is resolved!");
 		if (conclusion == BattleConclusion.WON) {
 			Stage[] reward = new Stage[nextStages.length];
+			// FIXME if there are unkown stages as nextStages, the lookup will result in an NPE
+			// System.out.println(Arrays.toString(nextStages));
 			for (int i = 0; i < reward.length; i++)
 				reward[i] = new Stage(STAGES.lookup(nextStages[i]), showChallengeRating);
 			return reward;
