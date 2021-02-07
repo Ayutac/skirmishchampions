@@ -1,4 +1,4 @@
-package org.abos.sc.core;
+package org.abos.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,6 +25,11 @@ public class UtilitiesTest {
 	@Test
 	public void testAlterating3() {
 		assertArrayEquals(new int[]{2,1,0}, Utilities.createAlteratingLowerFirst(2,3));
+	}
+	
+	@Test
+	public void testParsingIllegalInts() {
+		assertThrows(NumberFormatException.class, () -> Integer.parseInt(Integer.toString(Integer.MAX_VALUE)+"0"));
 	}
 
 }
