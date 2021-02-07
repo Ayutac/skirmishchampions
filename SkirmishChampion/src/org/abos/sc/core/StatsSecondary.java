@@ -1,5 +1,6 @@
 package org.abos.sc.core;
 
+import org.abos.util.Name;
 import org.abos.util.Utilities;
 
 /**
@@ -11,7 +12,7 @@ import org.abos.util.Utilities;
  * @see #MENTAL
  * @see #ELOQUENCE
  */
-public enum StatsSecondary {
+public enum StatsSecondary implements Name {
 	/*
 	 * If you change this enumeration be aware that at least
 	 * CharacterBae#getSecondaryStat() must be changed as well.
@@ -56,7 +57,8 @@ public enum StatsSecondary {
 	 * Returns the display name of the secondary stat.
 	 * @return the display name of the secondary stat, guaranteed to be non <code>null</code>
 	 */
-	public String getDisplayName() {
+	@Override
+	public String getName() {
 		return displayName;
 	}
 	

@@ -241,7 +241,7 @@ public class Character extends CharacterBase {
 		for (StatsPrimary ps : PRIMARY_STATS) {
 			if (ps == getAttackStat())
 				s.append("<u>");
-			s.append(ps.getDisplayName());
+			s.append(ps.getName());
 			s.append(": ");
 			s.append(getPrimaryStat(ps));
 			if (ps == getAttackStat())
@@ -251,7 +251,7 @@ public class Character extends CharacterBase {
 		for (StatsSecondary ss : SECONDARY_STATS) {
 			if (ss == getDamageStat())
 				s.append("<u>");
-			s.append(ss.getDisplayName());
+			s.append(ss.getName());
 			s.append(": ");
 			s.append(getSecondaryStat(ss));
 			if (ss == getDamageStat())

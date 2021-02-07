@@ -1,5 +1,6 @@
 package org.abos.sc.core;
 
+import org.abos.util.Name;
 import org.abos.util.Utilities;
 
 /**
@@ -16,7 +17,7 @@ import org.abos.util.Utilities;
  * @see #SPECIAL
  * @see #SPEED
  */
-public enum StatsPrimary {
+public enum StatsPrimary implements Name {
 	
 	/**
 	 * For the strength stat of the character.
@@ -82,7 +83,8 @@ public enum StatsPrimary {
 	 * Returns the display name of the primary stat.
 	 * @return the display name of the primary stat, guaranteed to be non <code>null</code>
 	 */
-	public String getDisplayName() {
+	@Override
+	public String getName() {
 		return displayName;
 	}
 	

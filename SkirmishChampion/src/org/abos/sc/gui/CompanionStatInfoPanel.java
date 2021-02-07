@@ -82,14 +82,14 @@ public class CompanionStatInfoPanel extends JPanel {
 		primaryStats = new JLabel[StatsPrimary.SIZE];
 		StatsPrimary[] valsP = StatsPrimary.values();
 		for (int i = 0; i < primaryStats.length; i++) {
-			primaryStatsDesc[i] = new JLabel(valsP[i].getDisplayName()+":");
+			primaryStatsDesc[i] = new JLabel(valsP[i].getName()+":");
 			primaryStats[i] = new JLabel();
 		}
 		secondaryStatsDesc = new JLabel[StatsSecondary.SIZE];
 		secondaryStats = new JLabel[StatsSecondary.SIZE];
 		StatsSecondary[] valsS = StatsSecondary.values();
 		for (int i = 0; i < secondaryStats.length; i++) {
-			secondaryStatsDesc[i] = new JLabel(valsS[i].getDisplayName()+":");
+			secondaryStatsDesc[i] = new JLabel(valsS[i].getName()+":");
 			secondaryStats[i] = new JLabel();
 		}
 	}
