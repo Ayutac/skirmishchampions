@@ -121,13 +121,22 @@ public class StageBattleFrame extends JFrame {
 	public void commenceBattle() {
 		BattleEncounter be1 = firstParty.getEncounter();
 		BattleEncounter be2 = secondParty.getEncounter();
+		// valid encounters required, as well as no battle going on
 		if (be1 == null || be2 == null || battle != null)
 			return;
-		if (Difficulty.of(player).warnWeakTeam() && crComparator.compare(be1, be2) <= Difficulty.WEAK_TRESHOLD) {
+		// maybe stop player from loosing
+		if (Difficulty.of(player).warnWeakTeam() && be1.getChallengeRating()-be2.getChallengeRating() <= Difficulty.WEAK_TRESHOLD) {
 			if (JOptionPane.showConfirmDialog(this, "Your team seems to be a bit weak against this encounter. Do you really want to fight?", 
 					"You sure?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
 				return;
 		}
+		// maybe stop player from steam rolling
+		if (Difficulty.of(player).stopSteamrolling() && be2.getChallengeRating()*Difficulty.STEAMROLL_FACTOR <= be1.getChallengeRating()) {
+			JOptionPane.showMessageDialog(this, "Your teams seems to be a bit too powerful against this encounter, doesn't it?"+System.lineSeparator()+"Let's not steamroll through the entire game, okay?", 
+					"This is unfair to them", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		// actually start the fight
 		fightButton.setEnabled(false);
 		returnButton.setEnabled(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

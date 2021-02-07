@@ -29,6 +29,8 @@ public enum Difficulty {
 		return this.compareTo(EASY) <= 0;
 	}
 	
+	public static final double STEAMROLL_FACTOR = 1.5;
+	
 	public final boolean stopSteamrolling() {
 		return this.compareTo(EASY) > 0;
 	}
