@@ -139,6 +139,7 @@ public class Character extends CharacterBase {
 	 * Returns the challenge rating of this character.
 	 * @return the challenge rating of this character
 	 */
+	@Override
 	public int getChallengeRating() {
 		if (challengeRating == null) 
 			challengeRating = calculateChallengeRating();

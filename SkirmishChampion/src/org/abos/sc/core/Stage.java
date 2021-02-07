@@ -1,5 +1,7 @@
 package org.abos.sc.core;
 
+import java.util.Comparator;
+
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.ParsedIdFoundException;
 import org.abos.util.ParsedIdNotFoundException;
@@ -84,6 +86,7 @@ public class Stage extends StageBase {
 	 * Returns the challenge rating of this stage.
 	 * @return the challenge rating of this stage
 	 */
+	@Override
 	public int getChallengeRating() {
 		if (challengeRating == null) 
 			createEncounter();
@@ -216,7 +219,7 @@ public class Stage extends StageBase {
 	protected void acknowledgeStageChange(StringBuilder message, BattleConclusion conclusion, Player player) {
 		Utilities.requireNonNull(message, "message");
 		Utilities.requireNonNull(conclusion, "conclusion");
-		Stage[] rewardStages = rewardStages(conclusion, player == null ? true : player.getDifficulty().showChallengeRatings());
+		Stage[] rewardStages = rewardStages(conclusion, Difficulty.of(player).showChallengeRatings());
 		if (player == null)
 			return;
 		if (rewardStages.length > 0) {
@@ -335,7 +338,7 @@ public class Stage extends StageBase {
 		StageBase base = StageBase.STAGES.lookup(id);
 		if (base == null)
 			throw new ParsedIdNotFoundException(String.format("Unknown stage ID %s!", id));
-		Stage stage = new Stage(base, start != 0, end != s.length(), player == null ? true : player.getDifficulty().showChallengeRatings());
+		Stage stage = new Stage(base, start != 0, end != s.length(), Difficulty.of(player).showChallengeRatings());
 		if (player != null) {
 			if (player.getStages().containsId(stage.getId()))
 				throw new ParsedIdFoundException("Stage "+stage.getId()+" already registered with this player!");

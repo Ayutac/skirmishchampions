@@ -23,7 +23,7 @@ import org.abos.util.Utilities;
  * @see Character
  * @see Companion
  */
-public class CharacterBase implements IdCloneable, Name {
+public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	
 	/**
 	 * An array of the primary stats, should equal {@link StatsPrimary}<code>.values()</code>. Saved here to reduce overhead.
@@ -361,7 +361,7 @@ public class CharacterBase implements IdCloneable, Name {
 	}
 	
 	/**
-	 * This method returns a challenge rating for this character. Characters tougher to beat are supposed to have a higher challenge rating.
+	 * This method calculates challenge rating for this character. Characters tougher to beat are supposed to have a higher challenge rating.
 	 * <br>
 	 * <br>
 	 * This method is central for game balancing, so it may change a lot between versions. Hence no documention of the exact calculation here.
@@ -369,6 +369,15 @@ public class CharacterBase implements IdCloneable, Name {
 	 */
 	public int calculateChallengeRating() {
 		return (getPrimaryStat(getAttackStat())+2*getPrimaryStat(StatsPrimary.SPEED)+sumSecondaryStats())/(3*(1+StatsSecondary.SIZE));
+	}
+	
+	/**
+	 * This method returns a challenge rating for this character by calculating it. 
+	 * @return the challenge rating for this character
+	 * @see #calculateChallengeRating()
+	 */
+	public int getChallengeRating() {
+		return calculateChallengeRating();
 	}
 	
 	/**

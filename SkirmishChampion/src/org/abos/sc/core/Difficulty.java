@@ -5,7 +5,7 @@ package org.abos.sc.core;
  * @version %I%
  * @since 0.5
  */
-public enum Difficulty {// implements Comparable<Difficulty>{
+public enum Difficulty {
 	
 	EASY,
 	
@@ -13,8 +13,24 @@ public enum Difficulty {// implements Comparable<Difficulty>{
 	
 	HARD;
 	
+	public static final Difficulty of(Player player) {
+		if (player == null)
+			return MEDIUM;
+		return player.getDifficulty();
+	}
+	
 	public final boolean showChallengeRatings() {
 		return this.compareTo(MEDIUM) <= 0;
+	}
+	
+	public static final int WEAK_TRESHOLD = -50;
+	
+	public final boolean warnWeakTeam() {
+		return this.compareTo(EASY) <= 0;
+	}
+	
+	public final boolean stopSteamrolling() {
+		return this.compareTo(EASY) > 0;
 	}
 
 }

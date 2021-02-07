@@ -19,7 +19,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class BattleFormation implements Iterable<Character>, Cloneable {
+public class BattleFormation implements Iterable<Character>, Cloneable, ChallengeRatable {
 	
 	/**
 	 * The maximum number of rows in formations.
@@ -199,6 +199,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable {
 	 * Returns the challenge rating of this formation.
 	 * @return the challenge rating of this formation
 	 */
+	@Override
 	public int getChallengeRating() {
 		int sum = 0;
 		for (Character character : this)

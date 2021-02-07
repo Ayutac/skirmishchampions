@@ -1,6 +1,7 @@
 package org.abos.sc.core;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 import org.abos.util.Id;
 import org.abos.util.IdCloneable;
@@ -18,7 +19,7 @@ import org.abos.util.Utilities;
  * @since 0.1
  * @see Stage
  */
-public class StageBase implements IdCloneable, Name {
+public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	
 	/**
 	 * separator character for the lists
@@ -169,6 +170,18 @@ public class StageBase implements IdCloneable, Name {
 		return BattleEncounter.parse(encounterString);
 	}
 	
+	/**
+	 * Returns the challenge rating of this stage base by parsing the encounter.
+	 * @return the challenge rating of this stage base
+	 * @throws ParseException If the encounter string cannot be parsed.
+	 * @see #createEncounter()
+	 * @see BattleEncounter#parse(String)
+	 */
+	@Override
+	public int getChallengeRating() {
+		return createEncounter().getChallengeRating();
+	}
+
 	@Override
 	public Object clone() {
 		return new StageBase(this);

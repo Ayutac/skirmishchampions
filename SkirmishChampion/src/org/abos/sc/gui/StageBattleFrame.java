@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Comparator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +23,8 @@ import javax.swing.text.DefaultCaret;
 import org.abos.sc.core.Battle;
 import org.abos.sc.core.BattleConclusion;
 import org.abos.sc.core.BattleEncounter;
+import org.abos.sc.core.ChallengeRatable;
+import org.abos.sc.core.Difficulty;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.Stage;
 import org.abos.util.gui.GUIUtilities;
@@ -41,6 +44,8 @@ public class StageBattleFrame extends JFrame {
 	protected Stage stage = null;
 	
 	protected Battle battle = null;
+	
+	protected Comparator<BattleEncounter> crComparator = ChallengeRatable.createCRComparator();
 	
 	protected Runnable afterHiding = null;
 	
@@ -114,12 +119,19 @@ public class StageBattleFrame extends JFrame {
 	}
 	
 	public void commenceBattle() {
-		if (firstParty.getEncounter() == null || secondParty.getEncounter() == null || battle != null)
+		BattleEncounter be1 = firstParty.getEncounter();
+		BattleEncounter be2 = secondParty.getEncounter();
+		if (be1 == null || be2 == null || battle != null)
 			return;
+		if (Difficulty.of(player).warnWeakTeam() && crComparator.compare(be1, be2) <= Difficulty.WEAK_TRESHOLD) {
+			if (JOptionPane.showConfirmDialog(this, "Your team seems to be a bit weak against this encounter. Do you really want to fight?", 
+					"You sure?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
+				return;
+		}
 		fightButton.setEnabled(false);
 		returnButton.setEnabled(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		battle = new Battle(firstParty.getEncounter(), secondParty.getEncounter(), handler);
+		battle = new Battle(be1, be2, handler);
 		battle.run();
 		new Thread(new Runnable() {
 			@Override public void run() {

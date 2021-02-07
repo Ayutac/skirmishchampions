@@ -9,7 +9,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class BattleEncounter implements Cloneable {
+public class BattleEncounter implements Cloneable, ChallengeRatable {
 	
 	/**
 	 * The separator char between the formation and strategy of an encounter in string form.
@@ -109,6 +109,7 @@ public class BattleEncounter implements Cloneable {
 	 * Returns the challenge rating of this encounter.
 	 * @return the challenge rating of this encounter
 	 */
+	@Override
 	public int getChallengeRating() {
 		return formation.getChallengeRating();
 	}
