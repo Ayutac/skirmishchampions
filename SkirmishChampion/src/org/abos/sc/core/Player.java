@@ -143,7 +143,7 @@ public class Player {
 	}
 	
 	public void addMoney(int amount) {
-		this.money += amount;
+		this.money = Utilities.addWithoutOverflow(this.money, amount);
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class Player {
 	}
 	
 	public void addDiamonds(int amount) {
-		this.diamonds += amount;
+		this.diamonds = Utilities.addWithoutOverflow(this.diamonds, amount);
 	}
 	
 	protected void companionsToSaveString(StringBuilder s) {
