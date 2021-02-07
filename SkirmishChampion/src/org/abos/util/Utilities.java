@@ -68,6 +68,48 @@ public class Utilities {
 	}
 	
 	/**
+	 * Sums two integers. When overflow occurs in either direction, the maximal or minimal integer is returned instead.
+	 * More specifically, if both integers are positive (negative) and the sum is smaller (greater) than one of the summands,
+	 * {@link Integer#MAX_VALUE} ({@link Integer#MIN_VALUE}) is returned instead, and if the first summand is positive (negative)
+	 * while the second one is negative (positive) and the sum is greater (smaller) than the first summand, 
+	 * {@link Integer#MIN_VALUE} ({@link Integer#MAX_VALUE}) is returned. If none of these cases apply, i.e. if no overflow
+	 * happens, <code>a+b</code> is returned.
+	 * @param a the first summand
+	 * @param b the second summand
+	 * @return the sum of the summands or the max/min int value if an overflow occurs
+	 * @see Integer#MAX_VALUE
+	 * @see Integer#MIN_VALUE
+	 */
+	public static int addWithoutOverflow(int a, int b) {
+		int sum = a+b;
+		if (a >= 0) {
+			if (b >= 0) {
+				if (sum < a)
+					return Integer.MAX_VALUE;
+				return sum;
+			}
+			else { // if b < 0
+				if (sum >= a)
+					return Integer.MIN_VALUE;
+				return sum;
+			}
+		}
+		else { // if a < 0
+			if (b <= 0) {
+				if (sum > a)
+					return Integer.MIN_VALUE;
+				return sum;
+			}
+			else { // if b > 0
+				if (sum <= a) {
+					return Integer.MAX_VALUE;
+				}
+				return sum;
+			}
+		}
+	}
+	
+	/**
 	 * Converts a given array to a string by writing the array entries behind one another
 	 * into the given string builder, only separated by the separator. No additional whitespaces
 	 * or enclosing brackets will be added, in opposite to {@link Arrays#toString(Object[])}.
