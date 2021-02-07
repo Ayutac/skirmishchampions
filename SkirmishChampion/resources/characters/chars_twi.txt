@@ -121,6 +121,7 @@ twi_aldenon;Aldenon;twi;Humans,Earthers,UN,Adventurers;60,80,60,50,50,50,10,50;1
 twi_kami;Kami;twi;Humans,Earthers,UN,Adventurers;60,80,60,50,50,50,10,50;1;0
 twi_tobi;Tobi;twi;Humans,Earthers,UN,Adventurers;60,80,60,50,50,50,10,50;1;0
 // UN NPCs
+twi_filip;Filip;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_blake;Blake;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_nicola;Nicola;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_lorenzo;Lorenzo;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
@@ -129,7 +130,6 @@ twi_dion;Dion;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_andel;Andel;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_amoli;Amoli;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_anders;Anders;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
-twi_filip;Filip;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_michael;Michael;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_sofie;Sofie;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_ben;Ben;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
