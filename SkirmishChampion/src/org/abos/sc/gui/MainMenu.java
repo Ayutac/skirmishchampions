@@ -90,7 +90,7 @@ public class MainMenu extends JFrame {
 	}
 	
 	public static Player createNewPlayer() {
-		return new Player(Difficulty.MEDIUM, FandomBase.FANDOMS.lookup("twi"), new Companion(CharacterBase.CHARACTERS.lookup("twi_erin")));
+		return new Player(Difficulty.EASY, FandomBase.FANDOMS.lookup("twi"), new Companion(CharacterBase.CHARACTERS.lookup("twi_erin")));
 		// TODO maybe better default? 
 	}
 	
