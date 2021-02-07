@@ -1,5 +1,6 @@
 package org.abos.sc.core;
 
+import org.abos.util.Name;
 import org.abos.util.Utilities;
 
 /**
@@ -8,7 +9,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public enum BattleStrategyType {
+public enum BattleStrategyType implements Name {
 
 	/**
 	 * For the strategy where the enemy is defeated row by row.
@@ -49,7 +50,8 @@ public enum BattleStrategyType {
 	 * Returns the display name of the strategy
 	 * @return the display name of the strategy, guaranteed to be non <code>null</code>
 	 */
-	public String getDisplayName() {
+	@Override
+	public String getName() {
 		return displayName;
 	}
 	
