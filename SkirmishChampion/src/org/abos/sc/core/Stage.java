@@ -25,8 +25,6 @@ public class Stage extends StageBase {
 	
 	protected BattleEncounter encounter = null;
 	
-	protected Integer challengeRating = null;
-	
 	/**
 	 * 
 	 * @param base
@@ -79,19 +77,20 @@ public class Stage extends StageBase {
 	@Override
 	public BattleEncounter createEncounter() {
 		BattleEncounter encounter = super.createEncounter();
-		challengeRating = encounter.getChallengeRating();
 		return encounter;
 	}
 	
 	/**
-	 * Returns the challenge rating of this stage.
+	 * Returns the challenge rating of this stage. If this stage currently has an encounter stored, its challenge rating
+	 * is returned, else the challenge rating from the base class.
 	 * @return the challenge rating of this stage
+	 * @see StageBase#getChallengeRating()
 	 */
 	@Override
 	public int getChallengeRating() {
-		if (challengeRating == null) 
-			createEncounter();
-		return challengeRating;
+		if (encounter != null) 
+			return encounter.getChallengeRating();
+		return super.getChallengeRating();
 	}
 
 	public boolean isEngaged() {
@@ -303,8 +302,6 @@ public class Stage extends StageBase {
 		Stage clone = new Stage(this, accessable, cleared, showChallengeRating);
 		if (encounter != null)
 			clone.encounter = (BattleEncounter)encounter.clone();
-		if (challengeRating != null)
-			clone.challengeRating = challengeRating;
 		return clone;
 	}
 	

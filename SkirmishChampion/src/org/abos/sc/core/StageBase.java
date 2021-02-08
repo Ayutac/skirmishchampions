@@ -1,6 +1,8 @@
 package org.abos.sc.core;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.abos.util.IdCloneable;
 import org.abos.util.IllegalNumberOfArgumentsException;
@@ -30,6 +32,12 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 * A registry of all globally available stages.
 	 */
 	public static final Registry<StageBase> STAGES = new Registry<>();
+	
+	/**
+	 * A collection of challenge ratings associated to their stage IDs.
+	 */
+	// stage ratings should be accessed via the stages and not directly via RATINGS, that's why this field is protected
+	protected static final Map<String, Integer> RATINGS = new HashMap<>();
 	
 	/**
 	 * The ID of this stage.
@@ -160,17 +168,20 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	}
 	
 	/**
-	 * Returns the encounter of this stage by parsing its encounter string.
+	 * Returns the encounter of this stage by parsing its encounter string. Also stores the challenge rating of the encounter internally.
 	 * @return the encounter of this stage
 	 * @throws ParseException If the encounter string cannot be parsed.
 	 * @see BattleEncounter#parse(String)
 	 */
 	public BattleEncounter createEncounter() {
-		return BattleEncounter.parse(encounterString);
+		BattleEncounter encounter = BattleEncounter.parse(encounterString);
+		RATINGS.put(id, encounter.getChallengeRating());
+		return encounter;
 	}
 	
 	/**
-	 * Returns the challenge rating of this stage base by parsing the encounter.
+	 * Returns the challenge rating of this stage base. If the challenge rating is internally stored, it is returned.
+	 * Else the encounter gets parsed, the challenge rating stored internally and then returned.
 	 * @return the challenge rating of this stage base
 	 * @throws ParseException If the encounter string cannot be parsed.
 	 * @see #createEncounter()
@@ -178,7 +189,11 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 */
 	@Override
 	public int getChallengeRating() {
-		return createEncounter().getChallengeRating();
+		Integer rating = RATINGS.get(id);
+		if (rating != null)
+			return rating;
+		createEncounter(); // put the challenge rating down
+		return RATINGS.get(id);
 	}
 
 	/**
