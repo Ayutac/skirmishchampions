@@ -3,17 +3,13 @@ package org.abos.sc.gui;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.abos.sc.core.BattleEncounter;
 import org.abos.sc.core.BattleFormation;
-import org.abos.sc.core.Character;
-import org.abos.util.Utilities;
+import org.abos.util.gui.GBCBuilder;
 
 /**
  * @author Sebastian Koch
@@ -96,40 +92,28 @@ public class EncounterInfoPanel extends JPanel {
 		challengeRatingLabel = new JLabel();
 	}
 	
-	protected GridBagConstraints createConstraint(int gridx, int gridy) {
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridx = gridx;
-		c.gridy = gridy;
-		return c;
-	}
-	
 	/**
 	 * Initializes the layout. Only call directly after {@link #initComponents()} has been called.
 	 * @see #initComponents()
 	 */
 	private void initLayout() {
 		// note that grid is rotated
-		//GridLayout layout = new GridLayout(BattleFormation.COL_NUMBER, BattleFormation.ROW_NUMBER);
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
+		GBCBuilder builder = new GBCBuilder().anchor(GridBagConstraints.LINE_START).reset();
 		if (atLineStart) {
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
 				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
-					add(formation[row][col], createConstraint(BattleFormation.ROW_NUMBER-1-row, col));
+					add(formation[row][col], builder.gridx(BattleFormation.ROW_NUMBER-1-row).gridy(col).get());
 				}
 		}
 		else {
 			for (int col = BattleFormation.COL_NUMBER - 1; col >= 0; col--)
 				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
-					add(formation[row][col], createConstraint(row, col));
+					add(formation[row][col], builder.gridx(row).gridy(col).get());
 				}
 		}
-		GridBagConstraints c = new GridBagConstraints();
-		c.gridy = BattleFormation.COL_NUMBER;
-		c.gridwidth = BattleFormation.ROW_NUMBER;
-		c.anchor = GridBagConstraints.CENTER;
-		add(challengeRatingLabel, c);
+		add(challengeRatingLabel, builder.gridx(0).gridy(BattleFormation.COL_NUMBER).gridwidth(BattleFormation.ROW_NUMBER).anchor(GridBagConstraints.CENTER).build());
 		setPreferredSize(new Dimension(
 				BattleFormation.ROW_NUMBER*CharacterBattlePanel.PREFERRED_WIDTH, 
 				BattleFormation.COL_NUMBER*CharacterBattlePanel.PREFERRED_HEIGHT+ContentComboBox.PREFERRED_HEIGHT));

@@ -3,17 +3,14 @@ package org.abos.sc.gui;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
+import org.abos.sc.core.Character;
+import org.abos.util.gui.GBCBuilder;
 import org.abos.util.gui.GUIUtilities;
 import org.abos.util.gui.ImagePanel;
-import org.abos.sc.core.Character;
 
 /**
  * @author Sebastian Koch
@@ -140,18 +137,10 @@ public class CharacterBattlePanel extends JPanel {
 	private void initLayout() {
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
-		GridBagConstraints c = new GridBagConstraints();
-		c.weighty = 0.5;
-		c.anchor = GridBagConstraints.PAGE_END;
-		add(imagePanel, c);
-		c.gridy = 1;
-		c.weighty = 0;
-		c.anchor = GridBagConstraints.CENTER;
-		add(characterLabel, c);
-		c.gridy = 2;
-		c.weighty = 0.5;
-		c.anchor = GridBagConstraints.PAGE_START;
-		add(characterHealthLabel, c);
+		GBCBuilder builder = new GBCBuilder();
+		add(imagePanel, builder.weighty(0.5).anchor(GridBagConstraints.PAGE_END).build());
+		add(characterLabel, builder.gridy(1).anchor(GridBagConstraints.CENTER).build());
+		add(characterHealthLabel, builder.gridy(2).weighty(0.5).anchor(GridBagConstraints.PAGE_START).build());
 		setPreferredSize(PREFERRED_SIZE);
 	}
 	

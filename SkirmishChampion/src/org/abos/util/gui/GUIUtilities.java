@@ -1,6 +1,7 @@
 package org.abos.util.gui;
 
 import java.awt.Component;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +32,78 @@ public class GUIUtilities {
 	 * Private constructor to avoid instantiation.
 	 */
 	private GUIUtilities() {}
+	
+	/**
+	 * Returns a hash code for a grid bag constraints object, taking into account all constraints. It's guarantied that
+	 * the hash codes of two grid bag constraints objects are equal if the grid bag constraints objects themselves are equal
+	 * as evaluated by {@link GUIUtilities}.
+	 * @param gbc the grid bag constraints object to generate a hash code of, not <code>null</code>
+	 * @return a hash code for the specified grid bag constraints object.
+	 * @throws NullPointerException If <code>gbc</code> refers to <code>null</code>.
+	 * @see #equalsGBC(GridBagConstraints, GridBagConstraints)
+	 */
+	public static int hashCodeGBC(GridBagConstraints gbc) {
+		Utilities.requireNonNull(gbc, "gbc");
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + gbc.anchor;
+		result = prime * result + gbc.fill;
+		result = prime * result + gbc.gridheight;
+		result = prime * result + gbc.gridwidth;
+		result = prime * result + gbc.gridx;
+		result = prime * result + gbc.gridy;
+		result = prime * result + ((gbc.insets == null) ? 0 : gbc.insets.hashCode());
+		result = prime * result + gbc.ipadx;
+		result = prime * result + gbc.ipady;
+		long temp;
+		temp = Double.doubleToLongBits(gbc.weightx);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(gbc.weighty);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+	
+	/**
+	 * Compares two grid bag constraints objects for equality.
+	 * If the two objects are equal, then their hash codes given by {@link GUIUtilities} return the same number.
+	 * @param gbc1 the first grid bag constraints object to compare
+	 * @param gbc2 the second grid bag constraints object to compare
+	 * @return <code>true</code> if both objects refer to <code>null</code> or if each corresponding constraint pair 
+	 * of the two objects are equal, else <code>false</code>
+	 * @see #hashCodeGBC(GridBagConstraints)
+	 */
+	public static boolean equalsGBC(GridBagConstraints gbc1, GridBagConstraints gbc2) {
+		if (gbc1 == gbc2)
+			return true;
+		if (gbc1 == null || gbc2 == null)
+			return false;
+		if (gbc1.gridx != gbc2.gridx)
+			return false;
+		if (gbc1.gridy != gbc2.gridy)
+			return false;
+		if (gbc1.gridwidth != gbc2.gridwidth)
+			return false;
+		if (gbc1.gridheight != gbc2.gridheight)
+			return false;
+		if (Double.doubleToLongBits(gbc1.weightx) != Double.doubleToLongBits(gbc2.weightx))
+			return false;
+		if (Double.doubleToLongBits(gbc1.weighty) != Double.doubleToLongBits(gbc2.weighty))
+			return false;
+		if (gbc1.anchor != gbc2.anchor)
+			return false;
+		if (gbc1.fill != gbc2.fill)
+			return false;
+		if (gbc1.insets == null) {
+			if (gbc2.insets != null)
+				return false;
+		} else if (!gbc1.insets.equals(gbc2.insets))
+			return false;
+		if (gbc1.ipadx != gbc2.ipadx)
+			return false;
+		if (gbc1.ipady != gbc2.ipady)
+			return false;
+		return true;
+	}
 	
 	/**
 	 * If {@link #LOGOS} is unloaded, loads logos of sizes 16, 32, 64 and 128 from

@@ -1,17 +1,13 @@
 package org.abos.sc.gui;
 
 import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,6 +16,7 @@ import org.abos.sc.core.Player;
 import org.abos.sc.core.Region;
 import org.abos.sc.core.Stage;
 import org.abos.util.Utilities;
+import org.abos.util.gui.GBCBuilder;
 
 /**
  * @author Sebastian Koch
@@ -143,38 +140,18 @@ public class StageSelectionPanel extends JPanel {
 		stageSelector.setPreferredSize(PREFERRED_CB_SIZE);
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
-		final double weightxForLabels = 0.0;
-		final double weightxForChoosers = 0.7;
-		final Insets chooserInsets = new Insets(0, 0, 0, 0);
-		final Insets labelInsets = new Insets(0, 1, 0, 2);
-		if (leftToRight) {
-			add(fandomLabel, new GridBagConstraints(0, 0, 1, 1, weightxForLabels, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
-			add(fandomSelector, new GridBagConstraints(1, 0, 1, 1, weightxForChoosers, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
-			add(regionLabel, new GridBagConstraints(0, 1, 1, 1, weightxForLabels, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
-			add(regionSelector, new GridBagConstraints(1, 1, 1, 1, weightxForChoosers, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
-			add(stageLabel, new GridBagConstraints(0, 2, 1, 1, weightxForLabels, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
-			add(stageSelector, new GridBagConstraints(1, 2, 1, 1, weightxForChoosers, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
-		}
-		else {
-			add(fandomLabel, new GridBagConstraints(1, 0, 1, 1, weightxForLabels, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
-			add(fandomSelector, new GridBagConstraints(0, 0, 1, 1, weightxForChoosers, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
-			add(regionLabel, new GridBagConstraints(1, 1, 1, 1, weightxForLabels, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
-			add(regionSelector, new GridBagConstraints(0, 1, 1, 1, weightxForChoosers, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
-			add(stageLabel, new GridBagConstraints(1, 2, 1, 1, weightxForLabels, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.NONE, labelInsets, 0, 0));
-			add(stageSelector, new GridBagConstraints(0, 2, 1, 1, weightxForChoosers, 1d, 
-					GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, chooserInsets, 0, 0));
-		}
+		GBCBuilder labelBuilder = new GBCBuilder().
+				anchorDefault(GridBagConstraints.LINE_END).insetsDefault(new Insets(0, 1, 0, 2));
+		GBCBuilder selectorBuilder = new GBCBuilder().
+				anchorDefault(GridBagConstraints.LINE_END).weightxDefault(0.7).fillDefault(GridBagConstraints.HORIZONTAL);
+		labelBuilder.gridx(leftToRight ? 0 : 1).reset();
+		selectorBuilder.gridx(leftToRight ? 1 : 0).reset();
+		add(fandomLabel, labelBuilder.gridy(0).get());
+		add(fandomSelector, selectorBuilder.gridy(0).get());
+		add(regionLabel, labelBuilder.gridy(1).get());
+		add(regionSelector, selectorBuilder.gridy(1).get());
+		add(stageLabel, labelBuilder.gridy(2).get());
+		add(stageSelector, selectorBuilder.gridy(2).get());
 	}
 
 }
