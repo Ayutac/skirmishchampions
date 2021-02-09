@@ -1,7 +1,9 @@
 package org.abos.sc.gui;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
@@ -13,20 +15,25 @@ import java.util.Set;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.abos.sc.core.BattleFormation;
+import org.abos.sc.core.ChallengeRatable;
 import org.abos.sc.core.Character;
 import org.abos.sc.core.Companion;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
+import org.abos.util.gui.GBCBuilder;
 
 /**
  * @author Sebastian Koch
  * @version %I%
  * @since 0.1
  */
-public class PartySelectionPanel extends JPanel {
+public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	
 	protected BattleFormation formation;
 	
@@ -39,6 +46,10 @@ public class PartySelectionPanel extends JPanel {
 	protected JCheckBox[][] positionCheckBox;
 	
 	protected ContentComboBox<Companion>[][] positionSelector;
+	
+	protected JLabel challengeRatingTextLabel;
+	
+	protected JLabel challengeRatingValueLabel;
 	
 	/**
 	 * 
@@ -182,6 +193,25 @@ public class PartySelectionPanel extends JPanel {
 			}
 	}
 	
+	/**
+	 * Returns the summed challenge rating of the currently selected characters, NOT the challege rating
+	 * of {@link #getFormation()}.
+	 * @return the summed challenge rating of the currently selected characters
+	 */
+	@Override
+	public int getChallengeRating() {
+		int sum = 0;
+		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
+			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+				if (positionCheckBox[row][col].isSelected())
+					sum += ((Character)positionSelector[row][col].getSelectedItem()).getChallengeRating();
+		return sum;
+	}
+	
+	public void refreshChallengeRating() {
+		challengeRatingValueLabel.setText(Integer.toString(getChallengeRating()));
+	}
+	
 	private void initComponents() {
 		positionCheckBox = new JCheckBox[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
 		positionSelector = new ContentComboBox[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
@@ -195,8 +225,14 @@ public class PartySelectionPanel extends JPanel {
 							((JCheckBox)e.getSource()).setSelected(!((JCheckBox)e.getSource()).isSelected());
 					}
 				});
+				// refresh CR on change
+				positionCheckBox[row][col].addChangeListener(new ChangeListener() {
+					@Override public void stateChanged(ChangeEvent e) {
+						refreshChallengeRating();
+					}
+				});
 				positionSelector[row][col] = new ContentComboBox<>(companionPool, Utilities.createNameComparator());
-				// automatically change to selected if combobox is used
+				// automatically change to selected if combobox is used, also refresh CR
 				positionSelector[row][col].addItemListener(new ItemListener() {
 					@SuppressWarnings("rawtypes")
 					@Override public void itemStateChanged(ItemEvent e) {
@@ -209,6 +245,7 @@ public class PartySelectionPanel extends JPanel {
 									for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
 										if (e.getSource() == positionSelector[row][col])
 											positionCheckBox[row][col].setSelected(true);
+							refreshChallengeRating();
 						}
 					}
 				});
@@ -225,32 +262,42 @@ public class PartySelectionPanel extends JPanel {
 					}
 				});
 			}
+		challengeRatingTextLabel = new JLabel("Challenge Rating:");
+		challengeRatingValueLabel = new JLabel(Integer.toString(((Character)positionSelector[0][0].getSelectedItem()).getChallengeRating()));
 		assert validateFormation();
 		acceptFormation();
 	}
 	
 	private void initLayout() {
 		// note that the grid is rotated
-		GridLayout layout = new GridLayout(BattleFormation.COL_NUMBER, 2 * BattleFormation.ROW_NUMBER);
+		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
+		GBCBuilder checkBoxBuilder = new GBCBuilder().
+				anchorDefault(GridBagConstraints.LINE_START).reset();
+		GBCBuilder selectorBuilder = new GBCBuilder().
+				anchorDefault(GridBagConstraints.LINE_START).weightxDefault(1d/BattleFormation.ROW_NUMBER).fillDefault(GridBagConstraints.HORIZONTAL).reset();
 		if (facesLineEnd) {
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
 				for (int row = BattleFormation.ROW_NUMBER - 1; row >= 0; row--) {
-					add(positionCheckBox[row][col]);
-					add(positionSelector[row][col]);
+					add(positionCheckBox[row][col], checkBoxBuilder.gridx(2*(BattleFormation.ROW_NUMBER-1-row)).gridy(col).get());
+					add(positionSelector[row][col], selectorBuilder.gridx(2*(BattleFormation.ROW_NUMBER-1-row)+1).gridy(col).get());
 				}
 		}
 		else {
 			for (int col = BattleFormation.COL_NUMBER - 1; col >= 0; col--)
 				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
-					add(positionCheckBox[row][col]);
-					add(positionSelector[row][col]);
+					add(positionCheckBox[row][col], checkBoxBuilder.gridx(2*row+1).gridy(col).get());
+					add(positionSelector[row][col], selectorBuilder.gridx(2*row).gridy(col).get());
 				}
 		}
+		GBCBuilder crBuilder =  new GBCBuilder().gridyDefault(BattleFormation.COL_NUMBER+1).gridwidthDefault(BattleFormation.ROW_NUMBER).reset();
+		add(challengeRatingTextLabel, crBuilder.anchor(GridBagConstraints.EAST).get());
+		add(challengeRatingValueLabel, crBuilder.anchor(GridBagConstraints.WEST).
+				gridx(BattleFormation.ROW_NUMBER).insets(new Insets(0, 3, 0, 0)).get());
 		// positionCheckBox[0][0].requestFocusInWindow();
 		setPreferredSize(new Dimension(
 				2*BattleFormation.ROW_NUMBER*ContentComboBox.PREFERRED_WIDTH, 
-				BattleFormation.COL_NUMBER*ContentComboBox.PREFERRED_HEIGHT));
+				(BattleFormation.COL_NUMBER+1)*ContentComboBox.PREFERRED_HEIGHT));
 	}
 	
 	
