@@ -35,6 +35,11 @@ public class Battle extends Timer implements Runnable {
 	protected BattleEncounter party2;
 	
 	/**
+	 * The difficulty for this battle.
+	 */
+	protected Difficulty difficulty;
+	
+	/**
 	 * logger for the battle
 	 */
 	protected Logger battleLogger;
@@ -52,18 +57,19 @@ public class Battle extends Timer implements Runnable {
 	 * but the attack tasks need to be sheduled seperately with {@link #run()}. 
 	 * @param party1 the first party, usually the player's
 	 * @param party2 the second party, usually the computer's
+	 * @param difficulty the difficulty for this battle
 	 * @param battleHandler the primary handler for this battle's logger
-	 * @param strategy1 the first party's strategy, usually the player's
-	 * @param strategy2 the second party's strategy, usually the computers's
-	 * @throws NullPointerException If <code>party1</code> or <code>party2</code> refers to <code>null</code>.
+	 * @throws NullPointerException If <code>party1</code>, <code>party2</code> or <code>difficulty</code> refers to <code>null</code>.
 	 * @see #run()
 	 */
-	public Battle(BattleEncounter party1, BattleEncounter party2, Handler battleHandler) {
+	public Battle(BattleEncounter party1, BattleEncounter party2, Difficulty difficulty, Handler battleHandler) {
 		super(true); // run as daemon
 		Utilities.requireNonNull(party1, "party1");
 		Utilities.requireNonNull(party2, "party2");
+		Utilities.requireNonNull(difficulty, "difficulty");
 		this.party1 = party1;
 		this.party2 = party2;
+		this.difficulty = difficulty;
 		this.battleHandler = battleHandler;
 		battleLogger = Logger.getAnonymousLogger();
 		battleLogger.setUseParentHandlers(false);
@@ -84,12 +90,12 @@ public class Battle extends Timer implements Runnable {
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
 				if (party1.getCharacter(row, col) != null)
-					scheduleAtFixedRate(new AttackTask(party1.getCharacter(row, col), party1.getTactic(row, col), party2.getFormation(), this,battleLogger), 
+					scheduleAtFixedRate(new AttackTask(party1.getCharacter(row, col), party1.getTactic(row, col), party2.getFormation(), this, battleLogger, difficulty), 
 							party1.getCharacter(row, col).getAttackSpeed(), party1.getCharacter(row, col).getAttackSpeed());
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
 				if (party2.getCharacter(row, col) != null)
-					scheduleAtFixedRate(new AttackTask(party2.getCharacter(row, col), party2.getTactic(row, col), party1.getFormation(), this,battleLogger), 
+					scheduleAtFixedRate(new AttackTask(party2.getCharacter(row, col), party2.getTactic(row, col), party1.getFormation(), this, battleLogger, difficulty), 
 							party2.getCharacter(row, col).getAttackSpeed(), party2.getCharacter(row, col).getAttackSpeed());
 	}
 	

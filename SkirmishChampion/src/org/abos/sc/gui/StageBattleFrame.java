@@ -144,7 +144,7 @@ public class StageBattleFrame extends JFrame {
 		fightButton.setEnabled(false);
 		returnButton.setEnabled(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		battle = new Battle(be1, be2, handler);
+		battle = new Battle(be1, be2, Difficulty.of(player), handler);
 		battle.run();
 		new Thread(new Runnable() {
 			@Override public void run() {

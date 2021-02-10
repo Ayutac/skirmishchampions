@@ -28,19 +28,19 @@ public class BattleTest {
 				flush();
 			}
 		};
-		Battle battle = new Battle(player, computer, consoleHandler);
+		Battle battle = new Battle(player, computer, Difficulty.of(null), consoleHandler);
 		battle.run();
 		battle.waitForEnd();
 		battle.restoreCombatants();
 		Character visma = new Character(new CharacterBase("twi_visma", "Visma", "TWI", new String[] {"Inn"}, 
 				new int[] {10,20,10,0,0,20,10,40}, StatsPrimary.CHARISMA, StatsSecondary.ELOQUENCE, false));
 		computer = new BattleEncounter(new BattleFormation(new Character[][] {{mrsha, visma, null}, {null, null, null}}), computerStrat);
-		battle = new Battle(player, computer, consoleHandler);
+		battle = new Battle(player, computer, Difficulty.of(null), consoleHandler);
 		battle.run();
 		battle.waitForEnd();
 		battle.restoreCombatants();
 		computer = new BattleEncounter(new BattleFormation(new Character[][] {{visma, mrsha, null}, {null, null, null}}), computerStrat);
-		battle = new Battle(player, computer, consoleHandler);
+		battle = new Battle(player, computer, Difficulty.of(null), consoleHandler);
 		battle.run();
 		battle.waitForEnd();
 	}
