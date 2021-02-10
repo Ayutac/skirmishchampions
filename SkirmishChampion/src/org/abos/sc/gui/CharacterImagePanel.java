@@ -44,6 +44,11 @@ public class CharacterImagePanel extends ImagePanel {
 	public static final long DAMAGE_DISPLAY_DURATION = 500;
 	
 	/**
+	 * Overlay color for defeated characters.
+	 */
+	public static final Color DEFEAT_COLOR = new Color(0xaaaaaaaa, true);
+	
+	/**
 	 * The character to display the image of.
 	 */
 	protected Character character;
@@ -104,13 +109,24 @@ public class CharacterImagePanel extends ImagePanel {
 			g.drawRect(1, 1, WIDTH-3, HEIGHT-3);
 		}
 		else if (paintDefeated()) {
-			g.setColor(Color.BLACK);
 			// draw X
-			g.drawLine(3, 1, WIDTH-2, HEIGHT-4);
-			g.drawLine(2, 1, WIDTH-2, HEIGHT-3);
-			g.drawLine(1, 1, WIDTH-2, HEIGHT-2);
-			g.drawLine(1, 2, WIDTH-3, HEIGHT-2);
-			g.drawLine(1, 3, WIDTH-4, HEIGHT-2);
+			g.setColor(DEFEAT_COLOR);
+			g.fillRect(1, 1, WIDTH-2, HEIGHT-2);
+//			g.setColor(Color.GRAY);
+////			g.drawLine(5, 1, WIDTH-2, HEIGHT-6);
+////			g.drawLine(4, 1, WIDTH-2, HEIGHT-5);
+////			g.drawLine(1, 4, WIDTH-5, HEIGHT-2);
+////			g.drawLine(1, 5, WIDTH-6, HEIGHT-2);
+//			g.drawLine(WIDTH-6, 1, 1, HEIGHT-6);
+//			g.drawLine(WIDTH-5, 1, 1, HEIGHT-5);
+//			g.drawLine(WIDTH-2, 4, 4, HEIGHT-2);
+//			g.drawLine(WIDTH-2, 5, 5, HEIGHT-2);
+			g.setColor(Color.BLACK);
+//			g.drawLine(3, 1, WIDTH-2, HEIGHT-4);
+//			g.drawLine(2, 1, WIDTH-2, HEIGHT-3);
+//			g.drawLine(1, 1, WIDTH-2, HEIGHT-2);
+//			g.drawLine(1, 2, WIDTH-3, HEIGHT-2);
+//			g.drawLine(1, 3, WIDTH-4, HEIGHT-2);
 			g.drawLine(WIDTH-4, 1, 1, HEIGHT-4);
 			g.drawLine(WIDTH-3, 1, 1, HEIGHT-3);
 			g.drawLine(WIDTH-2, 1, 1, HEIGHT-2);
