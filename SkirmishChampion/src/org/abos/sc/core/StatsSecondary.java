@@ -21,22 +21,27 @@ public enum StatsSecondary implements Name {
 	/**
 	 * For the constitution stat of the character.
 	 */
-	CONSTITUTION("CONS"),
+	CONSTITUTION("CONS", "attacked"),
 	
 	/**
 	 * For the mental stat of the character.
 	 */
-	MENTAL("MENT"),
+	MENTAL("MENT", "debated"),
 	
 	/**
 	 * For the eloquence stat of the character.
 	 */
-	ELOQUENCE("ELOQ");
+	ELOQUENCE("ELOQ", "charmed");
 	
 	/**
 	 * The display name of the secondary stat.
 	 */
 	private final String displayName;
+	
+	/**
+	 * The verb to communicate an attack.
+	 */
+	private final String attackVerb;
 	
 	/**
 	 * The number of different secondary stats.
@@ -46,11 +51,14 @@ public enum StatsSecondary implements Name {
 	/**
 	 * Creates a new secondary stat enum entry with the given display name.
 	 * @param displayName the display name of the secondary stat, not <code>null</code>
-	 * @throws NullPointerException If <code>displayName</code> refers to <code>null</code>.
+	 * @param attackVerb the attack verb of the secondary stat, not <code>null</code>
+	 * @throws NullPointerException If <code>displayName</code> or <code>attackVerb</code> refers to <code>null</code>.
 	 */
-	private StatsSecondary(String displayName) {
+	private StatsSecondary(String displayName, String attackVerb) {
 		Utilities.requireNonNull(displayName, "displayName");
+		Utilities.requireNonNull(attackVerb, "attackVerb");
 		this.displayName = displayName;
+		this.attackVerb = attackVerb;
 	}
 	
 	/**
@@ -60,6 +68,14 @@ public enum StatsSecondary implements Name {
 	@Override
 	public String getName() {
 		return displayName;
+	}
+	
+	/**
+	 * Returns the attack verb of the secondary stat in past tense.
+	 * @return the attack verb of the secondary stat, guaranteed to be non <code>null</code>
+	 */
+	public String getAttackVerb() {
+		return attackVerb;
 	}
 	
 	/**

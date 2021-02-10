@@ -87,7 +87,8 @@ public class AttackTask extends TimerTask {
 		}
 		Character enemy = enemies.getCharacter(tactic.getCurrentTargetRow(), tactic.getCurrentTargetCol());
 		enemy.dealDamage(character.getAttackPower(), character.getDamageStat());
-		attackLogger.info(() -> character.getName()+" attacked "+enemy.getName()+" and did "+character.getAttackPower()+" damage.");
+		attackLogger.info(() -> String.format("%s %s %s and dealt %d damage.", 
+				character.getName(), character.getDamageStat().getAttackVerb(), enemy.getName(), character.getAttackPower()));
 		if (enemy.isDefeated())
 			attackLogger.info(() -> enemy.getName()+" was defeated!");
 	}
