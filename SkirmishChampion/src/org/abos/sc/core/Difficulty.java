@@ -1,6 +1,7 @@
 package org.abos.sc.core;
 
 import org.abos.util.Name;
+import org.abos.util.Utilities;
 
 /**
  * An enumeration of the different difficulties complete with methods containing what they
@@ -12,19 +13,29 @@ import org.abos.util.Name;
 public enum Difficulty implements Name {
 	
 	/**
+	 * Easiest difficulty, if you need your hand hold.
+	 */
+	EASIEST("Well Done"),
+	
+	/**
 	 * Easy difficulty, great for beginners.
 	 */
-	EASY,
+	EASY("Medium Well"),
 	
 	/**
 	 * Medium difficulty for casual gamers.
 	 */
-	MEDIUM,
+	MEDIUM("Medium"),
 	
 	/**
-	 * Hard difficulty for those looking for an extra challenge.
+	 * Hard difficulty for experts of the game.
 	 */
-	HARD;
+	HARD("Medium Rare"),
+	
+	/**
+	 * Hardest difficulty for those looking for an extra challenge.
+	 */
+	HARDEST("Rate");
 	
 	/**
 	 * Returns the difficulty of the player if one is provided or the default difficulty if not.
@@ -39,13 +50,27 @@ public enum Difficulty implements Name {
 	}
 	
 	/**
+	 * The display name of the difficulty.
+	 */
+	private final String displayName;
+	
+	/**
+	 * Creates a new difficulty enum entry with the given display name.
+	 * @param displayName the display name of the primary stat, not <code>null</code>
+	 * @throws NullPointerException If <code>displayName</code> refers to <code>null</code>.
+	 */
+	private Difficulty(String displayName) {
+		Utilities.requireNonNull(displayName, "displayName");
+		this.displayName = displayName;
+	}
+	
+	/**
 	 * Returns the display name of this difficulty. 
-	 * @return the display name of this difficulty
+	 * @return the display name of this difficulty, guaranteed to be non <code>null</code>
 	 */
 	@Override
 	public String getName() {
-		// #name() but with only the first character being upper case
-		return name().substring(0, 1).concat(name().substring(1).toLowerCase());
+		return displayName;
 	}
 	
 	/**
@@ -89,7 +114,7 @@ public enum Difficulty implements Name {
 	 * @see #STEAMROLL_FACTOR
 	 */
 	public final boolean stopSteamrolling() {
-		return this.compareTo(EASY) > 0;
+		return this.compareTo(EASIEST) > 0;
 	}
 
 }

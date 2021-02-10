@@ -251,7 +251,7 @@ public class Player {
 					throw new ParseException(String.format(eofMsg, 2));
 			}
 			catch (IllegalArgumentException ex) {
-				player.difficulty = Difficulty.EASY;
+				player.difficulty = Difficulty.EASIEST;
 			}
 			
 			for (String s : line.split(";"))
