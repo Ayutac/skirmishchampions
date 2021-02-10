@@ -21,6 +21,11 @@ public class Character extends CharacterBase {
 	protected int[] damages;
 	
 	/**
+	 * The last moment this character has been damaged.
+	 */
+	protected Long lastDamageMoment = null;
+	
+	/**
 	 * A flag to remember if the character had been defeated.
 	 * @see #isDefeated()
 	 */
@@ -79,6 +84,7 @@ public class Character extends CharacterBase {
 	public synchronized void dealDamage(int damage, StatsSecondary type) {
 		Utilities.requireNonNull(type, "type");
 		this.damages[type.ordinal()] += damage; 
+		lastDamageMoment = System.currentTimeMillis();
 	}
 	
 	/**
@@ -103,6 +109,15 @@ public class Character extends CharacterBase {
 	@Override
 	public int getAttackPower() {
 		return getAttackPower(getAttackStat());
+	}
+	
+	/**
+	 * Returns the last moment this character was damaged in milliseconds. <code>null</code> means
+	 * the character hasn't been damaged yet.
+	 * @return the last moment this character was damaged
+	 */
+	public Long getLastDamageMoment() {
+		return lastDamageMoment;
 	}
 	
 	/**
@@ -132,6 +147,7 @@ public class Character extends CharacterBase {
 	public synchronized void restore() {
 		for (int i = 0; i < damages.length; i++)
 			damages[i] = 0;
+		lastDamageMoment = null;
 		defeated = false;
 	}
 	
