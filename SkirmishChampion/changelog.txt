@@ -29,3 +29,15 @@ Initial published version including
 - the current party is now saved
 - added validation of stage encounter strings and on console unreachable characters are now listed
 - fixed some minor bugs
+
+# 0.5.0-early-access
+- added 6 characters (all accessable)
+- made 29 previously unaccessable characters accessable
+- added 28 character images and a default character image
+- added 12 stages
+- added 2 regions
+- introduced challenge ratings for characters and encounters/stages
+- introduced game difficulties to prevent steam rolling
+- character images now get changed in battle if they have been recently hurt or are defeated
+- slightly improved GUI
+- fixed some minor bugs
