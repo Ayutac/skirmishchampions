@@ -2,24 +2,18 @@ package org.abos.sc.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
-import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.abos.sc.core.CharacterBase;
@@ -43,6 +37,11 @@ import org.abos.util.gui.TextAreaFrame;
  */
 public class MainMenu extends JFrame {
 
+	/**
+	 * the serial version UID
+	 */
+	private static final long serialVersionUID = -9145068484248836867L;
+
 	public final static String TITLE = "Skirmish Champion";
 	
 	public final static Dimension TITLE_SCREEN_DIMENSION = new Dimension(325, 325);
@@ -53,6 +52,8 @@ public class MainMenu extends JFrame {
 	public final static String SAVE_GAME_EXT_D = "." + SAVE_GAME_EXT;
 	
 	protected Player player;
+	
+	protected NewGameDialog newGameDialog; 
 	
 	protected StageSelectionFrame stageSelectionFrame;
 	
@@ -79,9 +80,11 @@ public class MainMenu extends JFrame {
 	protected JButton exitButton;
 	
 	/**
-	 * @throws HeadlessException
+	 * 
+	 * @throws IllegalStateException If {@link FandomBase#FANDOMS} is empty, which shouldn't happen. Either they have been loaded
+	 * successfully already, or the inability to load them should have ended the application already.
 	 */
-	public MainMenu() throws HeadlessException {
+	public MainMenu() {
 		super(TITLE);
 		initComponents();
 		initLayout();
@@ -89,9 +92,18 @@ public class MainMenu extends JFrame {
 			setIconImages(GUIUtilities.LOGOS);
 	}
 	
-	public static Player createNewPlayer() {
-		return new Player(Difficulty.EASY, FandomBase.FANDOMS.lookup("twi"), new Companion(CharacterBase.CHARACTERS.lookup("twi_erin")));
+	public static Player createNewPlayer(Difficulty difficulty, FandomBase startFandom) {
+		Utilities.requireNonNull(difficulty, "difficulty");
+		Utilities.requireNonNull(startFandom, "startFandom");
+		CharacterBase startCharacter = CharacterBase.CHARACTERS.lookup(startFandom.getStartCompanionId());
+		if (startCharacter == null)
+			throw new IllegalStateException(String.format("Start companion %s of fandom %s couldn't be found!", startFandom.getStartCompanionId(), startFandom.getId()));
+		return new Player(difficulty, startFandom, new Companion(startCharacter));
 		// TODO maybe better default? 
+	}
+	
+	public static Player createNewPlayer() {
+		return createNewPlayer(Difficulty.of(null), FandomBase.FANDOMS.lookup("twi"));
 	}
 	
 	/**
@@ -104,7 +116,16 @@ public class MainMenu extends JFrame {
 	}
 	
 	public void newGame() {
-		setPlayer(createNewPlayer());
+		newGameDialog.setVisible(true);
+		if (!newGameDialog.hasStarted())
+			return;
+		try {
+			setPlayer(createNewPlayer(newGameDialog.getDifficulty(), newGameDialog.getFandom()));
+		}
+		catch (IllegalStateException ex) {
+			GUIUtilities.errorMessage("Unexpected error!", "An unexpected error occured, no new game was created!", ex);
+			return;
+		}
 		continueGameButton.setEnabled(true);
 		continueGame();
 	}
@@ -231,6 +252,7 @@ public class MainMenu extends JFrame {
 		licenseButton.addActionListener(e -> licenseFrame.setVisible(true));
 		exitButton = new JButton("Exit");
 		exitButton.addActionListener(e -> System.exit(0));
+		newGameDialog = new NewGameDialog(this);
 		stageSelectionFrame = new StageSelectionFrame(player, true);
 		stageSelectionFrame.setAfterHiding(() -> setVisible(true));
 		if (applicationPath) {
