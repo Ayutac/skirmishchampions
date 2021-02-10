@@ -62,16 +62,22 @@ twi_lorent;Lorent;twi;Dullahans,Pallass;50,90,60,60,40,50,10,50;1;0
 twi_noass;Noass;twi;Drakes,Pallass;40,40,60,50,40,70,10,40;5;2
 twi_relz;Sir Relz;twi;Drakes,Nobility,Pallass;40,40,60,50,40,70,10,40;5;2
 twi_saliss;Saliss Oliwing;twi;Drakes,Pallass;1000,1000,300,300,100,50,100,300;1;0
+// Reizmelt
+twi_madain;Madain;twi;Humans,Warriors,Adventurers;120,90,50,70,40,10,20,70;0;0
+// Riverfarm
+twi_durene;Durene;twi;Half-Trolls,Unseen Empire,Warriors;150,120,30,30,30,50,30,40;0;0
 // Northern Izril
 twi_magnolia;Magnolia Reinhardt;twi;Nobility,Humans,Izril;40,80,280,180,150,500,100,90;5;2
 twi_bethal;Bethal Walchais;twi;Nobility,Humans,Izril;40,70,140,100,250,400,70,60;5;2
 twi_pryde;Pryde Ulta;twi;Nobility,Humans,Izril;70,70,160,120,180,380,70,70;5;2
 twi_termin;Termin;twi;Humans;40,40,50,60,40,40,10,70;5;2
+twi_gresaria;Gresaria Wellfar;twi;Nobility,Humans,Izril;120,100,180,150,180,300,100,90;5;2
 // High Passes
 twi_teriarch;Teriarch;twi;Dragons,High Passes;2000,1900,2000,2200,100,200,100,400;0;0
 // Baleros
 twi_niers;Niers;twi;Fraerling,Forgotten Wing Company;40,60,1000,800,40,200,100,70;2;1
 twi_foliana;Foliana;twi;Beastkin,Forgotten Wing Company;750,850,350,250,50,100,150,250;1;0
+twi_xol;Xol of Ingrilt;twi;Dullahan,Warriors;600,300,100,80,70,100,80,150;0;0
 // UN
 twi_geneva;Geneva Scala;twi;Humans,Earthers,UN;40,90,120,90,60,120,40,60;2;1
 twi_kenjiro;Kenjiro Murata;twi;Humans,Earthers,UN;40,40,100,70,30,200,20,60;5;2
@@ -120,6 +126,9 @@ twi_tofte;Tofte;twi;Humans,Earthers,UN,Adventurers;60,80,60,50,50,50,10,50;1;0
 twi_aldenon;Aldenon;twi;Humans,Earthers,UN,Adventurers;60,80,60,50,50,50,10,50;1;0
 twi_kami;Kami;twi;Humans,Earthers,UN,Adventurers;60,80,60,50,50,50,10,50;1;0
 twi_tobi;Tobi;twi;Humans,Earthers,UN,Adventurers;60,80,60,50,50,50,10,50;1;0
+// UN centaur runners
+twi_bault;Bault;twi;Centaurs,Runner;50,50,40,40,50,40,20,100;1;0;
+twi_pivana;Pivana;twi;Centaurs,Runner;50,50,40,40,50,40,20,100;1;0;
 // UN NPCs
 twi_filip;Filip;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1
 twi_blake;Blake;twi;Humans,Earthers,UN;40,40,40,30,20,40,10,40;2;1

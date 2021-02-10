@@ -24,7 +24,8 @@ twi_liscor_gate;City gates;twi_liscor;twi_liscor_dungeon,twi_stables,twi_watch_b
 twi_watch_barracks;Watch barracks;twi_liscor;twi_prison,twi_watch_captain,twi_marketstreet,twi_liscor_gate;;;twi_belsc,twi_mersh,twi_tells,twi_tessil,twi_lassil,twi_merka|COL
 twi_watch_captain;Watch captain's office;twi_liscor;twi_watch_barracks;;;twi_relc,,twi_klbkch,,twi_zevara|COL
 twi_prison;Prison;twi_liscor;twi_watch_barracks;;;twi_paiss,,twi_ulkel,twi_haldagaz,twi_calruz,twi_rhata|ROW
-twi_marketstreet;Market street;twi_liscor;twi_liscor_gate;;;twi_lism,,twi_krshia|COL
+twi_marketstreet;Market street;twi_liscor;twi_liscor_gate,twi_watch_barracks,twi_liscor_council;;;twi_lism,,twi_krshia|COL
+twi_liscor_council;Council;twi_liscor;twi_marketstreet;;;,,,,twi_olesm|CONCENTRATED
 // Dungeon
 twi_liscor_dungeon;Dungeon;twi_liscor;twi_liscor_gate,twi_stables;;;,twi_facestealer|CONCENTRATED
 // Northern Izril
@@ -34,9 +35,9 @@ twi_high_passes;High Passes;twi_nizril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
 twi_bloodfields;Bloodfields;twi_nizril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
 twi_invrisil;Invrisil;twi_nizril;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm,twi_reizmelt;;;twi_bethal,twi_magnolia,twi_pryde|ROW
 twi_invrisil_ag;Invrisil's Adventurer's Guild;twi_nizril;twi_invrisil;;;twi_todi,twi_jewel|ROW
-twi_first_landing;First Landing;twi_nizril;twi_invrisil,twi_elvallian;twi_baleros;;twi_erin|ROW
-twi_reizmelt;Reizmelt;twi_nizril;twi_invrisil;;;twi_erin|ROW
-twi_riverfarm;Riverfarm;twi_nizril;twi_invrisil;;;twi_erin|ROW
+twi_first_landing;First Landing;twi_nizril;twi_invrisil,twi_elvallian;twi_baleros;;,twi_gresaria|ROW
+twi_reizmelt;Reizmelt;twi_nizril;twi_invrisil;;;twi_madain|ROW
+twi_riverfarm;Riverfarm;twi_nizril;twi_invrisil;;;twi_durene|ROW
 // Southern Izril
 twi_pallass_door;Entry to The Wandering Inn;twi_sizril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
 // TODO add "_comm_booth" to the next ID
@@ -44,8 +45,8 @@ twi_pallass;Pallass;twi_sizril;twi_saliss_lab,twi_pallass_door;;;,twi_noass,,twi
 twi_saliss_lab;Saliss' laboratory;twi_sizril;twi_pallass;;;,twi_saliss|COL
 // Baleros
 twi_elvallian;Elvallian;twi_baleros;twi_first_landing,twi_daquin;twi_nizril;;,twi_foliana,,,twi_niers|ROW
-twi_daquin;Daquin;twi_baleros;twi_elvallian,twi_talenqual_entrance;twi_talenqual;;twi_erin|ROW
-twi_talenqual_entrance;City Entrance;twi_talenqual;twi_daquin,twi_un1,twi_talenqual_ag,twi_talenqual_hospital;twi_baleros;;,twi_kenjiro|ROW
+twi_daquin;Daquin;twi_baleros;twi_elvallian,twi_talenqual_entrance;twi_talenqual;;twi_xol|ROW
+twi_talenqual_entrance;City Entrance;twi_talenqual;twi_daquin,twi_un1,twi_talenqual_ag,twi_talenqual_hospital;twi_baleros;;twi_bault,twi_pivana,,,twi_kenjiro|COL
 twi_un1;United Nations House (1);twi_talenqual;twi_talenqual_entrance,twi_talenqual_ag,twi_talenqual_hospital,twi_un2;;;twi_myron,twi_ben,twi_sofie,twi_michael,twi_anders,twi_amoli|ROW
 twi_un2;United Nations House (2);twi_talenqual;twi_un1,twi_un3;;;twi_andel,twi_dion,twi_diana,twi_lorenzo,twi_nicola,twi_blake|ROW
 twi_un3;United Nations House (3);twi_talenqual;twi_un2;;;twi_priya,twi_filip,twi_kirana,,twi_luan,twi_daly|ROW
