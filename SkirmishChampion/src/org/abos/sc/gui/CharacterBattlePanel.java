@@ -25,47 +25,37 @@ public class CharacterBattlePanel extends JPanel {
 	private static final long serialVersionUID = 5266823928536695642L;
 
 	/**
-	 * the height of the character battle images
+	 * The preferred height of the character battle panel.
 	 */
-	public static final int IMAGE_HEIGHT = 64;
+	public static final int PREFERRED_HEIGHT = CharacterImagePanel.HEIGHT + 2*ContentComboBox.PREFERRED_HEIGHT;
 	
 	/**
-	 * the width of the character battle images
+	 * The preferred width of the character battle panel.
 	 */
-	public static final int IMAGE_WIDTH = 64;
+	public static final int PREFERRED_WIDTH = Math.max(CharacterImagePanel.WIDTH,ContentComboBox.PREFERRED_WIDTH);
 	
 	/**
-	 * the preferred height of the character battle panel
-	 */
-	public static final int PREFERRED_HEIGHT = IMAGE_HEIGHT + 2*ContentComboBox.PREFERRED_HEIGHT;
-	
-	/**
-	 * the preferred width of the character battle panel
-	 */
-	public static final int PREFERRED_WIDTH = Math.max(IMAGE_WIDTH,ContentComboBox.PREFERRED_WIDTH);
-	
-	/**
-	 * the preferred size of the character battle panel
+	 * The preferred size of the character battle panel.
 	 */
 	public static final Dimension PREFERRED_SIZE = new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT);
 	
 	/**
-	 * the character this battle panel is for
+	 * The character this battle panel is for.
 	 */
 	protected Character character;
 	
 	/**
-	 * the panel for the image
+	 * The panel for the image.
 	 */
-	protected ImagePanel imagePanel;
+	protected CharacterImagePanel imagePanel;
 	
 	/**
-	 * the label containing the character name
+	 * The label containing the character name.
 	 */
 	protected JLabel characterLabel;
 	
 	/**
-	 * the label containing the remaining chara
+	 * The label containing the remaining character health.
 	 */
 	protected JLabel characterHealthLabel;
 	
@@ -88,11 +78,12 @@ public class CharacterBattlePanel extends JPanel {
 	}
 	
 	/**
-	 * Sets the character
-	 * @param character the character to set
+	 * Sets the character for this battle panel.
+	 * @param character the new character of this image panel
 	 */
 	public void setCharacter(Character character) {
 		this.character = character;
+		imagePanel.setCharacter(character);
 		refreshCharacter(false);
 	}
 	
@@ -106,13 +97,11 @@ public class CharacterBattlePanel extends JPanel {
 			return;
 		}
 		if (character == null) {
-			imagePanel.setImage(null);
 			characterLabel.setText("");
 			characterLabel.setToolTipText(null);
 			characterHealthLabel.setText("");
 		}
 		else {
-			imagePanel.loadImageLazy(GUIUtilities.getCharacterImagesPath().resolve(character.getFandomId()).resolve(character.getId()+".png"));
 			characterLabel.setText(character.toString());
 			characterLabel.setToolTipText(character.toHintString());
 			characterHealthLabel.setText(character.healthToString());
@@ -125,7 +114,7 @@ public class CharacterBattlePanel extends JPanel {
 	 * @see #initLayout()
 	 */
 	private void initComponents() {
-		imagePanel = new ImagePanel(new Dimension(IMAGE_WIDTH, IMAGE_HEIGHT));
+		imagePanel = new CharacterImagePanel();
 		characterLabel = new JLabel();
 		characterHealthLabel = new JLabel();
 	}

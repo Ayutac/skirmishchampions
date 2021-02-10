@@ -14,6 +14,9 @@ https://freesvg.org/fantasy-sword-1
 https://freesvg.org/fantasy-staff-1
 https://freesvg.org/flower-image-publicdomainvectors-org
 Note that the logo created from these three images does not fall under public domain.
+# For the generic character image, a public domain SVG image was used as well:
+https://freesvg.org/red-head-avatar
+Note that the image created from that image does not fall under public domain.
 
 # The Wandering Inn
 ~ done by andelevion:

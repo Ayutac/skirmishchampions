@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
@@ -63,6 +64,28 @@ public class ImagePanel extends JPanel {
 	}
 	
 	/**
+	 * Loads an image from the given path if one is provided, with a backup image. This method will always attempt to load the
+	 * specified image anew, using {@link ImageIO#read(java.io.File)}, and throw an {@link IOException}
+	 * if that doesn't work. Except if <code>backup</code> is provided and a valid path, then that will be loaded
+	 * instead of the specified path if the specified path does not point to an existing file.
+	 * @param path The path to load the image from. If <code>null</code>, the current image will vanish.
+	 * @param backup The image to load if the image specified by path doesn't exist. <code>null</code> means no backup is given.
+	 * @throws IOException If the image specified by <code>path</code> couldn't be loaded.
+	 * @see #loadImageLazy(Path)
+	 * @see ImageIO#read(java.io.File)
+	 */
+	public void loadImage(Path path, Path backup) throws IOException {
+		if (path == null)
+			setImage(null);
+		else {
+			if (Files.notExists(path) && backup != null && Files.exists(backup))
+				setImage(ImageIO.read(backup.toFile()));
+			else
+				setImage(ImageIO.read(path.toFile()));
+		}
+	}
+	
+	/**
 	 * Loads an image from the given path if one is provided. This method will always attempt to load the
 	 * specified image anew, using {@link ImageIO#read(java.io.File)}, and throw an {@link IOException}
 	 * if that doesn't work.
@@ -72,10 +95,27 @@ public class ImagePanel extends JPanel {
 	 * @see ImageIO#read(java.io.File)
 	 */
 	public void loadImage(Path path) throws IOException {
+		loadImage(path, null);
+	}
+	
+	/**
+	 * Loads an image from the given path if one is provided, with a backup image. This method will attempt to look up
+	 * if the image has already been loaded into the memory and use that one. If there is none and <code>backup</code>
+	 * is <code>null</code> or not a valid path either, an attempt will be made to load the image using {@link Toolkit#getImage(String)},
+	 * else the backup will be loaded using the same method. No exception will be thrown.
+	 * @param path The path to load the image from. If <code>null</code>, the current image will vanish.
+	 * @param backup The image to load if the image specified by path doesn't exist. <code>null</code> means no backup is given.
+	 * @see #loadImage(Path)
+	 * @see Toolkit#getImage(String)
+	 */
+	public void loadImageLazy(Path path, Path backup) {
 		if (path == null)
 			setImage(null);
 		else {
-			setImage(ImageIO.read(path.toFile()));
+			if (Files.notExists(path) && backup != null && Files.exists(backup))
+				setImage(Toolkit.getDefaultToolkit().getImage(backup.toString()));
+			else 
+				setImage(Toolkit.getDefaultToolkit().getImage(path.toString()));
 		}
 	}
 	
@@ -89,11 +129,7 @@ public class ImagePanel extends JPanel {
 	 * @see Toolkit#getImage(String)
 	 */
 	public void loadImageLazy(Path path) {
-		if (path == null)
-			setImage(null);
-		else {
-			setImage(Toolkit.getDefaultToolkit().getImage(path.toString()));
-		}
+		loadImageLazy(path, null);
 	}
 	
 	/**
