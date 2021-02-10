@@ -35,7 +35,7 @@ public enum Difficulty implements Name {
 	/**
 	 * Hardest difficulty for those looking for an extra challenge.
 	 */
-	HARDEST("Rate");
+	HARDEST("Rare");
 	
 	/**
 	 * Returns the difficulty of the player if one is provided or the default difficulty if not.
