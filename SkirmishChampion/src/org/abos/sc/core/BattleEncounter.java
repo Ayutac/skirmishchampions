@@ -214,6 +214,8 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	 * The format is "<code>formation{@value #FIELD_SEPARATOR}strategy</code>".
 	 * @param s the string to parse
 	 * @return a battle encounter matching the string
+	 * @see BattleFormation#parse(String)
+	 * @see BattleStrategy#parse(String)
 	 */
 	public static BattleEncounter parse(String s) {
 		Utilities.requireNonNull(s, "s");
