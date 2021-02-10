@@ -105,6 +105,7 @@ public class EncounterInfoPanel extends JPanel {
 	
 	public void refreshHealth() {
 		if (encounter == null || !difficulty.showCharacterHealth()) {
+			repaint();
 			return;
 		}
 		for (int row = 0; row < formation.length; row++)
