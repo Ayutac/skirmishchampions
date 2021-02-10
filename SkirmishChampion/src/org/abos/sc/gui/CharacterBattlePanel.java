@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.abos.sc.core.Character;
+import org.abos.sc.core.Difficulty;
 import org.abos.util.gui.GBCBuilder;
 import org.abos.util.gui.GUIUtilities;
 import org.abos.util.gui.ImagePanel;
@@ -43,6 +44,10 @@ public class CharacterBattlePanel extends JPanel {
 	 * The character this battle panel is for.
 	 */
 	protected Character character;
+	
+	protected boolean statsHintVisible = Difficulty.of(null).showCharacterStats();
+	
+	protected boolean healthVisible = Difficulty.of(null).showCharacterHealth();
 	
 	/**
 	 * The panel for the image.
@@ -87,9 +92,47 @@ public class CharacterBattlePanel extends JPanel {
 		refreshCharacter(false);
 	}
 	
+	/**
+	 * @return the healthVisible
+	 */
+	public boolean isHealthVisible() {
+		return healthVisible;
+	}
+	
+	/**
+	 * @param healthVisible the healthVisible to set
+	 */
+	public void setHealthVisible(boolean healthVisible) {
+		this.healthVisible = healthVisible;
+		refreshCharacter(true);
+	}
+	
+	/**
+	 * @return the statsTipVisible
+	 */
+	public boolean isStatsHintVisible() {
+		return statsHintVisible;
+	}
+	
+	/**
+	 * @param statsHintVisible the statsTipVisible to set
+	 */
+	public void setStatsHintVisible(boolean statsHintVisible) {
+		this.statsHintVisible = statsHintVisible;
+		refreshStatsHint();
+	}
+	
+	public void refreshStatsHint() {
+		if (character != null && statsHintVisible) 
+			characterLabel.setToolTipText(character.toHintString());
+		else 
+			characterLabel.setToolTipText(null);
+	}
+	
+	// todo health only in separate method like stats hint
 	public void refreshCharacter(boolean healthOnly) {
 		if (healthOnly) {
-			if (character == null)
+			if (character == null || !healthVisible)
 				characterHealthLabel.setText("");
 			else
 				characterHealthLabel.setText(character.healthToString());
@@ -103,8 +146,8 @@ public class CharacterBattlePanel extends JPanel {
 		}
 		else {
 			characterLabel.setText(character.toString());
-			characterLabel.setToolTipText(character.toHintString());
 			characterHealthLabel.setText(character.healthToString());
+			refreshStatsHint();
 		}
 		repaint();
 	}

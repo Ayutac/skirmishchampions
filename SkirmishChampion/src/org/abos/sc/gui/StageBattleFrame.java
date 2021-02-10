@@ -88,6 +88,10 @@ public class StageBattleFrame extends JFrame {
 	 */
 	public void setPlayer(Player player) {
 		this.player = player;
+		if (firstParty != null)
+			firstParty.setDifficulty(Difficulty.of(player));
+		if (secondParty != null)
+			secondParty.setDifficulty(Difficulty.of(player));
 	}
 	
 	public Stage getStage() {

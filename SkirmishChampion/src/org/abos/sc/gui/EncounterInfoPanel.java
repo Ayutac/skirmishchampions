@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 
 import org.abos.sc.core.BattleEncounter;
 import org.abos.sc.core.BattleFormation;
+import org.abos.sc.core.Difficulty;
+import org.abos.util.Utilities;
 import org.abos.util.gui.GBCBuilder;
 
 /**
@@ -21,6 +23,8 @@ public class EncounterInfoPanel extends JPanel {
 	protected boolean atLineStart;
 	
 	protected BattleEncounter encounter;
+	
+	protected Difficulty difficulty = Difficulty.of(null);
 	
 	protected CharacterBattlePanel[][] formation;
 	
@@ -54,6 +58,35 @@ public class EncounterInfoPanel extends JPanel {
 		refreshEncounter();
 	}
 	
+	/**
+	 * @return the difficulty
+	 */
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+	
+	/**
+	 * @param difficulty the difficulty to set
+	 */
+	public void setDifficulty(Difficulty difficulty) {
+		Utilities.requireNonNull(difficulty, "difficulty");
+		this.difficulty = difficulty;
+	}
+	
+	public void refreshDifficulty() {
+		for (int row = 0; row < formation.length; row++)
+			for (int col = 0; col < formation[0].length; col++) {
+				formation[row][col].setHealthVisible(difficulty.showCharacterHealth());
+				formation[row][col].setStatsHintVisible(difficulty.showCharacterStats());
+			}
+		if (difficulty.stopSteamrolling()) {
+			challengeRatingLabel.setToolTipText(String.format("<html>The challenge rating of your team is only allowed to be at most %.2f times<br> higher than the challenge rating of the opposing team.",Difficulty.STEAMROLL_FACTOR));
+		}
+		else {
+			challengeRatingLabel.setToolTipText(null);
+		}
+	}
+	
 	public void refreshEncounter() {
 		if (encounter == null) {
 			for (int row = 0; row < formation.length; row++)
@@ -66,11 +99,12 @@ public class EncounterInfoPanel extends JPanel {
 			for (int col = 0; col < formation[0].length; col++)
 				formation[row][col].setCharacter(encounter.getCharacter(row, col));
 		challengeRatingLabel.setText(String.format("Challenge Rating: %d", encounter.getChallengeRating()));
+		refreshDifficulty();
 		repaint();
 	}
 	
 	public void refreshHealth() {
-		if (encounter == null) {
+		if (encounter == null || !difficulty.showCharacterHealth()) {
 			return;
 		}
 		for (int row = 0; row < formation.length; row++)

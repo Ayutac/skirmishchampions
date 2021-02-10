@@ -74,11 +74,27 @@ public enum Difficulty implements Name {
 	}
 	
 	/**
-	 * If challenge ratings should be shown, depending on the game difficulty.
-	 * @return <code>true</code> if challenge ratings should be displayed for this difficulty, else <code>false</code>
+	 * If challenge ratings should be shown on the stage frame, depending on the game difficulty.
+	 * @return <code>true</code> if challenge ratings should be displayed on the stage selection frame for this difficulty, else <code>false</code>
 	 */
 	public final boolean showChallengeRatings() {
 		return this.compareTo(MEDIUM) <= 0;
+	}
+	
+	/**
+	 * If the stats of a character should be shown on the battle screen, depending on the game difficulty.
+	 * @return <code>true</code> if the stats of a character should be displayed on the battle screen for this difficulty, else <code>false</code>
+	 */
+	public final boolean showCharacterStats() {
+		return this.compareTo(MEDIUM) <= 0;
+	}
+	
+	/**
+	 * If the health of a character should be shown on the battle screen, depending on the game difficulty.
+	 * @return <code>true</code> if the health of a character should be displayed on the battle screen for this difficulty, else <code>false</code>
+	 */
+	public final boolean showCharacterHealth() {
+		return this.compareTo(HARDEST) < 0;
 	}
 	
 	/**
