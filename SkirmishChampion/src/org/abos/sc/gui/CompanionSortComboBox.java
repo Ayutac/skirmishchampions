@@ -21,6 +21,8 @@ public class CompanionSortComboBox extends JComboBox<String> {
 	
 	public final static String NAME_CRITERIUM = "Name";
 	
+	public final static String CR_CRITERIUM = "CR";
+	
 	protected boolean reversed = false;
 	
 	protected Comparator<Companion> idComparator = Utilities.createIdComparator();
@@ -37,13 +39,15 @@ public class CompanionSortComboBox extends JComboBox<String> {
 			addItem(primary.getCapitalizedName());
 		for (StatsSecondary secondary : StatsSecondary.values())
 			addItem(secondary.getCapitalizedName());
-		selectionComparator = new Comparator[1+StatsPrimary.SIZE+StatsSecondary.SIZE];
+		addItem(CR_CRITERIUM);
+		selectionComparator = new Comparator[1+StatsPrimary.SIZE+StatsSecondary.SIZE+1];
 		selectionComparator[0] = Utilities.createNameComparator();
 		int i = 1;
 		for (StatsPrimary primary : StatsPrimary.values())
 			selectionComparator[i++] = CharacterBase.createPrimaryComparator(primary);
 		for (StatsSecondary secondary : StatsSecondary.values())
 			selectionComparator[i++] = CharacterBase.createSecondaryComparator(secondary);
+		selectionComparator[i] = CharacterBase.createChallengeRatingComparator();
 	}
 	
 	/**
