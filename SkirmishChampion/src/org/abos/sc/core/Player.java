@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.time.Instant;
 
 import org.abos.util.IllegalArgumentRangeException;
@@ -68,6 +69,16 @@ public class Player {
 			throw new IllegalArgumentException("At least one start companion must be given!");
 		companions.addAll(startCompanions);
 		party = BattleFormation.createFormation(companions.iterator().next());
+	}
+	
+	public boolean speedrunActive() {
+		return creationTime != null;
+	}
+	
+	public Duration getRunDuration() {
+		if (creationTime == null)
+			return null;
+		return Duration.between(creationTime, Instant.now());
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 package org.abos.sc.core;
 
+import java.time.Duration;
+import java.time.temporal.TemporalUnit;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -275,6 +277,21 @@ public class Stage extends StageBase {
 		}
 	}
 	
+	protected void acknowledgeRuntime(StringBuilder message, Player player) {
+		Utilities.requireNonNull(message, "message");
+		if (player == null || !player.speedrunActive())
+			return;
+		Duration runDuration = player.getRunDuration();
+		message.append(System.lineSeparator());
+		message.append("Time: ");
+		message.append(runDuration.toHours());
+		message.append("h ");
+		message.append(runDuration.toMinutesPart());
+		message.append("min ");
+		message.append(runDuration.toSecondsPart());
+		message.append("s");
+	}
+	
 	/**
 	 * Acknowledges the result of the battle by rewarding the player and building an
 	 * acknowledging string.
@@ -289,6 +306,7 @@ public class Stage extends StageBase {
 		acknowledgeStageChange(message, conclusion, player);
 		acknowledgeRegionChange(message, conclusion, player);
 		acknowledgeFandomChange(message, conclusion, player);
+		acknowledgeRuntime(message, player);
 		if (player != null) {
 			player.updateRegionStages();
 			player.updateFandomRegions();
