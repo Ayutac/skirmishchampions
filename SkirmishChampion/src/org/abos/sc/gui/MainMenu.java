@@ -163,7 +163,7 @@ public class MainMenu extends JFrame {
 			try {
 				loadedPlayer = Player.loadFromFile(saveGame);
 			}
-			catch (IOException ex) {
+			catch (IOException | ParseException ex) {
 				GUIUtilities.errorMessage(this, "Loading...", "Loading save game failed!", ex);
 			}
 			if (loadedPlayer != null) {
@@ -221,11 +221,7 @@ public class MainMenu extends JFrame {
 				try {
 					player = Player.loadFromFile(lastSaveLocationFile.toPath());
 				}
-				catch (ParseException ex) {
-					player = createNewPlayer();
-					continueGameButton.setEnabled(false);
-				}
-				catch (IOException ex) {
+				catch (IOException | ParseException ex) {
 					player = createNewPlayer();
 					continueGameButton.setEnabled(false);
 				}
