@@ -125,6 +125,12 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 		refreshChallengeRating();
 	}
 	
+	public void deselectAll() {
+		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
+			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+					positionCheckBox[row][col].setSelected(false);
+	}
+	
 	public void deselectAlmostAll() {
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {

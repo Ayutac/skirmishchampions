@@ -43,6 +43,10 @@ public class PartySelectionFrame extends JFrame {
 	
 	protected PartySelectionPanel selectionPanel;
 	
+	protected JButton deselectAllButton;
+	
+	protected JButton resetButton;
+	
 	protected JButton confirmButton;
 	
 	protected JButton cancelButton;
@@ -163,6 +167,10 @@ public class PartySelectionFrame extends JFrame {
 				selectionPanel.setComparator(sortComboBox.getComparator());
 			}
 		});
+		deselectAllButton = new JButton("Deselect all");
+		deselectAllButton.addActionListener(e -> selectionPanel.deselectAll());
+		resetButton = new JButton("Reset");
+		resetButton.addActionListener(e -> selectionPanel.resetFormation());
 		confirmButton = new JButton("Confirm");
 		confirmButton.addActionListener(e -> confirmFormation());
 		cancelButton = new JButton("Cancel");
@@ -179,7 +187,9 @@ public class PartySelectionFrame extends JFrame {
 		sortPanel.add(descButton);
 		add(sortPanel, BorderLayout.PAGE_START);
 		add(selectionPanel, BorderLayout.CENTER);
-		JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
+		JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
+		buttonPanel.add(deselectAllButton);
+		buttonPanel.add(resetButton);
 		buttonPanel.add(confirmButton);
 		buttonPanel.add(cancelButton);
 		add(buttonPanel, BorderLayout.PAGE_END);
