@@ -80,7 +80,8 @@ public class EncounterInfoPanel extends JPanel {
 				formation[row][col].setStatsHintVisible(difficulty.showCharacterStats());
 			}
 		if (difficulty.stopSteamrolling()) {
-			challengeRatingLabel.setToolTipText(String.format("<html>The challenge rating of your team is only allowed to be at most %.2f times<br> higher than the challenge rating of the opposing team.",Difficulty.STEAMROLL_FACTOR));
+			challengeRatingLabel.setToolTipText(String.format("<html>The challenge rating of your team is only allowed to be<br><b>%d</b> at most for this encounter.</html>",
+					Difficulty.getChallengeRatingCap(encounter.getChallengeRating())));
 		}
 		else {
 			challengeRatingLabel.setToolTipText(null);

@@ -123,6 +123,11 @@ public enum Difficulty implements Name {
 	 */
 	public static final double STEAMROLL_FACTOR = 1.5;
 	
+
+	public static final int getChallengeRatingCap(int rating) {
+		return (int)Math.floor(rating*STEAMROLL_FACTOR);
+	}
+	
 	/**
 	 * If the player should be stopped if their team is too strong for an encounter, depending on the game difficulty.
 	 * @return <code>true</code> if the player should be stopped with this difficulty 
