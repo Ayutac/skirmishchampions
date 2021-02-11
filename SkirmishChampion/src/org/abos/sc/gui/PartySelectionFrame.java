@@ -69,6 +69,20 @@ public class PartySelectionFrame extends JFrame {
 	}
 	
 	/**
+	 * @return the stageChallengeRatingCap
+	 */
+	public Integer getStageChallengeRatingCap() {
+		return selectionPanel.getStageChallengeRatingCap();
+	}
+	
+	/**
+	 * @param stageChallengeRatingCap the stageChallengeRatingCap to set
+	 */
+	public void setStageChallengeRatingCap(Integer stageChallengeRatingCap) {
+		selectionPanel.setStageChallengeRatingCap(stageChallengeRatingCap);
+	}
+	
+	/**
 	 * @param companionPool the companionPool to set
 	 */
 	public void setCompanionPool(Registry<Companion> companionPool) {

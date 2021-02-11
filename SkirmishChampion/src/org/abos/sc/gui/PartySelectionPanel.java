@@ -42,6 +42,8 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	protected boolean facesLineEnd;
 	
 	protected Registry<Companion> companionPool;
+	
+	protected Integer scrc; // stage challenge rating cap
 
 	protected JCheckBox[][] positionCheckBox;
 	
@@ -106,6 +108,21 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 		deselectAlmostAll();
 		assert validateFormation();
 		acceptFormation();
+	}
+	
+	/**
+	 * @return the stageChallengeRatingCap
+	 */
+	public Integer getStageChallengeRatingCap() {
+		return scrc;
+	}
+	
+	/**
+	 * @param stageChallengeRatingCap the stageChallengeRatingCap to set
+	 */
+	public void setStageChallengeRatingCap(Integer stageChallengeRatingCap) {
+		this.scrc = stageChallengeRatingCap;
+		refreshChallengeRating();
 	}
 	
 	public void deselectAlmostAll() {
@@ -209,7 +226,12 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	}
 	
 	public void refreshChallengeRating() {
-		challengeRatingValueLabel.setText(Integer.toString(getChallengeRating()));
+		int cr = getChallengeRating();
+		if (scrc == null)
+			challengeRatingValueLabel.setText(Integer.toString(cr));
+		else
+			challengeRatingValueLabel.setText(String.format("%d (%s %d)", 
+				cr, cr <= scrc ? "<=" : ">", scrc));
 	}
 	
 	private void initComponents() {

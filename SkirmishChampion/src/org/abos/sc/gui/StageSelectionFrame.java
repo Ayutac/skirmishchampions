@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import org.abos.sc.core.BattleEncounter;
 import org.abos.sc.core.BattleFormation;
 import org.abos.sc.core.BattleStrategy;
+import org.abos.sc.core.Difficulty;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.Stage;
 import org.abos.util.Utilities;
@@ -48,8 +49,7 @@ public class StageSelectionFrame extends JFrame {
 	 */
 	public StageSelectionFrame(Player player, boolean leftToRight) throws HeadlessException {
 		super(TITLE);
-		if (player == null)
-			throw new NullPointerException("player must be specified!");
+		Utilities.requireNonNull(player, "player");
 		this.player = player;
 		this.leftToRight = leftToRight;
 		initComponents();
@@ -113,6 +113,10 @@ public class StageSelectionFrame extends JFrame {
 	
 	public void showPartySelectionFrame() {
 		partySelectionFrame.setFormation(player.getParty());
+		if (player.getDifficulty().stopSteamrolling())
+			partySelectionFrame.setStageChallengeRatingCap(Difficulty.getChallengeRatingCap(selectionPanel.getStage().getChallengeRating()));
+		else
+			partySelectionFrame.setStageChallengeRatingCap(null);
 		showSubframe(partySelectionFrame);
 	}
 	
