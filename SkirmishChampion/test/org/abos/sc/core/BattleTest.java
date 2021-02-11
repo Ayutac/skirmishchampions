@@ -22,7 +22,7 @@ public class BattleTest {
 		BattleFormation computerForm = new BattleFormation(new Character[][] {{mrsha, null, null}, {null, null, null}});
 		BattleStrategy computerStrat = BattleStrategy.createConcentratedAssault();
 		BattleEncounter computer = new BattleEncounter(computerForm, computerStrat);
-		Handler consoleHandler = new StreamHandler(System.out, Utilities.createSimplestFormatter()) {
+		Handler consoleHandler = new StreamHandler(System.out, Utilities.createSimplestFormatter(false)) {
 			public synchronized void publish(java.util.logging.LogRecord record) {
 				super.publish(record);
 				flush();

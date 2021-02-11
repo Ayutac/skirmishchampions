@@ -4,7 +4,10 @@ import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
+import javax.swing.JEditorPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.text.EditorKit;
 
 import org.abos.util.Utilities;
 
@@ -31,7 +34,7 @@ public class TextAreaHandler extends Handler {
 	/**
 	 * the associated text area
 	 */
-	protected JTextArea textArea;
+	protected JEditorPane textArea;
 	
 	/**
 	 * Creates a new handler with the specified text area and formatter.
@@ -40,11 +43,11 @@ public class TextAreaHandler extends Handler {
 	 * @throws NullPointerException If <code>textArea</code> refers to <code>null</code>.
 	 * @see Utilities#createSimplestFormatter()
 	 */
-	public TextAreaHandler(JTextArea textArea, Formatter formatter) {
+	public TextAreaHandler(JEditorPane textArea, Formatter formatter) {
 		Utilities.requireNonNull(textArea, "textArea");
 		this.textArea = textArea;
 		if (formatter == null)
-			this.formatter = Utilities.createSimplestFormatter();
+			this.formatter = Utilities.createSimplestFormatter(GUIUtilities.isEditorPaneUsingHtml(textArea));
 		else
 			this.formatter = formatter;
 	}
@@ -56,7 +59,7 @@ public class TextAreaHandler extends Handler {
 	 * @see #TextAreaHandler(JTextArea, Formatter)
 	 * @see Utilities#createSimplestFormatter()
 	 */
-	public TextAreaHandler(JTextArea textArea) {
+	public TextAreaHandler(JEditorPane textArea) {
 		this(textArea, null);
 	}
 	
@@ -71,8 +74,9 @@ public class TextAreaHandler extends Handler {
 	 */
 	@Override
 	public void publish(LogRecord record) {
-		if (!closed)
-			textArea.append(formatter.format(record));
+		if (!closed) {
+			GUIUtilities.appendToEditorPane(textArea, formatter.format(record), null);
+		}
 	}
 	
 	/**

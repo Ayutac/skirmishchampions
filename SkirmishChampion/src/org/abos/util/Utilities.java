@@ -447,7 +447,13 @@ public class Utilities {
 	 * A line break as given by {@link System#lineSeparator()} is appended to the message.
 	 * @return an instance of the (anonymous) simplest formatter class
 	 */
-	public static Formatter createSimplestFormatter() {
+	public static Formatter createSimplestFormatter(boolean html) {
+		if (html)
+			return new Formatter() {
+				@Override public String format(LogRecord record) {
+					return record.getMessage()+"<br>"+System.lineSeparator();
+				}
+			};
 		return new Formatter() {
 			@Override public String format(LogRecord record) {
 				return record.getMessage()+System.lineSeparator();

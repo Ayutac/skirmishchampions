@@ -90,12 +90,12 @@ public class Battle extends Timer implements Runnable {
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
 				if (party1.getCharacter(row, col) != null)
-					scheduleAtFixedRate(new AttackTask(party1.getCharacter(row, col), party1.getTactic(row, col), party2.getFormation(), this, battleLogger, difficulty), 
+					scheduleAtFixedRate(new AttackTask(party1.getCharacter(row, col), party1.getTactic(row, col), party2.getFormation(), this, battleLogger, difficulty, true), 
 							party1.getCharacter(row, col).getAttackSpeed(), party1.getCharacter(row, col).getAttackSpeed());
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
 			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
 				if (party2.getCharacter(row, col) != null)
-					scheduleAtFixedRate(new AttackTask(party2.getCharacter(row, col), party2.getTactic(row, col), party1.getFormation(), this, battleLogger, difficulty), 
+					scheduleAtFixedRate(new AttackTask(party2.getCharacter(row, col), party2.getTactic(row, col), party1.getFormation(), this, battleLogger, difficulty, false), 
 							party2.getCharacter(row, col).getAttackSpeed(), party2.getCharacter(row, col).getAttackSpeed());
 	}
 	

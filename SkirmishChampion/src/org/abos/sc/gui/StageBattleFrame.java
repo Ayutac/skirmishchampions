@@ -9,8 +9,10 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Comparator;
+import java.util.logging.LogRecord;
 
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -55,7 +57,7 @@ public class StageBattleFrame extends JFrame {
 	
 	protected EncounterInfoPanel secondParty;
 	
-	protected JTextArea battleLog;
+	protected JEditorPane battleLog;
 	
 	protected JScrollPane battleLogWrapper;
 	
@@ -213,19 +215,18 @@ public class StageBattleFrame extends JFrame {
 		stageLabel = new JLabel();
 		firstParty = new EncounterInfoPanel(true);
 		secondParty = new EncounterInfoPanel(false);
-		battleLog = new JTextArea() {
-			private static final long serialVersionUID = 2598439816814944789L;
-			@Override public void append(String str) {
-				super.append(str);
-				refreshHealth();
-			};
-		};
+		battleLog = GUIUtilities.createEmptyHtmlPane();
 		battleLog.setEditable(false);
 		// the follwing two lines enable autoscrolling down
 		DefaultCaret caret = (DefaultCaret)battleLog.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		battleLogWrapper = new JScrollPane(battleLog);
-		handler = new TextAreaHandler(battleLog);
+		handler = new TextAreaHandler(battleLog) {
+			@Override public void publish(LogRecord record) {
+				super.publish(record);
+				refreshHealth();
+			}
+		};
 		fightButton = new JButton("Fight");
 		fightButton.addActionListener(e -> commenceBattle());
 		returnButton = new JButton("Return");

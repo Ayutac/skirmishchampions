@@ -10,8 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.html.HTMLDocument;
 
 import org.abos.util.Utilities;
 
@@ -22,6 +28,21 @@ import org.abos.util.Utilities;
  * @since Skirmish Champions 0.1.1
  */
 public class GUIUtilities {
+	
+	/**
+	 * The HTML content type for editor panes.
+	 */
+	public final static String HTML_TYPE = "text/html";
+	
+	/**
+	 * The start for HTML.
+	 */
+	public static final String HTML_START = "<html><head><style>body{font: 8px Dialog, Verdana, Arial, sans-serif}</style></head><body>";
+	
+	/**
+	 * The end for HTML.
+	 */
+	public static final String HTML_END = "</body></html>";
 
 	/**
 	 * Main logos for the currently running application. 
@@ -103,6 +124,36 @@ public class GUIUtilities {
 		if (gbc1.ipady != gbc2.ipady)
 			return false;
 		return true;
+	}
+	
+	public static JTextPane createEmptyHtmlPane() {
+		JTextPane pane = new JTextPane();
+		pane.setContentType(HTML_TYPE);
+		pane.setText(HTML_START+HTML_END);
+		return pane;
+	}
+	
+	public static boolean isEditorPaneUsingHtml(JEditorPane pane) {
+		Utilities.requireNonNull(pane, "pane");
+		return "text/html".equals(pane.getContentType());
+	}
+	
+	public static void appendToEditorPane(JEditorPane pane, String text, AttributeSet a) {
+		Utilities.requireNonNull(pane, "pane");
+		Utilities.requireNonNull(text, "text");
+		try {
+			if (isEditorPaneUsingHtml(pane)) {
+				HTMLDocument document = (HTMLDocument)pane.getDocument();
+				document.insertAfterEnd(document.getCharacterElement(document.getLength()), text);
+			}
+			else {
+				StyledDocument document = (StyledDocument)pane.getDocument();
+				document.insertString(document.getLength(), text, a);
+			}
+		} 
+		catch (BadLocationException | IOException ex) {
+			throw new IllegalStateException("Unexpected end of editor pane!", ex);
+		}
 	}
 	
 	/**

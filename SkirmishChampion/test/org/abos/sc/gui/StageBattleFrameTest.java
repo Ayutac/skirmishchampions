@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 import org.abos.sc.core.BattleEncounter;
 import org.abos.sc.core.BattleFormation;
@@ -35,6 +37,8 @@ public class StageBattleFrameTest {
 //		BattleFormation computerForm = new BattleFormation(new Character[][] {{mrsha, null, null}, {null, null, null}});
 //		BattleStrategy computerStrat = BattleStrategy.createConcentratedAssault();
 //		BattleEncounter computer = new BattleEncounter(computerForm, computerStrat);
+		System.out.println(new JTextArea().getFont());
+		System.out.println(new JLabel().getFont());
 		Character[][] silverRanks = new Character[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
 		int count = 0;
 		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
