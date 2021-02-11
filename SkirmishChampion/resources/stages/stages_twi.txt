@@ -33,7 +33,7 @@ twi_esthelm;Esthelm;twi_nizril;twi_stables,twi_high_passes,twi_celum;twi_twi;;tw
 twi_celum;Celum;twi_nizril;twi_invrisil,twi_high_passes,twi_esthelm;;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
 twi_high_passes;High Passes;twi_nizril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
 twi_bloodfields;Bloodfields;twi_nizril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
-twi_invrisil;Invrisil;twi_nizril;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm,twi_reizmelt;;;twi_bethal,twi_magnolia,twi_pryde|ROW
+twi_invrisil;Invrisil;twi_nizril;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm,twi_reizmelt;;;twi_bethal,twi_wuvren,twi_pryde,,twi_magnolia|ROW
 twi_invrisil_ag;Invrisil's Adventurer's Guild;twi_nizril;twi_invrisil;;;twi_todi,twi_jewel|ROW
 twi_first_landing;First Landing;twi_nizril;twi_invrisil,twi_elvallian;twi_baleros;;,twi_gresaria|ROW
 twi_reizmelt;Reizmelt;twi_nizril;twi_invrisil;;;twi_madain|ROW
