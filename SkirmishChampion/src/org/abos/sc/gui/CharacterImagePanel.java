@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import org.abos.sc.core.Character;
+import org.abos.sc.core.CharacterBase;
+import org.abos.util.Utilities;
 import org.abos.util.gui.GUIUtilities;
 import org.abos.util.gui.ImagePanel;
 
@@ -78,6 +80,11 @@ public class CharacterImagePanel extends ImagePanel {
 		return character;
 	}
 	
+	public static Path getCharacterPath(CharacterBase character) {
+		Utilities.requireNonNull(character, "character");
+		return GUIUtilities.getCharacterImagesPath().resolve(character.getFandomId()).resolve(character.getId()+".png");
+	}
+	
 	/**
 	 * Sets the character for this image panel.
 	 * @param character the new character of this image panel
@@ -87,7 +94,7 @@ public class CharacterImagePanel extends ImagePanel {
 		if (character == null)
 			setImage(null);
 		else
-			loadImageLazy(GUIUtilities.getCharacterImagesPath().resolve(character.getFandomId()).resolve(character.getId()+".png"), DEFAULT_PATH);
+			loadImageLazy(getCharacterPath(character), DEFAULT_PATH);
 		repaint();
 	}
 	

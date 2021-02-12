@@ -25,6 +25,7 @@ import org.abos.sc.core.Player;
 import org.abos.sc.core.RegionBase;
 import org.abos.sc.core.StageBase;
 import org.abos.util.ParseException;
+import org.abos.util.Registry;
 import org.abos.util.Utilities;
 import org.abos.util.gui.GUIUtilities;
 import org.abos.util.gui.ImagePanel;
@@ -342,6 +343,12 @@ public class MainMenu extends JFrame {
 		game.setVisible(true);
 		// TODO this needs to be put somewhere else:
 		System.out.print(Player.validateGameData(createNewPlayer()));
+		StringBuilder s = new StringBuilder();
+		Registry<CharacterBase> missingImages = new Registry<>();
+		for (CharacterBase characterBase : CharacterBase.CHARACTERS)
+			if (Files.notExists(CharacterImagePanel.getCharacterPath(characterBase)))
+				missingImages.add(characterBase);
+		System.out.println(String.format("%d out of %d character images missing: %s", missingImages.size(), CharacterBase.CHARACTERS.size(), missingImages.toString()));
 	}
 
 }
