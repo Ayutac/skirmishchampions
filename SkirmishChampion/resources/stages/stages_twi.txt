@@ -8,7 +8,7 @@
 // positions to attack in order (divided by ,) 
 // Wandering Inn
 twi_erins_room;Erin's room;twi_twi;twi_common_room,twi_garden_of_sanctuary,twi_birds_tower;;;twi_mrsha|ROW
-twi_garden_of_sanctuary;The Garden of Sanctuary;twi_twi;twi_gos_hill,twi_kitchen,twi_common_room,twi_lyons_room,twi_erins_room,twi_earth_room;;;twi_ekirra,,twi_visma|ROW
+twi_garden_of_sanctuary;Garden of Sanctuary;twi_twi;twi_gos_hill,twi_kitchen,twi_common_room,twi_lyons_room,twi_erins_room,twi_earth_room;;;twi_ekirra,,twi_visma|ROW
 twi_lyons_room;Lyonette's room;twi_twi;twi_common_room,twi_erins_room,twi_garden_of_sanctuary,twi_birds_tower;;;twi_pawn,twi_lyon|ROW
 twi_birds_tower;Bird's tower;twi_twi;twi_erins_room,twi_lyons_room;;;,twi_bird|COL
 twi_earth_room;Secret Earther room;twi_twi;twi_garden_of_sanctuary;;;twi_kevin,,twi_troy,twi_galina,twi_leon,twi_rose|ROW
