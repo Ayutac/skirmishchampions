@@ -66,6 +66,7 @@ twi_saliss;Saliss Oliwing;twi;Drakes,Pallass;1000,1000,300,300,100,50,100,300;1;
 twi_madain;Madain;twi;Humans,Warriors,Adventurers;120,90,50,70,40,10,20,70;0;0
 // Riverfarm
 twi_durene;Durene;twi;Half-Trolls,Unseen Empire,Warriors;150,120,30,30,30,50,30,40;0;0
+twi_laken;Laken Godart;twi;Nobility,Humans,Izril,Earthers;30,40,250,150,80,350,50,80;2;1
 // Northern Izril
 twi_magnolia;Magnolia Reinhardt;twi;Nobility,Humans,Izril;40,80,280,180,150,500,100,90;5;2
 twi_bethal;Bethal Walchais;twi;Nobility,Humans,Izril;40,70,140,100,250,400,70,60;5;2
