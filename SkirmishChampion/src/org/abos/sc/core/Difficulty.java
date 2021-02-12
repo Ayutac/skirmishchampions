@@ -123,9 +123,22 @@ public enum Difficulty implements Name {
 	 */
 	public static final double STEAMROLL_FACTOR = 1.5;
 	
-
+	/**
+	 * Returns the specified rating times the steamroll factor to obtain the upper bound for the challenge rating.
+	 * If the product exceeds {@link Integer} bounds the appropiate bound is returned instead.
+	 * @param rating the rating to multiply with the steamroll factor
+	 * @return the product of <code>rating</code> times the steamroll factor, capped within {@link Integer} bounds
+	 * @see #STEAMROLL_FACTOR
+	 * @see Integer#MAX_VALUE
+	 * @see Integer#MIN_VALUE 
+	 */
 	public static final int getChallengeRatingCap(int rating) {
-		return (int)Math.floor(rating*STEAMROLL_FACTOR);
+		double cap = Math.floor(rating*STEAMROLL_FACTOR);
+		if (cap >= Integer.MAX_VALUE)
+			return Integer.MAX_VALUE;
+		if (cap <= Integer.MIN_VALUE)
+			return Integer.MIN_VALUE;
+		return (int)cap;
 	}
 	
 	/**
