@@ -15,6 +15,7 @@ import org.abos.sc.core.Fandom;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.Region;
 import org.abos.sc.core.Stage;
+import org.abos.util.Name;
 import org.abos.util.Utilities;
 import org.abos.util.gui.GBCBuilder;
 
@@ -125,13 +126,13 @@ public class StageSelectionPanel extends JPanel {
 	
 	private void initComponents() {
 		fandomLabel = new JLabel("Fandom:");
-		fandomSelector = new ContentComboBox<>(player.getFandoms(), Utilities.createNameComparator());
+		fandomSelector = new ContentComboBox<>(player.getFandoms(), Name.createNameComparator());
 		fandomSelector.addItemListener(e -> refreshRegions(e));
 		regionLabel = new JLabel("Region:");
-		regionSelector = new ContentComboBox<>(getFandom().getRegions(), Utilities.createNameComparator());
+		regionSelector = new ContentComboBox<>(getFandom().getRegions(), Name.createNameComparator());
 		regionSelector.addItemListener(e -> refreshStages(e));
 		stageLabel = new JLabel("Stage:");
-		stageSelector = new ContentComboBox<>(getRegion().getStages(), Utilities.createNameComparator());
+		stageSelector = new ContentComboBox<>(getRegion().getStages(), Name.createNameComparator());
 	}
 	
 	private void initLayout() {

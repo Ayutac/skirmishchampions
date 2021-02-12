@@ -15,6 +15,7 @@ import javax.swing.JRadioButton;
 import org.abos.sc.core.Difficulty;
 import org.abos.sc.core.Fandom;
 import org.abos.sc.core.FandomBase;
+import org.abos.util.Name;
 import org.abos.util.Utilities;
 
 /**
@@ -111,7 +112,7 @@ public class NewGameDialog extends JDialog {
 		fandomChooseLabel = new JLabel("Start Fandom:");
 		fandomSelector = new ContentComboBox<>(FandomBase.FANDOMS.stream()
 				.map(base -> new Fandom(base)).collect(Collectors.toList()),
-				Utilities.createNameComparator());
+				Name.createNameComparator());
 		Difficulty[] difficulties = Difficulty.values();
 		difficultyChooseLabel = new JLabel("What is at steak?");
 		difficultyButtons = new JRadioButton[difficulties.length];

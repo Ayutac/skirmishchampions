@@ -197,6 +197,7 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @param primaryStat the primary stat of which to return the value
 	 * @return the value of the specified primary stat
 	 * @throws NullPointerException If <code>primaryStat</code> refers to <code>null</code>.
+	 * @see #getPrimaryStat(int)
 	 */
 	public int getPrimaryStat(StatsPrimary primaryStat) {
 		Utilities.requireNonNull(primaryStat, "primaryStat");
@@ -208,9 +209,23 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @param index the index of the primary stat of which to return the value
 	 * @return the value of the specified primary stat
 	 * @throws ArrayIndexOutOfBoundsException If <code>index < 0</code> or <code>index</code> is at least the number of primary stats.
+	 * @see #getPrimaryStat(StatsPrimary)
+	 * @see #getPrimaryStats()
 	 */
 	public int getPrimaryStat(int index) {
 		return primaryStats[index]; // throws AIOOBE
+	}
+	
+	/**
+	 * Returns the values of {@link #getPrimaryStat(int)} as an array of size {@link StatsPrimary#SIZE}.
+	 * @return the values of {@link #getPrimaryStat(int)} as an array
+	 * @see #getPrimaryStat(int)
+	 */
+	public int[] getPrimaryStats() {
+		int[] stats = new int[StatsPrimary.SIZE];
+		for (int i = 0; i < stats.length; i++)
+			stats[i] = getPrimaryStat(i); // it's important we call this method for overriding later
+		return stats;
 	}
 	
 	/**
@@ -218,11 +233,7 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @return the sum of all primary stats
 	 */
 	public int sumPrimaryStats() {
-		int sum = 0;
-		for (StatsPrimary stat : StatsPrimary.values()) {
-			sum += getPrimaryStat(stat); // it's important we call this method for overriding later
-		}
-		return sum;
+		return Utilities.addWithoutOverflow(getPrimaryStats());
 	}
 	
 	/**
@@ -239,17 +250,22 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @param secondaryStat the secondary stat of which to return the value
 	 * @return the value of the specified secondary stat
 	 * @throws NullPointerException If <code>secondaryStat</code> refers to <code>null</code>.
+	 * @throws IllegalArgumentException If <code>secondaryStat</code> refers to an unimplemented stat. Shouldn't happen.
+	 * @see #getSecondaryStat(int)
 	 */
 	public int getSecondaryStat(StatsSecondary secondaryStat) {
 		Utilities.requireNonNull(secondaryStat, "secondaryStat");
 		int speed = getPrimaryStat(StatsPrimary.SPEED);
 		switch(secondaryStat) {
 		case CONSTITUTION:
-			return getPrimaryStat(StatsPrimary.STRENGTH)+getPrimaryStat(StatsPrimary.DEXTERITY)+speed;
+			return Utilities.addWithoutOverflow(
+					getPrimaryStat(StatsPrimary.STRENGTH),getPrimaryStat(StatsPrimary.DEXTERITY),speed);
 		case MENTAL:
-			return getPrimaryStat(StatsPrimary.INTELLIGENCE)+getPrimaryStat(StatsPrimary.WISDOM)+speed;
+			return Utilities.addWithoutOverflow(
+					getPrimaryStat(StatsPrimary.INTELLIGENCE),getPrimaryStat(StatsPrimary.WISDOM),speed);
 		case ELOQUENCE:
-			return getPrimaryStat(StatsPrimary.ROMANCE)+getPrimaryStat(StatsPrimary.CHARISMA)+speed;
+			return Utilities.addWithoutOverflow(
+					getPrimaryStat(StatsPrimary.ROMANCE),getPrimaryStat(StatsPrimary.CHARISMA),speed);
 		default: // shouldn't happen
 			assert false;
 			throw new IllegalArgumentException("Unsupported secondary stat!");
@@ -261,9 +277,23 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @param index the index of the secondary stat of which to return the value
 	 * @return the value of the specified secondary stat
 	 * @throws ArrayIndexOutOfBoundsException If <code>index < 0</code> or <code>index</code> is at least the number of secondary stats.
+	 * @see #getSecondaryStat(StatsSecondary)
+	 * @see #getSecondaryStats()
 	 */
 	public int getSecondaryStat(int index) {
 		return getSecondaryStat(SECONDARY_STATS[index]);
+	}
+	
+	/**
+	 * Returns the values of {@link #getSecondaryStat(int)} as an array of size {@link StatsSecondary#SIZE}.
+	 * @return the values of {@link #getSecondaryStat(int)} as an array
+	 * @see #getSecondaryStat(int)
+	 */
+	public int[] getSecondaryStats() {
+		int[] stats = new int[StatsSecondary.SIZE];
+		for (int i = 0; i < stats.length; i++)
+			stats[i] = getSecondaryStat(i); // it's important we call this method for overriding later
+		return stats;
 	}
 	
 	/**
@@ -271,11 +301,7 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @return the sum of all secondary stats
 	 */
 	public int sumSecondaryStats() {
-		int sum = 0;
-		for (StatsSecondary stat : StatsSecondary.values()) {
-			sum += getSecondaryStat(stat);
-		}
-		return sum;
+		return Utilities.addWithoutOverflow(sumSecondaryStats());
 	}
 	
 	/**

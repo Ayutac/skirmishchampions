@@ -24,6 +24,7 @@ import org.abos.sc.core.BattleFormation;
 import org.abos.sc.core.ChallengeRatable;
 import org.abos.sc.core.Character;
 import org.abos.sc.core.Companion;
+import org.abos.util.Name;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
 import org.abos.util.gui.GBCBuilder;
@@ -259,7 +260,7 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 						refreshChallengeRating();
 					}
 				});
-				positionSelector[row][col] = new ContentComboBox<>(companionPool, Utilities.createNameComparator());
+				positionSelector[row][col] = new ContentComboBox<>(companionPool, Name.createNameComparator());
 				// automatically change to selected if combobox is used, also refresh CR
 				positionSelector[row][col].addItemListener(new ItemListener() {
 					@SuppressWarnings("rawtypes")

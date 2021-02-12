@@ -77,6 +77,7 @@ public class Utilities {
 	 * @param a the first summand
 	 * @param b the second summand
 	 * @return the sum of the summands or the max/min int value if an overflow occurs
+	 * @see #addWithoutOverflow(int...)
 	 * @see Integer#MAX_VALUE
 	 * @see Integer#MIN_VALUE
 	 */
@@ -107,6 +108,29 @@ public class Utilities {
 				return sum;
 			}
 		}
+	}
+	
+	/**
+	 * Sums a number of integers. If all integers are positive, sum will be capped at {@link Integer#MAX_VALUE}.
+	 * If all integers are negative, sum will be capped at {@link Integer#MIN_VALUE}. If the summands contain
+	 * different signs the result of this method is as unpredictable as with normal overflow summation, but 
+	 * unlike there in this case the result of this method can depend on the order of the summands.
+	 * @param summands the summands to sum
+	 * @return a sum of the given integers with overflow caps
+	 * @see #addWithoutOverflow(int, int)
+	 * @see Integer#MAX_VALUE
+	 * @see Integer#MIN_VALUE
+	 */
+	public static int addWithoutOverflow(int... summands) {
+		requireNonNull(summands, "summands");
+		if (summands.length == 0)
+			return 0;
+		if (summands.length == 1)
+			return summands[0];
+		int sum = summands[0];
+		for (int i = 1; i < summands.length; i++)
+			sum = addWithoutOverflow(sum, summands[i]);
+		return sum;
 	}
 	
 	/**
@@ -445,6 +469,7 @@ public class Utilities {
 	/**
 	 * Creates the simplest formatter for logs possible, i.e. one that disregards all parts of the log record except the message.
 	 * A line break as given by {@link System#lineSeparator()} is appended to the message.
+	 * @param html if an additional HTML linebreak should be inserted
 	 * @return an instance of the (anonymous) simplest formatter class
 	 */
 	public static Formatter createSimplestFormatter(boolean html) {
@@ -457,68 +482,6 @@ public class Utilities {
 		return new Formatter() {
 			@Override public String format(LogRecord record) {
 				return record.getMessage()+System.lineSeparator();
-			}
-		};
-	}
-	
-	/**
-	 * Returns a comparator that sorts objects with IDs alphabetically by their IDs.
-	 * <code>null</code> is permitted for both objects to compare and names of the objects to compare.
-	 * <code>null</code> is smaller than any other instance of <code>T</code> and an object with 
-	 * a <code>null</code> ID is smaller than any other non <code>null</code> instance of <code>T</code>,
-	 * except of course in both cases if both objects respectively their OD are <code>null</code>,
-	 * in which this comparator evaluates them as equal.  
-	 * @param <T> the class extending {@link ID}
-	 * @return A comparator for <code>T</code>.
-	 */
-	public static <T extends Id> Comparator<T> createIdComparator() {
-		return new Comparator<T>() {
-			@Override
-			public int compare(T o1, T o2) {
-				if (o1 == o2)
-					return 0;
-				if (o1 == null)
-					return Integer.MIN_VALUE;
-				if (o2 == null)
-					return Integer.MAX_VALUE;
-				if (o1.getId() == o2.getId())
-					return 0;
-				if (o1.getId() == null)
-					return Integer.MIN_VALUE;
-				if (o2.getId() == null)
-					return Integer.MAX_VALUE;
-				return o1.getId().compareTo(o2.getId());
-			}
-		};
-	}
-		
-	/**
-	 * Returns a comparator that sorts objects with names alphabetically by their names.
-	 * <code>null</code> is permitted for both objects to compare and names of the objects to compare.
-	 * <code>null</code> is smaller than any other instance of <code>T</code> and an object with 
-	 * a <code>null</code> name is smaller than any other non <code>null</code> instance of <code>T</code>,
-	 * except of course in both cases if both objects respectively their names are <code>null</code>,
-	 * in which this comparator evaluates them as equal.  
-	 * @param <T> the class extending {@link Name}
-	 * @return A comparator for <code>T</code>.
-	 */
-	public static <T extends Name> Comparator<T> createNameComparator() {
-		return new Comparator<T>() {
-			@Override
-			public int compare(T o1, T o2) {
-				if (o1 == o2)
-					return 0;
-				if (o1 == null)
-					return Integer.MIN_VALUE;
-				if (o2 == null)
-					return Integer.MAX_VALUE;
-				if (o1.getName() == o2.getName())
-					return 0;
-				if (o1.getName() == null)
-					return Integer.MIN_VALUE;
-				if (o2.getName() == null)
-					return Integer.MAX_VALUE;
-				return o1.getName().compareTo(o2.getName());
 			}
 		};
 	}

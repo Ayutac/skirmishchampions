@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import org.abos.sc.core.Companion;
 import org.abos.sc.core.Player;
+import org.abos.util.Name;
 import org.abos.util.Utilities;
 import org.abos.util.gui.GUIUtilities;
 
@@ -64,7 +65,7 @@ public class CompanionInfoFrame extends JFrame {
 	}
 	
 	private void initComponents() {
-		companionSelection = new ContentComboBox<>(player.getCompanions(), Utilities.createNameComparator());
+		companionSelection = new ContentComboBox<>(player.getCompanions(), Name.createNameComparator());
 		companionStatInfoPanel = new CompanionStatInfoPanel();
 		setInfoToSelected();
 		companionSelection.addActionListener(e -> setInfoToSelected());

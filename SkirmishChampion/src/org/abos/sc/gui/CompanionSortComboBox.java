@@ -10,6 +10,8 @@ import org.abos.sc.core.CharacterBase;
 import org.abos.sc.core.Companion;
 import org.abos.sc.core.StatsPrimary;
 import org.abos.sc.core.StatsSecondary;
+import org.abos.util.Id;
+import org.abos.util.Name;
 import org.abos.util.Utilities;
 
 /**
@@ -25,7 +27,7 @@ public class CompanionSortComboBox extends JComboBox<String> {
 	
 	protected boolean reversed = false;
 	
-	protected Comparator<Companion> idComparator = Utilities.createIdComparator();
+	protected Comparator<Companion> idComparator = Id.createIdComparator();
 	
 	protected Comparator<Companion>[] selectionComparator;
 	
@@ -40,14 +42,14 @@ public class CompanionSortComboBox extends JComboBox<String> {
 		for (StatsSecondary secondary : StatsSecondary.values())
 			addItem(secondary.getCapitalizedName());
 		addItem(CR_CRITERIUM);
-		selectionComparator = new Comparator[1+StatsPrimary.SIZE+StatsSecondary.SIZE+1];
-		selectionComparator[0] = Utilities.createNameComparator();
-		int i = 1;
+		selectionComparator = new Comparator[2+StatsPrimary.SIZE+StatsSecondary.SIZE];
+		selectionComparator[0] = Name.createNameComparator();
+		selectionComparator[1] = CharacterBase.createChallengeRatingComparator();
+		int i = 2;
 		for (StatsPrimary primary : StatsPrimary.values())
 			selectionComparator[i++] = CharacterBase.createPrimaryComparator(primary);
 		for (StatsSecondary secondary : StatsSecondary.values())
 			selectionComparator[i++] = CharacterBase.createSecondaryComparator(secondary);
-		selectionComparator[i] = CharacterBase.createChallengeRatingComparator();
 	}
 	
 	/**
