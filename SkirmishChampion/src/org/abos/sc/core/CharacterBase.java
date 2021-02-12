@@ -301,7 +301,7 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @return the sum of all secondary stats
 	 */
 	public int sumSecondaryStats() {
-		return Utilities.addWithoutOverflow(sumSecondaryStats());
+		return Utilities.addWithoutOverflow(getSecondaryStats());
 	}
 	
 	/**
@@ -395,7 +395,9 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @return a challenge rating for this character
 	 */
 	public int calculateChallengeRating() {
-		return (getPrimaryStat(getAttackStat())+2*getPrimaryStat(StatsPrimary.SPEED)+sumSecondaryStats())/(3*(1+StatsSecondary.SIZE));
+		return Utilities.addWithoutOverflow(
+				getPrimaryStat(getAttackStat()), Utilities.multWithoutOverflow(2, getPrimaryStat(StatsPrimary.SPEED), sumSecondaryStats()))
+			/ (3*(1+StatsSecondary.SIZE));
 	}
 	
 	/**

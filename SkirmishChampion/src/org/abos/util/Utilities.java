@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Formatter;
@@ -116,7 +115,8 @@ public class Utilities {
 	 * different signs the result of this method is as unpredictable as with normal overflow summation, but 
 	 * unlike there in this case the result of this method can depend on the order of the summands.
 	 * @param summands the summands to sum
-	 * @return a sum of the given integers with overflow caps
+	 * @return a sum of the given integers with overflow caps; an empty array will return <code>0</code>
+	 * @throws NullPointerException If <code>summands</code> refers to <code>null</code>
 	 * @see #addWithoutOverflow(int, int)
 	 * @see Integer#MAX_VALUE
 	 * @see Integer#MIN_VALUE
@@ -131,6 +131,53 @@ public class Utilities {
 		for (int i = 1; i < summands.length; i++)
 			sum = addWithoutOverflow(sum, summands[i]);
 		return sum;
+	}
+	
+	/**
+	 * Multiplies two integers. When overflow occurs in either direction, the maximal or minimal integer is returned instead.
+	 * More specifically, if the product divided by the second factor doesn't equal the first one, if both integers are positive/negative,
+	 * {@link Integer#MAX_VALUE} is returned instead, and if only one factor is negative {@link Integer#MIN_VALUE} is returned. 
+	 * If none of these cases apply, i.e. if no overflow happens, <code>a*b</code> is returned. Be aware that for
+	 * checking a division is done, so this might not be optimal for runtime critical applications.
+	 * @param a the first factor
+	 * @param b the second factor
+	 * @return the product of the factors or the max/min int value if an overflow occurs
+	 * @see #multWithoutOverflow(int...)
+	 * @see Integer#MAX_VALUE
+	 * @see Integer#MIN_VALUE
+	 */
+	public static int multWithoutOverflow(int a, int b) {
+		if (b == 0) // avoid division by zero
+			return 0;
+		int product = a*b;
+		if (a == product / b)
+			return product;
+		if ((a >= 0 && b < 0) || (a <= 0 && b > 0))
+			return Integer.MIN_VALUE;
+		assert (a >= 0 && b > 0) || (a <= 0 && b < 0);
+		return Integer.MAX_VALUE;
+	}
+	
+	/**
+	 * Multiplies a number of integers. If all integers are positive, sum will be capped at {@link Integer#MAX_VALUE}.
+	 * In other cases the result of this method is as unpredictable as with normal overflow summation, but 
+	 * unlike there in this case the result of this method can depend on the order of the factors.
+	 * @param factors the factors to multiply
+	 * @return a product of the given integers with overflow cap; an empty array will return <code>1</code>
+	 * @throws NullPointerException If <code>factors</code> refers to <code>null</code>
+	 * @see #multWithoutOverflow(int, int)
+	 * @see Integer#MAX_VALUE
+	 */
+	public static int multWithoutOverflow(int... factors) {
+		requireNonNull(factors, "summands");
+		if (factors.length == 0)
+			return 1;
+		if (factors.length == 1)
+			return factors[0];
+		int prod = factors[0];
+		for (int i = 1; i < factors.length; i++)
+			prod = multWithoutOverflow(prod, factors[i]);
+		return prod;
 	}
 	
 	/**
