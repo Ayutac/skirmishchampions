@@ -251,32 +251,26 @@ public class Player {
 			
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 1));
-			
-			// difficulty is optional to transfer save states from version up to 0.4 
-			// optionality might be removed in future releases
-			boolean extraLine = false;
 			try {
 				player.difficulty = Difficulty.valueOf(line);
-				extraLine = true;
-				if ((line = br.readLine()) == null)
-					throw new ParseException(String.format(eofMsg, 2));
 			}
 			catch (IllegalArgumentException ex) {
-				player.difficulty = Difficulty.EASIEST;
+				throw new IllegalArgumentRangeException(String.format("Difficulty for player was invalid: %s", line),ex);
 			}
-			
+			if ((line = br.readLine()) == null)
+				throw new ParseException(String.format(eofMsg, 2));
 			for (String s : line.split(";"))
 				Companion.parse(s, player);
 			if ((line = br.readLine()) == null)
-				throw new ParseException(String.format(eofMsg, extraLine ? 3 : 2));
+				throw new ParseException(String.format(eofMsg, 3));
 			for (String s : line.split(";"))
 				Stage.parse(s, player);
 			if ((line = br.readLine()) == null)
-				throw new ParseException(String.format(eofMsg, extraLine ? 4 : 3));
+				throw new ParseException(String.format(eofMsg, 4));
 			for (String s : line.split(";"))
 				Region.parse(s, player);
 			if ((line = br.readLine()) == null)
-				throw new ParseException(String.format(eofMsg, extraLine ? 5 : 4));
+				throw new ParseException(String.format(eofMsg, 5));
 			for (String s : line.split(";"))
 				Fandom.parse(s, player);
 			
@@ -299,15 +293,9 @@ public class Player {
 			catch (NumberFormatException ex) {
 				throw new IllegalArgumentTypeException(String.format("Amount of diamonds for player was invalid: %s", line),ex);
 			}
-			
-			// party is optional to transfer save states from version up to 0.3 
-			// optionality might be removed in future releases
-			if ((line = br.readLine()) != null) {
-				player.setParty(BattleFormation.parse(line));
-			}
-			else {
-				player.setParty(BattleFormation.createFormation(player.companions.iterator().next()));
-			}
+			if ((line = br.readLine()) != null)
+				throw new ParseException(String.format(eofMsg, 6));
+			player.setParty(BattleFormation.parse(line));
 			
 			// make loaded save states illegal for speedruns
 			player.creationTime = null;
