@@ -26,27 +26,93 @@ public final class GBCBuilder implements Cloneable {
 	 */
 	private GridBagConstraints c;
 	
-	private int gridxDefault;
+	/**
+     * The default gridx value for this builder.
+     * @see #gridxDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private int gridxDefault;
 	
-	private int gridyDefault;
+    /**
+     * The default gridy value for this builder.
+     * @see #gridyDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private int gridyDefault;
 	
-	private int gridwidthDefault;
+    /**
+     * The default gridwidth value for this builder.
+     * @see #gridwidthDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private int gridwidthDefault;
 	
-	private int gridheightDefault;
+    /**
+     * The default gridheight value for this builder.
+     * @see #gridheightDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private int gridheightDefault;
 	
-	private double weightxDefault;
+    /**
+     * The default weightx value for this builder.
+     * @see #weightxDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private double weightxDefault;
 	
-	private double weightyDefault;
+    /**
+     * The default weighty value for this builder.
+     * @see #weightyDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private double weightyDefault;
 	
-	private int anchorDefault;
+    /**
+     * The default anchor value for this builder.
+     * @see #anchorDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private int anchorDefault;
 	
-	private int fillDefault;
+    /**
+     * The default fill value for this builder.
+     * @see #fillDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private int fillDefault;
 	
-	private Insets insetsDefault;
+    /**
+     * The default insets value for this builder.
+     * @see #insetsDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private Insets insetsDefault;
 	
-	private int ipadxDefault;
+    /**
+     * The default ipadx value for this builder.
+     * @see #ipadxDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private int ipadxDefault;
 	
-	private int ipadyDefault;
+    /**
+     * The default ipady value for this builder.
+     * @see #ipadyDefault(int)
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     */
+    private int ipadyDefault;
 	
 	/**
 	 * Creates a grid bag constraint builder with the given defaults.
@@ -89,12 +155,13 @@ public final class GBCBuilder implements Cloneable {
 	}
 	
 	/**
-	 * Sets this builder's defaults to the specified grid bag constraints.
+	 * Sets this builder's defaults to the specified grid bag constraints without changing the current constraints of this builder.
 	 * @param constraintDefaults the new defaults for this builder
 	 * @return this instance
 	 * @throws NullPointerException If <code>constraintDefaults</code> refers to <code>null</code>.
 	 * @see #getDefault()
 	 * @see #set(GridBagConstraints)
+	 * @see #reset()
 	 */
 	public GBCBuilder setDefault(GridBagConstraints constraintDefaults) {
 		Utilities.requireNonNull(constraintDefaults, "constraintDefaults");
@@ -158,112 +225,299 @@ public final class GBCBuilder implements Cloneable {
 		return result;
 	}
 	
-	public GBCBuilder gridxDefault(int gridxDefault) {
+	/**
+     * Sets the default gridx value for this builder without changing the current constraints.
+     * @param gridxDefault the new default gridx value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #gridx(int)
+     * @see #reset()
+     */
+    public GBCBuilder gridxDefault(int gridxDefault) {
 		this.gridxDefault = gridxDefault;
 		return this;
 	}
 	
-	public GBCBuilder gridyDefault(int gridyDefault) {
+    /**
+     * Sets the default gridy value for this builder without changing the current constraints.
+     * @param gridyDefault the new default gridx value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #gridy(int)
+     * @see #reset()
+     */
+    public GBCBuilder gridyDefault(int gridyDefault) {
 		this.gridyDefault = gridyDefault;
 		return this;
 	}
 	
-	public GBCBuilder gridwidthDefault(int gridwidthDefault) {
+    /**
+     * Sets the default gridwidth value for this builder without changing the current constraints.
+     * @param gridwidthDefault the new default gridwidth value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #gridwidth(int)
+     * @see #reset()
+     */
+    public GBCBuilder gridwidthDefault(int gridwidthDefault) {
 		this.gridwidthDefault = gridwidthDefault;
 		return this;
 	}
 	
-	public GBCBuilder gridheightDefault(int gridheightDefault) {
+	/**
+     * Sets the default gridheight value for this builder without changing the current constraints.
+     * @param gridheightDefault the new default gridheight value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #gridheight(int)
+     * @see #reset()
+     */
+    public GBCBuilder gridheightDefault(int gridheightDefault) {
 		this.gridheightDefault = gridheightDefault;
 		return this;
 	}
 	
-	public GBCBuilder weightxDefault(double weightxDefault) {
+	/**
+     * Sets the default weightx value for this builder without changing the current constraints.
+     * @param weightxDefault the new default weightx value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #weightx(double)
+     * @see #reset()
+     */
+    public GBCBuilder weightxDefault(double weightxDefault) {
 		this.weightxDefault = weightxDefault;
 		return this;
 	}
 	
-	public GBCBuilder weightyDefault(double weightyDefault) {
+	/**
+     * Sets the default weighty value for this builder without changing the current constraints.
+     * @param weightyDefault the new default weighty value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #weighty(double)
+     * @see #reset()
+     */
+    public GBCBuilder weightyDefault(double weightyDefault) {
 		this.weightyDefault = weightyDefault;
 		return this;
 	}
 	
-	public GBCBuilder anchorDefault(int anchorDefault) {
+	/**
+     * Sets the default anchor value for this builder without changing the current constraints.
+     * @param anchorDefault the new default anchor value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #anchor(int)
+     * @see #reset()
+     */
+    public GBCBuilder anchorDefault(int anchorDefault) {
 		this.anchorDefault = anchorDefault;
 		return this;
 	}
 	
-	public GBCBuilder fillDefault(int fillDefault) {
+	/**
+     * Sets the default fill value for this builder without changing the current constraints.
+     * @param fillDefault the new default fill value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #fill(int)
+     * @see #reset()
+     */
+    public GBCBuilder fillDefault(int fillDefault) {
 		this.fillDefault = fillDefault;
 		return this;
 	}
 	
-	public GBCBuilder insetsDefault(Insets insetsDefault) {
+	/**
+     * Sets the default insets value for this builder without changing the current constraints.
+     * @param insetsDefault the new default insets value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #insets(Insets)
+     * @see #reset()
+     */
+    public GBCBuilder insetsDefault(Insets insetsDefault) {
 		this.insetsDefault = (Insets)insetsDefault.clone();
 		return this;
 	}
 	
-	public GBCBuilder ipadxDefault(int ipadxDefault) {
+	/**
+     * Sets the default ipadx value for this builder without changing the current constraints.
+     * @param ipadxDefault the new default ipadx value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #ipadx(int)
+     * @see #reset()
+     */
+    public GBCBuilder ipadxDefault(int ipadxDefault) {
 		this.ipadxDefault = ipadxDefault;
 		return this;
 	}
 	
-	public GBCBuilder ipadyDefault(int ipadyDefault) {
+    /**
+     * Sets the default ipady value for this builder without changing the current constraints.
+     * @param ipadyDefault the new default ipadx value for this builder
+     * @return this builder
+     * @see #getDefault()
+     * @see #setDefault(GridBagConstraints)
+     * @see #ipady(int)
+     * @see #reset()
+     */
+    public GBCBuilder ipadyDefault(int ipadyDefault) {
 		this.ipadyDefault = ipadyDefault;
 		return this;
 	}
 	
-	public GBCBuilder gridx(int gridx) {
+    /**
+     * Sets the gridx value for this builder's current constraints without changing the defaults of this builder.
+     * @param gridx the new gridx value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #gridxDefault(int)
+     */
+    public GBCBuilder gridx(int gridx) {
 		c.gridx = gridx;
 		return this;
 	}
 	
-	public GBCBuilder gridy(int gridy) {
+    /**
+     * Sets the gridy value for this builder's current constraints without changing the defaults of this builder.
+     * @param gridy the new gridy value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #gridyDefault(int)
+     */
+    public GBCBuilder gridy(int gridy) {
 		c.gridy = gridy;
 		return this;
 	}
 	
-	public GBCBuilder gridwidth(int gridwidth) {
+    /**
+     * Sets the gridwidth value for this builder's current constraints without changing the defaults of this builder.
+     * @param gridwidth the new gridwidth value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #gridwidthDefault(int)
+     */
+    public GBCBuilder gridwidth(int gridwidth) {
 		c.gridwidth = gridwidth;
 		return this;
 	}
 	
-	public GBCBuilder gridheight(int gridheight) {
+	/**
+     * Sets the gridheight value for this builder's current constraints without changing the defaults of this builder.
+     * @param gridheight the new gridheight value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #gridheightDefault(int)
+     */
+    public GBCBuilder gridheight(int gridheight) {
 		c.gridheight = gridheight;
 		return this;
 	}
 	
-	public GBCBuilder weightx(double weightx) {
+	/**
+     * Sets the weightx value for this builder's current constraints without changing the defaults of this builder.
+     * @param weightx the new weightx value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #weightxDefault(int)
+     */
+    public GBCBuilder weightx(double weightx) {
 		c.weightx = weightx;
 		return this;
 	}
 	
-	public GBCBuilder weighty(double weighty) {
+	/**
+     * Sets the weighty value for this builder's current constraints without changing the defaults of this builder.
+     * @param weighty the new weighty value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #weightyDefault(int)
+     */
+    public GBCBuilder weighty(double weighty) {
 		c.weighty = weighty;
 		return this;
 	}
 	
-	public GBCBuilder anchor(int anchor) {
+	/**
+     * Sets the anchor value for this builder's current constraints without changing the defaults of this builder.
+     * @param anchor the new anchor value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #anchorDefault(int)
+     */
+    public GBCBuilder anchor(int anchor) {
 		c.anchor = anchor;
 		return this;
 	}
 	
-	public GBCBuilder fill(int fill) {
+	/**
+     * Sets the fill value for this builder's current constraints without changing the defaults of this builder.
+     * @param fill the new fill value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #fillDefault(int)
+     */
+    public GBCBuilder fill(int fill) {
 		c.fill = fill;
 		return this;
 	}
 	
-	public GBCBuilder insets(Insets insets) {
+	/**
+     * Sets the insets value for this builder's current constraints without changing the defaults of this builder.
+     * @param insets the new insets value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #insetsDefault(int)
+     */
+    public GBCBuilder insets(Insets insets) {
 		c.insets = (Insets)insets.clone();
 		return this;
 	}
 	
-	public GBCBuilder ipadx(int ipadx) {
+	/**
+     * Sets the ipadx value for this builder's current constraints without changing the defaults of this builder.
+     * @param ipadx the new ipadx value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #ipadxDefault(int)
+     */
+    public GBCBuilder ipadx(int ipadx) {
 		c.ipadx = ipadx;
 		return this;
 	}
 	
-	public GBCBuilder ipady(int ipady) {
+	/**
+     * Sets the ipady value for this builder's current constraints without changing the defaults of this builder.
+     * @param ipady the new ipady value for this builder's current constraints
+     * @return this builder
+     * @see #get()
+     * @see #set(GridBagConstraints)
+     * @see #ipadyDefault(int)
+     */
+    public GBCBuilder ipady(int ipady) {
 		c.ipady = ipady;
 		return this;
 	}
