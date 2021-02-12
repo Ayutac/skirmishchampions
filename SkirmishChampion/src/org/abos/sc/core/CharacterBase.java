@@ -356,8 +356,9 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @see #getAttackPower()
 	 */
 	public long getAttackSpeed() {
-		// 50 seconds in milliseconds divided by speed as a multiple of 10ms
-		return 10L*Math.round(5000d / getPrimaryStat(StatsPrimary.SPEED));
+		return Math.max(10L, // at least 10 milliseconds, avoid 0 (or negatives) here
+			// 50 seconds in milliseconds divided by speed as a multiple of 10ms	
+			10L*Math.round(5000d / getPrimaryStat(StatsPrimary.SPEED)));
 	}
 	
 	/**
