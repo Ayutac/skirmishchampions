@@ -37,7 +37,7 @@ twi_invrisil;Invrisil;twi_nizril;twi_celum,twi_invrisil_ag,twi_first_landing,twi
 twi_invrisil_ag;Invrisil's Adventurer's Guild;twi_nizril;twi_invrisil;;;twi_todi,twi_jewel|ROW
 twi_first_landing;First Landing;twi_nizril;twi_invrisil,twi_elvallian;twi_baleros;;,twi_gresaria|ROW
 twi_reizmelt;Reizmelt;twi_nizril;twi_invrisil;;;twi_madain|ROW
-twi_riverfarm;Riverfarm;twi_nizril;twi_invrisil;;;twi_durene,,,twi_laken|ROW
+twi_riverfarm;Riverfarm;twi_nizril;twi_invrisil;;;twi_durene,twi_beniar,,twi_laken|ROW
 // Southern Izril
 twi_pallass_door;Entry to The Wandering Inn;twi_sizril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
 // TODO add "_comm_booth" to the next ID
