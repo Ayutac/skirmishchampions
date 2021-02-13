@@ -1,8 +1,9 @@
 // region line is given as follow:
 // ID (must be unique); displayed name; fandom ID; start stage ID 
 twi_twi;The Wandering Inn;twi;twi_erins_room
-twi_liscor;Liscor;twi;twi_marketstreet
-twi_nizril;Northern Izril;twi;twi_high_passes
-twi_sizril;Southern Izril;twi;twi_pallass
+twi_liscor;Izril: Liscor;twi;twi_marketstreet
+twi_izril;Izril;twi;twi_high_passes
+twi_invrisil;Izril: Invrisil;twi;twi_invrisil_gate
+twi_riverfarm;Izril: Riverfarm;twi;twi_riverfarm_entry
 twi_baleros;Baleros;twi;twi_elvallian
 twi_talenqual;Baleros: Talenqual;twi;twi_talenqual_entry

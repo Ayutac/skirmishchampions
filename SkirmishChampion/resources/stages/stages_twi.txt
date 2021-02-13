@@ -13,11 +13,11 @@ twi_lyons_room;Lyonette's room;twi_twi;twi_common_room,twi_erins_room,twi_garden
 twi_birds_tower;Bird's tower;twi_twi;twi_erins_room,twi_lyons_room;;;,twi_bird|COL
 twi_earth_room;Secret Earther room;twi_twi;twi_garden_of_sanctuary;;;twi_kevin,,twi_troy,twi_galina,twi_leon,twi_rose|ROW
 twi_gos_hill;Garden of Sanctuary (Hill);twi_twi;twi_garden_of_sanctuary;;;twi_knight,twi_bishop,twi_vladimir,twi_calabrian,twi_emanuel,twi_jose|ROW
-twi_common_room;Common Room;twi_twi;twi_pallass_door,twi_stables,twi_bar,twi_kitchen,twi_redfang_five_tg,twi_garden_of_sanctuary,twi_lyons_room,twi_erins_room;twi_sizril;;,twi_ishkr|ROW
+twi_common_room;Common Room;twi_twi;twi_pallass_door,twi_stables,twi_bar,twi_kitchen,twi_redfang_five_tg,twi_garden_of_sanctuary,twi_lyons_room,twi_erins_room;twi_izril;;,twi_ishkr|ROW
 twi_bar;Bar;twi_twi;twi_common_room;;;,twi_joseph,,,twi_drassi|ROW
 twi_redfang_five_tg;Redfang Five Training Ground;twi_twi;twi_stables,twi_common_room;twi_liscor;;twi_headscratcher,twi_rabbiteater,twi_shorthilt,twi_badarrow,twi_numbtongue|CONCENTRATED;
 twi_kitchen;Kitchen;twi_twi;twi_common_room,twi_garden_of_sanctuary;;;,twi_imani|ROW
-twi_stables;Stables;twi_twi;twi_liscor_dungeon,twi_bloodfields,twi_esthelm,twi_common_room,twi_liscor_gate,twi_redfang_five_tg;twi_liscor,twi_nizril;;,twi_termin|ROW
+twi_stables;Stables;twi_twi;twi_liscor_dungeon,twi_bloodfields,twi_esthelm,twi_common_room,twi_liscor_gate,twi_redfang_five_tg;twi_liscor,twi_izril;;,twi_termin|ROW
 // Liscor
 twi_liscor_gate;City gates;twi_liscor;twi_liscor_dungeon,twi_stables,twi_watch_barracks,twi_marketstreet;twi_twi;;twi_jerci,twi_tkrn,twi_silt,twi_bersa,twi_kelli,twi_geils|ROW
 // TODO add "liscor_" to the next four IDs
@@ -29,22 +29,22 @@ twi_liscor_council;Council;twi_liscor;twi_marketstreet;;;,,,,twi_olesm|CONCENTRA
 // Dungeon
 twi_liscor_dungeon;Dungeon;twi_liscor;twi_liscor_gate,twi_stables;;;,twi_facestealer|CONCENTRATED
 // Northern Izril
-twi_esthelm;Esthelm;twi_nizril;twi_stables,twi_high_passes,twi_celum;twi_twi;;twi_flower_girl,twi_grunter|CONCENTRATED
-twi_celum;Celum;twi_nizril;twi_invrisil,twi_high_passes,twi_esthelm;;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
-twi_high_passes;High Passes;twi_nizril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
-twi_bloodfields;Bloodfields;twi_nizril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
-twi_invrisil;Invrisil;twi_nizril;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm,twi_reizmelt;;;twi_bethal,twi_wuvren,twi_pryde,,twi_magnolia|ROW
-twi_invrisil_ag;Invrisil's Adventurer's Guild;twi_nizril;twi_invrisil;;;twi_todi,twi_jewel|ROW
-twi_first_landing;First Landing;twi_nizril;twi_invrisil,twi_elvallian;twi_baleros;;,twi_gresaria|ROW
-twi_reizmelt;Reizmelt;twi_nizril;twi_invrisil;;;twi_madain|ROW
-twi_riverfarm;Riverfarm;twi_nizril;twi_invrisil;;;twi_durene,twi_beniar,,twi_laken|ROW
+twi_esthelm;Esthelm;twi_izril;twi_stables,twi_high_passes,twi_celum;twi_twi;;twi_flower_girl,twi_grunter|CONCENTRATED
+twi_celum;Celum;twi_izril;twi_invrisil_gate,twi_high_passes,twi_esthelm;twi_invrisil;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
+twi_high_passes;High Passes;twi_izril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
+twi_bloodfields;Bloodfields;twi_izril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
+twi_invrisil_gate;Invrisil;twi_invrisil;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm_entry,twi_reizmelt;twi_riverfarm;;twi_bethal,twi_wuvren,twi_pryde,,twi_magnolia|ROW
+twi_invrisil_ag;Invrisil's Adventurer's Guild;twi_invrisil;twi_invrisil_gate;;;twi_todi,twi_jewel|ROW
+twi_first_landing;First Landing;twi_izril;twi_invrisil_gate,twi_elvallian;twi_baleros,twi_invrisil;;,twi_gresaria|ROW
+twi_reizmelt;Reizmelt;twi_izril;twi_invrisil_gate;twi_invrisil;;twi_madain|ROW
+twi_riverfarm_entry;Riverfarm;twi_riverfarm;twi_invrisil_gate;twi_invrisil;;twi_durene,twi_beniar,,twi_laken|ROW
 // Southern Izril
-twi_pallass_door;Entry to The Wandering Inn;twi_sizril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
+twi_pallass_door;Entry to The Wandering Inn;twi_izril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
 // TODO add "_comm_booth" to the next ID
-twi_pallass;Pallass;twi_sizril;twi_saliss_lab,twi_pallass_door;;;,twi_noass,,twi_relz|ROW
-twi_saliss_lab;Saliss' laboratory;twi_sizril;twi_pallass;;;,twi_saliss|COL
+twi_pallass;Pallass;twi_izril;twi_saliss_lab,twi_pallass_door;;;,twi_noass,,twi_relz|ROW
+twi_saliss_lab;Saliss' laboratory;twi_izril;twi_pallass;;;,twi_saliss|COL
 // Baleros
-twi_elvallian;Elvallian;twi_baleros;twi_first_landing,twi_daquin;twi_nizril;;,twi_foliana,,,twi_niers|ROW
+twi_elvallian;Elvallian;twi_baleros;twi_first_landing,twi_daquin;twi_izril;;,twi_foliana,,,twi_niers|ROW
 twi_daquin;Daquin;twi_baleros;twi_elvallian,twi_talenqual_entrance;twi_talenqual;;twi_xol|ROW
 twi_talenqual_entrance;City Entrance;twi_talenqual;twi_daquin,twi_un1,twi_talenqual_ag,twi_talenqual_hospital;twi_baleros;;twi_bault,twi_pivana,,,twi_kenjiro|COL
 twi_un1;United Nations House (1);twi_talenqual;twi_talenqual_entrance,twi_talenqual_ag,twi_talenqual_hospital,twi_un2;;;twi_myron,twi_ben,twi_sofie,twi_michael,twi_anders,twi_amoli|ROW
