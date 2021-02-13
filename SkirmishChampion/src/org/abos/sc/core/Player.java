@@ -206,6 +206,8 @@ public class Player {
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
 		// creation time is explicitly not saved for speedruns
+		s.append(difficulty.name());
+		s.append(System.lineSeparator());
 		companionsToSaveString(s);
 		s.append(System.lineSeparator());
 		stagesToSaveString(s);
@@ -219,8 +221,6 @@ public class Player {
 		s.append(diamonds);
 		s.append(System.lineSeparator());
 		party.toSaveString(s);
-		s.append(System.lineSeparator());
-		s.append(difficulty.name());
 		s.append(System.lineSeparator());
 	}
 	
