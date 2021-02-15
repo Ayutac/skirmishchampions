@@ -13,19 +13,18 @@ twi_lyons_room;Lyonette's room;twi_twi;twi_common_room,twi_erins_room,twi_garden
 twi_birds_tower;Bird's tower;twi_twi;twi_erins_room,twi_lyons_room;;;,twi_bird|COL
 twi_earth_room;Secret Earther room;twi_twi;twi_garden_of_sanctuary;;;twi_kevin,,twi_troy,twi_galina,twi_leon,twi_rose|ROW
 twi_gos_hill;Garden of Sanctuary (Hill);twi_twi;twi_garden_of_sanctuary;;;twi_knight,twi_bishop,twi_vladimir,twi_calabrian,twi_emanuel,twi_jose|ROW
-twi_common_room;Common Room;twi_twi;twi_pallass_door,twi_stables,twi_bar,twi_kitchen,twi_redfang_five_tg,twi_garden_of_sanctuary,twi_lyons_room,twi_erins_room;twi_izril;;,twi_ishkr|ROW
+twi_common_room;Common Room;twi_twi;twi_pallass_door,twi_stables,twi_bar,twi_kitchen,twi_redfang_five_tg,twi_garden_of_sanctuary,twi_lyons_room,twi_erins_room;twi_izril,twi_pallass;;,twi_ishkr|ROW
 twi_bar;Bar;twi_twi;twi_common_room;;;,twi_joseph,,,twi_drassi|ROW
 twi_redfang_five_tg;Redfang Five Training Ground;twi_twi;twi_stables,twi_common_room;twi_liscor;;twi_headscratcher,twi_rabbiteater,twi_shorthilt,twi_badarrow,twi_numbtongue|CONCENTRATED;
 twi_kitchen;Kitchen;twi_twi;twi_common_room,twi_garden_of_sanctuary;;;,twi_imani|ROW
 twi_stables;Stables;twi_twi;twi_liscor_dungeon,twi_bloodfields,twi_esthelm,twi_common_room,twi_liscor_gate,twi_redfang_five_tg;twi_liscor,twi_izril;;,twi_termin|ROW
 // Liscor
-twi_liscor_gate;City gates;twi_liscor;twi_liscor_dungeon,twi_stables,twi_watch_barracks,twi_marketstreet;twi_twi;;twi_jerci,twi_tkrn,twi_silt,twi_bersa,twi_kelli,twi_geils|ROW
-// TODO add "liscor_" to the next four IDs
-twi_watch_barracks;Watch barracks;twi_liscor;twi_prison,twi_watch_captain,twi_marketstreet,twi_liscor_gate;;;twi_belsc,twi_mersh,twi_tells,twi_tessil,twi_lassil,twi_merka|COL
-twi_watch_captain;Watch captain's office;twi_liscor;twi_watch_barracks;;;twi_relc,,twi_klbkch,,twi_zevara|COL
-twi_prison;Prison;twi_liscor;twi_watch_barracks;;;twi_paiss,,twi_ulkel,twi_haldagaz,twi_calruz,twi_rhata|ROW
-twi_marketstreet;Market street;twi_liscor;twi_liscor_gate,twi_watch_barracks,twi_liscor_council;;;twi_lism,,twi_krshia|COL
-twi_liscor_council;Council;twi_liscor;twi_marketstreet;;;,,,,twi_olesm|CONCENTRATED
+twi_liscor_gate;City gates;twi_liscor;twi_liscor_dungeon,twi_stables,twi_liscor_watch_barracks,twi_liscor_marketstreet;twi_twi;;twi_jerci,twi_tkrn,twi_silt,twi_bersa,twi_kelli,twi_geils|ROW
+twi_liscor_watch_barracks;Watch barracks;twi_liscor;twi_liscor_prison,twi_liscor_watch_captain,twi_liscor_marketstreet,twi_liscor_gate;;;twi_belsc,twi_mersh,twi_tells,twi_tessil,twi_lassil,twi_merka|COL
+twi_liscor_watch_captain;Watch captain's office;twi_liscor;twi_liscor_watch_barracks;;;twi_relc,,twi_klbkch,,twi_zevara|COL
+twi_liscor_prison;Prison;twi_liscor;twi_liscor_watch_barracks;;;twi_paiss,,twi_ulkel,twi_haldagaz,twi_calruz,twi_rhata|ROW
+twi_liscor_marketstreet;Market street;twi_liscor;twi_liscor_gate,twi_liscor_watch_barracks,twi_liscor_council;;;twi_lism,,twi_krshia|COL
+twi_liscor_council;Council;twi_liscor;twi_liscor_marketstreet;;;,,,,twi_olesm|CONCENTRATED
 // Dungeon
 twi_liscor_dungeon;Dungeon;twi_liscor;twi_liscor_gate,twi_stables;;;,twi_facestealer|CONCENTRATED
 // Northern Izril
@@ -38,11 +37,10 @@ twi_invrisil_ag;Invrisil's Adventurer's Guild;twi_invrisil;twi_invrisil_gate;;;t
 twi_first_landing;First Landing;twi_izril;twi_invrisil_gate,twi_elvallian;twi_baleros,twi_invrisil;;,twi_gresaria|ROW
 twi_reizmelt;Reizmelt;twi_izril;twi_invrisil_gate;twi_invrisil;;twi_madain|ROW
 twi_riverfarm_entry;Riverfarm;twi_riverfarm;twi_invrisil_gate;twi_invrisil;;twi_durene,twi_beniar,,twi_laken|ROW
-// Southern Izril
-twi_pallass_door;Entry to The Wandering Inn;twi_izril;twi_common_room,twi_pallass;twi_twi;;,twi_kel|ROW
-// TODO add "_comm_booth" to the next ID
-twi_pallass;Pallass;twi_izril;twi_saliss_lab,twi_pallass_door;;;,twi_noass,,twi_relz|ROW
-twi_saliss_lab;Saliss' laboratory;twi_izril;twi_pallass;;;,twi_saliss|COL
+// Pallass
+twi_pallass_door;Entry to The Wandering Inn;twi_pallass;twi_common_room,twi_pallass_comm_booth;twi_twi;;,twi_kel|ROW
+twi_pallass_comm_booth;Commentator Booth;twi_pallass;twi_saliss_lab,twi_pallass_door;;;,twi_noass,,twi_relz|ROW
+twi_saliss_lab;Saliss' laboratory;twi_pallass;twi_pallass_comm_booth;;;,twi_saliss|COL
 // Baleros
 twi_elvallian;Elvallian;twi_baleros;twi_first_landing,twi_daquin;twi_izril;;,twi_foliana,,,twi_niers|ROW
 twi_daquin;Daquin;twi_baleros;twi_elvallian,twi_talenqual_entrance;twi_talenqual;;twi_xol|ROW

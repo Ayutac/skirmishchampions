@@ -2,6 +2,7 @@
 // ID (must be unique); displayed name; fandom ID; start stage ID 
 twi_twi;The Wandering Inn;twi;twi_erins_room
 twi_liscor;Izril: Liscor;twi;twi_marketstreet
+twi_pallass;Izril: Pallass;twi;twi_marketstreet
 twi_izril;Izril;twi;twi_high_passes
 twi_invrisil;Izril: Invrisil;twi;twi_invrisil_gate
 twi_riverfarm;Izril: Riverfarm;twi;twi_riverfarm_entry
