@@ -114,7 +114,7 @@ public class StageSelectionFrame extends JFrame {
 	public void showPartySelectionFrame() {
 		partySelectionFrame.setFormation(player.getParty());
 		if (player.getDifficulty().stopSteamrolling())
-			partySelectionFrame.setStageChallengeRatingCap(Difficulty.getChallengeRatingCap(selectionPanel.getStage().getChallengeRating()));
+			partySelectionFrame.setStageChallengeRatingCap(Difficulty.of(player).getChallengeRatingCap(selectionPanel.getStage().getChallengeRating()));
 		else
 			partySelectionFrame.setStageChallengeRatingCap(null);
 		showSubframe(partySelectionFrame);

@@ -137,7 +137,7 @@ public class StageBattleFrame extends JFrame {
 				return;
 		}
 		// maybe stop player from steam rolling
-		if (Difficulty.of(player).stopSteamrolling() && be2.getChallengeRating()*Difficulty.STEAMROLL_FACTOR <= be1.getChallengeRating()) {
+		if (Difficulty.of(player).stopSteamrolling() && be1.getChallengeRating() > Difficulty.of(player).getChallengeRatingCap(be2.getChallengeRating())) {
 			JOptionPane.showMessageDialog(this, "Your teams seems to be a bit too powerful against this encounter, doesn't it?"+System.lineSeparator()+"Let's not steamroll through the entire game, okay?", 
 					"This is unfair to them", JOptionPane.INFORMATION_MESSAGE);
 			return;

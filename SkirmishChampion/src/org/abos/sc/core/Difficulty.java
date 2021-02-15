@@ -15,27 +15,27 @@ public enum Difficulty implements Name {
 	/**
 	 * Easiest difficulty, if you need your hand hold.
 	 */
-	EASIEST("Well Done"),
+	EASIEST("Well Done", Double.POSITIVE_INFINITY),
 	
 	/**
 	 * Easy difficulty, great for beginners.
 	 */
-	EASY("Medium Well"),
+	EASY("Medium Well", 2.0),
 	
 	/**
 	 * Medium difficulty for casual gamers.
 	 */
-	MEDIUM("Medium"),
+	MEDIUM("Medium", 1.5),
 	
 	/**
 	 * Hard difficulty for experts of the game.
 	 */
-	HARD("Medium Rare"),
+	HARD("Medium Rare", 1.4),
 	
 	/**
 	 * Hardest difficulty for those looking for an extra challenge.
 	 */
-	HARDEST("Rare");
+	HARDEST("Rare", 1.4);
 	
 	/**
 	 * Returns the difficulty of the player if one is provided or the default difficulty if not.
@@ -55,13 +55,25 @@ public enum Difficulty implements Name {
 	private final String displayName;
 	
 	/**
+	 * If stopping the player for a strong team is activated, they should be stopped 
+	 * if the ratio between the player's team and the enemy encounter is greater or
+	 * equal to this amount.
+	 * @see #stopSteamrolling()
+	 * @see #getChallengeRatingCap(int)
+	 */
+	private final double steamrollFactor;
+	
+	/**
 	 * Creates a new difficulty enum entry with the given display name.
 	 * @param displayName the display name of the primary stat, not <code>null</code>
 	 * @throws NullPointerException If <code>displayName</code> refers to <code>null</code>.
 	 */
-	private Difficulty(String displayName) {
+	private Difficulty(String displayName, double steamrollFactor) {
 		Utilities.requireNonNull(displayName, "displayName");
+		if (steamrollFactor <= 0)
+			throw new IllegalArgumentException("steamrollFactor must be positive!");
 		this.displayName = displayName;
+		this.steamrollFactor = steamrollFactor;
 	}
 	
 	/**
@@ -116,39 +128,29 @@ public enum Difficulty implements Name {
 	}
 	
 	/**
-	 * If stopping the player for a strong team is activated, they should be stopped 
-	 * if the ratio between the player's team and the enemy encounter is greater or
-	 * equal to this amount.
-	 * @see #stopSteamrolling()
+	 * If the player should be stopped if their team is too strong for an encounter, depending on the game difficulty.
+	 * @return <code>true</code> if the player should be stopped with this difficulty 
+	 * if their team is too strong for an encounter, else <code>false</code>
 	 */
-	public static final double STEAMROLL_FACTOR = 1.5;
+	public final boolean stopSteamrolling() {
+		return Double.POSITIVE_INFINITY != steamrollFactor;
+	}
 	
 	/**
 	 * Returns the specified rating times the steamroll factor to obtain the upper bound for the challenge rating.
 	 * If the product exceeds {@link Integer} bounds the appropiate bound is returned instead.
 	 * @param rating the rating to multiply with the steamroll factor
 	 * @return the product of <code>rating</code> times the steamroll factor, capped within {@link Integer} bounds
-	 * @see #STEAMROLL_FACTOR
 	 * @see Integer#MAX_VALUE
 	 * @see Integer#MIN_VALUE 
 	 */
-	public static final int getChallengeRatingCap(int rating) {
-		double cap = Math.floor(rating*STEAMROLL_FACTOR);
+	public final int getChallengeRatingCap(int rating) {
+		double cap = Math.floor(rating*steamrollFactor);
 		if (cap >= Integer.MAX_VALUE)
 			return Integer.MAX_VALUE;
 		if (cap <= Integer.MIN_VALUE)
 			return Integer.MIN_VALUE;
 		return (int)cap;
-	}
-	
-	/**
-	 * If the player should be stopped if their team is too strong for an encounter, depending on the game difficulty.
-	 * @return <code>true</code> if the player should be stopped with this difficulty 
-	 * if their team is too strong for an encounter, else <code>false</code>
-	 * @see #STEAMROLL_FACTOR
-	 */
-	public final boolean stopSteamrolling() {
-		return this.compareTo(EASIEST) > 0;
 	}
 
 }

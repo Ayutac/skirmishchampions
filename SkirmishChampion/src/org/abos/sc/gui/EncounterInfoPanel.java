@@ -81,7 +81,7 @@ public class EncounterInfoPanel extends JPanel {
 			}
 		if (difficulty.stopSteamrolling()) {
 			challengeRatingLabel.setToolTipText(String.format("<html>The challenge rating of your team is only allowed to be<br><b>%d</b> at most for this encounter.</html>",
-					Difficulty.getChallengeRatingCap(encounter.getChallengeRating())));
+					difficulty.getChallengeRatingCap(encounter.getChallengeRating())));
 		}
 		else {
 			challengeRatingLabel.setToolTipText(null);
