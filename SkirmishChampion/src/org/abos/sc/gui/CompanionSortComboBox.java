@@ -37,11 +37,11 @@ public class CompanionSortComboBox extends JComboBox<String> {
 	@SuppressWarnings("unchecked")
 	public CompanionSortComboBox() {
 		addItem(NAME_CRITERIUM);
+		addItem(CR_CRITERIUM);
 		for (StatsPrimary primary : StatsPrimary.values())
 			addItem(primary.getCapitalizedName());
 		for (StatsSecondary secondary : StatsSecondary.values())
 			addItem(secondary.getCapitalizedName());
-		addItem(CR_CRITERIUM);
 		selectionComparator = new Comparator[2+StatsPrimary.SIZE+StatsSecondary.SIZE];
 		selectionComparator[0] = Name.createNameComparator();
 		selectionComparator[1] = CharacterBase.createChallengeRatingComparator();
