@@ -19,8 +19,6 @@ import org.abos.util.Utilities;
  */
 public class Stage extends StageBase {
 	
-	protected boolean accessable;
-	
 	protected boolean cleared;
 	
 	protected boolean showChallengeRating;
@@ -33,9 +31,8 @@ public class Stage extends StageBase {
 	 * @param accessable
 	 * @param cleared
 	 */
-	public Stage(StageBase base, boolean accessable, boolean cleared, boolean showChallengeRating) {
+	public Stage(StageBase base, boolean cleared, boolean showChallengeRating) {
 		super(base); // throws NPE
-		this.accessable = accessable;
 		this.cleared = cleared;
 		this.showChallengeRating = showChallengeRating;
 	}
@@ -45,14 +42,7 @@ public class Stage extends StageBase {
 	 * @param base
 	 */
 	public Stage(StageBase base, boolean showChallengeRating) {
-		this(base, true, false, showChallengeRating); // throws NPE
-	}
-	
-	/**
-	 * @return the accessable
-	 */
-	public boolean isAccessable() {
-		return accessable;
+		this(base, false, showChallengeRating); // throws NPE
 	}
 	
 	/**
@@ -317,7 +307,7 @@ public class Stage extends StageBase {
 	
 	@Override
 	public Object clone() {
-		Stage clone = new Stage(this, accessable, cleared, showChallengeRating);
+		Stage clone = new Stage(this, cleared, showChallengeRating);
 		if (encounter != null)
 			clone.encounter = (BattleEncounter)encounter.clone();
 		return clone;
@@ -341,8 +331,6 @@ public class Stage extends StageBase {
 	@Override
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
-		if (accessable)
-			s.append('?');
 		s.append(id);
 		if (cleared)
 			s.append('!');
@@ -350,13 +338,12 @@ public class Stage extends StageBase {
 	
 	public static Stage parse(String s, Player player) {
 		Utilities.requireNonNull(s, "s");
-		int start = s.startsWith("?") ? 1 : 0;
 		int end = s.endsWith("!") ? s.length() - 1 : s.length();
-		String id = s.substring(start, end);
+		String id = s.substring(0, end);
 		StageBase base = StageBase.STAGES.lookup(id);
 		if (base == null)
 			throw new ParsedIdNotFoundException(String.format("Unknown stage ID %s!", id));
-		Stage stage = new Stage(base, start != 0, end != s.length(), Difficulty.of(player).showChallengeRatings());
+		Stage stage = new Stage(base, end != s.length(), Difficulty.of(player).showChallengeRatings());
 		if (player != null) {
 			if (player.getStages().containsId(stage.getId()))
 				throw new ParsedIdFoundException("Stage "+stage.getId()+" already registered with this player!");
