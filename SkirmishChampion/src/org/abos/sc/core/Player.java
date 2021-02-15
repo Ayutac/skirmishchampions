@@ -51,8 +51,8 @@ public class Player {
 		regions.add(region);
 		Stage stage = new Stage(StageBase.STAGES.lookup(region.getStartStageId()), difficulty.showChallengeRatings());
 		stages.add(stage);
-		updateRegionStages();
-		updateFandomRegions();
+		updateRegionStages(true);
+		updateFandomRegions(true);
 	}
 	
 	public Player(Difficulty difficulty, FandomBase startFandom, Companion startCompanion) {
@@ -100,18 +100,24 @@ public class Player {
 		return regions;
 	}
 	
-	public void updateRegionStages() {
-		for (Region region : regions)
+	public void updateRegionStages(boolean removeClearedFlags) {
+		for (Region region : regions) {
 			region.updateStages(stages);
+			if (removeClearedFlags)
+				region.hasBeenCleared();
+		}
 	}
 
 	public Registry<Fandom> getFandoms() {
 		return fandoms;
 	}
 	
-	public void updateFandomRegions() {
-		for (Fandom fandom : fandoms)
+	public void updateFandomRegions(boolean removeClearedFlags) {
+		for (Fandom fandom : fandoms) {
 			fandom.updateRegions(regions);
+			if (removeClearedFlags)
+				fandom.hasBeenCleared();
+		}
 	}
 	
 	/**
@@ -274,8 +280,8 @@ public class Player {
 			for (String s : line.split(";"))
 				Fandom.parse(s, player);
 			
-			player.updateFandomRegions();
-			player.updateRegionStages();
+			player.updateFandomRegions(true);
+			player.updateRegionStages(true);
 			
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 6));

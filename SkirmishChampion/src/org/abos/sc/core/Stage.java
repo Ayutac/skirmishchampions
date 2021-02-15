@@ -267,7 +267,35 @@ public class Stage extends StageBase {
 		}
 	}
 	
-	protected void acknowledgeRuntime(StringBuilder message, Player player) {
+	protected void acknowledgeRegionCompletion(StringBuilder message, Player player) {
+		Utilities.requireNonNull(message, "message");
+		if (player == null)
+			return;
+		for (Region region : player.getRegions()) {
+			if (region.hasBeenCleared()) {
+				message.append(System.lineSeparator());
+				message.append("Region ");
+				message.append(region.getName());
+				message.append(" completed!");
+			}
+		}
+	}
+	
+	protected void acknowledgeFandomCompletion(StringBuilder message, Player player) {
+		Utilities.requireNonNull(message, "message");
+		if (player == null)
+			return;
+		for (Fandom fandom : player.getFandoms()) {
+			if (fandom.hasBeenCleared()) {
+				message.append(System.lineSeparator());
+				message.append("Fandom ");
+				message.append(fandom.getName());
+				message.append(" completed!");
+			}
+		}
+	}
+	
+	protected void acknowledgeRuntimeAndDiff(StringBuilder message, Player player) {
 		Utilities.requireNonNull(message, "message");
 		if (player == null || !player.speedrunActive())
 			return;
@@ -279,7 +307,9 @@ public class Stage extends StageBase {
 		message.append(runDuration.toMinutesPart());
 		message.append("min ");
 		message.append(runDuration.toSecondsPart());
-		message.append("s");
+		message.append("s (");
+		message.append(player.getDifficulty().name());
+		message.append(')');
 	}
 	
 	/**
@@ -296,13 +326,15 @@ public class Stage extends StageBase {
 		acknowledgeStageChange(message, conclusion, player);
 		acknowledgeRegionChange(message, conclusion, player);
 		acknowledgeFandomChange(message, conclusion, player);
-		acknowledgeRuntime(message, player);
-		if (player != null) {
-			player.updateRegionStages();
-			player.updateFandomRegions();
-		}
 		if (conclusion == BattleConclusion.WON)
 			setCleared(true);
+		if (player != null) { // update and remember which ones have been cleared
+			player.updateRegionStages(false); 
+			player.updateFandomRegions(false);
+		}
+		acknowledgeRegionCompletion(message, player);
+		acknowledgeFandomCompletion(message, player);
+		acknowledgeRuntimeAndDiff(message, player);
 	}
 	
 	@Override

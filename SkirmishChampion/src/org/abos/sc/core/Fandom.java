@@ -12,15 +12,52 @@ import org.abos.util.Utilities;
  */
 public class Fandom extends FandomBase {
 	
+	protected final int allRegionsCount;
+	
+	protected boolean cleared;
+	
+	protected boolean clearedFlag = false;
+	
 	protected final Registry<Region> regions;
 
 	public Fandom(FandomBase base, Registry<Region> regions) {
 		super(base);
+		Utilities.requireNonNull(regions, "regions");
 		this.regions = regions;
+		allRegionsCount = collectAssociatedRegionIds().size();
 	}
 	
 	public Fandom(FandomBase base) {
 		this(base, new Registry<>());
+	}
+	
+	/**
+	 * @return the cleared
+	 */
+	public boolean isCleared() {
+		return cleared;
+	}
+	
+	public boolean hasBeenCleared() {
+		if (!clearedFlag)
+			return false;
+		clearedFlag = false;
+		return true;
+	}
+	
+	public boolean checkCleared() {
+		boolean oldCleared = cleared;
+		if (allRegionsCount != regions.size()) {
+			cleared = false;
+		}
+		else {
+			boolean check = true;
+			for (Region region : regions)
+				check &= region.isCleared();
+			cleared = check;
+		}
+		clearedFlag = oldCleared != cleared;
+		return cleared;
 	}
 	
 	/**
@@ -40,6 +77,7 @@ public class Fandom extends FandomBase {
 			if (region.getFandomId().equals(id))
 				this.regions.add(region);
 		}
+		checkCleared();
 	}
 	
 	@Override
@@ -49,7 +87,7 @@ public class Fandom extends FandomBase {
 	
 	@Override
 	public String toString() {
-		return getName();
+		return cleared ? getName() + " ✓" : getName();
 	}
 	
 	@Override

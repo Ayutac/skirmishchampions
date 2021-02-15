@@ -12,15 +12,50 @@ import org.abos.util.Utilities;
  */
 public class Region extends RegionBase {
 	
+	protected final int allStagesCount;
+	
+	protected boolean cleared;
+	
+	protected boolean clearedFlag = false;
+	
 	protected final Registry<Stage> stages;
 
-	private Region(RegionBase base, Registry<Stage> stages) {
+	private Region(RegionBase base, boolean cleared, Registry<Stage> stages) {
 		super(base);
+		Utilities.requireNonNull(stages, "stages");
+		this.cleared = cleared;
 		this.stages = stages;
+		allStagesCount = collectAssociatedStageIds().size();
 	}
 	
 	public Region(RegionBase base) {
-		this(base, new Registry<>());
+		this(base, false, new Registry<>());
+	}
+	
+	public boolean isCleared() {
+		return cleared;
+	}
+	
+	public boolean hasBeenCleared() {
+		if (!clearedFlag)
+			return false;
+		clearedFlag = false;
+		return true;
+	}
+	
+	public boolean checkCleared() {
+		boolean oldCleared = cleared;
+		if (allStagesCount != stages.size()) {
+			cleared = false;
+		}
+		else {
+			boolean check = true;
+			for (Stage stage : stages)
+				check &= stage.isCleared();
+			cleared = check;
+		}
+		clearedFlag = oldCleared != cleared;
+		return cleared;
 	}
 	
 	/**
@@ -36,16 +71,17 @@ public class Region extends RegionBase {
 			if (stage.getRegionId().equals(id))
 				this.stages.add(stage);
 		}
+		checkCleared();
 	}
 	
 	@Override
 	public Object clone() {
-		return new Region(this, Registry.deepClone(stages));
+		return new Region(this, cleared, Registry.deepClone(stages));
 	}
 	
 	@Override
 	public String toString() {
-		return getName();
+		return cleared ? getName() + " ✓" : getName();
 	}
 	
 	@Override
