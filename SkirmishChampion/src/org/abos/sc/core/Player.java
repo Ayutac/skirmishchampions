@@ -278,7 +278,7 @@ public class Player {
 			player.updateRegionStages();
 			
 			if ((line = br.readLine()) == null)
-				throw new ParseException(String.format(eofMsg, 5));
+				throw new ParseException(String.format(eofMsg, 6));
 			try {
 				player.setMoney(Integer.parseInt(line));
 			}
@@ -286,15 +286,15 @@ public class Player {
 				throw new IllegalArgumentTypeException(String.format("Amount of money for player was invalid: %s", line),ex);
 			}
 			if ((line = br.readLine()) == null)
-				throw new ParseException(String.format(eofMsg, 6));
+				throw new ParseException(String.format(eofMsg, 7));
 			try {
 				player.setDiamonds(Integer.parseInt(line));
 			}
 			catch (NumberFormatException ex) {
 				throw new IllegalArgumentTypeException(String.format("Amount of diamonds for player was invalid: %s", line),ex);
 			}
-			if ((line = br.readLine()) != null)
-				throw new ParseException(String.format(eofMsg, 6));
+			if ((line = br.readLine()) == null)
+				throw new ParseException(String.format(eofMsg, 8));
 			player.setParty(BattleFormation.parse(line));
 			
 			// make loaded save states illegal for speedruns
