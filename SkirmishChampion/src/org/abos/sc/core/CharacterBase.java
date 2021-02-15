@@ -396,7 +396,7 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 */
 	public int calculateChallengeRating() {
 		return Utilities.addWithoutOverflow(
-				getPrimaryStat(getAttackStat()), Utilities.multWithoutOverflow(2, getPrimaryStat(StatsPrimary.SPEED), sumSecondaryStats()))
+				getPrimaryStat(getAttackStat()), Utilities.multWithoutOverflow(2, getPrimaryStat(StatsPrimary.SPEED)), sumSecondaryStats())
 			/ (3*(1+StatsSecondary.SIZE));
 	}
 	
