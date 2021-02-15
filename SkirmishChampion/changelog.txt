@@ -41,3 +41,13 @@ Initial published version including
 - character images now get changed in battle if they have been recently hurt or are defeated
 - slightly improved GUI
 - fixed some minor bugs
+
+# 0.6.0-early-access
+- added 3 TWI characters
+- added 10 TWI character images
+- added timer for speedruns
+- added CR comparator for party selection screen
+- regions were reworked, saves prior to this version won't be compatible
+- battle log is now colored
+- steamroll factor now dependent on difficulty
+- fixed some minor bugs including that saving and loading resetted the difficulty to easy
