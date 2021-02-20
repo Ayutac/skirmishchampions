@@ -71,11 +71,13 @@ public enum Difficulty implements Name {
 	/**
 	 * Creates a new difficulty enum entry with the given display name.
 	 * @param displayName the display name of the primary stat, not <code>null</code>
+	 * @param steamrollFactor the steamroll factor for this difficulty, must be positive
 	 * @throws NullPointerException If <code>displayName</code> refers to <code>null</code>.
+	 * @throws IllegalArgumentException If <code>steamrollFactor</code> is 0, Not a Number or negative.
 	 */
 	private Difficulty(String displayName, double steamrollFactor) {
 		Utilities.requireNonNull(displayName, "displayName");
-		if (steamrollFactor <= 0)
+		if (Double.isNaN(steamrollFactor) || steamrollFactor <= 0)
 			throw new IllegalArgumentException("steamrollFactor must be positive!");
 		this.displayName = displayName;
 		this.steamrollFactor = steamrollFactor;
