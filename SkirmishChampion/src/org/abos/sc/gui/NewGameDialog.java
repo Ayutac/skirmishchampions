@@ -119,6 +119,7 @@ public class NewGameDialog extends JDialog {
 		ButtonGroup difficultyGroup = new ButtonGroup(); 
 		for (int i = 0; i < difficulties.length; i++) {
 			difficultyButtons[i] = new JRadioButton(difficulties[i].getName(), difficulties[i] == Difficulty.MEDIUM);
+			difficultyButtons[i].setToolTipText(difficulties[i].getCapitalizedName());
 			difficultyGroup.add(difficultyButtons[i]);
 		}
 		startButton = new JButton("Start");

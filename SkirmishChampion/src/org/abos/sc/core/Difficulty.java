@@ -35,7 +35,12 @@ public enum Difficulty implements Name {
 	/**
 	 * Hardest difficulty for those looking for an extra challenge.
 	 */
-	HARDEST("Rare", 1.4);
+	HARDEST("Rare", 1.4),
+	
+	/**
+	 * Lunatic mode, not made to be beat.
+	 */
+	IMPOSSIBLE("A living cow", 1.0);
 	
 	/**
 	 * Returns the difficulty of the player if one is provided or the default difficulty if not.
@@ -83,6 +88,14 @@ public enum Difficulty implements Name {
 	@Override
 	public String getName() {
 		return displayName;
+	}
+	
+	/**
+	 * Returns {@link #name()} but with only the first character being upper case.
+	 * @return {@link #name()} but with only the first character being upper case.
+	 */
+	public String getCapitalizedName() {
+		return name().substring(0, 1).concat(name().substring(1).toLowerCase());
 	}
 	
 	/**
