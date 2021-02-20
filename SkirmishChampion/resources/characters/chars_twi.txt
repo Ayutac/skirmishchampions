@@ -98,6 +98,9 @@ twi_grunter;Grunter;twi;Goblins,Redfangs,Hobgoblins,Warriors;150,120,60,60,50,50
 twi_flower_girl;Flower Girl;twi;Monsters;90,100,40,30,50,20,30,50;0;0
 twi_todi;Todi;twi;Humans,Todi's Elites,Warriors,Adventurers;220,180,60,50,60,80,40,80;0;0
 twi_jewel;Jewel;twi;Humans,Glitterblade,Warriors,Adventurers;200,160,90,70,60,100,40,90;0;0
+twi_talia;Talia Kallinad;twi;Humans,Knights,Summer Knights,Order of Seasons;200,160,60,50,40,100,30,80;0;0
+twi_maviola;Maviola El (young);twi;Nobility,Humans,Izril;150,100,200,180,200,350,100,100;5;2
+twi_maviola_old;Maviola El (old);twi;Nobility,Humans,Izril;80,20,200,180,180,300,100,80;5;2
 // ------------------------------------------------
 // down here are the characters I only invested 20% of my brain into :'(
 // ------------------------------------------------

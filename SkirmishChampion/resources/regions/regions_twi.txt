@@ -8,3 +8,4 @@ twi_invrisil;Izril: Invrisil;twi;twi_invrisil_gate
 twi_riverfarm;Izril: Riverfarm;twi;twi_riverfarm_entry
 twi_baleros;Baleros;twi;twi_elvallian
 twi_talenqual;Baleros: Talenqual;twi;twi_talenqual_entry
+twi_terandria;Terandria;twi;twi_seasons_hq
