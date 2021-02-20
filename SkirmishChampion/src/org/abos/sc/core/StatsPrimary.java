@@ -84,7 +84,7 @@ public enum StatsPrimary implements Name {
 	 * @return the display name of the primary stat, guaranteed to be non <code>null</code>
 	 */
 	@Override
-	public String getName() {
+	public final String getName() {
 		return displayName;
 	}
 	
@@ -92,7 +92,7 @@ public enum StatsPrimary implements Name {
 	 * Returns {@link #name()} but with only the first character being upper case.
 	 * @return {@link #name()} but with only the first character being upper case.
 	 */
-	public String getCapitalizedName() {
+	public final String getCapitalizedName() {
 		return name().substring(0, 1).concat(name().substring(1).toLowerCase());
 	}
 

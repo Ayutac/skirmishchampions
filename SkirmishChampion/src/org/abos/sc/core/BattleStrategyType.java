@@ -34,7 +34,7 @@ public enum BattleStrategyType implements Name {
 	/**
 	 * The display name of the strategy.
 	 */
-	private String displayName;
+	private final String displayName;
 	
 	/**
 	 * Creates a new battle strategy enum entry with the given display name.
@@ -51,7 +51,7 @@ public enum BattleStrategyType implements Name {
 	 * @return the display name of the strategy, guaranteed to be non <code>null</code>
 	 */
 	@Override
-	public String getName() {
+	public final String getName() {
 		return displayName;
 	}
 	
