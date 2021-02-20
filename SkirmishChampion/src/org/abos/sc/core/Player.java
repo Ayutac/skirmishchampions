@@ -33,6 +33,7 @@ public class Player {
 	
 	protected Registry<Fandom> fandoms = new Registry<>();
 	
+	// make sure the formation is always made up of companions
 	protected BattleFormation party;
 	
 	protected int money = 0;
@@ -143,6 +144,13 @@ public class Player {
 				}
 			}
 		this.party = new BattleFormation(partySelection);
+	}
+	
+	public void addExtraPointsToParty(int amount) {
+		for (Character companion : party) {
+			assert companion instanceof Companion;
+			((Companion)companion).addExtraPoints(amount);
+		}
 	}
 	
 	/**

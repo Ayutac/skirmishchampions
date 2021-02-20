@@ -191,6 +191,14 @@ public class Stage extends StageBase {
 			message.append(String.format("You lost %d gold...", Math.abs(extraGold)));
 	}
 	
+	protected void acknowledgeExtraPointChange(StringBuilder message, BattleConclusion conclusion, Player player) {
+		Utilities.requireNonNull(message, "message");
+		Utilities.requireNonNull(conclusion, "conclusion");
+		if (player == null)
+			return;
+		player.addExtraPointsToParty(getChallengeRating());
+	}
+	
 	protected void acknowledgeCompanionChange(StringBuilder message, BattleConclusion conclusion, Player player) {
 		Utilities.requireNonNull(message, "message");
 		Utilities.requireNonNull(conclusion, "conclusion");
@@ -322,6 +330,7 @@ public class Stage extends StageBase {
 		else // not having won is interpreted as a loss, even for ties
 			message.append("You have lost this battle...");
 		acknowledgeMoneyChange(message, conclusion, player);
+		acknowledgeExtraPointChange(message, conclusion, player);
 		acknowledgeCompanionChange(message, conclusion, player);
 		acknowledgeStageChange(message, conclusion, player);
 		acknowledgeRegionChange(message, conclusion, player);

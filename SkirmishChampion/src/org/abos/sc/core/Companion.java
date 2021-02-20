@@ -34,16 +34,24 @@ public class Companion extends Character {
 	protected int level;
 	
 	/**
+	 * The extra points of this companion.
+	 * @see #getExtraPoints
+	 */
+	protected int extraPoints;
+	
+	/**
 	 * Creates a new companion from a specified character base with the given level and heals the companion
 	 * if <code>healUp</code> was set to <code>true</code>. 
 	 * @param base the base for this companion
-	 * @param level the level of this companion.
+	 * @param level the level of this companion
+	 * @param extraPoints the extra points of this companion
 	 * @param healUp If set to <code>true</code>, {@link #restore()} will be called on this companion. Will only have an effect if <code>base</code> was a damaged character or subclass thereof.
 	 * @throws NullPointerException If <code>base</code> refers to <code>null</code>.
 	 */
-	public Companion(CharacterBase base, int level, boolean healUp) {
+	public Companion(CharacterBase base, int level, int extraPoints, boolean healUp) {
 		super(base);
 		this.level = level;
+		this.extraPoints = extraPoints;
 		if (healUp)
 			restore();
 	}
@@ -52,10 +60,11 @@ public class Companion extends Character {
 	 * Creates a new companion from a specified character base with the given level and heals the companion if needed.
 	 * @param base the base for this companion
 	 * @param level the level of this companion.
+	 * @param extraPoints the extra points of this companion
 	 * @throws NullPointerException If <code>base</code> refers to <code>null</code>.
 	 */
-	public Companion(CharacterBase base, int level) {
-		this(base, level, true);
+	public Companion(CharacterBase base, int level, int extraPoints) {
+		this(base, level, extraPoints, true);
 	}
 	
 	/**
@@ -64,7 +73,7 @@ public class Companion extends Character {
 	 * @throws NullPointerException If <code>base</code> refers to <code>null</code>.
 	 */
 	public Companion(CharacterBase base) {
-		this(base,1);
+		this(base, 1, 0);
 	}
 	
 	/**
@@ -73,12 +82,13 @@ public class Companion extends Character {
 	 * @throws NullPointerException If <code>companion</code> refers to <code>null</code>.
 	 */
 	public Companion(Companion companion) {
-		this(companion, companion.level, false);
+		this(companion, companion.level, companion.extraPoints, false);
 	}
 	
 	/**
 	 * Returns the level of this companion.
 	 * @return the level of this companion
+	 * @see #increaseLevel()
 	 */
 	public int getLevel() {
 		return level;
@@ -86,9 +96,28 @@ public class Companion extends Character {
 	
 	/**
 	 * Increases the level of this character by 1.
+	 * @see #getLevel()
 	 */
 	public void increaseLevel() {
 		level++;
+	}
+	
+	/**
+	 * Returns the extra points of this companion.
+	 * @return the extra points of this companion
+	 * @see #addExtraPoints(int)
+	 */
+	public int getExtraPoints() {
+		return extraPoints;
+	}
+	
+	/**
+	 * Adds extra points to this companion.
+	 * @param amount the amount of extra points to add
+	 * @see #getExtraPoints()
+	 */
+	public void addExtraPoints(int amount) {
+		extraPoints += amount;
 	}
 	
 	/**
@@ -113,6 +142,7 @@ public class Companion extends Character {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + level;
+		result = prime * result + extraPoints;
 		return result;
 	}
 
@@ -138,6 +168,8 @@ public class Companion extends Character {
 		Companion other = (Companion) obj;
 		if (level != other.level)
 			return false;
+		if (extraPoints != other.extraPoints)
+			return false;
 		return true;
 	}
 	
@@ -158,6 +190,8 @@ public class Companion extends Character {
 		s.append(id);
 		s.append(',');
 		s.append(level);
+		s.append(',');
+		s.append(extraPoints);
 	}
 	
 	/**
@@ -177,7 +211,7 @@ public class Companion extends Character {
 	}
 	
 	/**
-	 * {@inheritDoc} Level included.
+	 * {@inheritDoc} Level included, but not extra points.
 	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
 	 */
 	@Override
@@ -190,14 +224,14 @@ public class Companion extends Character {
 	
 	/**
 	 * Parses a string representation of a companion into a object.
-	 * The format is "<code>ID,level</code>".
+	 * The format is "<code>ID,level,extraPoints</code>".
 	 * @param s the string to parse
 	 * @param player the player this companion should be added to, if any.
 	 * @return a companion matching the string
 	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
 	 * @throws IllegalNumberOfArgumentsException If the number of arguments in the string separated by <code>,</code> is wrong.
 	 * @throws ParsedIdNotFoundException If the parsed ID cannot be found in {@link CharacterBase#CHARACTERS}.
-	 * @throws IllegalArgumentTypeException If the level is not a number.
+	 * @throws IllegalArgumentTypeException If the level or extra points is not a number.
 	 * @throws ParsedIdFoundException If <code>player</code> is not <code>null</code> and the string is parsed successfully, but the ID is already registered in {@link Player#getCompanions()}.
 	 * @see #CharacterBase(String, String, String, String[], int[], StatsPrimary, StatsSecondary, boolean)
 	 * @see #toSaveString()
@@ -205,8 +239,9 @@ public class Companion extends Character {
 	public static Companion parse(String s, Player player) {
 		Utilities.requireNonNull(s, "s");
 		String[] params = s.split(",");
-		final int PARAM_NUMBER = 2;
-		if (params.length != PARAM_NUMBER)
+		final int PARAM_NUMBER = 3;
+		// compatibility for version 0.6
+		if (params.length != PARAM_NUMBER && params.length + 1 != PARAM_NUMBER)
 			throw new IllegalNumberOfArgumentsException(String.format("Companion has %d parameters instead of %d!", params.length, PARAM_NUMBER));
 		CharacterBase base = CharacterBase.CHARACTERS.lookup(params[0]);
 		if (base == null)
@@ -218,7 +253,16 @@ public class Companion extends Character {
 		catch (NumberFormatException ex) {
 			throw new IllegalArgumentTypeException(String.format("Level of %s is invalid: %s!", params[0], params[1]), ex);
 		}
-		Companion companion = new Companion(base,level);
+		int xp = 0;
+		// compatibility for version 0.6
+		if (params.length == PARAM_NUMBER)
+			try {
+				xp = Integer.valueOf(params[2]); // throws NFE
+			}
+			catch (NumberFormatException ex) {
+				throw new IllegalArgumentTypeException(String.format("Extra points of %s are invalid: %s!", params[0], params[2]), ex);
+			}
+		Companion companion = new Companion(base, level, xp);
 		if (player != null) {
 			if (player.getCompanions().containsId(companion.getId()))
 				throw new ParsedIdFoundException("Companion "+companion.getId()+" already registered with this player!");
