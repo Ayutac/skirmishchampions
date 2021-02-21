@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
 
+import org.abos.sc.core.battle.Formation;
 import org.abos.util.Utilities;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,7 +38,7 @@ class BattleFormationTest {
 
 	@Test
 	public void parseTest() {
-		BattleFormation formation = new BattleFormation(new Character[][] {
+		Formation formation = new Formation(new Character[][] {
 			{new Character(Character.CHARACTERS.lookup("twi_headscratcher")),
 				new Character(Character.CHARACTERS.lookup("twi_rabbiteater")),
 				new Character(Character.CHARACTERS.lookup("twi_shorthilt"))
@@ -48,13 +49,13 @@ class BattleFormationTest {
 				null
 			}
 		});
-		assertEquals(formation, BattleFormation.parse(REDFANG_FIVE));
+		assertEquals(formation, Formation.parse(REDFANG_FIVE));
 	}
 
 	@Test
 	public void parseTest2() {
 		
-		assertEquals(BattleFormation.parse(REDFANG_FIVE).toSaveString(), REDFANG_FIVE);
+		assertEquals(Formation.parse(REDFANG_FIVE).toSaveString(), REDFANG_FIVE);
 	}
 
 }

@@ -1,4 +1,4 @@
-package org.abos.sc.core;
+package org.abos.sc.core.battle;
 
 import org.abos.util.Name;
 import org.abos.util.Utilities;
@@ -9,7 +9,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public enum BattleStrategyType implements Name {
+public enum StrategyType implements Name {
 
 	/**
 	 * For the strategy where the enemy is defeated row by row.
@@ -41,7 +41,7 @@ public enum BattleStrategyType implements Name {
 	 * @param displayName the display name of the strategy, not <code>null</code>
 	 * @throws NullPointerException If <code>displayName</code> refers to <code>null</code>.
 	 */
-	private BattleStrategyType(String displayName) {
+	private StrategyType(String displayName) {
 		Utilities.requireNonNull(displayName, "displayName");
 		this.displayName = displayName;
 	}

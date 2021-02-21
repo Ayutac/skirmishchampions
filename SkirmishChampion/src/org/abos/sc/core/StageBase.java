@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.abos.sc.core.battle.Encounter;
 import org.abos.util.IdCloneable;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Name;
@@ -171,10 +172,10 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 * Returns the encounter of this stage by parsing its encounter string. Also stores the challenge rating of the encounter internally.
 	 * @return the encounter of this stage
 	 * @throws ParseException If the encounter string cannot be parsed.
-	 * @see BattleEncounter#parse(String)
+	 * @see Encounter#parse(String)
 	 */
-	public BattleEncounter createEncounter() {
-		BattleEncounter encounter = BattleEncounter.parse(encounterString);
+	public Encounter createEncounter() {
+		Encounter encounter = Encounter.parse(encounterString);
 		RATINGS.put(id, encounter.getChallengeRating());
 		return encounter;
 	}
@@ -185,7 +186,7 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 * @return the challenge rating of this stage base
 	 * @throws ParseException If the encounter string cannot be parsed.
 	 * @see #createEncounter()
-	 * @see BattleEncounter#parse(String)
+	 * @see Encounter#parse(String)
 	 */
 	@Override
 	public int getChallengeRating() {
@@ -325,7 +326,7 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 * The format is<br>
 	 * "<code>ID;name;regionID;nextStages;nextRegions;nextFandoms;encounterString</code>"<br>
 	 * where <code>nextStages</code>, <code>nextRegions</code> and <code>nextFandoms</code> are lists of strings separated by {@value #LIST_SEPARATOR} without whitespaces,
-     * and <code>encounterString</code> is the parseable string representation of a {@link BattleEncounter}.
+     * and <code>encounterString</code> is the parseable string representation of a {@link Encounter}.
 	 * @param s the string to parse
 	 * @param register If the parsed stage should be registered in {@link #STAGES} after parsing. 
 	 * Will throw an exception if this stage could be parsed successfully, but their ID is already registered there.
@@ -336,11 +337,11 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 * OR if <code>checkEncounter</code> is <code>true</code> and this exception is thrown by parsing it.
 	 * @throws ParsedIdFoundException If <code>register</code> is set to <code>true</code> and the stage base string is parsed successfully (except for the encounter string), but the ID is already registered in {@link #STAGES}.
 	 * @throws ParseException If <code>checkEncounter</code> is <code>true</code> and this exception is thrown by parsing it. For more information
-	 * see {@link BattleEncounter#parse(String)}.
+	 * see {@link Encounter#parse(String)}.
 	 * @see #StageBase(String, String, String, String[], String[], String[], String, boolean)
 	 * @see #toSaveString()
 	 * @see #createEncounter()
-	 * @see BattleEncounter#parse(String)
+	 * @see Encounter#parse(String)
 	 */
 	public static StageBase parse(String s, boolean register, boolean checkEncounter) {
 		Utilities.requireNonNull(s, "s");
@@ -368,18 +369,18 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 * The format is<br>
 	 * "<code>ID;name;regionID;nextStages;nextRegions;nextFandoms;encounterString</code>"<br>
 	 * where <code>nextStages</code>, <code>nextRegions</code> and <code>nextFandoms</code> are lists of strings separated by {@value #LIST_SEPARATOR} without whitespaces,
-     * and <code>encounterString</code> is the parseable string representation of a {@link BattleEncounter}.
+     * and <code>encounterString</code> is the parseable string representation of a {@link Encounter}.
 	 * @param s the string to parse
 	 * @return a stage base matching the string
 	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
 	 * @throws IllegalNumberOfArgumentsException If the number of arguments in the string separated by <code>;</code> is wrong 
 	 * OR if this exception is thrown by parsing the encounter string.
 	 * @throws ParsedIdFoundException If the stage base string is parsed successfully (except for the encounter string), but the ID is already registered in {@link #STAGES}.
-	 * @throws ParseException If this exception is thrown by parsing the encounter string. For more information see {@link BattleEncounter#parse(String)}.
+	 * @throws ParseException If this exception is thrown by parsing the encounter string. For more information see {@link Encounter#parse(String)}.
 	 * @see #StageBase(String, String, String, String[], String[], String[], String, boolean)
 	 * @see #toSaveString()
 	 * @see #createEncounter()
-	 * @see BattleEncounter#parse(String)
+	 * @see Encounter#parse(String)
 	 */
 	public static StageBase parse(String s) {
 		return parse(s, true, true);
@@ -390,7 +391,7 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 * Since a lot of instances are created by this call, {@link System#gc()} is called afterwards.
 	 * @throws ParseException If any registered stage has an invalid encounter string.
 	 * @see #createEncounter()
-	 * @see BattleEncounter#parse(String)
+	 * @see Encounter#parse(String)
 	 */
 	public static void validateEncouterStrings() {
 		for (StageBase stage : STAGES)

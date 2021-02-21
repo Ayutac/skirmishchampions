@@ -7,9 +7,9 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.abos.sc.core.BattleEncounter;
-import org.abos.sc.core.BattleFormation;
 import org.abos.sc.core.Difficulty;
+import org.abos.sc.core.battle.Encounter;
+import org.abos.sc.core.battle.Formation;
 import org.abos.util.Utilities;
 import org.abos.util.gui.GBCBuilder;
 
@@ -22,7 +22,7 @@ public class EncounterInfoPanel extends JPanel {
 
 	protected boolean atLineStart;
 	
-	protected BattleEncounter encounter;
+	protected Encounter encounter;
 	
 	protected Difficulty difficulty = Difficulty.of(null);
 	
@@ -49,11 +49,11 @@ public class EncounterInfoPanel extends JPanel {
 		initLayout();
 	}
 	
-	public BattleEncounter getEncounter() {
+	public Encounter getEncounter() {
 		return encounter;
 	}
 
-	public void setEncounter(BattleEncounter encounter) {
+	public void setEncounter(Encounter encounter) {
 		this.encounter = encounter;
 		refreshEncounter();
 	}
@@ -120,7 +120,7 @@ public class EncounterInfoPanel extends JPanel {
 	 * @see #initLayout()
 	 */
 	private void initComponents() {
-		formation = new CharacterBattlePanel[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
+		formation = new CharacterBattlePanel[Formation.ROW_NUMBER][Formation.COL_NUMBER];
 		for (int row = 0; row < formation.length; row++)
 			for (int col = 0; col < formation[0].length; col++) {
 				formation[row][col] = new CharacterBattlePanel();
@@ -138,21 +138,21 @@ public class EncounterInfoPanel extends JPanel {
 		setLayout(layout);
 		GBCBuilder builder = new GBCBuilder().anchor(GridBagConstraints.LINE_START).reset();
 		if (atLineStart) {
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
-				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
-					add(formation[row][col], builder.gridx(BattleFormation.ROW_NUMBER-1-row).gridy(col).get());
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
+				for (int row = 0; row < Formation.ROW_NUMBER; row++) {
+					add(formation[row][col], builder.gridx(Formation.ROW_NUMBER-1-row).gridy(col).get());
 				}
 		}
 		else {
-			for (int col = BattleFormation.COL_NUMBER - 1; col >= 0; col--)
-				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
+			for (int col = Formation.COL_NUMBER - 1; col >= 0; col--)
+				for (int row = 0; row < Formation.ROW_NUMBER; row++) {
 					add(formation[row][col], builder.gridx(row).gridy(col).get());
 				}
 		}
-		add(challengeRatingLabel, builder.gridx(0).gridy(BattleFormation.COL_NUMBER).gridwidth(BattleFormation.ROW_NUMBER).anchor(GridBagConstraints.CENTER).build());
+		add(challengeRatingLabel, builder.gridx(0).gridy(Formation.COL_NUMBER).gridwidth(Formation.ROW_NUMBER).anchor(GridBagConstraints.CENTER).build());
 		setPreferredSize(new Dimension(
-				BattleFormation.ROW_NUMBER*CharacterBattlePanel.PREFERRED_WIDTH, 
-				BattleFormation.COL_NUMBER*CharacterBattlePanel.PREFERRED_HEIGHT+ContentComboBox.PREFERRED_HEIGHT));
+				Formation.ROW_NUMBER*CharacterBattlePanel.PREFERRED_WIDTH, 
+				Formation.COL_NUMBER*CharacterBattlePanel.PREFERRED_HEIGHT+ContentComboBox.PREFERRED_HEIGHT));
 	}
 
 }

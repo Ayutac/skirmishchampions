@@ -1,5 +1,7 @@
-package org.abos.sc.core;
+package org.abos.sc.core.battle;
 
+import org.abos.sc.core.ChallengeRatable;
+import org.abos.sc.core.Character;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Utilities;
 
@@ -9,7 +11,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class BattleEncounter implements Cloneable, ChallengeRatable {
+public class Encounter implements Cloneable, ChallengeRatable {
 	
 	/**
 	 * The separator char between the formation and strategy of an encounter in string form.
@@ -28,13 +30,13 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	 * The underlying formation.
 	 * @see #getFormation()
 	 */
-	protected BattleFormation formation;
+	protected Formation formation;
 	
 	/**
 	 * The underlying strategy.
 	 * @see #getStrategy()
 	 */
-	protected BattleStrategy strategy;
+	protected Strategy strategy;
 
 	/**
 	 * Creates a new battle encounter from a given formation and strategy. Note that the formation and
@@ -43,7 +45,7 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	 * @param strategy the strategy for this encounter
 	 * @throws NullPointerException If <code>formation</code> or <code>strategy</code> refers to <code>null</code>.
 	 */
-	public BattleEncounter(BattleFormation formation, BattleStrategy strategy) {
+	public Encounter(Formation formation, Strategy strategy) {
 		Utilities.requireNonNull(formation, "formation");
 		Utilities.requireNonNull(strategy, "strategy");
 		this.formation = formation;
@@ -54,7 +56,7 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	 * Returns the underlying battle formation.
 	 * @return the underlying battle formation
 	 */
-	public BattleFormation getFormation() {
+	public Formation getFormation() {
 		return formation;
 	}
 	
@@ -62,14 +64,14 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	 * Returns the underlying battle strategy.
 	 * @return the underlying battle strategy
 	 */
-	public BattleStrategy getStrategy() {
+	public Strategy getStrategy() {
 		return strategy;
 	}
 	
 	/**
 	 * Returns the number of non <code>null</code> characters in the underlying formation.
 	 * @return the number of non <code>null</code> characters in this encounter
-	 * @see BattleFormation#getSize()
+	 * @see Formation#getSize()
 	 */
 	public int getSize() {
 		return formation.getSize();
@@ -101,7 +103,7 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	 * @return the tactic at the specified position, never <code>null</code>
 	 * @throws ArrayIndexOutOfBoundsException If <code>row</code> or <code>col</code> is out of bounds.
 	 */
-	public BattleTactic getTactic(int row, int col) {
+	public Tactic getTactic(int row, int col) {
 		return strategy.getTactic(row, col);
 	}
 
@@ -119,8 +121,8 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	 * of the underlying formation and strategy. Two equal encounters will return the same hash code value.
 	 * @return a hash code value for this encounter
 	 * @see #equals(Object)
-	 * @see BattleFormation#hashCode()
-	 * @see BattleStrategy#hashCode()
+	 * @see Formation#hashCode()
+	 * @see Strategy#hashCode()
 	 */
 	@Override
 	public int hashCode() {
@@ -136,8 +138,8 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	 * their underlying formation and strategy are equal.
 	 * @return <code>true</code> if the other object is an encounter equal to this one, else <code>false</code>
 	 * @see #hashCode()
-	 * @see BattleFormation#equals(Object)
-	 * @see BattleStrategy#equals(Object)
+	 * @see Formation#equals(Object)
+	 * @see Strategy#equals(Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -147,7 +149,7 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BattleEncounter other = (BattleEncounter) obj;
+		Encounter other = (Encounter) obj;
 		if (formation == null) {
 			if (other.formation != null)
 				return false;
@@ -164,12 +166,12 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	/**
 	 * Returns a deep clone of this encounter.
 	 * @return a deep clone of this encounter
-	 * @see BattleFormation#clone()
-	 * @see BattleStrategy#clone()
+	 * @see Formation#clone()
+	 * @see Strategy#clone()
 	 */
 	@Override
 	public Object clone() {
-		return new BattleEncounter((BattleFormation)formation.clone(), (BattleStrategy)strategy.clone());
+		return new Encounter((Formation)formation.clone(), (Strategy)strategy.clone());
 	}
 	
 	/**
@@ -214,15 +216,15 @@ public class BattleEncounter implements Cloneable, ChallengeRatable {
 	 * The format is "<code>formation{@value #FIELD_SEPARATOR}strategy</code>".
 	 * @param s the string to parse
 	 * @return a battle encounter matching the string
-	 * @see BattleFormation#parse(String)
-	 * @see BattleStrategy#parse(String)
+	 * @see Formation#parse(String)
+	 * @see Strategy#parse(String)
 	 */
-	public static BattleEncounter parse(String s) {
+	public static Encounter parse(String s) {
 		Utilities.requireNonNull(s, "s");
 		String[] split = s.split(FIELD_SEPARATOR_REGEX);
 		if (split.length != 2)
 			throw new IllegalNumberOfArgumentsException("s must consist of a BattleFormation and a BattleStrategy separated by "+FIELD_SEPARATOR+"!");
-		return new BattleEncounter(BattleFormation.parse(split[0]), BattleStrategy.parse(split[1]));
+		return new Encounter(Formation.parse(split[0]), Strategy.parse(split[1]));
 	}
 	
 }

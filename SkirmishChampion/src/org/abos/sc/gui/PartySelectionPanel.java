@@ -20,10 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.abos.sc.core.BattleFormation;
 import org.abos.sc.core.ChallengeRatable;
 import org.abos.sc.core.Character;
 import org.abos.sc.core.Companion;
+import org.abos.sc.core.battle.Formation;
 import org.abos.util.Name;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
@@ -36,7 +36,7 @@ import org.abos.util.gui.GBCBuilder;
  */
 public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	
-	protected BattleFormation formation;
+	protected Formation formation;
 	
 	protected Comparator<Companion> comparator = null;
 	
@@ -69,11 +69,11 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 		this(companionPool, true);
 	}
 	
-	public BattleFormation getFormation() {
+	public Formation getFormation() {
 		return formation;
 	}
 	
-	public void setFormation(BattleFormation formation) {
+	public void setFormation(Formation formation) {
 		this.formation = formation;
 		resetFormation();
 	}
@@ -82,8 +82,8 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 		if (this.comparator == comparator)
 			return;
 		this.comparator = comparator;
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				positionSelector[row][col].setComparator(comparator, positionCheckBox[row][col].isSelected());
 			}
 	}
@@ -101,8 +101,8 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	public void setCompanionPool(Registry<Companion> companionPool) {
 		Utilities.requireNonNull(companionPool, "companionPool");
 		this.companionPool = companionPool;
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				positionSelector[row][col].setContent(companionPool);
 			}
 		refreshSelectors();
@@ -127,14 +127,14 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	}
 	
 	public void deselectAll() {
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
 					positionCheckBox[row][col].setSelected(false);
 	}
 	
 	public void deselectAlmostAll() {
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				if (row == 0 && col == 0)
 					positionCheckBox[row][col].setSelected(true);
 				else
@@ -148,8 +148,8 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	 */
 	public void resetFormation() {
 		Character currentCharacter = null;
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				currentCharacter = formation.getCharacter(row, col);
 				if (currentCharacter == null) {
 					positionCheckBox[row][col].setSelected(false);
@@ -171,15 +171,15 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	 */
 	public boolean validateFormation() {
 		boolean anySelected = false;
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
 				anySelected |= positionCheckBox[row][col].isSelected();
 		if (!anySelected)
 			return false;
-		Set<Character> selectedChars = new HashSet<>(BattleFormation.MAX_CHAR_NUMBER+1,1f);
+		Set<Character> selectedChars = new HashSet<>(Formation.MAX_CHAR_NUMBER+1,1f);
 		Character currentChar = null;
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				if (positionCheckBox[row][col].isSelected()) {
 					currentChar = (Character)positionSelector[row][col].getSelectedItem();
 					if (selectedChars.contains(currentChar))
@@ -199,19 +199,19 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	 * @see #validateFormation()
 	 */
 	public void acceptFormation() {
-		Character[][] characters = new Character[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		Character[][] characters = new Character[Formation.ROW_NUMBER][Formation.COL_NUMBER];
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				if (positionCheckBox[row][col].isSelected())
 					characters[row][col] = (Character)((Character)positionSelector[row][col].getSelectedItem()).clone();
 			}
-		formation = new BattleFormation(characters);
+		formation = new Formation(characters);
 	}
 	
 	public void refreshSelectors() {
 		Companion companion = null;
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				companion = (Companion)positionSelector[row][col].getSelectedItem();
 				positionSelector[row][col].refreshContent(true);
 			}
@@ -225,8 +225,8 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	@Override
 	public int getChallengeRating() {
 		int sum = 0;
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
 				if (positionCheckBox[row][col].isSelected())
 					sum += ((Character)positionSelector[row][col].getSelectedItem()).getChallengeRating();
 		return sum;
@@ -242,10 +242,10 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 	}
 	
 	private void initComponents() {
-		positionCheckBox = new JCheckBox[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
-		positionSelector = new ContentComboBox[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		positionCheckBox = new JCheckBox[Formation.ROW_NUMBER][Formation.COL_NUMBER];
+		positionSelector = new ContentComboBox[Formation.ROW_NUMBER][Formation.COL_NUMBER];
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				positionCheckBox[row][col] = new JCheckBox(String.format("Position (%d,%d) ",row,col), row == 0 && col == 0);
 				// enable toggle selection with right mouse click just like for the combobox
 				positionCheckBox[row][col].addMouseListener(new MouseAdapter() {
@@ -270,8 +270,8 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 							((JComponent)e.getSource()).setToolTipText(((Companion)e.getItem()).toHintString());
 							// check the appropiate checkbox
 							if (((JComboBox)e.getSource()).isPopupVisible())
-								for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-									for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+								for (int row = 0; row < Formation.ROW_NUMBER; row++)
+									for (int col = 0; col < Formation.COL_NUMBER; col++)
 										if (e.getSource() == positionSelector[row][col])
 											positionCheckBox[row][col].setSelected(true);
 							refreshChallengeRating();
@@ -281,8 +281,8 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 				// also enable toggle selection with right mouse click
 				positionSelector[row][col].addMouseListener(new MouseAdapter() {
 					@Override public void mouseClicked(MouseEvent e) {
-						for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-							for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+						for (int row = 0; row < Formation.ROW_NUMBER; row++)
+							for (int col = 0; col < Formation.COL_NUMBER; col++)
 								if (e.getSource() == positionSelector[row][col]) {
 									if (e.getButton() == MouseEvent.BUTTON3)
 										positionCheckBox[row][col].setSelected(!positionCheckBox[row][col].isSelected());
@@ -304,29 +304,29 @@ public class PartySelectionPanel extends JPanel implements ChallengeRatable {
 		GBCBuilder checkBoxBuilder = new GBCBuilder().
 				anchorDefault(GridBagConstraints.LINE_START).reset();
 		GBCBuilder selectorBuilder = new GBCBuilder().
-				anchorDefault(GridBagConstraints.LINE_START).weightxDefault(1d/BattleFormation.ROW_NUMBER).fillDefault(GridBagConstraints.HORIZONTAL).reset();
+				anchorDefault(GridBagConstraints.LINE_START).weightxDefault(1d/Formation.ROW_NUMBER).fillDefault(GridBagConstraints.HORIZONTAL).reset();
 		if (facesLineEnd) {
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
-				for (int row = BattleFormation.ROW_NUMBER - 1; row >= 0; row--) {
-					add(positionCheckBox[row][col], checkBoxBuilder.gridx(2*(BattleFormation.ROW_NUMBER-1-row)).gridy(col).get());
-					add(positionSelector[row][col], selectorBuilder.gridx(2*(BattleFormation.ROW_NUMBER-1-row)+1).gridy(col).get());
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
+				for (int row = Formation.ROW_NUMBER - 1; row >= 0; row--) {
+					add(positionCheckBox[row][col], checkBoxBuilder.gridx(2*(Formation.ROW_NUMBER-1-row)).gridy(col).get());
+					add(positionSelector[row][col], selectorBuilder.gridx(2*(Formation.ROW_NUMBER-1-row)+1).gridy(col).get());
 				}
 		}
 		else {
-			for (int col = BattleFormation.COL_NUMBER - 1; col >= 0; col--)
-				for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
+			for (int col = Formation.COL_NUMBER - 1; col >= 0; col--)
+				for (int row = 0; row < Formation.ROW_NUMBER; row++) {
 					add(positionCheckBox[row][col], checkBoxBuilder.gridx(2*row+1).gridy(col).get());
 					add(positionSelector[row][col], selectorBuilder.gridx(2*row).gridy(col).get());
 				}
 		}
-		GBCBuilder crBuilder =  new GBCBuilder().gridyDefault(BattleFormation.COL_NUMBER+1).gridwidthDefault(BattleFormation.ROW_NUMBER).reset();
+		GBCBuilder crBuilder =  new GBCBuilder().gridyDefault(Formation.COL_NUMBER+1).gridwidthDefault(Formation.ROW_NUMBER).reset();
 		add(challengeRatingTextLabel, crBuilder.anchor(GridBagConstraints.EAST).get());
 		add(challengeRatingValueLabel, crBuilder.anchor(GridBagConstraints.WEST).
-				gridx(BattleFormation.ROW_NUMBER).insets(new Insets(0, 3, 0, 0)).get());
+				gridx(Formation.ROW_NUMBER).insets(new Insets(0, 3, 0, 0)).get());
 		// positionCheckBox[0][0].requestFocusInWindow();
 		setPreferredSize(new Dimension(
-				2*BattleFormation.ROW_NUMBER*ContentComboBox.PREFERRED_WIDTH, 
-				(BattleFormation.COL_NUMBER+1)*ContentComboBox.PREFERRED_HEIGHT));
+				2*Formation.ROW_NUMBER*ContentComboBox.PREFERRED_WIDTH, 
+				(Formation.COL_NUMBER+1)*ContentComboBox.PREFERRED_HEIGHT));
 	}
 	
 	

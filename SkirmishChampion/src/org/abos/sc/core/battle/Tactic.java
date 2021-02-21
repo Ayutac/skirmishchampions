@@ -1,4 +1,4 @@
-package org.abos.sc.core;
+package org.abos.sc.core.battle;
 
 import java.util.Arrays;
 
@@ -14,7 +14,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class BattleTactic implements Cloneable {
+public class Tactic implements Cloneable {
 	/*
 	 * Note that this class does NOT implement Iterable<Integer>.
 	 * This is a design choice given that future changes to this class
@@ -42,8 +42,8 @@ public class BattleTactic implements Cloneable {
 	 * Note that this constitutes an invalid battle tactic and needs
 	 * to change to a valid one.
 	 */
-	private BattleTactic() {
-		attackOrder = new int[BattleFormation.MAX_CHAR_NUMBER];
+	private Tactic() {
+		attackOrder = new int[Formation.MAX_CHAR_NUMBER];
 	}
 	
 	/**
@@ -51,12 +51,12 @@ public class BattleTactic implements Cloneable {
 	 * @param col the column of the attacker
 	 * @return
 	 */
-	public static BattleTactic createRowAssault(int col) {
-		int[] alteratingCols = Utilities.createAlteratingLowerFirst(col,BattleFormation.COL_NUMBER);
-		BattleTactic tactic = new BattleTactic();
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
+	public static Tactic createRowAssault(int col) {
+		int[] alteratingCols = Utilities.createAlteratingLowerFirst(col,Formation.COL_NUMBER);
+		Tactic tactic = new Tactic();
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
 			for (int i = 0; i  < alteratingCols.length; i++)
-				tactic.attackOrder[row*BattleFormation.COL_NUMBER+i] = row*BattleFormation.COL_NUMBER+alteratingCols[i];
+				tactic.attackOrder[row*Formation.COL_NUMBER+i] = row*Formation.COL_NUMBER+alteratingCols[i];
 		return tactic;
 	}
 	
@@ -65,33 +65,33 @@ public class BattleTactic implements Cloneable {
 	 * @param col the column of the attacker
 	 * @return
 	 */
-	public static BattleTactic createColAssault(int col) {
-		int[] alteratingCols = Utilities.createAlteratingLowerFirst(col,BattleFormation.COL_NUMBER);
-		BattleTactic tactic = new BattleTactic();
+	public static Tactic createColAssault(int col) {
+		int[] alteratingCols = Utilities.createAlteratingLowerFirst(col,Formation.COL_NUMBER);
+		Tactic tactic = new Tactic();
 		for (int i = 0; i < alteratingCols.length; i++)
-			for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-				tactic.attackOrder[i*BattleFormation.ROW_NUMBER+row] = row*BattleFormation.COL_NUMBER+alteratingCols[i];
+			for (int row = 0; row < Formation.ROW_NUMBER; row++)
+				tactic.attackOrder[i*Formation.ROW_NUMBER+row] = row*Formation.COL_NUMBER+alteratingCols[i];
 		return tactic;
 	}
 	
-	public static BattleTactic createConcentratedAssault() {
-		BattleTactic tactic = new BattleTactic();
-		for (int i = 0; i  < BattleFormation.MAX_CHAR_NUMBER; i++)
+	public static Tactic createConcentratedAssault() {
+		Tactic tactic = new Tactic();
+		for (int i = 0; i  < Formation.MAX_CHAR_NUMBER; i++)
 			tactic.attackOrder[i] = i;
 		return tactic;
 	}
 
-	public BattleTactic(int[] attackOrder) {
+	public Tactic(int[] attackOrder) {
 		Utilities.requireNonNull(attackOrder, "attackOrder");
-		if (attackOrder.length != BattleFormation.MAX_CHAR_NUMBER)
-			throw new IllegalArgumentException("Number of targets is "+attackOrder.length+" instead of maximum "+BattleFormation.MAX_CHAR_NUMBER+"!");
+		if (attackOrder.length != Formation.MAX_CHAR_NUMBER)
+			throw new IllegalArgumentException("Number of targets is "+attackOrder.length+" instead of maximum "+Formation.MAX_CHAR_NUMBER+"!");
 		if (!Utilities.checkPermutation(attackOrder))
 			throw new IllegalArgumentException("attackOrder doesn't constitutes a permutation!");
 		
 		this.attackOrder = Arrays.copyOf(attackOrder, attackOrder.length);
 	}
 	
-	public BattleTactic(BattleTactic tactic) {
+	public Tactic(Tactic tactic) {
 		Utilities.requireNonNull(tactic, "tactic");
 		attackOrder = Arrays.copyOf(tactic.attackOrder, tactic.attackOrder.length);
 	}
@@ -101,11 +101,11 @@ public class BattleTactic implements Cloneable {
 	}
 	
 	public int getCurrentTargetRow() {
-		return attackOrder[currentIndex] / BattleFormation.COL_NUMBER; // throws AIOOBE
+		return attackOrder[currentIndex] / Formation.COL_NUMBER; // throws AIOOBE
 	}
 	
 	public int getCurrentTargetCol() {
-		return attackOrder[currentIndex] % BattleFormation.COL_NUMBER; // throws AIOOBE
+		return attackOrder[currentIndex] % Formation.COL_NUMBER; // throws AIOOBE
 	}
 	
 	public boolean hasTarget() {
@@ -130,7 +130,7 @@ public class BattleTactic implements Cloneable {
 	
 	@Override
 	public Object clone() {
-		return new BattleTactic(this);
+		return new Tactic(this);
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class BattleTactic implements Cloneable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BattleTactic other = (BattleTactic) obj;
+		Tactic other = (Tactic) obj;
 		if (!Arrays.equals(attackOrder, other.attackOrder))
 			return false;
 		if (currentIndex != other.currentIndex)
@@ -179,25 +179,25 @@ public class BattleTactic implements Cloneable {
 
 	/**
 	 * Parses a string representation of a battle tactic into a proper tactic.
-	 * The tactic is given by a list of exactly {@link BattleFormation#MAX_CHAR_NUMBER} 
-	 * positions being a permutation of 1 to {@link BattleFormation#MAX_CHAR_NUMBER}, 
+	 * The tactic is given by a list of exactly {@link Formation#MAX_CHAR_NUMBER} 
+	 * positions being a permutation of 1 to {@link Formation#MAX_CHAR_NUMBER}, 
 	 * separated by the {@value #INDEX_SEPARATOR} character without additional whitespaces. 
 	 * A {@link ParseException} will be thrown if the string cannot be parsed correctly.
 	 * @param s the string to parse
 	 * @return a battle tactic matching the string
 	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
-	 * @throws IllegalNumberOfArgumentsException If the number of positions isn't {@link BattleFormation#MAX_CHAR_NUMBER}.
+	 * @throws IllegalNumberOfArgumentsException If the number of positions isn't {@link Formation#MAX_CHAR_NUMBER}.
 	 * @throws IllegalArgumentTypeException If any position isn't a number.
-	 * @throws IllegalArgumentRangeException If the {@link BattleFormation#MAX_CHAR_NUMBER} numeric positions
-	 * don't constitute a permutation of the numbers from 1 to {@link BattleFormation#MAX_CHAR_NUMBER}.
+	 * @throws IllegalArgumentRangeException If the {@link Formation#MAX_CHAR_NUMBER} numeric positions
+	 * don't constitute a permutation of the numbers from 1 to {@link Formation#MAX_CHAR_NUMBER}.
 	 */
-	public static BattleTactic parse(String s) {
+	public static Tactic parse(String s) {
 		Utilities.requireNonNull(s, "s");
 		String[] split = s.split(String.valueOf(INDEX_SEPARATOR));
-		if (split.length != BattleFormation.MAX_CHAR_NUMBER)
-			throw new IllegalNumberOfArgumentsException("Number of targets is "+split.length+" instead of maximum "+BattleFormation.MAX_CHAR_NUMBER+"!");
+		if (split.length != Formation.MAX_CHAR_NUMBER)
+			throw new IllegalNumberOfArgumentsException("Number of targets is "+split.length+" instead of maximum "+Formation.MAX_CHAR_NUMBER+"!");
 		try {
-			return new BattleTactic(Utilities.arrayToInt(split));
+			return new Tactic(Utilities.arrayToInt(split));
 		}
 		catch (NumberFormatException ex) {
 			throw new IllegalArgumentTypeException(ex);

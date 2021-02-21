@@ -8,13 +8,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
-import org.abos.sc.core.BattleEncounter;
-import org.abos.sc.core.BattleFormation;
-import org.abos.sc.core.BattleStrategy;
 import org.abos.sc.core.Character;
 import org.abos.sc.core.CharacterBase;
 import org.abos.sc.core.StatsPrimary;
 import org.abos.sc.core.StatsSecondary;
+import org.abos.sc.core.battle.Encounter;
+import org.abos.sc.core.battle.Formation;
+import org.abos.sc.core.battle.Strategy;
 import org.abos.util.Utilities;
 import org.junit.jupiter.api.Test;
 
@@ -39,10 +39,10 @@ public class StageBattleFrameTest {
 //		BattleEncounter computer = new BattleEncounter(computerForm, computerStrat);
 		System.out.println(new JTextArea().getFont());
 		System.out.println(new JLabel().getFont());
-		Character[][] silverRanks = new Character[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
+		Character[][] silverRanks = new Character[Formation.ROW_NUMBER][Formation.COL_NUMBER];
 		int count = 0;
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) {
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		for (int row = 0; row < Formation.ROW_NUMBER; row++) {
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				silverRanks[row][col] = new Character(new CharacterBase("twi_erin", "Silver "+count, "TWI", new String[] {"Inn"}, 
 						new int[] {80,60,40,40,10,60,80,40}, StatsPrimary.STRENGTH, StatsSecondary.CONSTITUTION, false));
 				if (++count >= 5)
@@ -54,12 +54,12 @@ public class StageBattleFrameTest {
 		}
 		Character gold = new Character(new CharacterBase("twi_erin", "Gold", "TWI", new String[] {"Inn"}, 
 		new int[] {300,300,40,40,10,60,80,80}, StatsPrimary.STRENGTH, StatsSecondary.CONSTITUTION, false));
-		BattleFormation playerForm = new BattleFormation(new Character[][] {{gold, null, null}, {null, null, null}});
-		BattleStrategy playerStrat = BattleStrategy.createConcentratedAssault();
-		BattleEncounter player = new BattleEncounter(playerForm, playerStrat);
-		BattleFormation computerForm = new BattleFormation(silverRanks);
-		BattleStrategy computerStrat = BattleStrategy.createConcentratedAssault();
-		BattleEncounter computer = new BattleEncounter(computerForm, computerStrat);
+		Formation playerForm = new Formation(new Character[][] {{gold, null, null}, {null, null, null}});
+		Strategy playerStrat = Strategy.createConcentratedAssault();
+		Encounter player = new Encounter(playerForm, playerStrat);
+		Formation computerForm = new Formation(silverRanks);
+		Strategy computerStrat = Strategy.createConcentratedAssault();
+		Encounter computer = new Encounter(computerForm, computerStrat);
 		
 		StageBattleFrame frame = new StageBattleFrame();
 		frame.stageLabel.setText("Test Battle");

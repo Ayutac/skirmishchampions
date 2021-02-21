@@ -1,9 +1,10 @@
-package org.abos.sc.core;
+package org.abos.sc.core.battle;
 
 import java.util.Timer;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
+import org.abos.sc.core.Difficulty;
 import org.abos.util.Utilities;
 
 /**
@@ -11,7 +12,7 @@ import org.abos.util.Utilities;
  * @author Sebastian Koch
  * @version %I%
  * @since 0.1
- * @see #Battle(BattleEncounter, BattleEncounter, Handler)
+ * @see #Battle(Encounter, Encounter, Handler)
  * @see #run()
  */
 public class Battle extends Timer implements Runnable {
@@ -26,13 +27,13 @@ public class Battle extends Timer implements Runnable {
 	 * First party, usually the player's.
 	 * @see #party2
 	 */
-	protected BattleEncounter party1;
+	protected Encounter party1;
 	
 	/**
 	 * Second party, usually the computer's.
 	 * @see #party1
 	 */
-	protected BattleEncounter party2;
+	protected Encounter party2;
 	
 	/**
 	 * The difficulty for this battle.
@@ -47,7 +48,7 @@ public class Battle extends Timer implements Runnable {
 	/**
 	 * The primary handler for the logger. The handler is saved internally so it
 	 * can be removed once the battle is over.
-	 * @see #Battle(BattleEncounter, BattleEncounter, Handler)
+	 * @see #Battle(Encounter, Encounter, Handler)
 	 * @see #waitForEnd()
 	 */
 	protected Handler battleHandler;
@@ -62,7 +63,7 @@ public class Battle extends Timer implements Runnable {
 	 * @throws NullPointerException If <code>party1</code>, <code>party2</code> or <code>difficulty</code> refers to <code>null</code>.
 	 * @see #run()
 	 */
-	public Battle(BattleEncounter party1, BattleEncounter party2, Difficulty difficulty, Handler battleHandler) {
+	public Battle(Encounter party1, Encounter party2, Difficulty difficulty, Handler battleHandler) {
 		super(true); // run as daemon
 		Utilities.requireNonNull(party1, "party1");
 		Utilities.requireNonNull(party2, "party2");
@@ -87,13 +88,13 @@ public class Battle extends Timer implements Runnable {
 	 */
 	@Override
 	public void run() {
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
 				if (party1.getCharacter(row, col) != null)
 					scheduleAtFixedRate(new AttackTask(party1.getCharacter(row, col), party1.getTactic(row, col), party2.getFormation(), this, battleLogger, difficulty, true), 
 							party1.getCharacter(row, col).getAttackSpeed(), party1.getCharacter(row, col).getAttackSpeed());
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
 				if (party2.getCharacter(row, col) != null)
 					scheduleAtFixedRate(new AttackTask(party2.getCharacter(row, col), party2.getTactic(row, col), party1.getFormation(), this, battleLogger, difficulty, false), 
 							party2.getCharacter(row, col).getAttackSpeed(), party2.getCharacter(row, col).getAttackSpeed());
@@ -199,8 +200,8 @@ public class Battle extends Timer implements Runnable {
 	
 	/**
 	 * Restores the formations and resets the strategies.
-	 * @see BattleFormation#restoreAll()
-	 * @see BattleStrategy#reset()
+	 * @see Formation#restoreAll()
+	 * @see Strategy#reset()
 	 */
 	public void restoreCombatants() {
 		party1.getFormation().restoreAll();

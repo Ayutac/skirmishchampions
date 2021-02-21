@@ -1,9 +1,12 @@
-package org.abos.sc.core;
+package org.abos.sc.core.battle;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.abos.sc.core.ChallengeRatable;
+import org.abos.sc.core.Character;
+import org.abos.sc.core.CharacterBase;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.ParseException;
 import org.abos.util.ParsedIdNotFoundException;
@@ -19,7 +22,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class BattleFormation implements Iterable<Character>, Cloneable, ChallengeRatable {
+public class Formation implements Iterable<Character>, Cloneable, ChallengeRatable {
 	
 	/**
 	 * The maximum number of rows in formations.
@@ -53,7 +56,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable, Challeng
 	protected class BattleFormationIterator implements Iterator<Character> {
 		
 		/**
-		 * The current postion of the iterator. Modulo {@link BattleFormation#COL_NUMBER} is the column,
+		 * The current postion of the iterator. Modulo {@link Formation#COL_NUMBER} is the column,
 		 * divided by it is the row.
 		 */
 		protected int pos = 0;
@@ -106,7 +109,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable, Challeng
 	 * @throws NullPointerException If <code>characters</code> or any of its one-dimensional subarrays refers to <code>null</code>.
 	 * @throws IllegalArgumentException If <code>characters</code> isn't rectangular or contains no non <code>null</code> character.
 	 */
-	public BattleFormation(Character[][] characters) {
+	public Formation(Character[][] characters) {
 		Utilities.requireNonNull(characters, "characters");
 		if (characters.length != ROW_NUMBER)
 			throw new IllegalArgumentException("characters must be a rectangular array!");
@@ -237,7 +240,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable, Challeng
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BattleFormation other = (BattleFormation) obj;
+		Formation other = (Formation) obj;
 		if (!Arrays.deepEquals(characters, other.characters))
 			return false;
 		return true;
@@ -255,7 +258,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable, Challeng
 			for (int col = 0; col < COL_NUMBER; col++)
 				if (characters[row][col] != null)
 					clonedChars[row][col] = (Character)characters[row][col].clone();
-		return new BattleFormation(clonedChars);
+		return new Formation(clonedChars);
 	}
 	
 	/**
@@ -347,7 +350,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable, Challeng
 	 * @throws IllegalArgumentException If no character is given or all characters refer to <code>null</code>.
 	 * @see #BattleFormation(Character[][])
 	 */
-	public static BattleFormation createFormation(Character... characters) {
+	public static Formation createFormation(Character... characters) {
 		Utilities.requireNonNull(characters, "characters");
 		if (characters.length == 0)
 			throw new IllegalArgumentException("At least one character must be given!");
@@ -362,7 +365,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable, Challeng
 			if (index >= characters.length)
 				break;
 		}
-		return new BattleFormation(chars); // throws IAE if all characters are null
+		return new Formation(chars); // throws IAE if all characters are null
 	}
 	
 	/**
@@ -377,7 +380,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable, Challeng
 	 * @throws IllegalNumberOfArgumentsException If there are more than {@value #MAX_CHAR_NUMBER} characters supplied or none at all.
 	 * @throws ParsedIdNotFoundException If a character ID supplied by the string isn't found in {@link CharacterBase#CHARACTERS}.
 	 */
-	public static BattleFormation parse(String s) {
+	public static Formation parse(String s) {
 		Utilities.requireNonNull(s, "s");
 		Character[][] characters = new Character[ROW_NUMBER][COL_NUMBER];
 		String[] split = s.split(String.valueOf(CHARACTER_SEPARATOR));
@@ -398,7 +401,7 @@ public class BattleFormation implements Iterable<Character>, Cloneable, Challeng
 				index++;
 			}
 		try {
-			return new BattleFormation(characters);
+			return new Formation(characters);
 		}
 		catch (IllegalArgumentException ex) {
 			throw new IllegalNumberOfArgumentsException("At least one character must be specified!");

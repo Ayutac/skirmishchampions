@@ -22,13 +22,13 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.text.DefaultCaret;
 
-import org.abos.sc.core.Battle;
-import org.abos.sc.core.BattleConclusion;
-import org.abos.sc.core.BattleEncounter;
 import org.abos.sc.core.ChallengeRatable;
 import org.abos.sc.core.Difficulty;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.Stage;
+import org.abos.sc.core.battle.Battle;
+import org.abos.sc.core.battle.Conclusion;
+import org.abos.sc.core.battle.Encounter;
 import org.abos.util.gui.GUIUtilities;
 import org.abos.util.gui.TextAreaHandler;
 
@@ -47,7 +47,7 @@ public class StageBattleFrame extends JFrame {
 	
 	protected Battle battle = null;
 	
-	protected Comparator<BattleEncounter> crComparator = ChallengeRatable.createCRComparator();
+	protected Comparator<Encounter> crComparator = ChallengeRatable.createCRComparator();
 	
 	protected Runnable afterHiding = null;
 	
@@ -109,12 +109,12 @@ public class StageBattleFrame extends JFrame {
 			stageLabel.setText(stage.getName());
 	}
 	
-	public void setFirstParty(BattleEncounter encounter) {
+	public void setFirstParty(Encounter encounter) {
 		if (battle == null)
 			this.firstParty.setEncounter(encounter);
 	}
 	
-	public void setSecondParty(BattleEncounter encounter) {
+	public void setSecondParty(Encounter encounter) {
 		if (battle == null)
 			this.secondParty.setEncounter(encounter);
 	}
@@ -125,8 +125,8 @@ public class StageBattleFrame extends JFrame {
 	}
 	
 	public void commenceBattle() {
-		BattleEncounter be1 = firstParty.getEncounter();
-		BattleEncounter be2 = secondParty.getEncounter();
+		Encounter be1 = firstParty.getEncounter();
+		Encounter be2 = secondParty.getEncounter();
 		// valid encounters required, as well as no battle going on
 		if (be1 == null || be2 == null || battle != null)
 			return;
@@ -165,11 +165,11 @@ public class StageBattleFrame extends JFrame {
 	public void acknowledgeBattleResult() {
 		StringBuilder message = new StringBuilder();
 		if (battle.party1Won()) {
-			stage.acknowledgeBattleResult(message, BattleConclusion.WON, player);
+			stage.acknowledgeBattleResult(message, Conclusion.WON, player);
 			JOptionPane.showMessageDialog(this, message.toString(), "You won!", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else { // not having won is interpreted as a loss, even for ties
-			stage.acknowledgeBattleResult(message, BattleConclusion.LOST, player);
+			stage.acknowledgeBattleResult(message, Conclusion.LOST, player);
 			JOptionPane.showMessageDialog(this, message.toString(), "You lost...", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}

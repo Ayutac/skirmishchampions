@@ -8,12 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.abos.sc.core.BattleEncounter;
-import org.abos.sc.core.BattleFormation;
-import org.abos.sc.core.BattleStrategy;
 import org.abos.sc.core.Difficulty;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.Stage;
+import org.abos.sc.core.battle.Encounter;
+import org.abos.sc.core.battle.Formation;
+import org.abos.sc.core.battle.Strategy;
 import org.abos.util.Utilities;
 import org.abos.util.gui.GUIUtilities;
 
@@ -140,7 +140,7 @@ public class StageSelectionFrame extends JFrame {
 		Stage stage = selectionPanel.getStage();
 		stageBattleFrame.setStage(stage);
 		stage.engageStage();
-		stageBattleFrame.setFirstParty(new BattleEncounter((BattleFormation)player.getParty().clone(), BattleStrategy.createConcentratedAssault()));
+		stageBattleFrame.setFirstParty(new Encounter((Formation)player.getParty().clone(), Strategy.createConcentratedAssault()));
 		stageBattleFrame.setSecondParty(stage.getEncounter());
 		showSubframe(stageBattleFrame);
 	}

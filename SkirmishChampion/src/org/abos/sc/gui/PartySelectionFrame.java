@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import org.abos.sc.core.BattleFormation;
 import org.abos.sc.core.Companion;
+import org.abos.sc.core.battle.Formation;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
 import org.abos.util.gui.GUIUtilities;
@@ -64,11 +64,11 @@ public class PartySelectionFrame extends JFrame {
 			setIconImages(GUIUtilities.LOGOS);
 	}
 	
-	public BattleFormation getFormation() {
+	public Formation getFormation() {
 		return selectionPanel.getFormation();
 	}
 	
-	public void setFormation(BattleFormation formation) {
+	public void setFormation(Formation formation) {
 		selectionPanel.setFormation(formation);
 	}
 	

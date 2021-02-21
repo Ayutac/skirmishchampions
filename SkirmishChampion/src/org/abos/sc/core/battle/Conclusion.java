@@ -1,4 +1,4 @@
-package org.abos.sc.core;
+package org.abos.sc.core.battle;
 
 /**
  * An enumeration for battle outcomes.
@@ -9,7 +9,7 @@ package org.abos.sc.core;
  * @see #LOST
  * @see #TIE
  */
-public enum BattleConclusion {
+public enum Conclusion {
 	
 	/**
 	 * Indicates that the battle was won.

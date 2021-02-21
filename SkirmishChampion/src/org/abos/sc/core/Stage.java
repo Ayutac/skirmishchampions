@@ -5,6 +5,9 @@ import java.time.temporal.TemporalUnit;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.abos.sc.core.battle.Conclusion;
+import org.abos.sc.core.battle.Encounter;
+import org.abos.sc.core.battle.Formation;
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.ParsedIdFoundException;
 import org.abos.util.ParsedIdNotFoundException;
@@ -23,7 +26,7 @@ public class Stage extends StageBase {
 	
 	protected boolean showChallengeRating;
 	
-	protected BattleEncounter encounter = null;
+	protected Encounter encounter = null;
 	
 	/**
 	 * 
@@ -62,13 +65,13 @@ public class Stage extends StageBase {
 	/**
 	 * @return the encounter
 	 */
-	public BattleEncounter getEncounter() {
+	public Encounter getEncounter() {
 		return encounter;
 	}
 	
 	@Override
-	public BattleEncounter createEncounter() {
-		BattleEncounter encounter = super.createEncounter();
+	public Encounter createEncounter() {
+		Encounter encounter = super.createEncounter();
 		return encounter;
 	}
 	
@@ -101,7 +104,7 @@ public class Stage extends StageBase {
 		encounter = null;
 	}
 	
-	public int rewardMoney(BattleConclusion conclusion) {
+	public int rewardMoney(Conclusion conclusion) {
 		Utilities.requireNonNull(conclusion, "conclusion");
 		if (encounter == null) 
 			throw new IllegalStateException("Encounter cannot be gone before the battle is resolved!");
@@ -117,15 +120,15 @@ public class Stage extends StageBase {
 		}
 	}
 	
-	public Companion[] rewardCompanions(BattleConclusion conclusion) {
+	public Companion[] rewardCompanions(Conclusion conclusion) {
 		Utilities.requireNonNull(conclusion, "conclusion");
 		if (encounter == null) 
 			throw new IllegalStateException("Encounter cannot be gone before the battle is resolved!");
-		if (conclusion == BattleConclusion.WON) {
+		if (conclusion == Conclusion.WON) {
 			Companion[] reward = new Companion[encounter.getSize()];
 			int i = 0;
-			for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-				for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+			for (int row = 0; row < Formation.ROW_NUMBER; row++)
+				for (int col = 0; col < Formation.COL_NUMBER; col++) {
 					if (encounter.getCharacter(row, col) != null) {
 						reward[i] = new Companion(encounter.getCharacter(row, col));
 						i++;
@@ -136,11 +139,11 @@ public class Stage extends StageBase {
 		return new Companion[0];
 	}
 	
-	public Stage[] rewardStages(BattleConclusion conclusion, boolean showChallengeRating) {
+	public Stage[] rewardStages(Conclusion conclusion, boolean showChallengeRating) {
 		Utilities.requireNonNull(conclusion, "conclusion");
 		if (encounter == null) 
 			throw new IllegalStateException("Encounter cannot be gone before the battle is resolved!");
-		if (conclusion == BattleConclusion.WON) {
+		if (conclusion == Conclusion.WON) {
 			Stage[] reward = new Stage[nextStages.length];
 			// FIXME if there are unkown stages as nextStages, the lookup will result in an NPE
 			// System.out.println(Arrays.toString(nextStages));
@@ -151,11 +154,11 @@ public class Stage extends StageBase {
 		return new Stage[0];
 	}
 	
-	public Region[] rewardRegions(BattleConclusion conclusion) {
+	public Region[] rewardRegions(Conclusion conclusion) {
 		Utilities.requireNonNull(conclusion, "conclusion");
 		if (encounter == null) 
 			throw new IllegalStateException("Encounter cannot be gone before the battle is resolved!");
-		if (conclusion == BattleConclusion.WON) {
+		if (conclusion == Conclusion.WON) {
 			Region[] reward = new Region[nextRegions.length];
 			for (int i = 0; i < reward.length; i++)
 				reward[i] = new Region(RegionBase.REGIONS.lookup(nextRegions[i]));
@@ -164,11 +167,11 @@ public class Stage extends StageBase {
 		return new Region[0];
 	}
 	
-	public Fandom[] rewardFandoms(BattleConclusion conclusion) {
+	public Fandom[] rewardFandoms(Conclusion conclusion) {
 		Utilities.requireNonNull(conclusion, "conclusion");
 		if (encounter == null) 
 			throw new IllegalStateException("Encounter cannot be gone before the battle is resolved!");
-		if (conclusion == BattleConclusion.WON) {
+		if (conclusion == Conclusion.WON) {
 			Fandom[] reward = new Fandom[nextFandoms.length];
 			for (int i = 0; i < reward.length; i++)
 				reward[i] = new Fandom(FandomBase.FANDOMS.lookup(nextFandoms[i]));
@@ -177,7 +180,7 @@ public class Stage extends StageBase {
 		return new Fandom[0];
 	}
 	
-	protected void acknowledgeMoneyChange(StringBuilder message, BattleConclusion conclusion, Player player) {
+	protected void acknowledgeMoneyChange(StringBuilder message, Conclusion conclusion, Player player) {
 		Utilities.requireNonNull(message, "message");
 		Utilities.requireNonNull(conclusion, "conclusion");
 		int extraGold = rewardMoney(conclusion);
@@ -197,7 +200,7 @@ public class Stage extends StageBase {
 		}
 	}
 	
-	protected void acknowledgeExtraPointChange(StringBuilder message, BattleConclusion conclusion, Player player) {
+	protected void acknowledgeExtraPointChange(StringBuilder message, Conclusion conclusion, Player player) {
 		Utilities.requireNonNull(message, "message");
 		Utilities.requireNonNull(conclusion, "conclusion");
 		if (player == null)
@@ -205,8 +208,8 @@ public class Stage extends StageBase {
 		// base amount is stage CR + difference of stage CR - party CR
 		int amount = Utilities.addWithoutOverflow(Utilities.multWithoutOverflow(2, getChallengeRating()), -player.getParty().getChallengeRating());
 		amount = Math.max(0, amount); // ensure nonnegative
-		if (conclusion != BattleConclusion.WON) { // if WON no division will happen
-			if (conclusion == BattleConclusion.TIE)
+		if (conclusion != Conclusion.WON) { // if WON no division will happen
+			if (conclusion == Conclusion.TIE)
 				amount /= 2;
 			else
 				amount /= 100; // unexpected cases will be interpreted as loss
@@ -220,7 +223,7 @@ public class Stage extends StageBase {
 		}
 	}
 	
-	protected void acknowledgeCompanionChange(StringBuilder message, BattleConclusion conclusion, Player player) {
+	protected void acknowledgeCompanionChange(StringBuilder message, Conclusion conclusion, Player player) {
 		Utilities.requireNonNull(message, "message");
 		Utilities.requireNonNull(conclusion, "conclusion");
 		Companion[] rewardCompanions = rewardCompanions(conclusion);
@@ -239,7 +242,7 @@ public class Stage extends StageBase {
 		}
 	}
 	
-	protected void acknowledgeStageChange(StringBuilder message, BattleConclusion conclusion, Player player) {
+	protected void acknowledgeStageChange(StringBuilder message, Conclusion conclusion, Player player) {
 		Utilities.requireNonNull(message, "message");
 		Utilities.requireNonNull(conclusion, "conclusion");
 		Stage[] rewardStages = rewardStages(conclusion, Difficulty.of(player).showChallengeRatings());
@@ -258,7 +261,7 @@ public class Stage extends StageBase {
 		}
 	}
 	
-	protected void acknowledgeRegionChange(StringBuilder message, BattleConclusion conclusion, Player player) {
+	protected void acknowledgeRegionChange(StringBuilder message, Conclusion conclusion, Player player) {
 		Utilities.requireNonNull(message, "message");
 		Utilities.requireNonNull(conclusion, "conclusion");
 		Region[] rewardRegions = rewardRegions(conclusion);
@@ -277,7 +280,7 @@ public class Stage extends StageBase {
 		}
 	}
 	
-	protected void acknowledgeFandomChange(StringBuilder message, BattleConclusion conclusion, Player player) {
+	protected void acknowledgeFandomChange(StringBuilder message, Conclusion conclusion, Player player) {
 		Utilities.requireNonNull(message, "message");
 		Utilities.requireNonNull(conclusion, "conclusion");
 		Fandom[] rewardFandoms = rewardFandoms(conclusion);
@@ -345,8 +348,8 @@ public class Stage extends StageBase {
 	 * Acknowledges the result of the battle by rewarding the player and building an
 	 * acknowledging string.
 	 */
-	public void acknowledgeBattleResult(StringBuilder message, BattleConclusion conclusion, Player player) {
-		if (conclusion == BattleConclusion.WON)
+	public void acknowledgeBattleResult(StringBuilder message, Conclusion conclusion, Player player) {
+		if (conclusion == Conclusion.WON)
 			message.append("You have won this battle!");
 		else // not having won is interpreted as a loss, even for ties
 			message.append("You have lost this battle...");
@@ -356,7 +359,7 @@ public class Stage extends StageBase {
 		acknowledgeStageChange(message, conclusion, player);
 		acknowledgeRegionChange(message, conclusion, player);
 		acknowledgeFandomChange(message, conclusion, player);
-		if (conclusion == BattleConclusion.WON)
+		if (conclusion == Conclusion.WON)
 			setCleared(true);
 		if (player != null) { // update and remember which ones have been cleared
 			player.updateRegionStages(false); 
@@ -371,7 +374,7 @@ public class Stage extends StageBase {
 	public Object clone() {
 		Stage clone = new Stage(this, cleared, showChallengeRating);
 		if (encounter != null)
-			clone.encounter = (BattleEncounter)encounter.clone();
+			clone.encounter = (Encounter)encounter.clone();
 		return clone;
 	}
 	

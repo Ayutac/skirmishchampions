@@ -1,9 +1,11 @@
-package org.abos.sc.core;
+package org.abos.sc.core.battle;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
+import org.abos.sc.core.Character;
+import org.abos.sc.core.Difficulty;
 import org.abos.util.Utilities;
 
 /**
@@ -24,12 +26,12 @@ public class AttackTask extends TimerTask {
 	/**
 	 * The tactic the character employs.
 	 */
-	protected BattleTactic tactic;
+	protected Tactic tactic;
 	
 	/**
 	 * The group of enemies to attack.
 	 */
-	protected BattleFormation enemies;
+	protected Formation enemies;
 	
 	/**
 	 * The associated timer to stop once this character runs out of targets/enemies.
@@ -59,7 +61,7 @@ public class AttackTask extends TimerTask {
 	 * @param difficulty the difficulty setting for this task
 	 * @throws NullPointerException If any parameter except <code>timer</code> refers to <code>null</code>.
 	 */
-	public AttackTask(Character character, BattleTactic tactic, BattleFormation enemies, Timer timer, Logger attackLogger, Difficulty difficulty, boolean challenger) {
+	public AttackTask(Character character, Tactic tactic, Formation enemies, Timer timer, Logger attackLogger, Difficulty difficulty, boolean challenger) {
 		Utilities.requireNonNull(character, "character");
 		Utilities.requireNonNull(tactic, "tactic");
 		Utilities.requireNonNull(enemies, "enemies");

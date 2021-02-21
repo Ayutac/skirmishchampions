@@ -1,4 +1,4 @@
-package org.abos.sc.core;
+package org.abos.sc.core.battle;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -14,15 +14,15 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
+public class Strategy implements Iterable<Tactic>, Cloneable {
 	
 	/**
 	 * The separator character for different tactics
-	 * Should differ from {@link BattleTactic#INDEX_SEPARATOR}.
+	 * Should differ from {@link Tactic#INDEX_SEPARATOR}.
 	 */
 	public static final char TACTIC_SEPARATOR = '/';
 	
-	protected class BattleStrategyIterator implements Iterator<BattleTactic> {
+	protected class BattleStrategyIterator implements Iterator<Tactic> {
 		
 		/**
 		 * The current row of the iterator.
@@ -36,10 +36,10 @@ public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
 		protected int col = 0;
 		
 		@Override
-		public BattleTactic next() {
+		public Tactic next() {
 			if (!hasNext())
 				throw new NoSuchElementException("No more tactics in this strategy!");
-			if (col == BattleFormation.COL_NUMBER) {
+			if (col == Formation.COL_NUMBER) {
 				col = 0;
 				row++;
 			}
@@ -48,50 +48,50 @@ public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
 		
 		@Override
 		public boolean hasNext() {
-			return row+1 < BattleFormation.ROW_NUMBER && col < BattleFormation.COL_NUMBER;
+			return row+1 < Formation.ROW_NUMBER && col < Formation.COL_NUMBER;
 		}
 	}
 	
 	/**
 	 * The type of the battle strategy.
-	 * @see BattleStrategyType
+	 * @see StrategyType
 	 */
-	protected final BattleStrategyType type;
+	protected final StrategyType type;
 
-	protected BattleTactic[][] battleTactics;
+	protected Tactic[][] battleTactics;
 	
-	protected BattleStrategy(BattleStrategyType type) {
+	protected Strategy(StrategyType type) {
 		if (type == null)
-			type = BattleStrategyType.CUSTOM;
-		battleTactics = new BattleTactic[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
+			type = StrategyType.CUSTOM;
+		battleTactics = new Tactic[Formation.ROW_NUMBER][Formation.COL_NUMBER];
 		this.type = type;
 	}
 	
-	public static BattleStrategy createRowAssault() {
-		BattleStrategy strategy = new BattleStrategy(BattleStrategyType.ROW);
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) 
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
-				strategy.battleTactics[row][col] = BattleTactic.createRowAssault(col);
+	public static Strategy createRowAssault() {
+		Strategy strategy = new Strategy(StrategyType.ROW);
+		for (int row = 0; row < Formation.ROW_NUMBER; row++) 
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
+				strategy.battleTactics[row][col] = Tactic.createRowAssault(col);
 		return strategy;
 	}
 	
-	public static BattleStrategy createColAssault() {
-		BattleStrategy strategy = new BattleStrategy(BattleStrategyType.COL);
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) 
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
-				strategy.battleTactics[row][col] = BattleTactic.createColAssault(col);
+	public static Strategy createColAssault() {
+		Strategy strategy = new Strategy(StrategyType.COL);
+		for (int row = 0; row < Formation.ROW_NUMBER; row++) 
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
+				strategy.battleTactics[row][col] = Tactic.createColAssault(col);
 		return strategy;
 	}
 	
-	public static BattleStrategy createConcentratedAssault() {
-		BattleStrategy strategy = new BattleStrategy(BattleStrategyType.CONCENTRATED);
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) 
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
-				strategy.battleTactics[row][col] = BattleTactic.createConcentratedAssault();
+	public static Strategy createConcentratedAssault() {
+		Strategy strategy = new Strategy(StrategyType.CONCENTRATED);
+		for (int row = 0; row < Formation.ROW_NUMBER; row++) 
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
+				strategy.battleTactics[row][col] = Tactic.createConcentratedAssault();
 		return strategy;
 	}
 	
-	public static BattleStrategy createStrategy(BattleStrategyType type) {
+	public static Strategy createStrategy(StrategyType type) {
 		if (type == null)
 			throw new NullPointerException("type must be specified!");
 		switch(type) {
@@ -103,25 +103,25 @@ public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
 		}
 	}
 	
-	public BattleStrategy(BattleTactic[][] battleTactics) {
+	public Strategy(Tactic[][] battleTactics) {
 		Utilities.requireNonNull(battleTactics, "battleTactics");
-		if (battleTactics.length != BattleFormation.ROW_NUMBER)
-			throw new IllegalArgumentException("Tactics must be given for all "+BattleFormation.ROW_NUMBER+" rows and not for "+battleTactics.length+"!");
-		if (battleTactics[0].length != BattleFormation.COL_NUMBER)
-			throw new IllegalArgumentException("Tactics must be given for all "+BattleFormation.COL_NUMBER+" columns and not for "+battleTactics[0].length+"!");
-		for (int i = 1; i < BattleFormation.ROW_NUMBER; i++)
+		if (battleTactics.length != Formation.ROW_NUMBER)
+			throw new IllegalArgumentException("Tactics must be given for all "+Formation.ROW_NUMBER+" rows and not for "+battleTactics.length+"!");
+		if (battleTactics[0].length != Formation.COL_NUMBER)
+			throw new IllegalArgumentException("Tactics must be given for all "+Formation.COL_NUMBER+" columns and not for "+battleTactics[0].length+"!");
+		for (int i = 1; i < Formation.ROW_NUMBER; i++)
 			if (battleTactics[i].length != battleTactics[0].length)
 				throw new IllegalArgumentException("Each column must have same number of tactics, but column "+i+" doesn't!");
 
-		type = BattleStrategyType.CUSTOM;
-		battleTactics = new BattleTactic[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++) 
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++)
-				this.battleTactics[row][col] = new BattleTactic(battleTactics[row][col]); // throws NPE
+		type = StrategyType.CUSTOM;
+		battleTactics = new Tactic[Formation.ROW_NUMBER][Formation.COL_NUMBER];
+		for (int row = 0; row < Formation.ROW_NUMBER; row++) 
+			for (int col = 0; col < Formation.COL_NUMBER; col++)
+				this.battleTactics[row][col] = new Tactic(battleTactics[row][col]); // throws NPE
 	}
 	
 	@Override
-	public Iterator<BattleTactic> iterator() {
+	public Iterator<Tactic> iterator() {
 		return new BattleStrategyIterator();
 	}
 	
@@ -132,12 +132,12 @@ public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
 	 * @return the tactic at the specified position, never <code>null</code>
 	 * @throws ArrayIndexOutOfBoundsException If <code>row</code> or <code>col</code> is out of bounds.
 	 */
-	public BattleTactic getTactic(int row, int col) {
+	public Tactic getTactic(int row, int col) {
 		return battleTactics[row][col];
 	}
 	
 	public void reset() {
-		for (BattleTactic tactic : this)
+		for (Tactic tactic : this)
 			tactic.reset();
 	}
 
@@ -163,7 +163,7 @@ public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BattleStrategy other = (BattleStrategy) obj;
+		Strategy other = (Strategy) obj;
 		if (!Arrays.deepEquals(battleTactics, other.battleTactics))
 			return false;
 		if (type != other.type)
@@ -173,17 +173,17 @@ public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
 	
 	@Override
 	public Object clone() {
-		if (!BattleStrategyType.CUSTOM.equals(type))
+		if (!StrategyType.CUSTOM.equals(type))
 			return createStrategy(type);
-		return new BattleStrategy(battleTactics);
+		return new Strategy(battleTactics);
 	}
 	
 	public void toSaveString(StringBuilder s) {
-		if (!type.equals(BattleStrategyType.CUSTOM)) {
+		if (!type.equals(StrategyType.CUSTOM)) {
 			s.append(type.name());
 			return;
 		}
-		Iterator<BattleTactic> it = iterator();
+		Iterator<Tactic> it = iterator();
 		it.next().toSaveString(s);
 		while(it.hasNext()) {
 			s.append(TACTIC_SEPARATOR);
@@ -192,7 +192,7 @@ public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
 	}
 
 	public String toSaveString() {
-		if (!type.equals(BattleStrategyType.CUSTOM))
+		if (!type.equals(StrategyType.CUSTOM))
 			return type.name();
 		StringBuilder s = new StringBuilder();
 		toSaveString(s);
@@ -204,26 +204,26 @@ public class BattleStrategy implements Iterable<BattleTactic>, Cloneable {
 		return "BattleStrategy [type=" + type + ", battleTactics=" + Arrays.deepToString(battleTactics) + "]";
 	}
 	
-	public static BattleStrategy parse(String s) {
+	public static Strategy parse(String s) {
 		Utilities.requireNonNull(s, "s");
 		if (s.isEmpty())
 			throw new ParsedIdNotFoundException("Unkown strategy identifier !");
 		if (!java.lang.Character.isDigit(s.charAt(0))) {
 			try {
-				return createStrategy(BattleStrategyType.valueOf(s)); // throws IAE
+				return createStrategy(StrategyType.valueOf(s)); // throws IAE
 			}
 			catch (IllegalArgumentException ex) {
 				throw new ParsedIdNotFoundException("Unkown strategy identifier "+s+"!", ex);
 			}
 		}
-		BattleTactic[][] tactics = new BattleTactic[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
+		Tactic[][] tactics = new Tactic[Formation.ROW_NUMBER][Formation.COL_NUMBER];
 		String[] split = s.split(String.valueOf(TACTIC_SEPARATOR));
-		if (split.length != BattleFormation.MAX_CHAR_NUMBER)
-			throw new IllegalNumberOfArgumentsException("Number of targets is "+split.length+" instead of maximum "+BattleFormation.MAX_CHAR_NUMBER+"!");
+		if (split.length != Formation.MAX_CHAR_NUMBER)
+			throw new IllegalNumberOfArgumentsException("Number of targets is "+split.length+" instead of maximum "+Formation.MAX_CHAR_NUMBER+"!");
 		for (int row = 0; row < tactics.length; row++)
 			for (int col = 0; col < tactics[0].length; col++)
-				tactics[row][col] = BattleTactic.parse(split[row*BattleFormation.COL_NUMBER+col]);
-		return new BattleStrategy(tactics);
+				tactics[row][col] = Tactic.parse(split[row*Formation.COL_NUMBER+col]);
+		return new Strategy(tactics);
 	}
 	
 }

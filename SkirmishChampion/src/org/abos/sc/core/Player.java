@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
 
+import org.abos.sc.core.battle.Conclusion;
+import org.abos.sc.core.battle.Formation;
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.ParseException;
@@ -34,7 +36,7 @@ public class Player {
 	protected Registry<Fandom> fandoms = new Registry<>();
 	
 	// make sure the formation is always made up of companions
-	protected BattleFormation party;
+	protected Formation party;
 	
 	protected int money = 0;
 	
@@ -60,7 +62,7 @@ public class Player {
 		this(difficulty, startFandom);
 		Utilities.requireNonNull(startCompanion, "startCompanion");
 		companions.add(startCompanion);
-		party = BattleFormation.createFormation(startCompanion);
+		party = Formation.createFormation(startCompanion);
 	}
 
 	public Player(Difficulty difficulty, FandomBase startFandom, Registry<? extends Companion> startCompanions) {
@@ -69,7 +71,7 @@ public class Player {
 		if (startCompanions.isEmpty())
 			throw new IllegalArgumentException("At least one start companion must be given!");
 		companions.addAll(startCompanions);
-		party = BattleFormation.createFormation(companions.iterator().next());
+		party = Formation.createFormation(companions.iterator().next());
 	}
 	
 	public boolean speedrunActive() {
@@ -124,17 +126,17 @@ public class Player {
 	/**
 	 * @return the party
 	 */
-	public BattleFormation getParty() {
+	public Formation getParty() {
 		return party;
 	}
 	
-	public void setParty(BattleFormation party) {
+	public void setParty(Formation party) {
 		Utilities.requireNonNull(party, "party");
-		Companion[][] partySelection = new Companion[BattleFormation.ROW_NUMBER][BattleFormation.COL_NUMBER];
+		Companion[][] partySelection = new Companion[Formation.ROW_NUMBER][Formation.COL_NUMBER];
 		Character currentChar = null;
 		Companion currentComp = null;
-		for (int row = 0; row < BattleFormation.ROW_NUMBER; row++)
-			for (int col = 0; col < BattleFormation.COL_NUMBER; col++) {
+		for (int row = 0; row < Formation.ROW_NUMBER; row++)
+			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				currentChar = party.getCharacter(row, col);
 				if (currentChar != null) {
 					currentComp = companions.lookup(currentChar.getId());
@@ -143,7 +145,7 @@ public class Player {
 					partySelection[row][col] = currentComp;
 				}
 			}
-		this.party = new BattleFormation(partySelection);
+		this.party = new Formation(partySelection);
 	}
 	
 	public void addExtraPointsToParty(int amount) {
@@ -309,7 +311,7 @@ public class Player {
 			}
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 8));
-			player.setParty(BattleFormation.parse(line));
+			player.setParty(Formation.parse(line));
 			
 			// make loaded save states illegal for speedruns
 			player.creationTime = null;
@@ -336,19 +338,19 @@ public class Player {
 		while (!uncheckedStages.isEmpty()) {
 			currentStage = uncheckedStages.iterator().next();
 			currentStage.engageStage();
-			for (Companion companion : currentStage.rewardCompanions(BattleConclusion.WON)) {
+			for (Companion companion : currentStage.rewardCompanions(Conclusion.WON)) {
 				if (!companions.containsId(companion.getId()))
 					companions.add(companion);
 			}
-			for (Fandom fandom : currentStage.rewardFandoms(BattleConclusion.WON)) {
+			for (Fandom fandom : currentStage.rewardFandoms(Conclusion.WON)) {
 				if (!fandoms.containsId(fandom.getId()))
 					fandoms.add(fandom);
 			}
-			for (Region region : currentStage.rewardRegions(BattleConclusion.WON)) {
+			for (Region region : currentStage.rewardRegions(Conclusion.WON)) {
 				if (!regions.containsId(region.getId()))
 					regions.add(region);
 			}
-			for (Stage stage : currentStage.rewardStages(BattleConclusion.WON, player.getDifficulty().showChallengeRatings())) {
+			for (Stage stage : currentStage.rewardStages(Conclusion.WON, player.getDifficulty().showChallengeRatings())) {
 				if (!uncheckedStages.containsId(stage.getId()) && !checkedStages.containsId(stage.getId()))
 					uncheckedStages.add(stage);
 			}
