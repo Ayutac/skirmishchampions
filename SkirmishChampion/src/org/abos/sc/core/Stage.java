@@ -185,10 +185,16 @@ public class Stage extends StageBase {
 			return;
 		player.addMoney(extraGold);
 		message.append(System.lineSeparator());
-		if (extraGold > 0)
-			message.append(String.format("You recieved %d gold!", extraGold));
-		else 
-			message.append(String.format("You lost %d gold...", Math.abs(extraGold)));
+		if (extraGold > 0) {
+			message.append("You recieved ");
+			message.append(extraGold);
+			message.append(" gold!");
+		}
+		else {
+			message.append("You lost ");
+			message.append(Math.abs(extraGold));
+			message.append(" gold...");
+		}
 	}
 	
 	protected void acknowledgeExtraPointChange(StringBuilder message, BattleConclusion conclusion, Player player) {
@@ -196,7 +202,22 @@ public class Stage extends StageBase {
 		Utilities.requireNonNull(conclusion, "conclusion");
 		if (player == null)
 			return;
-		player.addExtraPointsToParty(getChallengeRating());
+		// base amount is stage CR + difference of stage CR - party CR
+		int amount = Utilities.addWithoutOverflow(Utilities.multWithoutOverflow(2, getChallengeRating()), -player.getParty().getChallengeRating());
+		amount = Math.max(0, amount); // ensure nonnegative
+		if (conclusion != BattleConclusion.WON) { // if WON no division will happen
+			if (conclusion == BattleConclusion.TIE)
+				amount /= 2;
+			else
+				amount /= 100; // unexpected cases will be interpreted as loss
+		}
+		if (amount > 0) {
+			player.addExtraPointsToParty(amount);
+			message.append(System.lineSeparator());
+			message.append("Party recieved ");
+			message.append(amount);
+			message.append(" extra points!");
+		}
 	}
 	
 	protected void acknowledgeCompanionChange(StringBuilder message, BattleConclusion conclusion, Player player) {
