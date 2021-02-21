@@ -39,9 +39,10 @@ twi_first_landing;First Landing;twi_izril;twi_invrisil_gate,twi_elvallian,twi_se
 twi_reizmelt;Reizmelt;twi_izril;twi_invrisil_gate;twi_invrisil;;twi_madain|ROW
 twi_riverfarm_entry;Riverfarm;twi_riverfarm;twi_invrisil_gate;twi_invrisil;;twi_durene,twi_beniar,,twi_laken|ROW
 // Pallass
-twi_pallass_door;Entry to The Wandering Inn;twi_pallass;twi_common_room,twi_pallass_comm_booth,twi_ilvriss_office;twi_twi,twi_salazsar;;,twi_kel|ROW
-twi_pallass_comm_booth;Commentator Booth;twi_pallass;twi_saliss_lab,twi_pallass_door;;;,twi_noass,,twi_relz|ROW
-twi_saliss_lab;Saliss' laboratory;twi_pallass;twi_pallass_comm_booth;;;,twi_saliss|COL
+twi_pallass_door;Entry to The Wandering Inn;twi_pallass;twi_common_room,twi_pallass_streets;twi_twi;;,twi_kel|ROW
+twi_pallass_streets;Streets;twi_pallass;twi_pallass_door,twi_pallass_comm_booth,twi_saliss_lab,twi_ilvriss_office;twi_salazsar;;,twi_lorent|ROW
+twi_pallass_comm_booth;Commentator Booth;twi_pallass;twi_pallass_streets;;;,twi_noass,,,twi_relz|ROW
+twi_saliss_lab;Saliss' laboratory;twi_pallass;twi_pallass_streets;;;,twi_saliss|COL
 // Salazsar
 twi_ilvriss_office;Ilvriss' office;twi_salazsar;twi_pallass_door;twi_pallass;;twi_ilvriss|ROW
 // Baleros
