@@ -337,7 +337,7 @@ public class Stage extends StageBase {
 		message.append("min ");
 		message.append(runDuration.toSecondsPart());
 		message.append("s (");
-		message.append(player.getDifficulty().name());
+		message.append(player.getDifficulty().getCapitalizedName());
 		message.append(')');
 	}
 	
