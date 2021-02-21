@@ -32,17 +32,20 @@ twi_esthelm;Esthelm;twi_izril;twi_stables,twi_high_passes,twi_celum;twi_twi;;twi
 twi_celum;Celum;twi_izril;twi_invrisil_gate,twi_high_passes,twi_esthelm;twi_invrisil;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
 twi_high_passes;High Passes;twi_izril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
 twi_bloodfields;Bloodfields;twi_izril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
-twi_invrisil_gate;Invrisil;twi_invrisil;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm_entry,twi_reizmelt;twi_riverfarm;;twi_bethal,twi_wuvren,twi_pryde,,twi_magnolia|ROW
-twi_invrisil_ag;Invrisil's Adventurer's Guild;twi_invrisil;twi_invrisil_gate;;;twi_todi,twi_jewel|ROW
-twi_first_landing;First Landing;twi_izril;twi_invrisil_gate,twi_elvallian,twi_seasons_hq;twi_baleros,twi_invrisil,twi_terandria;;twi_maviola_old,twi_gresaria|ROW
+twi_invrisil_gate;Invrisil;twi_invrisil;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm_entry,twi_reizmelt,twi_invrisil_ieka;twi_riverfarm;;twi_bethal,twi_wuvren,twi_pryde,,twi_magnolia|ROW
+twi_invrisil_ieka;Ieka's Abode;twi_invrisil;twi_invrisil_gate;;;twi_ieka|COL
+twi_invrisil_ag;Adventurer's Guild;twi_invrisil;twi_invrisil_gate;;;twi_todi,twi_jewel|ROW
+twi_first_landing;First Landing;twi_izril;twi_invrisil_gate,twi_elvallian,twi_seasons_hq,twi_reim;twi_baleros,twi_invrisil,twi_terandria,twi_chandrar;;twi_maviola_old,twi_gresaria|ROW
 twi_reizmelt;Reizmelt;twi_izril;twi_invrisil_gate;twi_invrisil;;twi_madain|ROW
 twi_riverfarm_entry;Riverfarm;twi_riverfarm;twi_invrisil_gate;twi_invrisil;;twi_durene,twi_beniar,,twi_laken|ROW
 // Pallass
-twi_pallass_door;Entry to The Wandering Inn;twi_pallass;twi_common_room,twi_pallass_comm_booth;twi_twi;;,twi_kel|ROW
+twi_pallass_door;Entry to The Wandering Inn;twi_pallass;twi_common_room,twi_pallass_comm_booth,twi_ilvriss_office;twi_twi,twi_salazsar;;,twi_kel|ROW
 twi_pallass_comm_booth;Commentator Booth;twi_pallass;twi_saliss_lab,twi_pallass_door;;;,twi_noass,,twi_relz|ROW
 twi_saliss_lab;Saliss' laboratory;twi_pallass;twi_pallass_comm_booth;;;,twi_saliss|COL
+// Salazsar
+twi_ilvriss_office;Ilvriss' office;twi_salazsar;twi_pallass_door;twi_pallass;;twi_ilvriss|ROW
 // Baleros
-twi_elvallian;Elvallian;twi_baleros;twi_first_landing,twi_daquin,twi_seasons_hq;twi_izril,twi_terandria;;,twi_foliana,,,twi_niers|ROW
+twi_elvallian;Elvallian;twi_baleros;twi_first_landing,twi_daquin,twi_seasons_hq,twi_reim;twi_izril,twi_terandria,twi_chandrar;;,twi_foliana,,,twi_niers|ROW
 twi_daquin;Daquin;twi_baleros;twi_elvallian,twi_talenqual_entrance;twi_talenqual;;twi_xol|ROW
 twi_talenqual_entrance;City Entrance;twi_talenqual;twi_daquin,twi_un1,twi_talenqual_ag,twi_talenqual_hospital;twi_baleros;;twi_bault,twi_pivana,,,twi_kenjiro|COL
 twi_un1;United Nations House (1);twi_talenqual;twi_talenqual_entrance,twi_talenqual_ag,twi_talenqual_hospital,twi_un2;;;twi_myron,twi_ben,twi_sofie,twi_michael,twi_anders,twi_amoli|ROW
@@ -51,4 +54,6 @@ twi_un3;United Nations House (3);twi_talenqual;twi_un2;;;twi_priya,twi_filip,twi
 twi_talenqual_ag;Adventurer's Guild;twi_talenqual;twi_talenqual_entrance,twi_un1,twi_talenqual_hospital;;;twi_dawson,twi_siri,twi_tofte,twi_aldenon,twi_kami,twi_tobi|CONCENTRATED
 twi_talenqual_hospital;Hospital;twi_talenqual;twi_talenqual_entrance,twi_un1,twi_talenqual_ag;;;,,,twi_aiko,twi_geneva|ROW
 // Terandria
-twi_seasons_hq;Order of Seasons;twi_terandria;twi_first_landing,twi_elvallian;twi_izril,twi_baleros;;,twi_talia|CONCENTRATED
+twi_seasons_hq;Order of Seasons;twi_terandria;twi_first_landing,twi_elvallian,twi_reim;twi_izril,twi_baleros,twi_chandrar;;,twi_talia|CONCENTRATED
+// Chandrar
+twi_reim;Reim;twi_chandrar;twi_first_landing,twi_elvallian,twi_seasons_hq;twi_izril,twi_baleros,twi_terandria;;,twi_gazi|CONCENTRATED
