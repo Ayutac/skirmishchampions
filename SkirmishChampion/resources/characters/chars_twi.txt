@@ -41,6 +41,10 @@ twi_ksmvr;Ksmvr;twi;Antinium,Free Antinium,Warriors,Horns,Adventurers;100,150,50
 twi_ylawes;Ylawes Byres;twi;Humans,Nobility,Silver Swords,Warriors,Adventurers;300,250,60,50,20,200,40,100;0;0
 twi_falene;Falene Skystrall;twi;Half-Elves,Silver Swords,Mages,Adventurers;50,80,300,180,40,100,40,100;2;0
 twi_dawil;Dawil Ironbreaker;twi;Dwarves,Silver Swords,Warriors,Adventurers;250,220,80,90,50,70,40,70;0;0
+// Griffon Hunt
+twi_halrac;Halrac Everam;twi;Humans,Griffon Hunt,Adventurers;110,270,100,80,40,70,40,180;1;0
+twi_revi;Revi;twi;Stitch-Folk,Griffon Hunt,Adventurers;50,90,260,90,60,70,100,100;2;0
+twi_typhenous;Typhenous;twi;Humans,Griffon Hunt,Adventurers;40,70,340,260,100,120,50,120;2;0
 // Liscor Watch
 twi_tkrn;Tkrn Silverfang;twi;Gnolls,Liscor,Silverfang,Watch;70,60,40,30,50,40,20,40;0;0
 twi_jerci;Jerci;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0

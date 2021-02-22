@@ -37,7 +37,8 @@ twi_invrisil_ieka;Ieka's Abode;twi_invrisil;twi_invrisil_gate;;;twi_ieka|COL
 twi_invrisil_ag;Adventurer's Guild;twi_invrisil;twi_invrisil_gate;;;twi_todi,twi_jewel|ROW
 twi_first_landing;First Landing;twi_izril;twi_invrisil_gate,twi_elvallian,twi_seasons_hq,twi_reim;twi_baleros,twi_invrisil,twi_terandria,twi_chandrar;;twi_maviola_old,twi_gresaria|ROW
 twi_reizmelt;Reizmelt;twi_izril;twi_invrisil_gate;twi_invrisil;;twi_madain|ROW
-twi_riverfarm_entry;Riverfarm;twi_riverfarm;twi_invrisil_gate;twi_invrisil;;twi_durene,twi_beniar,,twi_laken|ROW
+twi_riverfarm_entry;Riverfarm;twi_riverfarm;twi_invrisil_gate,twi_riverfarm_griffon;twi_invrisil;;twi_durene,twi_beniar,,twi_laken|ROW
+twi_riverfarm_griffon;Griffon Hunt's abode;twi_riverfarm;twi_riverfarm_entry;;;twi_revi,twi_typhenous,twi_halrac|CONCENTRATED
 // Pallass
 twi_pallass_door;Entry to The Wandering Inn;twi_pallass;twi_common_room,twi_pallass_streets;twi_twi;;,twi_kel|ROW
 twi_pallass_streets;Streets;twi_pallass;twi_pallass_door,twi_pallass_comm_booth,twi_saliss_lab,twi_ilvriss_office;twi_salazsar;;,twi_lorent|ROW
