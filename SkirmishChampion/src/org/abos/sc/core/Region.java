@@ -12,6 +12,9 @@ import org.abos.util.Utilities;
  */
 public class Region extends RegionBase {
 	
+	/**
+	 * The number of all stages associated with this region.
+	 */
 	protected final int allStagesCount;
 	
 	protected boolean cleared;

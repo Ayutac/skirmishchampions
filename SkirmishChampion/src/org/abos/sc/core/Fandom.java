@@ -12,6 +12,9 @@ import org.abos.util.Utilities;
  */
 public class Fandom extends FandomBase {
 	
+	/**
+	 * The number of all regions associated with this fandom.
+	 */
 	protected final int allRegionsCount;
 	
 	protected boolean cleared;

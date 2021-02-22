@@ -13,35 +13,86 @@ import org.abos.sc.core.battle.Formation;
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.ParseException;
+import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
 
 /**
+ * Constitutes a player / game state.
  * @author Sebastian Koch
  * @version %I%
  * @since 0.1
  */
 public class Player {
 	
+	/**
+	 * When this game was started, mainly for speedrun purposes. Should only be non null if this game state wasn't loaded.
+	 * @see #speedrunActive()
+	 * @see #getRunDuration()
+	 */
 	protected Instant creationTime = Instant.now();
 	
+	/**
+	 * The difficulty for this player / of this game state.
+	 * @see #getDifficulty()
+	 */
 	protected Difficulty difficulty;
 	
-	protected Registry<Companion> companions = new Registry<>();
+	/**
+	 * The companions this player has access to.
+	 * @see #getCompanions()
+	 */
+	protected final Registry<Companion> companions = new Registry<>();
 	
-	protected Registry<Stage> stages = new Registry<>();
+	/**
+	 * The stages this player has access to.
+	 * @see #getStages()
+	 * @see #updateRegionStages(boolean)
+	 */
+	protected final Registry<Stage> stages = new Registry<>();
 	
-	protected Registry<Region> regions = new Registry<>();
+	/**
+	 * The regions this player has access to.
+	 * @see #getRegions()
+	 * @see #updateRegionStages(boolean)
+	 * @see #updateFandomRegions(boolean)
+	 */
+	protected final Registry<Region> regions = new Registry<>();
 	
-	protected Registry<Fandom> fandoms = new Registry<>();
+	/**
+	 * The fandoms this player has access to.
+	 * @see #getFandoms()
+	 * @see #updateFandomRegions(boolean)
+	 */
+	protected final Registry<Fandom> fandoms = new Registry<>();
 	
-	// make sure the formation is always made up of companions
+	/**
+	 * The party of this player, made up of accessable companions.
+	 * @see #getParty()
+	 * @see #setParty(Formation)
+	 */
 	protected Formation party;
 	
+	/**
+	 * The money this player has.
+	 * @see #getMoney()
+	 * @see #setMoney(int)
+	 * @see #addMoney(int)
+	 */
 	protected int money = 0;
 	
+	/**
+	 * The amount of diamonds this player has.
+	 * @see #getDiamonds()
+	 * @see #setDiamonds(int)
+	 * @see #addDiamonds(int)
+	 */
 	protected int diamonds = 0;
 	
+	/**
+	 * Private constructor for loading purposes.
+	 * @see #loadFromFile(Path)
+	 */
 	private Player() {}
 	
 	protected Player(Difficulty difficulty, FandomBase startFandom) {
@@ -74,31 +125,57 @@ public class Player {
 		party = Formation.createFormation(companions.iterator().next());
 	}
 	
+	/**
+	 * Returns <code>true</code> if this game state constitutes a valid speedrun.
+	 * @return <code>true</code> if this game state constitutes a valid speedrun, else false.
+	 * @see #getRunDuration()
+	 */
 	public boolean speedrunActive() {
-		return creationTime != null;
+		return creationTime != null;  // keep in sync with getRunDuration()
 	}
 	
+	/**
+	 * Returns how long this game state exists.
+	 * @return the duration of this run OR <code>null</code> if this game state is not a valid speedrun.
+	 */
 	public Duration getRunDuration() {
-		if (creationTime == null)
+		if (!speedrunActive())
 			return null;
+		assert creationTime != null;  // keep in sync with speedrunActive()
 		return Duration.between(creationTime, Instant.now());
 	}
 	
 	/**
-	 * @return the difficulty
+	 * Returns the difficulty for this player / of this game state
+	 * @return the difficulty for this player, not <code>null</code>.
 	 */
 	public Difficulty getDifficulty() {
 		return difficulty;
 	}
 	
+	/**
+	 * Returns the registry of accessable companions for this player. 
+	 * @return the registry of accessable companions for this player as a direct reference
+	 */
 	public Registry<Companion> getCompanions() {
 		return companions;
 	}
 
+	/**
+	 * Returns the registry of accessable stages for this player. 
+	 * @return the registry of accessable stages for this player as a direct reference
+	 * @see #updateRegionStages(boolean)
+	 */
 	public Registry<Stage> getStages() {
 		return stages;
 	}
 
+	/**
+	 * Returns the registry of accessable regions for this player. 
+	 * @return the registry of accessable regions for this player as a direct reference
+	 * @see #updateRegionStages(boolean)
+	 * @see #updateFandomRegions(boolean)
+	 */
 	public Registry<Region> getRegions() {
 		return regions;
 	}
@@ -111,6 +188,11 @@ public class Player {
 		}
 	}
 
+	/**
+	 * Returns the registry of accessable fandoms for this player. 
+	 * @return the registry of accessable fandoms for this player as a direct reference
+	 * @see #updateFandomRegions(boolean)
+	 */
 	public Registry<Fandom> getFandoms() {
 		return fandoms;
 	}
@@ -124,7 +206,9 @@ public class Player {
 	}
 	
 	/**
-	 * @return the party
+	 * Returns the party of this player.
+	 * @return the party of this player, made up of accessable companions
+	 * @see #setParty(Formation)
 	 */
 	public Formation getParty() {
 		return party;
@@ -141,7 +225,7 @@ public class Player {
 				if (currentChar != null) {
 					currentComp = companions.lookup(currentChar.getId());
 					if (currentComp == null)
-						throw new IllegalArgumentException(String.format("%s is an invalid party member for this player!",currentChar.getId()));
+						throw new IllegalStateException(String.format("%s is an invalid party member for this player!",currentChar.getId()));
 					partySelection[row][col] = currentComp;
 				}
 			}
@@ -156,37 +240,61 @@ public class Player {
 	}
 	
 	/**
-	 * @return the money
+	 * Returns the money this player has.
+	 * @return the money this player has
+	 * @see #setMoney(int)
+	 * @see #addMoney(int)
 	 */
 	public int getMoney() {
 		return money;
 	}
 	
 	/**
+	 * Sets the money of this player to the specified amount.
 	 * @param amount the amount of money to set
+	 * @see #getMoney()
+	 * @see #addMoney(int)
 	 */
 	public void setMoney(int amount) {
 		this.money = amount;
 	}
 	
+	/**
+	 * Adds the specified amount of money to this player. Overflow is prevented, i.e. money caps at max or min integer.
+	 * @param amount the amount of money to add
+	 * @see #getMoney()
+	 * @see #setMoney(int)
+	 */
 	public void addMoney(int amount) {
 		this.money = Utilities.addWithoutOverflow(this.money, amount);
 	}
 	
 	/**
-	 * @return the diamonds
+	 * Returns the amount of diamonds this player has.
+	 * @return the amount of diamonds this player has
+	 * @see #setDiamonds(int)
+	 * @see #addDiamonds(int)
 	 */
 	public int getDiamonds() {
 		return diamonds;
 	}
 	
 	/**
-	 * @param amount the diamonds to set
+	 * Sets the amount of diamonds of this player to the specified amount.
+	 * @param amount the amount of diamonds to set
+	 * @see #getDiamonds()
+	 * @see #addDiamonds(int)
 	 */
 	public void setDiamonds(int amount) {
 		this.diamonds = amount;
 	}
 	
+	/**
+	 * Adds the specified amount of diamonds to this player. Overflow is prevented, i.e. diamonds cap at max or min integer.
+	 * @param amount the amount of diamonds to add
+	 * @see #getDiamonds()
+	 * @see #setDiamonds(int)
+	 */
 	public void addDiamonds(int amount) {
 		this.diamonds = Utilities.addWithoutOverflow(this.diamonds, amount);
 	}
@@ -311,7 +419,12 @@ public class Player {
 			}
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 8));
-			player.setParty(Formation.parse(line));
+			try {
+				player.setParty(Formation.parse(line));
+			} 
+			catch (IllegalStateException ex) {
+				throw new ParsedIdNotFoundException(String.format("At least one party member was inaccessable for the player: %s", line),ex);
+			}
 			
 			// make loaded save states illegal for speedruns
 			player.creationTime = null;
