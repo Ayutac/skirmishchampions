@@ -1,7 +1,5 @@
 package org.abos.util;
 
-import java.util.Comparator;
-
 /**
  * For denoting an object has an ID that is (supposed to be) unique.
  * @author Sebastian Koch
@@ -26,8 +24,8 @@ public interface Id {
 	 * @param <T> the class extending {@link ID}
 	 * @return A comparator for <code>T</code>.
 	 */
-	public static <T extends Id> Comparator<T> createIdComparator() {
-		return new Comparator<T>() {
+	public static <T extends Id> AbstractNamedComparator<T> createIdComparator() {
+		return new AbstractNamedComparator<T>("ID") {
 			@Override
 			public int compare(T o1, T o2) {
 				if (o1 == o2)

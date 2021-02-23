@@ -1,7 +1,5 @@
 package org.abos.util;
 
-import java.util.Comparator;
-
 /**
  * For denoting an object has a name.
  * @author Sebastian Koch
@@ -26,8 +24,8 @@ public interface Name {
 	 * @param <T> the class extending {@link Name}
 	 * @return A comparator for <code>T</code>.
 	 */
-	public static <T extends Name> Comparator<T> createNameComparator() {
-		return new Comparator<T>() {
+	public static <T extends Name> AbstractNamedComparator<T> createNameComparator() {
+		return new AbstractNamedComparator<T>("Name") {
 			@Override
 			public int compare(T o1, T o2) {
 				if (o1 == o2)

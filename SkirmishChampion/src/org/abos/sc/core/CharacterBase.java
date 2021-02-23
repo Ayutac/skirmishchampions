@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.BinaryOperator;
 
+import org.abos.util.AbstractNamedComparator;
 import org.abos.util.IdCloneable;
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalArgumentTypeException;
@@ -715,9 +716,9 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @return a comparator for the specified primary stat
 	 * @throws NullPointerException If <code>type</code> refers to <code>null</code>.
 	 */
-	public static <T extends CharacterBase> Comparator<T> createPrimaryComparator(StatsPrimary type) {
+	public static <T extends CharacterBase> AbstractNamedComparator<T> createPrimaryComparator(StatsPrimary type) {
 		Utilities.requireNonNull(type, "type");
-		return new Comparator<T>() {
+		return new AbstractNamedComparator<T>(type.getCapitalizedName()) {
 			@Override public int compare(T o1, T o2) {
 				if (o1 == o2)
 					return 0;
@@ -742,9 +743,9 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @return a comparator for the specified secondary stat
 	 * @throws NullPointerException If <code>type</code> refers to <code>null</code>.
 	 */
-	public static <T extends CharacterBase> Comparator<T> createSecondaryComparator(StatsSecondary type) {
+	public static <T extends CharacterBase> AbstractNamedComparator<T> createSecondaryComparator(StatsSecondary type) {
 		Utilities.requireNonNull(type, "type");
-		return new Comparator<T>() {
+		return new AbstractNamedComparator<T>(type.getCapitalizedName()) {
 			@Override public int compare(T o1, T o2) {
 				if (o1 == o2)
 					return 0;
@@ -767,8 +768,8 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @param <T> a subclass of {@link CharacterBase}
 	 * @return a comparator for the challenge rating
 	 */
-	public static <T extends CharacterBase> Comparator<T> createChallengeRatingComparator() {
-		return new Comparator<T>() {
+	public static <T extends CharacterBase> AbstractNamedComparator<T> createChallengeRatingComparator() {
+		return new AbstractNamedComparator<T>("CR") {
 			@Override public int compare(T o1, T o2) {
 				if (o1 == o2)
 					return 0;
