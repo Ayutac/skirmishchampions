@@ -65,7 +65,7 @@ public class Battle extends Timer implements Runnable {
 	 * @see #run()
 	 */
 	public Battle(Encounter party1, Encounter party2, Difficulty difficulty, Handler battleHandler) {
-		super("Battle "+Instant.now().toString(), true); // run as daemon
+		super("Battle created "+Instant.now().toString(), true); // run as daemon
 		Utilities.requireNonNull(party1, "party1");
 		Utilities.requireNonNull(party2, "party2");
 		Utilities.requireNonNull(difficulty, "difficulty");
