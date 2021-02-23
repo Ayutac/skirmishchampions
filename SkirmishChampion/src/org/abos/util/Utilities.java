@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Formatter;
@@ -64,6 +65,74 @@ public class Utilities {
 	public static void requireNonNull(Object obj, String objName) {
 		if (obj == null)
 			throw new NullPointerException(objName+" must be specified!");
+	}
+	
+	/**
+	 * Checks if the given iterable contains <code>null</code> 
+	 * and if so, throws an exception featuring the specified name and position within the iterable.
+	 * @param iterable The iterable to check for <code>null</code> entries. If either <code>null</code> or empty, this method will return without an exception thrown.
+	 * @param iterableName the name of the iterable parameter
+	 * @throws NullPointerException If any entry of <code>iterable</code> refers to <code>null</code>.
+	 * @see #requireNonNull(Object, String)
+	 */
+	public static void requireNonNullEntries(Iterable<?> iterable, String iterableName) {
+		if (iterable == null)
+			return;
+		Iterator<?> it = iterable.iterator();
+		if (!it.hasNext())
+			return;
+		int index = 0;
+		while (it.hasNext()) {
+			if (it.next() == null)
+				throw new NullPointerException(String.format(
+						"All entries of %s must be specified, but the one at position %d wasn't!", iterableName, index));
+			index++;
+		}
+	}
+	
+	/**
+	 * Checks if the given iterable contains duplicate entries (compared with {@link Objects#equals(Object, Object)})
+	 * and if so, throws an exception featuring the specified name and positions within the iterable.
+	 * @param iterable The iterable to check for duplicate entries. If either <code>null</code> or empty or only with one entry, this method will return without an exception thrown.
+	 * @param iterableName the name of the iterable parameter
+	 * @param ignoreNull if suplicate <code>null</code> should be ignored
+	 * @throws IllegalArgumentException If any two entries of <code>iterable</code> are equal.
+	 * @see Objects#equals(Object, Object)
+	 */
+	public static void requireDifferentEntries(Iterable<?> iterable, String iterableName, boolean ignoreNull) {
+		if (iterable == null)
+			return;
+		Iterator<?> it1 = iterable.iterator(), it2;
+		if (!it1.hasNext())
+			return;
+		int i1 = 0, i2;
+		Object obj1, obj2;
+		while (it1.hasNext()) {
+			obj1 = it1.next();
+			it2 = iterable.iterator();
+			for (i2 = 0; i2 <= i1; i2++)
+				it2.next();
+			while (it2.hasNext()) {
+				obj2 = it2.next();
+				if (!(ignoreNull && obj1 == null) && Objects.equals(obj1, obj2))
+					throw new IllegalArgumentException(String.format(
+							"All entries of %s must be different, but these at position %d and %d are equal!", iterableName, i1, i2));
+				i2++;
+			}
+			i1++;
+		}
+	}
+	
+	/**
+	 * Checks if the given iterable contains duplicate entries (compared with {@link Objects#equals(Object, Object)})
+	 * and if so, throws an exception featuring the specified name and positions within the iterable.
+	 * @param iterable The iterable to check for duplicate entries. If either <code>null</code> or empty or only with one entry, this method will return without an exception thrown.
+	 * @param iterableName the name of the iterable parameter
+	 * @throws IllegalArgumentException If any two entries of <code>iterable</code> are equal.
+	 * @see Objects#equals(Object, Object)
+	 */
+	public static void requireDifferentEntries(Iterable<?> iterable, String iterableName) {
+		requireDifferentEntries(iterable, iterableName, false);
 	}
 	
 	/**
