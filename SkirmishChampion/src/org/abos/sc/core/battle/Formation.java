@@ -90,6 +90,57 @@ public class Formation implements Iterable<Character>, Cloneable, ChallengeRatab
 		public boolean hasNext() {
 			return count < size;
 		}
+
+		/**
+		 * Returns a hash code value for this formation iterator, computed based on its fields and the formation.
+		 * Two equal formation iterators will return the same hash code value.
+		 * @return a hash code value for this formation iterator
+		 * @see #equals(Object)
+		 * @see Formation#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + count;
+			result = prime * result + pos;
+			result = prime * result + getEnclosingInstance().hashCode();
+			return result;
+		}
+
+		/**
+		 * Tests if another object is equal to this formation iterator. Two formation iterators are equal if and only if
+		 * their fields and formations are equal
+		 * @return <code>true</code> if the other object is a formation iterator equal to this one, else <code>false</code>
+		 * @see #hashCode()
+		 * @see Formation#equals(Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			BattleFormationIterator other = (BattleFormationIterator) obj;
+			if (count != other.count)
+				return false;
+			if (pos != other.pos)
+				return false;
+			if (!getEnclosingInstance().equals(other.getEnclosingInstance()))
+				return false;
+			return true;
+		}
+
+		/**
+		 * Returns the formation this iterator is iterating through.
+		 * @return the formation of this iterator
+		 */
+		private Formation getEnclosingInstance() {
+			return Formation.this;
+		}
+		
 	}
 	
 	/**
@@ -226,9 +277,9 @@ public class Formation implements Iterable<Character>, Cloneable, ChallengeRatab
 	}
 
 	/**
-	 * Tests if another object is equal to this encounter. Two encounters are equal if and only if
+	 * Tests if another object is equal to this formation. Two formations are equal if and only if
 	 * their underlying characters are equal.
-	 * @return <code>true</code> if the other object is an encounter equal to this one, else <code>false</code>
+	 * @return <code>true</code> if the other object is a formation equal to this one, else <code>false</code>
 	 * @see #hashCode()
 	 * @see Character#equals(Object)
 	 */
