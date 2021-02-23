@@ -220,6 +220,7 @@ public class StageBattleFrame extends JFrame {
 		// the follwing two lines enable autoscrolling down
 		DefaultCaret caret = (DefaultCaret)battleLog.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		battleLog.setText(null); // needed so autoscrolling works on first time
 		battleLogWrapper = new JScrollPane(battleLog);
 		handler = new TextAreaHandler(battleLog) {
 			@Override public void publish(LogRecord record) {
