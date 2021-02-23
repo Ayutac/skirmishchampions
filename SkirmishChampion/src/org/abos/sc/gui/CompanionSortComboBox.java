@@ -21,7 +21,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 1.0
  */
-public class CompanionSortComboBox extends JComboBox<AbstractNamedComparator<? extends CharacterBase>> {
+public class CompanionSortComboBox extends JComboBox<AbstractNamedComparator<Companion>> {
 	
 	protected boolean reversed = false;
 	
@@ -53,6 +53,7 @@ public class CompanionSortComboBox extends JComboBox<AbstractNamedComparator<? e
 		this.reversed = reversed;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Comparator<Companion> getComparator() {
 		Comparator<Companion> comp = ((AbstractNamedComparator<Companion>)getSelectedItem()).thenComparing(idComparator);
 		if (reversed)
