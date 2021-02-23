@@ -761,25 +761,5 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 			}
 		};
 	}
-	
-	/**
-	 * Creates a comparator for character bases or subclasses thereof, sorting them by their challenge rating
-	 * from smallest to biggest value. <code>null</code> objects are allowed and sorted as smaller than any non <code>null</code> object.
-	 * @param <T> a subclass of {@link CharacterBase}
-	 * @return a comparator for the challenge rating
-	 */
-	public static <T extends CharacterBase> AbstractNamedComparator<T> createChallengeRatingComparator() {
-		return new AbstractNamedComparator<T>("CR") {
-			@Override public int compare(T o1, T o2) {
-				if (o1 == o2)
-					return 0;
-				if (o1 == null)
-					return Integer.MIN_VALUE;
-				if (o2 == null)
-					return Integer.MAX_VALUE;
-				return o1.getChallengeRating() - o2.getChallengeRating();
-			}
-		};
-	}
 
 }

@@ -2,6 +2,8 @@ package org.abos.sc.core;
 
 import java.util.Comparator;
 
+import org.abos.util.AbstractNamedComparator;
+
 /**
  * An interface to give challenge ratings of objects.
  * @author Sebastian Koch
@@ -24,8 +26,8 @@ public interface ChallengeRatable {
 	 * @param <T> a subclass of {@link ChallengeRatable}
 	 * @return a comparator for the challenge rating
 	 */
-	public static <T extends ChallengeRatable> Comparator<T> createCRComparator() {
-		return new Comparator<T>() {
+	public static <T extends ChallengeRatable> AbstractNamedComparator<T> createCRComparator() {
+		return new AbstractNamedComparator<T>("CR") {
 			@Override public int compare(T o1, T o2) {
 				if (o1 == o2)
 					return 0;

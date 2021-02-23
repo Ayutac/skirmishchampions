@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.abos.sc.core.ChallengeRatable;
 import org.abos.sc.core.CharacterBase;
 import org.abos.sc.core.Companion;
 import org.abos.sc.core.StatsPrimary;
@@ -24,15 +25,14 @@ public class CompanionSortComboBox extends JComboBox<AbstractNamedComparator<? e
 	
 	protected boolean reversed = false;
 	
-	protected Comparator<Companion> idComparator = Id.createIdComparator();
+	protected AbstractNamedComparator<Companion> idComparator = Id.createIdComparator();
 	
 	/**
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
 	public CompanionSortComboBox() {
 		addItem(Name.createNameComparator());
-		addItem(CharacterBase.createChallengeRatingComparator());
+		addItem(ChallengeRatable.createCRComparator());
 		for (StatsPrimary primary : StatsPrimary.values())
 			addItem(CharacterBase.createPrimaryComparator(primary));
 		for (StatsSecondary secondary : StatsSecondary.values())
