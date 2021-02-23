@@ -1,5 +1,6 @@
 package org.abos.sc.core.battle;
 
+import java.time.Instant;
 import java.util.Timer;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
@@ -64,7 +65,7 @@ public class Battle extends Timer implements Runnable {
 	 * @see #run()
 	 */
 	public Battle(Encounter party1, Encounter party2, Difficulty difficulty, Handler battleHandler) {
-		super(true); // run as daemon
+		super("Battle "+Instant.now().toString(), true); // run as daemon
 		Utilities.requireNonNull(party1, "party1");
 		Utilities.requireNonNull(party2, "party2");
 		Utilities.requireNonNull(difficulty, "difficulty");
