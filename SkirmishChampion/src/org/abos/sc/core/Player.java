@@ -307,34 +307,6 @@ public class Player implements SaveString {
 		this.diamonds = Utilities.addWithoutOverflow(this.diamonds, amount);
 	}
 	
-	protected void companionsToSaveString(StringBuilder s) {
-		for (Companion companion : companions) {
-			companion.toSaveString(s);
-			s.append(";");
-		}
-	}
-	
-	protected void stagesToSaveString(StringBuilder s) {
-		for (Stage stage : stages) {
-			stage.toSaveString(s);
-			s.append(";");
-		}
-	}
-	
-	protected void regionsToSaveString(StringBuilder s) {
-		for (Region region : regions) {
-			region.toSaveString(s);
-			s.append(";");
-		}
-	}
-	
-	protected void fandomsToSaveString(StringBuilder s) {
-		for (Fandom fandom : fandoms) {
-			fandom.toSaveString(s);
-			s.append(";");
-		}
-	}
-	
 	@Override
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
