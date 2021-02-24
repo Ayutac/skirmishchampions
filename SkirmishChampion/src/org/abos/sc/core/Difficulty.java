@@ -2,6 +2,7 @@ package org.abos.sc.core;
 
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.Name;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -11,7 +12,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.5
  */
-public enum Difficulty implements Name {
+public enum Difficulty implements Name, SaveString {
 	
 	/**
 	 * Easiest difficulty, if you need your hand hold.
@@ -167,6 +168,19 @@ public enum Difficulty implements Name {
 		if (cap <= Integer.MIN_VALUE)
 			return Integer.MIN_VALUE;
 		return (int)cap;
+	}
+	
+	/**
+	 * Saves the difficulty to a string builder.
+	 * @param s the string builder to append to
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @see #toSaveString()
+	 * @see #parse(String)
+	 */
+	@Override
+	public void toSaveString(StringBuilder s) {
+		Utilities.requireNonNull(s, "s");
+		s.append(name());
 	}
 	
 	/**

@@ -10,7 +10,6 @@ import java.time.Instant;
 
 import org.abos.sc.core.battle.Conclusion;
 import org.abos.sc.core.battle.Formation;
-import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.ParseException;
 import org.abos.util.ParsedIdNotFoundException;
@@ -312,7 +311,7 @@ public class Player implements SaveString {
 		Utilities.requireNonNull(s, "s");
 		// if changed, also change the loadFromFile function and the documentation of it
 		// creation time is explicitly not saved for speedruns
-		s.append(difficulty.name());
+		difficulty.toSaveString(s);
 		s.append(System.lineSeparator());
 		Utilities.iterableToSaveString(companions, ENTRY_SEPARATOR, s);
 		s.append(System.lineSeparator());
@@ -351,12 +350,7 @@ public class Player implements SaveString {
 			
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 1));
-			try {
-				player.difficulty = Difficulty.valueOf(line);
-			}
-			catch (IllegalArgumentException ex) {
-				throw new IllegalArgumentRangeException(String.format("Difficulty for player was invalid: %s", line),ex);
-			}
+			player.difficulty = Difficulty.parse(line);
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 2));
 			for (String s : line.split(ENTRY_SEPARATOR))

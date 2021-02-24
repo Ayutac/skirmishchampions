@@ -2,6 +2,7 @@ package org.abos.sc.core;
 
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.Name;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -18,7 +19,7 @@ import org.abos.util.Utilities;
  * @see #SPECIAL
  * @see #SPEED
  */
-public enum StatsPrimary implements Name {
+public enum StatsPrimary implements Name, SaveString {
 	
 	/**
 	 * For the strength stat of the character.
@@ -95,6 +96,19 @@ public enum StatsPrimary implements Name {
 	 */
 	public final String getCapitalizedName() {
 		return name().substring(0, 1).concat(name().substring(1).toLowerCase());
+	}
+	
+	/**
+	 * Saves the primary stat to a string builder.
+	 * @param s the string builder to append to
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @see #toSaveString()
+	 * @see #parse(String)
+	 */
+	@Override
+	public void toSaveString(StringBuilder s) {
+		Utilities.requireNonNull(s, "s");
+		s.append(getName());
 	}
 	
 	/**

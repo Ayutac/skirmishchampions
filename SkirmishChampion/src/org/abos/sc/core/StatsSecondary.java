@@ -2,6 +2,7 @@ package org.abos.sc.core;
 
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.Name;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -13,7 +14,7 @@ import org.abos.util.Utilities;
  * @see #MENTAL
  * @see #ELOQUENCE
  */
-public enum StatsSecondary implements Name {
+public enum StatsSecondary implements Name, SaveString {
 	/*
 	 * If you change this enumeration be aware that at least
 	 * CharacterBae#getSecondaryStat() must be changed as well.
@@ -85,6 +86,19 @@ public enum StatsSecondary implements Name {
 	 */
 	public final String getCapitalizedName() {
 		return name().substring(0, 1).concat(name().substring(1).toLowerCase());
+	}
+	
+	/**
+	 * Saves the secondary stat to a string builder.
+	 * @param s the string builder to append to
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @see #toSaveString()
+	 * @see #parse(String)
+	 */
+	@Override
+	public void toSaveString(StringBuilder s) {
+		Utilities.requireNonNull(s, "s");
+		s.append(getName());
 	}
 	
 	/**

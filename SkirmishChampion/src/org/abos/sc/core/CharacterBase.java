@@ -544,9 +544,13 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable, Card,
 		s.append(';');
 		Utilities.arrayToString(primaryStats, s, PRIMARY_SEPARATOR);
 		s.append(';');
-		s.append(Integer.toString(preferredAttackStat.ordinal()));
+		preferredAttackStat.toSaveString(s);
 		s.append(';');
-		s.append(Integer.toString(preferredDamageStat.ordinal()));
+		preferredDamageStat.toSaveString(s);
+		s.append(';');
+		rarity.toSaveString(s);
+		s.append(';');
+		s.append(flavourText);
 	}
 
 	/**
