@@ -6,6 +6,7 @@ import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.ParseException;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -14,7 +15,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class Tactic implements Cloneable {
+public class Tactic implements Cloneable, SaveString {
 	/*
 	 * Note that this class does NOT implement Iterable<Integer>.
 	 * This is a design choice given that future changes to this class
@@ -158,18 +159,13 @@ public class Tactic implements Cloneable {
 		return true;
 	}
 	
+	@Override
 	public void toSaveString(StringBuilder s) {
 		for (int i = 0; i+1 < attackOrder.length; i++) {
 			s.append(attackOrder[i]);
 			s.append(INDEX_SEPARATOR);
 		}
 		s.append(attackOrder[attackOrder.length-1]);
-	}
-
-	public String toSaveString() {
-		StringBuilder s = new StringBuilder();
-		toSaveString(s);
-		return s.toString();
 	}
 
 	@Override

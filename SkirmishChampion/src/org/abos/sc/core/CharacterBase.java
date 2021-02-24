@@ -2,7 +2,6 @@ package org.abos.sc.core;
 
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.function.BinaryOperator;
 
 import org.abos.sc.core.cards.Card;
@@ -16,6 +15,7 @@ import org.abos.util.Name;
 import org.abos.util.ParsedIdFoundException;
 import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Registry;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -27,7 +27,7 @@ import org.abos.util.Utilities;
  * @see Character
  * @see Companion
  */
-public class CharacterBase implements IdCloneable, Name, ChallengeRatable, Card {
+public class CharacterBase implements IdCloneable, Name, ChallengeRatable, Card, SaveString {
 	
 	/**
 	 * An array of the primary stats, should equal {@link StatsPrimary}<code>.values()</code>. Saved here to reduce overhead.
@@ -530,6 +530,7 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable, Card 
 	 * @see #toSaveString()
 	 * @see #parse(String, boolean)
 	 */
+	@Override
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
 		// if changed, also change the parse function and the documentation of it
@@ -546,18 +547,6 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable, Card 
 		s.append(Integer.toString(preferredAttackStat.ordinal()));
 		s.append(';');
 		s.append(Integer.toString(preferredDamageStat.ordinal()));
-	}
-	
-	/**
-	 * Returns the character base as a string for saving purposes, i.e. in the form needed for {@link #parse(String)}.
-	 * @return the character base as a string for saving purposes
-	 * @see #toSaveString(StringBuilder)
-	 * @see #parse(String, boolean)
-	 */
-	public String toSaveString() {
-		StringBuilder s = new StringBuilder();
-		toSaveString(s);
-		return s.toString();
 	}
 
 	/**
@@ -590,6 +579,7 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable, Card 
 	 */
 	public static CharacterBase parse(String s, boolean register) {
 		Utilities.requireNonNull(s, "s");
+		// if changed, also change the toSaveString function
 		String[] parts = s.split(";"); 
 		if (parts.length < PARSE_PARAM_NUM || parts.length > PARSE_PARAM_NUM+2)
 			throw new IllegalNumberOfArgumentsException(String.format("Character \"%s\" to parse contained %d arguments instead of %d-%d", s, parts.length, PARSE_PARAM_NUM, PARSE_PARAM_NUM+2));

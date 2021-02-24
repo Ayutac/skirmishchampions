@@ -11,6 +11,7 @@ import org.abos.util.Name;
 import org.abos.util.ParseException;
 import org.abos.util.ParsedIdFoundException;
 import org.abos.util.Registry;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -21,7 +22,7 @@ import org.abos.util.Utilities;
  * @since 0.1
  * @see Stage
  */
-public class StageBase implements IdCloneable, Name, ChallengeRatable {
+public class StageBase implements IdCloneable, Name, ChallengeRatable, SaveString {
 	
 	/**
 	 * Separator character for the lists.
@@ -281,6 +282,7 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 * @see #toSaveString()
 	 * @see #parse(String, boolean, boolean)
 	 */
+	@Override
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
 		// if changed, also change the parse function and the documentation of it
@@ -297,18 +299,6 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 		Utilities.arrayToString(nextFandoms, s, LIST_SEPARATOR);
 		s.append(';');
 		s.append(encounterString);
-	}
-	
-	/**
-	 * Returns the stage base as a string for saving purposes, i.e. in the form needed for {@link #parse(String)}.
-	 * @return the stage base as a string for saving purposes
-	 * @see #toSaveString(StringBuilder)
-	 * @see #parse(String, boolean, boolean)
-	 */
-	public String toSaveString() {
-		StringBuilder s = new StringBuilder();
-		toSaveString(s);
-		return s.toString();
 	}
 
 	/**
@@ -345,6 +335,7 @@ public class StageBase implements IdCloneable, Name, ChallengeRatable {
 	 */
 	public static StageBase parse(String s, boolean register, boolean checkEncounter) {
 		Utilities.requireNonNull(s, "s");
+		// if changed, also change the toSaveString function
 		String[] parts = s.split(";");
 		final int NUMBER_OF_ARGUMENTS = 7;
 		if (parts.length != NUMBER_OF_ARGUMENTS)

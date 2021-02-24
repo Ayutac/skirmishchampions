@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.ParsedIdNotFoundException;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -14,7 +15,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class Strategy implements Iterable<Tactic>, Cloneable {
+public class Strategy implements Iterable<Tactic>, Cloneable, SaveString {
 	
 	/**
 	 * The separator character for different tactics
@@ -178,6 +179,7 @@ public class Strategy implements Iterable<Tactic>, Cloneable {
 		return new Strategy(battleTactics);
 	}
 	
+	@Override
 	public void toSaveString(StringBuilder s) {
 		if (!type.equals(StrategyType.CUSTOM)) {
 			s.append(type.name());
@@ -189,14 +191,6 @@ public class Strategy implements Iterable<Tactic>, Cloneable {
 			s.append(TACTIC_SEPARATOR);
 			it.next().toSaveString();
 		}
-	}
-
-	public String toSaveString() {
-		if (!type.equals(StrategyType.CUSTOM))
-			return type.name();
-		StringBuilder s = new StringBuilder();
-		toSaveString(s);
-		return s.toString();
 	}
 
 	@Override

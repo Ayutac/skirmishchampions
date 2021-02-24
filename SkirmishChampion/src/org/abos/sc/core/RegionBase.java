@@ -8,6 +8,7 @@ import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Name;
 import org.abos.util.ParsedIdFoundException;
 import org.abos.util.Registry;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -18,7 +19,7 @@ import org.abos.util.Utilities;
  * @since 0.1
  * @see Region
  */
-public class RegionBase implements IdCloneable, Name {
+public class RegionBase implements IdCloneable, Name, SaveString {
 	
 	/**
 	 * A registry of all globally available regions.
@@ -226,6 +227,7 @@ public class RegionBase implements IdCloneable, Name {
 	 * @see #toSaveString()
 	 * @see #parse(String, boolean)
 	 */
+	@Override
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
 		// if changed, also change the parse function and the documentation of it
@@ -236,18 +238,6 @@ public class RegionBase implements IdCloneable, Name {
 		s.append(fandomId);
 		s.append(';');
 		s.append(startStageId);
-	}
-	
-	/**
-	 * Returns the region base as a string for saving purposes, i.e. in the form needed for {@link #parse(String)}.
-	 * @return the region base as a string for saving purposes
-	 * @see #toSaveString(StringBuilder)
-	 * @see #parse(String, boolean)
-	 */
-	public String toSaveString() {
-		StringBuilder s = new StringBuilder();
-		toSaveString(s);
-		return s.toString();
 	}
 
 	/**
@@ -275,6 +265,7 @@ public class RegionBase implements IdCloneable, Name {
 	 */
 	public static RegionBase parse(String s, boolean register) {
 		Utilities.requireNonNull(s, "s");
+		// if changed, also change the toSaveString function
 		String[] parts = s.split(";");
 		final int NUMBER_OF_ARGUMENTS = 4;
 		if (parts.length != NUMBER_OF_ARGUMENTS)

@@ -10,6 +10,7 @@ import org.abos.sc.core.CharacterBase;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.ParseException;
 import org.abos.util.ParsedIdNotFoundException;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -22,7 +23,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class Formation implements Iterable<Character>, Cloneable, ChallengeRatable {
+public class Formation implements Iterable<Character>, Cloneable, ChallengeRatable, SaveString {
 	
 	/**
 	 * The maximum number of rows in formations.
@@ -319,6 +320,7 @@ public class Formation implements Iterable<Character>, Cloneable, ChallengeRatab
 	 * @see #toSaveString()
 	 * @see #parse(String)
 	 */
+	@Override
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
 		// if changed, also change the parse function and the documentation of it
@@ -329,18 +331,6 @@ public class Formation implements Iterable<Character>, Cloneable, ChallengeRatab
 				// note that the last separator gets ignored by String#split()
 				s.append(CHARACTER_SEPARATOR);
 			}
-	}
-	
-	/**
-	 * Returns the battle formation as a string for saving purposes, i.e. in the form needed for {@link #parse(String)}.
-	 * @return the battle formation as a string for saving purposes
-	 * @see #toSaveString(StringBuilder)
-	 * @see #parse(String)
-	 */
-	public String toSaveString() {
-		StringBuilder s = new StringBuilder();
-		toSaveString(s);
-		return s.toString();
 	}
 
 	/**

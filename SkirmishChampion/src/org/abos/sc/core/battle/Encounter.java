@@ -3,6 +3,7 @@ package org.abos.sc.core.battle;
 import org.abos.sc.core.ChallengeRatable;
 import org.abos.sc.core.Character;
 import org.abos.util.IllegalNumberOfArgumentsException;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -11,7 +12,7 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class Encounter implements Cloneable, ChallengeRatable {
+public class Encounter implements Cloneable, ChallengeRatable, SaveString {
 	
 	/**
 	 * The separator char between the formation and strategy of an encounter in string form.
@@ -181,24 +182,13 @@ public class Encounter implements Cloneable, ChallengeRatable {
 	 * @see #toSaveString()
 	 * @see #parse(String)
 	 */
+	@Override
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
 		// if changed, also change the parse function and the documentation of it
 		formation.toSaveString(s);
 		s.append(FIELD_SEPARATOR);
 		strategy.toSaveString(s);
-	}
-	
-	/**
-	 * Returns the battle encounter as a string for saving purposes, i.e. in the form needed for {@link #parse(String)}.
-	 * @return the battle encounter as a string for saving purposes
-	 * @see #toSaveString(StringBuilder)
-	 * @see #parse(String)
-	 */
-	public String toSaveString() {
-		StringBuilder s = new StringBuilder();
-		toSaveString(s);
-		return s.toString();
 	}
 
 	/**

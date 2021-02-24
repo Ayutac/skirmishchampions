@@ -552,6 +552,27 @@ public class Utilities {
 	}
 	
 	/**
+	 * Iterates the savables and writes them into the string builder, separated by <code>separator</code>.
+	 * @param iterable the iterable to save
+	 * @param separator The separator between two entries. It is not checked if the save string of the entries contains
+	 * the separator, which might lead to issues if the save string method is not implemented with that in mind.
+	 * @param s the string builder to append to
+	 * @throws NullPointerException If any parameter or entry of the iterable refer to <code>null</code>.
+	 */
+	public static void iterableToSaveString(Iterable<? extends SaveString> iterable, String separator, StringBuilder s) {
+		requireNonNull(iterable, "iterable");
+		requireNonNullEntries(iterable, "iterable");
+		requireNonNull(separator, "separator");
+		requireNonNull(s, "s");
+		Iterator<? extends SaveString> it = iterable.iterator();
+		while (it.hasNext()) {
+			it.next().toSaveString(s);
+			if (it.hasNext())
+				s.append(separator);
+		}
+	}
+	
+	/**
 	 * Reads in lines from a file that are all to be parsed in the same way as specified by the parser.
 	 * The file is expected to be encoded in {@link #ENCODING}. Empty lines and lines starting with "//" for comments
 	 * are permitted and will not be parsed.

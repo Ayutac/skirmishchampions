@@ -15,6 +15,7 @@ import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.ParseException;
 import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Registry;
+import org.abos.util.SaveString;
 import org.abos.util.Utilities;
 
 /**
@@ -23,7 +24,14 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.1
  */
-public class Player {
+public class Player implements SaveString {
+	
+	/**
+	 * Main separator for entries on a line when saving this player / game state.
+	 * @see #toSaveString(StringBuilder)
+	 * @see #loadFromFile(Path)
+	 */
+	public static final String ENTRY_SEPARATOR = ";";
 	
 	/**
 	 * When this game was started, mainly for speedrun purposes. Should only be non null if this game state wasn't loaded.
@@ -327,18 +335,20 @@ public class Player {
 		}
 	}
 	
+	@Override
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
+		// if changed, also change the loadFromFile function and the documentation of it
 		// creation time is explicitly not saved for speedruns
 		s.append(difficulty.name());
 		s.append(System.lineSeparator());
-		companionsToSaveString(s);
+		Utilities.iterableToSaveString(companions, ENTRY_SEPARATOR, s);
 		s.append(System.lineSeparator());
-		stagesToSaveString(s);
+		Utilities.iterableToSaveString(stages, ENTRY_SEPARATOR, s);
 		s.append(System.lineSeparator());
-		regionsToSaveString(s);
+		Utilities.iterableToSaveString(regions, ENTRY_SEPARATOR, s);
 		s.append(System.lineSeparator());
-		fandomsToSaveString(s);
+		Utilities.iterableToSaveString(fandoms, ENTRY_SEPARATOR, s);
 		s.append(System.lineSeparator());
 		s.append(money);
 		s.append(System.lineSeparator());
@@ -346,12 +356,6 @@ public class Player {
 		s.append(System.lineSeparator());
 		party.toSaveString(s);
 		s.append(System.lineSeparator());
-	}
-	
-	public String toSaveString() {
-		StringBuilder s = new StringBuilder();
-		toSaveString(s);
-		return s.toString();
 	}
 	
 	public boolean saveToFile(Path path, boolean overwrite) throws IOException {
@@ -383,19 +387,19 @@ public class Player {
 			}
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 2));
-			for (String s : line.split(";"))
+			for (String s : line.split(ENTRY_SEPARATOR))
 				Companion.parse(s, player);
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 3));
-			for (String s : line.split(";"))
+			for (String s : line.split(ENTRY_SEPARATOR))
 				Stage.parse(s, player);
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 4));
-			for (String s : line.split(";"))
+			for (String s : line.split(ENTRY_SEPARATOR))
 				Region.parse(s, player);
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 5));
-			for (String s : line.split(";"))
+			for (String s : line.split(ENTRY_SEPARATOR))
 				Fandom.parse(s, player);
 			
 			player.updateFandomRegions(true);
