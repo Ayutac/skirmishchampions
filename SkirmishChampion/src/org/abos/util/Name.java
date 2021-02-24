@@ -9,6 +9,11 @@ package org.abos.util;
 public interface Name {
 	
 	/**
+	 * The display name of this class for named comparators.
+	 */
+	public static final String DISPLAY_NAME = "Name";
+	
+	/**
 	 * Returns the name of the object.
 	 * @return the name of the object
 	 */
@@ -25,7 +30,7 @@ public interface Name {
 	 * @return A comparator for <code>T</code>.
 	 */
 	public static <T extends Name> AbstractNamedComparator<T> createNameComparator() {
-		return new AbstractNamedComparator<T>("Name") {
+		return new AbstractNamedComparator<T>(DISPLAY_NAME) {
 			@Override
 			public int compare(T o1, T o2) {
 				if (o1 == o2)
