@@ -26,7 +26,7 @@ twi_liscor_prison;Prison;twi_liscor;twi_liscor_watch_barracks;;;twi_paiss,,twi_u
 twi_liscor_marketstreet;Market street;twi_liscor;twi_liscor_gate,twi_liscor_watch_barracks,twi_liscor_council;;;twi_lism,,twi_krshia|COL
 twi_liscor_council;Council;twi_liscor;twi_liscor_marketstreet;;;,twi_maviola,,,twi_olesm|CONCENTRATED
 // Dungeon
-twi_liscor_dungeon;Dungeon;twi_liscor;twi_liscor_gate,twi_stables;;;,twi_facestealer|CONCENTRATED
+twi_liscor_dungeon;Dungeon;twi_liscor;twi_liscor_gate,twi_stables;;;twi_skinner,twi_facestealer|CONCENTRATED
 // Northern Izril
 twi_esthelm;Esthelm;twi_izril;twi_stables,twi_high_passes,twi_celum;twi_twi;;twi_flower_girl,twi_grunter|CONCENTRATED
 twi_celum;Celum;twi_izril;twi_invrisil_gate,twi_high_passes,twi_esthelm;twi_invrisil;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
@@ -43,7 +43,7 @@ twi_riverfarm_griffon;Griffon Hunt's abode;twi_riverfarm;twi_riverfarm_entry;;;t
 twi_pallass_door;Entry to The Wandering Inn;twi_pallass;twi_common_room,twi_pallass_streets;twi_twi;;,twi_kel|ROW
 twi_pallass_streets;Streets;twi_pallass;twi_pallass_door,twi_pallass_comm_booth,twi_saliss_lab,twi_ilvriss_office;twi_salazsar;;,twi_lorent|ROW
 twi_pallass_comm_booth;Commentator Booth;twi_pallass;twi_pallass_streets;;;,twi_noass,,,twi_relz|ROW
-twi_saliss_lab;Saliss' laboratory;twi_pallass;twi_pallass_streets;;;,twi_saliss|COL
+twi_saliss_lab;Saliss' laboratory;twi_pallass;twi_pallass_streets;;;,twi_saliss,,,twi_chaldion|COL
 // Salazsar
 twi_ilvriss_office;Ilvriss' office;twi_salazsar;twi_pallass_door;twi_pallass;;twi_ilvriss|ROW
 // Baleros
@@ -56,6 +56,6 @@ twi_un3;United Nations House (3);twi_talenqual;twi_un2;;;twi_priya,twi_filip,twi
 twi_talenqual_ag;Adventurer's Guild;twi_talenqual;twi_talenqual_entrance,twi_un1,twi_talenqual_hospital;;;twi_dawson,twi_siri,twi_tofte,twi_aldenon,twi_kami,twi_tobi|CONCENTRATED
 twi_talenqual_hospital;Hospital;twi_talenqual;twi_talenqual_entrance,twi_un1,twi_talenqual_ag;;;,,,twi_aiko,twi_geneva|ROW
 // Terandria
-twi_seasons_hq;Order of Seasons;twi_terandria;twi_first_landing,twi_elvallian,twi_reim;twi_izril,twi_baleros,twi_chandrar;;,twi_talia|CONCENTRATED
+twi_seasons_hq;Order of Seasons;twi_terandria;twi_first_landing,twi_elvallian,twi_reim;twi_izril,twi_baleros,twi_chandrar;;,twi_talia,,,twi_cara|CONCENTRATED
 // Chandrar
 twi_reim;Reim;twi_chandrar;twi_first_landing,twi_elvallian,twi_seasons_hq;twi_izril,twi_baleros,twi_terandria;;,twi_gazi|CONCENTRATED

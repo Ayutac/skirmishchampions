@@ -52,7 +52,8 @@ twi_relc;Relc Grasstongue;twi;Drakes,Liscor,Watch;550,650,60,60,100,20,30,200;1;
 twi_klbkch;Klbkchhezeim;twi;Antinium,Centinum,Liscor,Watch;700,800,300,300,10,80,100,250;1;0
 twi_zevara;Zevara Sunderscale;twi;Drakes,Liscor,Watch;130,110,120,130,60,90,100,70;0;0
 // Dungeon
-twi_facestealer;Facestealer;twi;Monsters,Liscor,Dungeon;800,200,100,50,50,10,10,30;0;0
+twi_facestealer;Facestealer;twi;Monsters,Liscor,Dungeon;800,200,100,50,80,10,10,30;0;0
+twi_skinner;Skinner;twi;Monsters,Liscor,Dungeon;500,400,150,80,100,10,10,80;0;0
 // Players of Celum
 twi_wesle;Wesle Salkis;twi;Humans,Players of Celum;60,60,50,60,40,300,50,90;5;2
 twi_jasi;Jasi Redigal;twi;Drakes,Players of Celum;40,40,50,50,40,330,50,80;5;2
@@ -66,6 +67,7 @@ twi_lorent;Lorent;twi;Dullahans,Pallass;50,90,60,60,40,50,10,50;1;0
 twi_noass;Noass;twi;Drakes,Pallass;40,40,60,50,40,70,10,40;5;2
 twi_relz;Sir Relz;twi;Drakes,Nobility,Pallass;40,40,60,50,40,70,10,40;5;2
 twi_saliss;Saliss Oliwing;twi;Drakes,Pallass;1000,1000,300,300,100,50,100,300;1;0
+twi_chaldion;Chaldion Oliwing;twi;Drakes,Pallass;40,60,800,700,80,280,80,80;2;1
 // Reizmelt
 twi_madain;Madain;twi;Humans,Warriors,Adventurers;120,90,50,70,40,10,20,70;0;0
 // Riverfarm
@@ -82,7 +84,7 @@ twi_gresaria;Gresaria Wellfar;twi;Nobility,Humans,Izril;120,100,180,150,180,300,
 // High Passes
 twi_teriarch;Teriarch;twi;Dragons,High Passes;2000,1900,2000,2200,100,200,100,400;0;0
 // Baleros
-twi_niers;Niers;twi;Fraerling,Forgotten Wing Company;40,60,1000,800,40,200,100,70;2;1
+twi_niers;Niers Astoragon;twi;Fraerling,Forgotten Wing Company;40,60,1000,800,40,200,100,100;2;1
 twi_foliana;Foliana;twi;Beastkin,Forgotten Wing Company;750,850,350,250,50,100,150,250;1;0
 twi_xol;Xol of Ingrilt;twi;Dullahan,Warriors;600,300,100,80,70,100,80,150;0;0
 // UN
@@ -109,6 +111,7 @@ twi_maviola_old;Maviola El (old);twi;Nobility,Humans,Izril;80,20,200,180,180,300
 twi_gazi;Gazi Pathseeker;twi;Chandrar,Half-Gazer,Flos;700,800,300,300,50,100,100,250;1;0
 twi_ilvriss;Ilvriss Gemscale;twi;Drakes,Nobility;350,300,250,150,150,350,50,100;0;0
 twi_ieka;Ieka Imarris;twi;Nobility,Humans,Izril;40,90,190,140,220,350,60,70;5;2
+twi_cara;Cara O'Sulliven;twi;Earters,Humans,Terandria;40,70,250,100,70,480,100,100;5;2
 // ------------------------------------------------
 // down here are the characters I only invested 20% of my brain into :'(
 // ------------------------------------------------
