@@ -15,6 +15,7 @@ import org.abos.sc.core.StatsSecondary;
 import org.abos.sc.core.battle.Encounter;
 import org.abos.sc.core.battle.Formation;
 import org.abos.sc.core.battle.Strategy;
+import org.abos.sc.core.cards.Rarity;
 import org.abos.util.Utilities;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +45,7 @@ public class StageBattleFrameTest {
 		for (int row = 0; row < Formation.ROW_NUMBER; row++) {
 			for (int col = 0; col < Formation.COL_NUMBER; col++) {
 				silverRanks[row][col] = new Character(new CharacterBase("twi_erin", "Silver "+count, "TWI", new String[] {"Inn"}, 
-						new int[] {80,60,40,40,10,60,80,40}, StatsPrimary.STRENGTH, StatsSecondary.CONSTITUTION, false));
+						new int[] {80,60,40,40,10,60,80,40}, StatsPrimary.STRENGTH, StatsSecondary.CONSTITUTION, Rarity.COMMON, "", false));
 				if (++count >= 5)
 					break;
 			}
@@ -53,7 +54,7 @@ public class StageBattleFrameTest {
 			}
 		}
 		Character gold = new Character(new CharacterBase("twi_erin", "Gold", "TWI", new String[] {"Inn"}, 
-		new int[] {300,300,40,40,10,60,80,80}, StatsPrimary.STRENGTH, StatsSecondary.CONSTITUTION, false));
+		new int[] {300,300,40,40,10,60,80,80}, StatsPrimary.STRENGTH, StatsSecondary.CONSTITUTION, Rarity.COMMON, "", false));
 		Formation playerForm = new Formation(new Character[][] {{gold, null, null}, {null, null, null}});
 		Strategy playerStrat = Strategy.createConcentratedAssault();
 		Encounter player = new Encounter(playerForm, playerStrat);

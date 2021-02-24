@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 
+import org.abos.sc.core.cards.Rarity;
 import org.abos.util.Utilities;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +30,7 @@ public class CharacterTest {
 	
 	@Test
 	public void testUnparseAndParse() {
-		CharacterBase c = new CharacterBase("twi_erin","Erin Solstice","The Wandering Inn",new String[] {"Earthers","Liscor","Innfamily"},new int[] {50,40,40,40,10,60,80,30},StatsPrimary.CHARISMA,StatsSecondary.ELOQUENCE, false);
+		CharacterBase c = new CharacterBase("twi_erin","Erin Solstice","The Wandering Inn",new String[] {"Earthers","Liscor","Innfamily"},new int[] {50,40,40,40,10,60,80,30},StatsPrimary.CHARISMA,StatsSecondary.ELOQUENCE, Rarity.COMMON, "", false);
 		assertEquals(c, CharacterBase.parse(c.toSaveString(), false));
 	}
 	

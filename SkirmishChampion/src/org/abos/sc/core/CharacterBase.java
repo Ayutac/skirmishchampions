@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.BinaryOperator;
 
+import org.abos.sc.core.cards.Card;
+import org.abos.sc.core.cards.Rarity;
 import org.abos.util.AbstractNamedComparator;
 import org.abos.util.IdCloneable;
 import org.abos.util.IllegalArgumentRangeException;
@@ -12,6 +14,7 @@ import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.IllegalNumberOfArgumentsException;
 import org.abos.util.Name;
 import org.abos.util.ParsedIdFoundException;
+import org.abos.util.ParsedIdNotFoundException;
 import org.abos.util.Registry;
 import org.abos.util.Utilities;
 
@@ -24,7 +27,7 @@ import org.abos.util.Utilities;
  * @see Character
  * @see Companion
  */
-public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
+public class CharacterBase implements IdCloneable, Name, ChallengeRatable, Card {
 	
 	/**
 	 * An array of the primary stats, should equal {@link StatsPrimary}<code>.values()</code>. Saved here to reduce overhead.
@@ -110,6 +113,18 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	protected final StatsSecondary preferredDamageStat;
 
 	/**
+	 * The rarity of this character as a card.
+	 * @see #getRarity()
+	 */
+	protected final Rarity rarity;
+	
+	/**
+	 * The flavour text of this character.
+	 * @see #getFlavourText()
+	 */
+	protected final String flavourText;
+	
+	/**
 	 * Creates a new character base with the specified parameters.
 	 * @param id The ID of the character. Should be unique insofar <code>register</code> is set to <code>true</code>, or an exception will be thrown.
 	 * @param name the display name of the character
@@ -118,6 +133,8 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @param primaryStats an array containing the primary stats for this character
 	 * @param preferredAttackStat the character's preferred primary stat to attack with
 	 * @param preferredDamageStat the character's preferred secondary stat to do damage to
+	 * @param rarity the rarity of this character as a card
+	 * @param flavourText the flavour text of this character
 	 * @param register If this character should be registered in {@link #CHARACTERS} after construction. Will throw an exception if this character's ID is already registered there.
 	 * @throws NullPointerException If any argument except <code>affiliations</code> refers to <code>null</code>.
 	 * @throws IllegalArgumentException If the length of <code>primaryStats</code> doesn't match the number
@@ -125,13 +142,15 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @throws IllegalStateException If <code>register</code> is <code>true</code> but the <code>id</code> is already registered in {@link #CHARACTERS}.
 	 */
 	public CharacterBase(String id, String name, String fandomId, String[] affiliations, int[] primaryStats,
-			StatsPrimary preferredAttackStat, StatsSecondary preferredDamageStat, boolean register) {
+			StatsPrimary preferredAttackStat, StatsSecondary preferredDamageStat, Rarity rarity, String flavourText, boolean register) {
 		Utilities.requireNonNull(id, "id");
 		Utilities.requireNonNull(name, "name");
 		Utilities.requireNonNull(fandomId, "fandomId");
 		Utilities.requireNonNull(primaryStats, "primaryStats");
 		Utilities.requireNonNull(preferredAttackStat, "preferredAttackStat");
 		Utilities.requireNonNull(preferredDamageStat, "preferredDamageStat");
+		Utilities.requireNonNull(rarity, "rarity");
+		Utilities.requireNonNull(flavourText, "flavourText");
 		if (primaryStats.length != StatsPrimary.SIZE)
 			throw new IllegalArgumentException("primaryStats has wrong number of arguments!");
 		
@@ -145,6 +164,8 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 		this.primaryStats = Arrays.copyOf(primaryStats, primaryStats.length);
 		this.preferredAttackStat = preferredAttackStat;
 		this.preferredDamageStat = preferredDamageStat;
+		this.rarity = rarity;
+		this.flavourText = flavourText;
 		if (register) {
 			CHARACTERS.add(this);
 		}
@@ -156,7 +177,7 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @throws NullPointerException if <code>c</code> refers to <code>null</code>.
 	 */
 	public CharacterBase(CharacterBase c) { 
-		this(c.id, c.name, c.fandomId, c.affiliations, c.primaryStats, c.preferredAttackStat, c.preferredDamageStat, false);
+		this(c.id, c.name, c.fandomId, c.affiliations, c.primaryStats, c.preferredAttackStat, c.preferredDamageStat, c.rarity, c.flavourText, false);
 	}
 	
 	/**
@@ -389,6 +410,24 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	}
 	
 	/**
+	 * The rarity of this character as a card.
+	 * @return the rarity of this character as a card
+	 */
+	@Override
+	public Rarity getRarity() {
+		return rarity;
+	}
+	
+	/**
+	 * The flavour text of this character.
+	 * @return the flavour text of this character
+	 */
+	@Override
+	public String getFlavourText() {
+		return flavourText;
+	}
+	
+	/**
 	 * This method calculates challenge rating for this character. Characters tougher to beat are supposed to have a higher challenge rating.
 	 * <br>
 	 * <br>
@@ -533,7 +572,7 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	/**
 	 * Parses a string representation of a character base into a object.
 	 * The format is<br>
-	 * "<code>ID;name;fandomID;affiliations;primaryStats;preferredAttack;preferredDamage</code>"<br>
+	 * "<code>ID;name;fandomID;affiliations;primaryStats;preferredAttack;preferredDamage[;rarity[;flavourText]]</code>"<br>
 	 * where <code>affiliations</code> is a list of strings separated by {@value #AFFILIATION_SEPARATOR} without whitespaces,
      * <code>primaryStats</code> is a list of {@link StatsPrimary#SIZE} many integers separated by {@value #PRIMARY_SEPARATOR} without whitespaces,
      * and <code>preferredAttack</code> and <code>preferredDamage</code> are valid indices of a {@link StatsPrimary} and {@link StatsSecondary} respectively.
@@ -543,17 +582,17 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 	 * @return a character base matching the string
 	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
 	 * @throws IllegalNumberOfArgumentsException If the number of arguments in the string separated by <code>;</code> or the number of specified primary stats is wrong.
-	 * @throws IllegalArgumentTypeException If any primary stat value or one of the two indices at the end is not a number.
-	 * @throws IllegalArgumentRangeException If any of the two indices at the end is out of bounds.
-	 * @throws ParsedIdFoundException If <code>register</code> is set to <code>true</code> and the string is parsed successfully, but the ID is already registered in {@link #CHARACTERS}.
+	 * @throws IllegalArgumentTypeException If any primary stat value is not a number.
+	 * @throws IllegalArgumentRangeException If the attack stat, damage stat or rarity couldn't be parsed.
+	 * @throws ParsedIdFoundException If the specified fandom is not registered yet OR if <code>register</code> is set to <code>true</code> and the string is parsed successfully, but the ID is already registered in {@link #CHARACTERS}.
 	 * @see #CharacterBase(String, String, String, String[], int[], StatsPrimary, StatsSecondary, boolean)
 	 * @see #toSaveString()
 	 */
 	public static CharacterBase parse(String s, boolean register) {
 		Utilities.requireNonNull(s, "s");
 		String[] parts = s.split(";"); 
-		if (parts.length != PARSE_PARAM_NUM)
-			throw new IllegalNumberOfArgumentsException(String.format("Character \"%s\" to parse contained %d arguments instead of %d", s, parts.length, PARSE_PARAM_NUM));
+		if (parts.length < PARSE_PARAM_NUM || parts.length > PARSE_PARAM_NUM+2)
+			throw new IllegalNumberOfArgumentsException(String.format("Character \"%s\" to parse contained %d arguments instead of %d-%d", s, parts.length, PARSE_PARAM_NUM, PARSE_PARAM_NUM+2));
 		int[] primaryStats = null;
 		try {
 			primaryStats = Utilities.arrayToInt(parts[4].split(String.valueOf(PRIMARY_SEPARATOR)));
@@ -563,20 +602,24 @@ public class CharacterBase implements IdCloneable, Name, ChallengeRatable {
 		}
 		if (primaryStats.length != StatsPrimary.SIZE)
 			throw new IllegalNumberOfArgumentsException(String.format("Character \"%s\" to parse contained %d primary stats instead of %d", s, primaryStats.length, PRIMARY_STATS.length));
-		StatsPrimary attackStat  = null;
-		StatsSecondary damageStat = null;
+		FandomBase fandom = FandomBase.FANDOMS.lookup(parts[2]);
+		if (fandom == null) 
+			throw new ParsedIdNotFoundException(String.format("Fandom %s not found for character %s", parts[2], parts[0]));
+		Rarity rarity = Rarity.COMMON;
+		if (parts.length > 7)
+			rarity = Rarity.parse(parts[7]);
+		String flavourText = null;
+		if (parts.length > 8) {
+			flavourText = parts[8];
+		}
+		else {
+			flavourText = String.format("A character from %s.", fandom.getName());
+		}
 		try {
-			attackStat = PRIMARY_STATS[Integer.parseInt(parts[5])];
-			damageStat = SECONDARY_STATS[Integer.parseInt(parts[6])];
 			return new CharacterBase(parts[0], parts[1], parts[2], 
 					parts[3].isEmpty() ? null : parts[3].split(String.valueOf(AFFILIATION_SEPARATOR)), 
-					primaryStats, attackStat, damageStat, register);
-		}
-		catch (NumberFormatException ex) {
-			throw new IllegalArgumentTypeException(ex);
-		}
-		catch (ArrayIndexOutOfBoundsException ex) {
-			throw new IllegalArgumentRangeException(ex);
+					primaryStats, StatsPrimary.parse(parts[5]), StatsSecondary.parse(parts[6]), 
+					rarity, flavourText, register);
 		}
 		catch (IllegalStateException ex) {
 			throw new ParsedIdFoundException(ex);

@@ -298,6 +298,11 @@ public class MainMenu extends JFrame {
 		try {
 			Utilities.checkApplicationDirectory();
 			Path path = Utilities.getApplicationDirectory().resolve("resources");
+			// order of the following is important
+			for (Path file : Files.newDirectoryStream(path.resolve("fandoms"))) {
+				current = file.toString();
+				Utilities.loadFromFile(file, FandomBase::parse);
+			}
 			for (Path file : Files.newDirectoryStream(path.resolve("characters"))) {
 				current = file.toString();
 				Utilities.loadFromFile(file, CharacterBase::parse);
@@ -309,10 +314,6 @@ public class MainMenu extends JFrame {
 			for (Path file : Files.newDirectoryStream(path.resolve("regions"))) {
 				current = file.toString();
 				Utilities.loadFromFile(file, RegionBase::parse);
-			}
-			for (Path file : Files.newDirectoryStream(path.resolve("fandoms"))) {
-				current = file.toString();
-				Utilities.loadFromFile(file, FandomBase::parse);
 			}
 		}
 		catch (IllegalStateException ex) {
