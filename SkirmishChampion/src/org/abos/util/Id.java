@@ -9,6 +9,11 @@ package org.abos.util;
 public interface Id {
 	
 	/**
+	 * The display name of this class for named comparators.
+	 */
+	public static final String DISPLAY_NAME = "ID";
+	
+	/**
 	 * Returns the ID of the object.
 	 * @return the ID of the object
 	 */
@@ -19,13 +24,13 @@ public interface Id {
 	 * <code>null</code> is permitted for both objects to compare and names of the objects to compare.
 	 * <code>null</code> is smaller than any other instance of <code>T</code> and an object with 
 	 * a <code>null</code> ID is smaller than any other non <code>null</code> instance of <code>T</code>,
-	 * except of course in both cases if both objects respectively their OD are <code>null</code>,
+	 * except of course in both cases if both objects respectively their IDs are <code>null</code>,
 	 * in which this comparator evaluates them as equal.  
 	 * @param <T> the class extending {@link ID}
 	 * @return A comparator for <code>T</code>.
 	 */
 	public static <T extends Id> AbstractNamedComparator<T> createIdComparator() {
-		return new AbstractNamedComparator<T>("ID") {
+		return new AbstractNamedComparator<T>(DISPLAY_NAME) {
 			@Override
 			public int compare(T o1, T o2) {
 				if (o1 == o2)
