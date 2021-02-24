@@ -28,6 +28,8 @@ public class Quartett<T extends Card> extends Thread {
 	
 	protected final List<AbstractNamedComparator<T>> rules;
 	
+	protected List<AbstractNamedComparator<T>> immutableRules;
+	
 	protected final List<QuartettPlayer<T>> activePlayers;
 	
 	protected QuartettPlayer<T> startPlayer;
@@ -59,6 +61,7 @@ public class Quartett<T extends Card> extends Thread {
 			throw new IllegalArgumentException("There must be at least one player with at least one card!");
 		startPlayer = activePlayers.get(0);
 		this.rules = new ArrayList<>(rules);
+		immutableRules = Collections.unmodifiableList(this.rules);
 	}
 	
 	public void removeDefeatedPlayers() {
@@ -79,8 +82,8 @@ public class Quartett<T extends Card> extends Thread {
 	
 	public void round() throws InterruptedException, ExecutionException {
 		// start player decides on category
-		Future<Integer> choice = startPlayer.choose(startPlayer.getCurrentStack().peek(), rules);
-		AbstractNamedComparator<T> comparator = rules.get(choice.get());
+		Future<Integer> choice = startPlayer.choose(startPlayer.getCurrentStack().peek(), immutableRules);
+		AbstractNamedComparator<T> comparator = immutableRules.get(choice.get());
 		assert activePlayers.size() > 1;
 		// take next card of each player
 		List<T> cards = new ArrayList<>(activePlayers.size());

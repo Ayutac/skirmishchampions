@@ -38,6 +38,11 @@ public enum Rarity implements Name, SaveString {
 	LEGENDARY("L");
 	
 	/**
+	 * The display name of this class for named comparators.
+	 */
+	public static final String DISPLAY_NAME = "Rarity";
+	
+	/**
 	 * The display name of the rarity.
 	 */
 	private final String displayName;

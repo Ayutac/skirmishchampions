@@ -33,8 +33,9 @@ public interface QuartettPlayer<T extends Card> {
 	 */
 	public void shuffle();
 
-	public Future<Integer> offerTie(int rounds);
+	public Future<Boolean> offerTie(int rounds);
 	
+	// note that the list is likely to be immutable
 	public Future<Integer> choose(T card, List<AbstractNamedComparator<T>> comparators);
 	
 }
