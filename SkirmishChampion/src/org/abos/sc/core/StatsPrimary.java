@@ -1,8 +1,6 @@
 package org.abos.sc.core;
 
-import org.abos.sc.core.cards.Rarity;
 import org.abos.util.IllegalArgumentRangeException;
-import org.abos.util.IllegalArgumentTypeException;
 import org.abos.util.Name;
 import org.abos.util.Utilities;
 
