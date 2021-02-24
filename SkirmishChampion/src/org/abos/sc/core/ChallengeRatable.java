@@ -1,7 +1,5 @@
 package org.abos.sc.core;
 
-import java.util.Comparator;
-
 import org.abos.util.AbstractNamedComparator;
 
 /**
@@ -11,6 +9,11 @@ import org.abos.util.AbstractNamedComparator;
  * @since 0.5
  */
 public interface ChallengeRatable {
+	
+	/**
+	 * The display name of this class for named comparators.
+	 */
+	public static final String DISPLAY_NAME = "CR";
 	
 	/**
 	 * Returns an integer for this object rating it in some way
@@ -27,7 +30,7 @@ public interface ChallengeRatable {
 	 * @return a comparator for the challenge rating
 	 */
 	public static <T extends ChallengeRatable> AbstractNamedComparator<T> createCRComparator() {
-		return new AbstractNamedComparator<T>("CR") {
+		return new AbstractNamedComparator<T>(DISPLAY_NAME) {
 			@Override public int compare(T o1, T o2) {
 				if (o1 == o2)
 					return 0;
