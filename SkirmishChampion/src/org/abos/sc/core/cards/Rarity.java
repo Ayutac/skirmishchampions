@@ -69,18 +69,18 @@ public enum Rarity implements Name {
 	}
 	
 	/**
-	 * Parses a string to a secondary stat. Allowed strings are the enum name of the stats,
+	 * Parses a string to a rarity. Allowed strings are the enum name of the rarities,
 	 * their capitalized version, their display name or their index. Anything else will throw an exception. 
 	 * @param s the string to parse
-	 * @return the string as a secondary stat
+	 * @return the string as a rarity
 	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
 	 * @throws IllegalArgumentRangeException If the string couldn't be parsed.
 	 */
 	public static Rarity parse(String s) {
 		Utilities.requireNonNull(s, "s");
-		for (Rarity stat : values()) 
-			if (s.equals(stat.name()) || s.equals(stat.getCapitalizedName()) || s.equals(stat.getName()))
-				return stat;
+		for (Rarity rarity : values()) 
+			if (s.equals(rarity.name()) || s.equals(rarity.getCapitalizedName()) || s.equals(rarity.getName()))
+				return rarity;
 		try {
 			return values()[Integer.parseInt(s)];
 		}

@@ -1,5 +1,6 @@
 package org.abos.sc.core;
 
+import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.Name;
 import org.abos.util.Utilities;
 
@@ -166,6 +167,27 @@ public enum Difficulty implements Name {
 		if (cap <= Integer.MIN_VALUE)
 			return Integer.MIN_VALUE;
 		return (int)cap;
+	}
+	
+	/**
+	 * Parses a string to a difficulty. Allowed strings are the enum name of the difficulties,
+	 * their capitalized version, their display name or their index. Anything else will throw an exception. 
+	 * @param s the string to parse
+	 * @return the string as a rarity
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @throws IllegalArgumentRangeException If the string couldn't be parsed.
+	 */
+	public static Difficulty parse(String s) {
+		Utilities.requireNonNull(s, "s");
+		for (Difficulty difficulty : values()) 
+			if (s.equals(difficulty.name()) || s.equals(difficulty.getCapitalizedName()) || s.equals(difficulty.getName()))
+				return difficulty;
+		try {
+			return values()[Integer.parseInt(s)];
+		}
+		catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
+			throw new IllegalArgumentRangeException(ex);
+		}
 	}
 
 }
