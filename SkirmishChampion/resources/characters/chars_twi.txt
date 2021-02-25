@@ -115,6 +115,11 @@ twi_cara;Cara O'Sulliven;twi;Earters,Humans,Terandria;40,70,250,100,70,480,100,1
 // ------------------------------------------------
 // down here are the characters I only invested 20% of my brain into :'(
 // ------------------------------------------------
+twi_healing_slime;Healing Slime;twi;Slimes;10,10,20,20,10,80,10,70;5;2
+// copied from Daly, speeded up
+twi_theofore;Theofore;twi;Humans,Assassins;60,80,60,50,50,50,10,80;1;0
+// copied from Bird, with social stats add
+twi_ressa;Ressa;twi;Izril,Maids,Assassins;80,300,150,100,50,70,60,100;1;0
 // Chess club
 twi_knight;Knight;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
 twi_bishop;Bishop;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1

@@ -17,7 +17,7 @@ twi_common_room;Common Room;twi_twi;twi_pallass_door,twi_stables,twi_bar,twi_kit
 twi_bar;Bar;twi_twi;twi_common_room;;;,twi_joseph,,,twi_drassi|ROW
 twi_redfang_five_tg;Redfang Five Training Ground;twi_twi;twi_stables,twi_common_room;twi_liscor;;twi_headscratcher,twi_rabbiteater,twi_shorthilt,twi_badarrow,twi_numbtongue|CONCENTRATED;
 twi_kitchen;Kitchen;twi_twi;twi_common_room,twi_garden_of_sanctuary;;;,twi_imani|ROW
-twi_stables;Stables;twi_twi;twi_liscor_dungeon,twi_bloodfields,twi_esthelm,twi_common_room,twi_liscor_gate,twi_redfang_five_tg;twi_liscor,twi_izril;;,twi_termin|ROW
+twi_stables;Stables;twi_twi;twi_liscor_dungeon,twi_bloodfields,twi_beaver_cave,twi_esthelm,twi_common_room,twi_liscor_gate,twi_redfang_five_tg;twi_liscor,twi_izril;;,twi_termin|ROW
 // Liscor
 twi_liscor_gate;City gates;twi_liscor;twi_liscor_dungeon,twi_stables,twi_liscor_watch_barracks,twi_liscor_marketstreet;twi_twi;;twi_jerci,twi_tkrn,twi_silt,twi_bersa,twi_kelli,twi_geils|ROW
 twi_liscor_watch_barracks;Watch barracks;twi_liscor;twi_liscor_prison,twi_liscor_watch_captain,twi_liscor_marketstreet,twi_liscor_gate;;;twi_belsc,twi_mersh,twi_tells,twi_tessil,twi_lassil,twi_merka|COL
@@ -28,11 +28,12 @@ twi_liscor_council;Council;twi_liscor;twi_liscor_marketstreet;;;,twi_maviola,,,t
 // Dungeon
 twi_liscor_dungeon;Dungeon;twi_liscor;twi_liscor_gate,twi_stables;;;twi_skinner,twi_facestealer|CONCENTRATED
 // Northern Izril
-twi_esthelm;Esthelm;twi_izril;twi_stables,twi_high_passes,twi_celum;twi_twi;;twi_flower_girl,twi_grunter|CONCENTRATED
+twi_esthelm;Esthelm;twi_izril;twi_stables,twi_high_passes,twi_celum,twi_beaver_cave;twi_twi;;twi_flower_girl,twi_grunter|CONCENTRATED
+twi_beaver_cave;Beaver Cave;twi_izril;twi_stables,twi_esthelm;twi_twi;;,twi_healing_slime|ROW
 twi_celum;Celum;twi_izril;twi_invrisil_gate,twi_high_passes,twi_esthelm;twi_invrisil;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
 twi_high_passes;High Passes;twi_izril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
 twi_bloodfields;Bloodfields;twi_izril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
-twi_invrisil_gate;Invrisil;twi_invrisil;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm_entry,twi_reizmelt,twi_invrisil_ieka;twi_riverfarm;;twi_bethal,twi_wuvren,twi_pryde,,twi_magnolia|ROW
+twi_invrisil_gate;Invrisil;twi_invrisil;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm_entry,twi_reizmelt,twi_invrisil_ieka;twi_riverfarm;;twi_bethal,twi_wuvren,twi_pryde,twi_ressa,twi_magnolia,twi_theofore|ROW
 twi_invrisil_ieka;Ieka's Abode;twi_invrisil;twi_invrisil_gate;;;twi_ieka|COL
 twi_invrisil_ag;Adventurer's Guild;twi_invrisil;twi_invrisil_gate;;;twi_todi,twi_jewel|ROW
 twi_first_landing;First Landing;twi_izril;twi_invrisil_gate,twi_elvallian,twi_seasons_hq,twi_reim;twi_baleros,twi_invrisil,twi_terandria,twi_chandrar;;twi_maviola_old,twi_gresaria|ROW
