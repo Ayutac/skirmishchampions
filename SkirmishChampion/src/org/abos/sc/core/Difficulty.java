@@ -45,6 +45,11 @@ public enum Difficulty implements Name, SaveString {
 	IMPOSSIBLE("A living cow", 1.0);
 	
 	/**
+	 * The default difficulty.
+	 */
+	public static final Difficulty DEFAULT = MEDIUM;
+	
+	/**
 	 * Returns the difficulty of the player if one is provided or the default difficulty if not.
 	 * This method should be used where a player is optional but a difficulty must be provided.
 	 * @param player the player to return the difficulty of, can be <code>null</code>
@@ -52,7 +57,7 @@ public enum Difficulty implements Name, SaveString {
 	 */
 	public static final Difficulty of(Player player) {
 		if (player == null)
-			return MEDIUM; // default difficulty
+			return DEFAULT;
 		return player.getDifficulty();
 	}
 	

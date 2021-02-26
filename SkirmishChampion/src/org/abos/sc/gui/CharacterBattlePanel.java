@@ -45,9 +45,9 @@ public class CharacterBattlePanel extends JPanel {
 	 */
 	protected Character character;
 	
-	protected boolean statsHintVisible = Difficulty.of(null).showCharacterStats();
+	protected boolean statsHintVisible = Difficulty.DEFAULT.showCharacterStats();
 	
-	protected boolean healthVisible = Difficulty.of(null).showCharacterHealth();
+	protected boolean healthVisible = Difficulty.DEFAULT.showCharacterHealth();
 	
 	/**
 	 * The panel for the image.

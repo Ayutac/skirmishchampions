@@ -100,11 +100,10 @@ public class MainMenu extends JFrame {
 		if (startCharacter == null)
 			throw new IllegalStateException(String.format("Start companion %s of fandom %s couldn't be found!", startFandom.getStartCompanionId(), startFandom.getId()));
 		return new Player(difficulty, startFandom, new Companion(startCharacter));
-		// TODO maybe better default? 
 	}
 	
 	public static Player createNewPlayer() {
-		return createNewPlayer(Difficulty.of(null), FandomBase.FANDOMS.lookup("twi"));
+		return createNewPlayer(Difficulty.DEFAULT, FandomBase.FANDOMS.lookup(FandomBase.DEFAULT_FANDOM_ID));
 	}
 	
 	/**
@@ -343,7 +342,7 @@ public class MainMenu extends JFrame {
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);
 		// TODO this needs to be put somewhere else:
-		System.out.print(Player.validateGameData(createNewPlayer()));
+		System.out.print(Player.validateGameData());
 		StringBuilder s = new StringBuilder();
 		Registry<CharacterBase> missingImages = new Registry<>();
 		for (CharacterBase characterBase : CharacterBase.CHARACTERS)

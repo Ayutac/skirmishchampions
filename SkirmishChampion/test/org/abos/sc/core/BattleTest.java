@@ -33,7 +33,7 @@ public class BattleTest {
 				flush();
 			}
 		};
-		Battle battle = new Battle(player, computer, Difficulty.of(null), consoleHandler);
+		Battle battle = new Battle(player, computer, Difficulty.DEFAULT, consoleHandler);
 		battle.run();
 		battle.waitForEnd();
 		battle.restoreCombatants();

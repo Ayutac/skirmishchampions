@@ -24,7 +24,7 @@ public class EncounterInfoPanel extends JPanel {
 	
 	protected Encounter encounter;
 	
-	protected Difficulty difficulty = Difficulty.of(null);
+	protected Difficulty difficulty = Difficulty.DEFAULT;
 	
 	protected CharacterBattlePanel[][] formation;
 	

@@ -21,6 +21,11 @@ import org.abos.util.Utilities;
 public class FandomBase implements IdCloneable, Name, SaveString {
 	
 	/**
+	 * The ID of the default (or first) fandom of this game.
+	 */
+	public static final String DEFAULT_FANDOM_ID = "twi";
+	
+	/**
 	 * A registry of all globally available fandoms.
 	 */
 	public static final Registry<FandomBase> FANDOMS = new Registry<>();

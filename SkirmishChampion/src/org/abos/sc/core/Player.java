@@ -102,6 +102,22 @@ public class Player implements SaveString {
 	 */
 	private Player() {}
 	
+	protected Player(Difficulty difficulty) {
+		Utilities.requireNonNull(difficulty, "difficulty");
+		this.difficulty = difficulty;
+		for (FandomBase fb : FandomBase.FANDOMS) {
+			Fandom fandom = new Fandom(fb);
+			fandoms.add(fandom);
+			Region region = new Region(RegionBase.REGIONS.lookup(fandom.getStartRegionId()));
+			regions.add(region);
+			Stage stage = new Stage(StageBase.STAGES.lookup(region.getStartStageId()), difficulty.showChallengeRatings());
+			stages.add(stage);
+			companions.add(new Companion(CharacterBase.CHARACTERS.lookup(fb.getStartCompanionId())));
+		}
+		updateRegionStages(true);
+		updateFandomRegions(true);
+	}
+	
 	protected Player(Difficulty difficulty, FandomBase startFandom) {
 		Utilities.requireNonNull(difficulty, "difficulty");
 		Utilities.requireNonNull(startFandom, "startFandom");
@@ -407,8 +423,12 @@ public class Player implements SaveString {
 		}
 	}
 	
-	public static String validateGameData(Player player) {
-		Utilities.requireNonNull(player, "player");
+	public static Player createValidationPlayer() {
+		return new Player(Difficulty.DEFAULT);
+	}
+	
+	public static String validateGameData() {
+		Player player = createValidationPlayer();
 		Registry<Companion> companions = new Registry<>(player.companions);
 		Registry<Fandom> fandoms = new Registry<>(player.fandoms);
 		Registry<Region> regions = new Registry<>(player.regions);
