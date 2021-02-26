@@ -33,7 +33,8 @@ public class CompanionInfoFrameTest {
 		new FandomBase("twi", "The Wandering Inn", "twi_twi", "twi_erin", true);
 		new RegionBase("twi_twi", "The Wandering Inn", "twi", "twi_erins_bedroom", true);
 		new StageBase("twi_erins_bedroom", "Erin's Bedroom", "twi_twi", new String[0], new String[0], new String[0], "twi_mrsha|ROW", true);
-		Player player = new Player(Difficulty.MEDIUM, FandomBase.FANDOMS.lookup("twi"), new Registry<Companion>(erin, mrsha));
+		Player player = new Player(Difficulty.MEDIUM, FandomBase.FANDOMS.lookup("twi"));
+		player.getCompanions().add(mrsha);
 		CompanionInfoFrame frame = new CompanionInfoFrame(player);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

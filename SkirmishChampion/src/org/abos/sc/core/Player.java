@@ -102,50 +102,84 @@ public class Player implements SaveString {
 	 */
 	private Player() {}
 	
+	/**
+	 * Creates a player with the specified difficulty and access to all fandoms and
+	 * their respective start region, start stage and start companion.
+	 * @param difficulty the difficulty for this player, not <code>null</code>
+	 * @throws NullPointerException If <code>difficulty</code> refers to <code>null</code>.
+	 * @throws IllegalStateException If any start configurations are not properly loaded, 
+	 * e.g. if the start region of a registered fandom isn't a registered region OR if there are no registered fandoms.
+	 * @see #createValidationPlayer()
+	 */
 	protected Player(Difficulty difficulty) {
 		Utilities.requireNonNull(difficulty, "difficulty");
 		this.difficulty = difficulty;
+		if (FandomBase.FANDOMS.isEmpty())
+			throw new IllegalStateException("No registered fandoms available!");
 		for (FandomBase fb : FandomBase.FANDOMS) {
+			assert fb != null; 
 			Fandom fandom = new Fandom(fb);
 			fandoms.add(fandom);
-			Region region = new Region(RegionBase.REGIONS.lookup(fandom.getStartRegionId()));
+			RegionBase rb = fandom.getStartRegion();
+			if (rb == null)
+				throw new IllegalStateException(String.format("Region base %s is not registered!", fandom.getStartRegionId()));
+			Region region = new Region(rb);
 			regions.add(region);
-			Stage stage = new Stage(StageBase.STAGES.lookup(region.getStartStageId()), difficulty.showChallengeRatings());
+			StageBase sb = region.getStartStage();
+			if (sb == null)
+				throw new IllegalStateException(String.format("Stage base %s is not registered!", region.getStartStageId()));
+			Stage stage = new Stage(sb, difficulty.showChallengeRatings());
 			stages.add(stage);
-			companions.add(new Companion(CharacterBase.CHARACTERS.lookup(fb.getStartCompanionId())));
+			CharacterBase cb = CharacterBase.CHARACTERS.lookup(fb.getStartCompanionId());
+			if (cb == null)
+				throw new IllegalStateException(String.format("Character base %s is not registered!", fandom.getStartCompanionId()));
+			Companion companion = new Companion(cb);
+			companions.add(companion);
+			if (fb.getId().equals(FandomBase.DEFAULT_FANDOM_ID))
+				party = Formation.createFormation(companion);
+		}
+		if (party == null) { // shouldn't happen, but is recoverable
+			System.err.println(String.format("WARNING: Default fandom base %s is not registered!", FandomBase.DEFAULT_FANDOM_ID));
+			assert !companions.isEmpty();
+			party = Formation.createFormation(companions.iterator().next());
 		}
 		updateRegionStages(true);
 		updateFandomRegions(true);
 	}
 	
-	protected Player(Difficulty difficulty, FandomBase startFandom) {
+	/**
+	 * Creates a player with the specified difficulty and start fandom, as well as the
+	 * respective start region, start stage and start companion.
+	 * @param difficulty the difficulty for this player, not <code>null</code>
+	 * @param startFandom the start fandom for this player, not <code>null</code>
+	 * @throws NullPointerException If <code>difficulty</code> or <code>startFandom</code> refers to <code>null</code>.
+	 * @throws IllegalStateException If the start configuration is not properly loaded, 
+	 * e.g. if the start region of the start fandom isn't a registered region.
+	 */
+	public Player(Difficulty difficulty, FandomBase startFandom) {
 		Utilities.requireNonNull(difficulty, "difficulty");
 		Utilities.requireNonNull(startFandom, "startFandom");
 		this.difficulty = difficulty;
 		Fandom fandom = new Fandom(startFandom);
 		fandoms.add(fandom);
-		Region region = new Region(RegionBase.REGIONS.lookup(fandom.getStartRegionId()));
+		RegionBase rb = fandom.getStartRegion();
+		if (rb == null)
+			throw new IllegalStateException(String.format("Region base %s is not registered!", fandom.getStartRegionId()));
+		Region region = new Region(rb);
 		regions.add(region);
-		Stage stage = new Stage(StageBase.STAGES.lookup(region.getStartStageId()), difficulty.showChallengeRatings());
+		StageBase sb = region.getStartStage();
+		if (sb == null)
+			throw new IllegalStateException(String.format("Stage base %s is not registered!", region.getStartStageId()));
+		Stage stage = new Stage(sb, difficulty.showChallengeRatings());
 		stages.add(stage);
+		CharacterBase cb = CharacterBase.CHARACTERS.lookup(startFandom.getStartCompanionId());
+		if (cb == null)
+			throw new IllegalStateException(String.format("Character base %s is not registered!", fandom.getStartCompanionId()));
+		Companion startCompanion = new Companion(cb);
+		companions.add(startCompanion);
 		updateRegionStages(true);
 		updateFandomRegions(true);
-	}
-	
-	public Player(Difficulty difficulty, FandomBase startFandom, Companion startCompanion) {
-		this(difficulty, startFandom);
-		Utilities.requireNonNull(startCompanion, "startCompanion");
-		companions.add(startCompanion);
 		party = Formation.createFormation(startCompanion);
-	}
-
-	public Player(Difficulty difficulty, FandomBase startFandom, Registry<? extends Companion> startCompanions) {
-		this(difficulty, startFandom);
-		Utilities.requireNonNull(startCompanions, "startCompanions");
-		if (startCompanions.isEmpty())
-			throw new IllegalArgumentException("At least one start companion must be given!");
-		companions.addAll(startCompanions);
-		party = Formation.createFormation(companions.iterator().next());
 	}
 	
 	/**
@@ -203,6 +237,12 @@ public class Player implements SaveString {
 		return regions;
 	}
 	
+	/**
+	 * Updates the stages of every region of this player.
+	 * @param removeClearedFlags if the cleared flag should be removed
+	 * @see Region#updateStages(Iterable)
+	 * @see Region#hasBeenCleared()
+	 */
 	public void updateRegionStages(boolean removeClearedFlags) {
 		for (Region region : regions) {
 			region.updateStages(stages);
@@ -220,6 +260,12 @@ public class Player implements SaveString {
 		return fandoms;
 	}
 	
+	/**
+	 * Updates the regions of every fandom of this player.
+	 * @param removeClearedFlags if the cleared flag should be removed
+	 * @see Fandom#updateRegions(Iterable)
+	 * @see Fandom#hasBeenCleared()
+	 */
 	public void updateFandomRegions(boolean removeClearedFlags) {
 		for (Fandom fandom : fandoms) {
 			fandom.updateRegions(regions);
@@ -237,6 +283,14 @@ public class Player implements SaveString {
 		return party;
 	}
 	
+	/**
+	 * Sets the party of this character. The characters in the specified party are looked
+	 * up in this players companions and substituted by them (without changing <code>party</code>)
+	 * before being assigned to the player.
+	 * @param party the party to set, not <code>null</code>
+	 * @throws NullPointerException If <code>party</code> refers to <code>null</code>
+	 * @throws IllegalStateException If a member of <code>party</code> is not a registered companion of this player.
+	 */
 	public void setParty(Formation party) {
 		Utilities.requireNonNull(party, "party");
 		Companion[][] partySelection = new Companion[Formation.ROW_NUMBER][Formation.COL_NUMBER];
@@ -255,6 +309,11 @@ public class Player implements SaveString {
 		this.party = new Formation(partySelection);
 	}
 	
+	/**
+	 * Adds the specified amount of extra points to each companion in this player's party.
+	 * @param amount the amount of extra points to add (can be negative)
+	 * @throws ClassCastException If the party of this player contains a non companion member (shouldn't happen).
+	 */
 	public void addExtraPointsToParty(int amount) {
 		for (Character companion : party) {
 			assert companion instanceof Companion;
@@ -322,6 +381,14 @@ public class Player implements SaveString {
 		this.diamonds = Utilities.addWithoutOverflow(this.diamonds, amount);
 	}
 	
+	/**
+	 * Saves the player / game state to a string builder.
+	 * @param s the string builder to append to
+	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
+	 * @see #toSaveString()
+	 * @see #saveToFile(Path, boolean)
+	 * @see #loadFromFile(Path)
+	 */
 	@Override
 	public void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
@@ -345,19 +412,40 @@ public class Player implements SaveString {
 		s.append(System.lineSeparator());
 	}
 	
+	/**
+	 * Saves this player / game state to the specified file.
+	 * @param path the path to the save file
+	 * @param overwrite if an existing save file should be overwritten
+	 * @return <code>true</code> if the file was successfully saved, else <code>false</code>
+	 * @throws IOException If an I/O error occurs.
+	 */
 	public boolean saveToFile(Path path, boolean overwrite) throws IOException {
 		if (path.toFile().isFile() && !overwrite)
 			return false;
-		FileWriter fw = new FileWriter(path.toFile(), Utilities.ENCODING, !overwrite);
-		fw.append(toSaveString());
-		fw.close();
-		return true;
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(path.toFile(), Utilities.ENCODING, !overwrite);
+			fw.append(toSaveString());
+			return true;
+		}
+		finally {
+			if (fw != null) try {fw.close();} catch (IOException ex) {/* ignore */}
+		}
 	}
-	
+
+	// TODO add description of how the save file looks
+	/**
+	 * Loads a saved player / game state from the specified file.
+	 * @param path the path to the saved player / game state
+	 * @return the player / game state described by the file
+	 * @throws ParseException If the loaded file isn't in the correct format.
+	 * @throws IOException If an I/O error occurs.
+	 */
 	public static Player loadFromFile(Path path) throws IOException {
 		FileReader fr = null;
 		BufferedReader br = null;
 		String eofMsg = "Unexpected end of save file in line %d";
+		// if changed, also change the parse function
 		try {
 			fr = new FileReader(path.toFile());
 			br = new BufferedReader(fr);
@@ -419,18 +507,41 @@ public class Player implements SaveString {
 		}
 		finally {
 			if (br != null) try {br.close();} catch (IOException ex) {/* ignore */}
-			if (fr != null) try {br.close();} catch (IOException ex) {/* ignore */}
+			if (fr != null) try {fr.close();} catch (IOException ex) {/* ignore */}
 		}
 	}
+
+	/**
+	 * Creates a player on default difficulty with access to the default fandom.
+	 * @return a player on default difficulty with access to the default fandom
+	 * @throws IllegalStateException If the default fandom is not registered yet.
+	 * @see Difficulty#DEFAULT
+	 * @see FandomBase#DEFAULT_FANDOM_ID
+	 */
+	public static Player createNewDefaultPlayer() {
+		FandomBase fandom = FandomBase.FANDOMS.lookup(FandomBase.DEFAULT_FANDOM_ID);
+		if (fandom == null)
+			throw new IllegalStateException(String.format("Fandom base %s is not registered!", FandomBase.DEFAULT_FANDOM_ID));
+		return new Player(Difficulty.DEFAULT, fandom);
+	}
 	
+	/**
+	 * Creates a player on default difficulty with access to all fandoms and their respective start characters. 
+	 * @return a player on default difficulty with access to all fandoms and their respective start characters
+	 * @see Difficulty#DEFAULT
+	 */
 	public static Player createValidationPlayer() {
 		return new Player(Difficulty.DEFAULT);
 	}
 	
+	/**
+	 * Checks for accessability of characters, stages and regions and for which characters images are missing.
+	 * @return The evaluation as a string.
+	 */
 	public static String validateGameData() {
 		Player player = createValidationPlayer();
 		Registry<Companion> companions = new Registry<>(player.companions);
-		Registry<Fandom> fandoms = new Registry<>(player.fandoms);
+//		Registry<Fandom> fandoms = new Registry<>(player.fandoms);
 		Registry<Region> regions = new Registry<>(player.regions);
 		Registry<Stage> uncheckedStages = new Registry<>();
 		Registry<Stage> checkedStages = new Registry<>();
@@ -445,10 +556,10 @@ public class Player implements SaveString {
 				if (!companions.containsId(companion.getId()))
 					companions.add(companion);
 			}
-			for (Fandom fandom : currentStage.rewardFandoms(Conclusion.WON)) {
-				if (!fandoms.containsId(fandom.getId()))
-					fandoms.add(fandom);
-			}
+//			for (Fandom fandom : currentStage.rewardFandoms(Conclusion.WON)) {
+//				if (!fandoms.containsId(fandom.getId()))
+//					fandoms.add(fandom);
+//			}
 			for (Region region : currentStage.rewardRegions(Conclusion.WON)) {
 				if (!regions.containsId(region.getId()))
 					regions.add(region);
@@ -463,15 +574,15 @@ public class Player implements SaveString {
 		}
 		// get the remaining entries 
 		Registry<CharacterBase> unreachableCharacters = new Registry<>();
-		Registry<FandomBase> unreachableFandoms = new Registry<>();
+//		Registry<FandomBase> unreachableFandoms = new Registry<>();
 		Registry<RegionBase> unreachableRegions = new Registry<>();
 		Registry<StageBase> unreachableStages = new Registry<>();
 		for (CharacterBase character : CharacterBase.CHARACTERS)
 			if (!companions.containsId(character.getId()))
 				unreachableCharacters.add(character);
-		for (FandomBase fandom : FandomBase.FANDOMS)
-			if (!fandoms.containsId(fandom.getId()))
-				unreachableFandoms.add(fandom);
+//		for (FandomBase fandom : FandomBase.FANDOMS)
+//			if (!fandoms.containsId(fandom.getId()))
+//				unreachableFandoms.add(fandom);
 		for (RegionBase region : RegionBase.REGIONS)
 			if (!regions.containsId(region.getId()))
 				unreachableRegions.add(region);
@@ -483,8 +594,8 @@ public class Player implements SaveString {
 		s.append(String.format("%d characters out of %d unreachable: %s", 
 				unreachableCharacters.size(), CharacterBase.CHARACTERS.size(), unreachableCharacters));
 		s.append(System.lineSeparator());
-		s.append(String.format("%d fandoms out of %d unreachable: %s", 
-				unreachableFandoms.size(), FandomBase.FANDOMS.size(), unreachableFandoms));
+//		s.append(String.format("%d fandoms out of %d unreachable: %s", 
+//				unreachableFandoms.size(), FandomBase.FANDOMS.size(), unreachableFandoms));
 		s.append(System.lineSeparator());
 		s.append(String.format("%d regions out of %d unreachable: %s", 
 				unreachableRegions.size(), RegionBase.REGIONS.size(), unreachableRegions));

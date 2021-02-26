@@ -19,7 +19,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.abos.sc.core.CharacterBase;
 import org.abos.sc.core.Companion;
 import org.abos.sc.core.ConfigManager;
-import org.abos.sc.core.Difficulty;
 import org.abos.sc.core.FandomBase;
 import org.abos.sc.core.Player;
 import org.abos.sc.core.RegionBase;
@@ -93,19 +92,6 @@ public class MainMenu extends JFrame {
 			setIconImages(GUIUtilities.LOGOS);
 	}
 	
-	public static Player createNewPlayer(Difficulty difficulty, FandomBase startFandom) {
-		Utilities.requireNonNull(difficulty, "difficulty");
-		Utilities.requireNonNull(startFandom, "startFandom");
-		CharacterBase startCharacter = CharacterBase.CHARACTERS.lookup(startFandom.getStartCompanionId());
-		if (startCharacter == null)
-			throw new IllegalStateException(String.format("Start companion %s of fandom %s couldn't be found!", startFandom.getStartCompanionId(), startFandom.getId()));
-		return new Player(difficulty, startFandom, new Companion(startCharacter));
-	}
-	
-	public static Player createNewPlayer() {
-		return createNewPlayer(Difficulty.DEFAULT, FandomBase.FANDOMS.lookup(FandomBase.DEFAULT_FANDOM_ID));
-	}
-	
 	/**
 	 * @param player the player to set
 	 */
@@ -120,7 +106,7 @@ public class MainMenu extends JFrame {
 		if (!newGameDialog.hasStarted())
 			return;
 		try {
-			setPlayer(createNewPlayer(newGameDialog.getDifficulty(), newGameDialog.getFandom()));
+			setPlayer(new Player(newGameDialog.getDifficulty(), newGameDialog.getFandom()));
 		}
 		catch (IllegalStateException ex) {
 			GUIUtilities.errorMessage("Unexpected error!", "An unexpected error occured, no new game was created!", ex);
@@ -209,20 +195,20 @@ public class MainMenu extends JFrame {
 		File lastSaveLocationFile = null;
 		if (lastSaveLocation == null) {
 			continueGameButton.setEnabled(false);
-			player = createNewPlayer();
+			player = Player.createNewDefaultPlayer();
 		}
 		else {
 			lastSaveLocationFile = new File(lastSaveLocation);
 			if (!lastSaveLocationFile.isFile()) {
 				continueGameButton.setEnabled(false);
-				player = createNewPlayer();
+				player = Player.createNewDefaultPlayer();
 			}
 			else {
 				try {
 					player = Player.loadFromFile(lastSaveLocationFile.toPath());
 				}
 				catch (IOException | ParseException ex) {
-					player = createNewPlayer();
+					player = Player.createNewDefaultPlayer();
 					continueGameButton.setEnabled(false);
 				}
 			}
