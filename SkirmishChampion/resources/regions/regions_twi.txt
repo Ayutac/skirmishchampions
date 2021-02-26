@@ -5,6 +5,7 @@ twi_liscor;Izril: Liscor;twi;twi_marketstreet
 twi_pallass;Izril: Pallass;twi;twi_marketstreet
 twi_salazsar;Izril: Salazsar;twi;twi_ilvriss_office
 twi_izril;Izril;twi;twi_high_passes
+twi_high_passes;Izril: High Passes;twi;twi_high_passes_goblinhome
 twi_invrisil;Izril: Invrisil;twi;twi_invrisil_gate
 twi_riverfarm;Izril: Riverfarm;twi;twi_riverfarm_entry
 twi_baleros;Baleros;twi;twi_elvallian

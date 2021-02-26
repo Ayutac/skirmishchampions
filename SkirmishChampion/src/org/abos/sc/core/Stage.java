@@ -161,7 +161,7 @@ public class Stage extends StageBase {
 		if (conclusion == Conclusion.WON) {
 			Region[] reward = new Region[nextRegions.length];
 			for (int i = 0; i < reward.length; i++)
-				reward[i] = new Region(RegionBase.REGIONS.lookup(nextRegions[i]));
+				reward[i] = new Region(RegionBase.REGIONS.lookup(nextRegions[i])); // throws NPE
 			return reward;
 		}
 		return new Region[0];
