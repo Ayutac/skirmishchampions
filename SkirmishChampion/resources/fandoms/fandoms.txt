@@ -1,3 +1,4 @@
 // fandom line is given as follow:
 // ID (must be unique); displayed name; start region ID; start character ID 
 twi;The Wandering Inn;twi_twi;twi_erin
+owo;Overwatch;owo_earth;owo_mercy
