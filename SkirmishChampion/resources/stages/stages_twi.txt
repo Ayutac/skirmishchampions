@@ -28,14 +28,15 @@ twi_liscor_council;Council;twi_liscor;twi_liscor_marketstreet;;;,twi_maviola,,,t
 // Dungeon
 twi_liscor_dungeon;Dungeon;twi_liscor;twi_liscor_gate,twi_stables;;;twi_skinner,twi_facestealer|CONCENTRATED
 // Northern Izril
-twi_esthelm;Esthelm;twi_izril;twi_stables,twi_high_passes,twi_celum,twi_beaver_cave;twi_twi;;twi_flower_girl,twi_grunter|CONCENTRATED
+twi_esthelm;Esthelm;twi_izril;twi_stables,twi_high_passes_dragon,twi_celum,twi_beaver_cave;twi_twi;;twi_flower_girl,twi_grunter|CONCENTRATED
 twi_beaver_cave;Beaver Cave;twi_izril;twi_stables,twi_esthelm;twi_twi;;,twi_healing_slime|ROW
-twi_celum;Celum;twi_izril;twi_invrisil_gate,twi_high_passes,twi_esthelm;twi_invrisil;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
-twi_high_passes;High Passes;twi_izril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
+twi_celum;Celum;twi_izril;twi_invrisil_gate,twi_high_passes_dragon,twi_esthelm,twi_izril_roads;twi_invrisil;;twi_jasi,twi_wesle,twi_temile,twi_grev,twi_emme,twi_kilkran|ROW
+twi_high_passes_dragon;High Passes;twi_izril;twi_esthelm,twi_celum;;;,twi_teriarch|COL
 twi_bloodfields;Bloodfields;twi_izril;twi_esthelm,twi_stables,twi_liscor_gate;twi_liscor,twi_twi;;twi_ksmvr,twi_yvlon,,twi_pisces,twi_ceria|CONCENTRATED
-twi_invrisil_gate;Invrisil;twi_invrisil;twi_celum,twi_invrisil_ag,twi_first_landing,twi_riverfarm_entry,twi_reizmelt,twi_invrisil_ieka;twi_riverfarm;;twi_bethal,twi_wuvren,twi_pryde,twi_ressa,twi_magnolia,twi_theofore|ROW
+twi_invrisil_gate;Invrisil;twi_invrisil;twi_celum,twi_izril_roads,twi_invrisil_ag,twi_first_landing,twi_riverfarm_entry,twi_reizmelt,twi_invrisil_ieka;twi_riverfarm;;twi_bethal,twi_wuvren,twi_pryde,twi_ressa,twi_magnolia,twi_theofore|ROW
 twi_invrisil_ieka;Ieka's Abode;twi_invrisil;twi_invrisil_gate;;;twi_ieka|COL
 twi_invrisil_ag;Adventurer's Guild;twi_invrisil;twi_invrisil_gate;;;twi_todi,twi_jewel|ROW
+twi_izril_roads;On the Road;twi_izril;twi_celum,twi_invrisil_gate;twi_invrisil;;twi_dawil,twi_ylawes,,twi_falene|CONCENTRATED
 twi_first_landing;First Landing;twi_izril;twi_invrisil_gate,twi_elvallian,twi_seasons_hq,twi_reim;twi_baleros,twi_invrisil,twi_terandria,twi_chandrar;;twi_maviola_old,twi_gresaria|ROW
 twi_reizmelt;Reizmelt;twi_izril;twi_invrisil_gate;twi_invrisil;;twi_madain|ROW
 twi_riverfarm_entry;Riverfarm;twi_riverfarm;twi_invrisil_gate,twi_riverfarm_griffon;twi_invrisil;;twi_durene,twi_beniar,,twi_laken|ROW

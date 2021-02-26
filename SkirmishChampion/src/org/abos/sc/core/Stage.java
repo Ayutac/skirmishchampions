@@ -405,6 +405,9 @@ public class Stage extends StageBase {
 		Utilities.requireNonNull(s, "s");
 		int end = s.endsWith("!") ? s.length() - 1 : s.length();
 		String id = s.substring(0, end);
+		// compatibility for V0.6
+		if (id.equals("twi_high_passes"))
+			id = "twi_high_passes_dragon";
 		StageBase base = StageBase.STAGES.lookup(id);
 		if (base == null)
 			throw new ParsedIdNotFoundException(String.format("Unknown stage ID %s!", id));
