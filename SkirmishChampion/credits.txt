@@ -7,6 +7,9 @@ Some Rights Reserved. See license.txt for more information.
 # The Wandering Inn is owned by pirateaba
 for more information on TWI, especially reading it, visit https://wanderinginn.com/
 
+# Overwatch is owned by Blizzard Entertainment Inc.
+for more information on Overwatch, especially playing it, visit https://playoverwatch.com/
+
 ## Art:
 
 # For the logo and title screen, public domain SVG images were used:
@@ -108,3 +111,38 @@ Florist: https://twifanartsfw.booru.org/index.php?page=post&s=view&id=768
 Ieka: https://twifanartsfw.booru.org/index.php?page=post&s=view&id=787
 ~ done by Zelanters:
 Ceria: https://img.booru.org/twifanartsfw//images/1/519c57996329dbb3d751b576d1583c75f7b3dd76.jpg
+
+# Overwatch
+Ana: https://overwatch.fandom.com/wiki/Ana/Gallery?file=Ana_screen2.jpg
+Ashe: https://overwatch.fandom.com/wiki/Ashe/Gallery?file=Ashe_10.png
+Baptiste: https://blizzard.justnetwork.eu/2019/02/26/overwatch-baptiste-wurde-auf-den-ptr-aufgespielt/
+Bastion: https://overwatch.fandom.com/wiki/Bastion/Gallery?file=Bastion_Overwatch_004.jpg
+Bob: https://overwatch.fandom.com/wiki/Bob?file=BOB.jpg#Gallery
+Brigitte: https://news.blizzard.com/de-de/overwatch/21590096/vorstellung-der-neuen-heldin-brigitte
+D.Va: https://overwatch.fandom.com/wiki/D.Va/Gallery?file=DVa_012.jpg
+Doomfist: https://overwatch.fandom.com/wiki/Doomfist/Gallery?file=Doomf1.jpg
+Echo: https://overwatch.fandom.com/wiki/Echo/Gallery?file=Echo7.png
+Genji: https://overwatch.fandom.com/wiki/Genji/Gallery?file=Genji_005.jpg
+Hanzo: https://overwatch.fandom.com/wiki/Hanzo/Gallery?file=Hanzo_Overwatch_001.jpg
+Junkrat: https://overwatch.fandom.com/wiki/Junkrat/Gallery?file=Junkrat_SS3.jpg
+Lúcio: https://overwatch.fandom.com/wiki/L%C3%BAcio/Gallery?file=Lucio7.jpg
+McCree: https://overwatch.fandom.com/wiki/McCree/Gallery?file=McCreeSS.jpg
+Mei: https://overwatch.fandom.com/wiki/Mei/Gallery?file=Mei_003.jpg
+Mercy: https://overwatch.fandom.com/wiki/Mercy/Gallery?file=Mercy_-_PS4.jpg
+Moira: https://overwatch.fandom.com/wiki/Moira/Gallery?file=Moira_screenshot_12.jpg
+Orisa: https://overwatch.fandom.com/wiki/Orisa/Gallery?file=Orisa_SS1.jpg
+Pharah: https://overwatch.fandom.com/wiki/Pharah/Gallery?file=Pharah_Overwatch_003.jpg
+Reaper: https://overwatch.fandom.com/wiki/Reaper/Gallery?file=Reaper_Overwatch_005.jpg
+Reinhardt: https://overwatch.fandom.com/wiki/Reinhardt/Gallery?file=Reinhardt_-_PS4.jpg
+Roadhog: https://overwatch.fandom.com/wiki/Roadhog/Gallery?file=Roadhog_SS_3.jpg
+Sigma: https://overwatch.fandom.com/wiki/Sigma?file=Sigma_classic.jpg
+Soldier 76: https://overwatch.fandom.com/wiki/Soldier:_76/Gallery?file=Soldier_76_-_PS4.jpg
+Sombra: https://overwatch.fandom.com/wiki/Sombra/Gallery?file=Sombra_SS14.jpg
+Symmetra: https://overwatch.fandom.com/wiki/Symmetra/Gallery?file=Symmetra_Overwatch_001.jpg
+Torbjörn: https://overwatch.fandom.com/wiki/Torbj%C3%B6rn/Gallery?file=Torbj%25C3%25B6rn_Overwatch_007.jpg
+Tracer: https://overwatch.fandom.com/wiki/Tracer/Gallery?file=Tracer_-_XBox.jpg
+Widowmaker: https://overwatch.fandom.com/wiki/Widowmaker/Gallery?file=Widowmaker_Overwatch_004.jpg
+Winston: https://overwatch.fandom.com/wiki/Winston/Gallery?file=Winston_Overwatch_007.jpg
+Wrecking Ball: https://overwatch.fandom.com/wiki/Wrecking_Ball?file=Wrecking_Ball_classic.png
+Zarya: https://overwatch.fandom.com/wiki/Zarya/Gallery?file=Zarya_03.jpg
+Zenyatta: https://overwatch.fandom.com/wiki/Zenyatta/Gallery?file=Zenyatta_Overwatch_008.jpg
