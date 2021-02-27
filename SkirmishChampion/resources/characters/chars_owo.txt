@@ -1,6 +1,6 @@
-owo_mercy;Mercy;owo;Humans,Overwatch,Scientists;50,80,350,70,70,120,50,90;2;1
+owo_mercy;Mercy;owo;Humans,Overwatch,Scientists;50,80,320,70,70,120,50,90;2;1
 owo_winston;Winston;owo;Gorillas,Overwatch,Scientists,Engineers;250,120,350,70,10,100,30,70;2;1
-owo_moira;Moira;owo;Humans,Talon,Scientists;70,60,350,70,70,100,50,120;2;1
+owo_moira;Moira;owo;Humans,Talon,Scientists;70,60,330,70,70,100,50,120;2;1
 owo_sigma;Sigma;owo;Humans,Talon,Scientists;250,150,450,100,40,50,50,50;2;1
 owo_symmetra;Symmetra;owo;Humans,Vishkar,Scientists;70,150,300,100,80,100,70,80;2;1
 owo_wb;Wrecking Ball;owo;Hamsters,Junker,Engineers;250,90,200,50,10,60,70,150;0;0
