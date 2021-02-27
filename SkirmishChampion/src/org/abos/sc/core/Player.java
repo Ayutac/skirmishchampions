@@ -471,9 +471,9 @@ public class Player implements SaveString {
 				throw new ParseException(String.format(eofMsg, 5));
 			for (String s : line.split(ENTRY_SEPARATOR))
 				Fandom.parse(s, player);
-			
-			player.updateFandomRegions(true);
+
 			player.updateRegionStages(true);
+			player.updateFandomRegions(true);
 			
 			if ((line = br.readLine()) == null)
 				throw new ParseException(String.format(eofMsg, 6));
