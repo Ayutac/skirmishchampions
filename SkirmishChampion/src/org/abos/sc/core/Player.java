@@ -130,10 +130,7 @@ public class Player implements SaveString {
 				throw new IllegalStateException(String.format("Stage base %s is not registered!", region.getStartStageId()));
 			Stage stage = new Stage(sb, difficulty.showChallengeRatings());
 			stages.add(stage);
-			CharacterBase cb = CharacterBase.CHARACTERS.lookup(fb.getStartCompanionId());
-			if (cb == null)
-				throw new IllegalStateException(String.format("Character base %s is not registered!", fandom.getStartCompanionId()));
-			Companion companion = new Companion(cb);
+			Companion companion = fandom.getStartCompanion();
 			companions.add(companion);
 			if (fb.getId().equals(FandomBase.DEFAULT_FANDOM_ID))
 				party = Formation.createFormation(companion);
@@ -172,10 +169,7 @@ public class Player implements SaveString {
 			throw new IllegalStateException(String.format("Stage base %s is not registered!", region.getStartStageId()));
 		Stage stage = new Stage(sb, difficulty.showChallengeRatings());
 		stages.add(stage);
-		CharacterBase cb = CharacterBase.CHARACTERS.lookup(startFandom.getStartCompanionId());
-		if (cb == null)
-			throw new IllegalStateException(String.format("Character base %s is not registered!", fandom.getStartCompanionId()));
-		Companion startCompanion = new Companion(cb);
+		Companion startCompanion = fandom.getStartCompanion();
 		companions.add(startCompanion);
 		updateRegionStages(true);
 		updateFandomRegions(true);
@@ -238,8 +232,9 @@ public class Player implements SaveString {
 	}
 	
 	/**
-	 * Updates the stages of every region of this player.
+	 * Updates the stages of every region of this player. Call this method before {@link #updateFandomRegions(boolean)}.
 	 * @param removeClearedFlags if the cleared flag should be removed
+	 * @see #updateFandomRegions(boolean)
 	 * @see Region#updateStages(Iterable)
 	 * @see Region#hasBeenCleared()
 	 */
@@ -261,8 +256,9 @@ public class Player implements SaveString {
 	}
 	
 	/**
-	 * Updates the regions of every fandom of this player.
+	 * Updates the regions of every fandom of this player. Call this method after {@link #updateRegionStages(boolean)}.
 	 * @param removeClearedFlags if the cleared flag should be removed
+	 * @see #updateRegionStages(boolean)
 	 * @see Fandom#updateRegions(Iterable)
 	 * @see Fandom#hasBeenCleared()
 	 */

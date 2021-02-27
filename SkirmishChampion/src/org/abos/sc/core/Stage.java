@@ -370,6 +370,9 @@ public class Stage extends StageBase {
 		acknowledgeRuntimeAndDiff(message, player);
 	}
 	
+	/**
+	 * Returns a deep copy of this stage, including the associated encounter if one is currently loaded.
+	 */
 	@Override
 	public Object clone() {
 		Stage clone = new Stage(this, cleared, showChallengeRating);

@@ -17,10 +17,23 @@ public class Fandom extends FandomBase {
 	 */
 	protected final int allRegionsCount;
 	
+	/**
+	 * If this fandom has been cleared.
+	 * @see #isCleared()
+	 */
 	protected boolean cleared;
 	
+	/**
+	 * A flag for notification that this fandom has been cleared.
+	 * @see #isCleared()
+	 * @see #hasBeenCleared()
+	 */
 	protected boolean clearedFlag = false;
 	
+	/**
+	 * The regions accessable via this fandom.
+	 * @see #getRegions()
+	 */
 	protected final Registry<Region> regions;
 
 	public Fandom(FandomBase base, Registry<Region> regions) {
@@ -35,12 +48,23 @@ public class Fandom extends FandomBase {
 	}
 	
 	/**
-	 * @return the cleared
+	 * Tells if this fandom is cleared / completed.
+	 * @return <code>true</code> if this fandom is cleared, else <code>false</code>.
+	 * @see #hasBeenCleared()
+	 * @see #checkCleared()
 	 */
 	public boolean isCleared() {
 		return cleared;
 	}
 	
+	/**
+	 * Tells if this fandom has recently been cleared / completed. This method can only return
+	 * <code>true</code> if {@link #checkCleared()} cleared has been called and after calling this method
+	 * once, any subsequent calls will return <code>false</code>.
+	 * @return <code>true</code> if this fandom has recently been cleared, else false
+	 * @see #isCleared()
+	 * @see #checkCleared()
+	 */
 	public boolean hasBeenCleared() {
 		if (!clearedFlag)
 			return false;
@@ -48,6 +72,14 @@ public class Fandom extends FandomBase {
 		return true;
 	}
 	
+	/**
+	 * Checks if this fandom has been completed, i.e. if all of its regions have been cleared.
+	 * Only after this method has been called can {@link #hasBeenCleared()} return <code>true</code>.
+	 * @return <code>true</code> if this fandom has been cleared, else <code>false</code>. 
+	 * The return value of this method can also be called with {@link #isCleared()}.
+	 * @see #isCleared()
+	 * @see #hasBeenCleared()
+	 */
 	public boolean checkCleared() {
 		boolean oldCleared = cleared;
 		if (allRegionsCount != regions.size()) {
@@ -70,11 +102,28 @@ public class Fandom extends FandomBase {
 		return regions;
 	}
 	
+	/**
+	 * Returns a new companion from the character base of this fandom's start companion.
+	 * @return a new companion from the character base of this fandom's start companion
+	 * @throws IllegalStateException If the start companion ID of this fandom isn't registered as a character.
+	 * @see #getStartCompanionId()
+	 */
 	public Companion getStartCompanion() {
-		return new Companion(CharacterBase.CHARACTERS.lookup(startCompanionId));
+		CharacterBase cb = CharacterBase.CHARACTERS.lookup(getStartCompanionId());
+		if (cb == null)
+			throw new IllegalStateException(String.format("Character base %s is not registered!", getStartCompanionId()));
+		return new Companion(cb);
 	}
 	
+	/**
+	 * Changes the regions associated to this fandom to all of those of the
+	 * specified that belong to this fandom. Afterwards checks if this fandom has been cleared.
+	 * @param regions the regions to consider for adding
+	 * @throws NullPointerException If <code>regions</code> refers to <code>null</code>.
+	 * @see #checkCleared()
+	 */
 	public void updateRegions(Iterable<? extends Region> regions) {
+		Utilities.requireNonNull(regions, "regions");
 		this.regions.clear();
 		for (Region region : regions) {
 			if (region.getFandomId().equals(id))
@@ -83,6 +132,9 @@ public class Fandom extends FandomBase {
 		checkCleared();
 	}
 	
+	/**
+	 * Returns a deep copy of this fandom, including cloning the associated regions.
+	 */
 	@Override
 	public Object clone() {
 		return new Fandom(this, Registry.deepClone(regions));
