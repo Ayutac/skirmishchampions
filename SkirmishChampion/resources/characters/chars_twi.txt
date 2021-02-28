@@ -81,12 +81,15 @@ twi_pryde;Pryde Ulta;twi;Nobility,Humans,Izril;70,70,160,120,180,380,70,70;5;2
 twi_wuvren;Wuvren Sitil;twi;Nobility,Humans,Izril;40,90,160,120,300,380,60,70;5;2
 twi_termin;Termin;twi;Humans;40,40,50,60,40,40,10,70;5;2
 twi_gresaria;Gresaria Wellfar;twi;Nobility,Humans,Izril;120,100,180,150,180,300,100,90;5;2
+twi_gralton;Gralton Radivaek;twi;Nobility,Humans,Izril;200,140,140,130,120,80,70,120;0;0
 // High Passes
 twi_teriarch;Teriarch;twi;Dragons,High Passes;2000,1900,2000,2200,100,200,100,400;0;0
 // Baleros
 twi_niers;Niers Astoragon;twi;Fraerling,Forgotten Wing Company;40,60,1000,800,40,200,100,100;2;1
 twi_foliana;Foliana;twi;Beastkin,Forgotten Wing Company;750,850,350,250,50,100,150,250;1;0
 twi_xol;Xol of Ingrilt;twi;Dullahan,Warriors;600,300,100,80,70,100,80,150;0;0
+// Wistram
+twi_feor;Feor;twi;Half-Elves,Mages,Wistram;60,90,400,200,50,110,90,70;2;0
 // UN
 twi_geneva;Geneva Scala;twi;Humans,Earthers,UN;40,90,120,90,60,120,40,60;2;1
 twi_kenjiro;Kenjiro Murata;twi;Humans,Earthers,UN;40,40,100,70,30,200,20,60;5;2
@@ -120,6 +123,12 @@ twi_healing_slime;Healing Slime;twi;Slimes;10,10,20,20,10,80,10,70;5;2
 twi_theofore;Theofore;twi;Humans,Assassins;60,80,60,50,50,50,10,80;1;0
 // copied from Bird, with social stats add
 twi_ressa;Ressa;twi;Izril,Maids,Assassins;80,500,150,100,50,70,60,100;1;0
+// copied from Ressa with a bit improvement
+twi_ferin;Ferin;twi;Izril,Assassins;90,500,220,180,70,90,100,100;1;0
+// based on Tracer; this is ryoka at start of book8
+twi_ryoka_courier;Ryoka Griffin;twi;Humans,Runners,Earthers;70,70,70,80,60,40,30,180;2;1
+// fierre after being cured
+twi_fierre_pure;Serafierre val Lischelle-Drakle;twi;Humans,Vampires;500,500,90,50,70,50,20,150;0;0
 // Chess club
 twi_knight;Knight;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
 twi_bishop;Bishop;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
