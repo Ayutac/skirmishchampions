@@ -1,20 +1,20 @@
-owo_gibralta;Watch Point Gibralta;owo_earth;owo_oasis_entry,owo_junker_outback,owo_london,owo_dorado_streets,owo_nepal,owo_route66,owo_hanamura_castle,owo_volskaya_industries,owo_lijiang_tower,owo_torb_home,owo_anubis_temple,owo_numbani,owo_havanna,owo_busan;;;owo_winston|COL
-owo_oasis_entry;Oasis Entry;owo_earth;owo_gibralta,owo_oasis_laboratories;;;,owo_symmetra|CONCENTRATED
-owo_oasis_laboratories;Oasis Laboratories;owo_earth;owo_oasis_entry,owo_talon_hq;;;,owo_sigma,,,owo_moira|CONCENTRATED
-owo_junker_outback;Junkertown Outback;owo_earth;owo_gibralta,owo_junker_arena;;;owo_roadhog,owo_junkrat|CONCENTRATED
-owo_junker_arena;Junkertown Arena;owo_earth;owo_junker_outback;;;,owo_wb|COL
-owo_london;London;owo_earth;owo_gibralta;;;,owo_tracer|CONCENTRATED
-owo_talon_hq;Talon HQ;owo_earth;owo_oasis_laboratories;;;owo_doomfist,owo_reaper,,,owo_widowmaker|CONCENTRATED
-owo_dorado_streets;Dorado Streets;owo_earth;owo_gibralta,owo_dorado_hideout;;;owo_soldier76,,,owo_ana|CONCENTRATED
-owo_dorado_hideout;Dorado Hideout;owo_earth;owo_dorado_streets;;;owo_sombra|CONCENTRATED
-owo_nepal;Nepal Sanctum;owo_earth;owo_gibralta;;;owo_genji,,,owo_zenyatta|COL
-owo_deadlock_hideout;Deadlock Hideout;owo_earth;owo_route66;;;,owo_bob,,,owo_ashe|CONCENTRATED
-owo_route66;Route 66;owo_earth;owo_gibralta,owo_deadlock_hideout;;;owo_mccree,owo_echo|CONCENTRATED
-owo_hanamura_castle;Hanamura Castle;owo_earth;owo_gibralta;;;owo_hanzo|CONCENTRATED
-owo_volskaya_industries;Volskaya Industries;owo_earth;owo_gibralta;;;owo_zarya|CONCENTRATED
-owo_lijiang_tower;Lijiang Tower;owo_earth;owo_gibralta;;;,owo_mei|ROW
-owo_torb_home;Torbjörn's Workshop;owo_earth;owo_gibralta;;;owo_reinhardt,owo_brigitte,,owo_bastion,owo_torbjoern|CONCENTRATED
-owo_anubis_temple;Temple of Anubis;owo_earth;owo_gibralta;;;,owo_pharah|CONCENTRATED
-owo_numbani;Numbani;owo_earth;owo_gibralta;;;owo_orisa,,,owo_lucio|CONCENTRATED
-owo_havanna;Havanna;owo_earth;owo_gibralta;;;owo_baptiste|CONCENTRATED
-owo_busan;Busan;owo_earth;owo_gibralta;;;owo_dva|CONCENTRATED
+owo_gibralta;Watch Point Gibralta;owo_europe;owo_oasis_entry,owo_junker_outback,owo_london,owo_dorado_streets,owo_nepal,owo_route66,owo_hanamura_castle,owo_volskaya_industries,owo_lijiang_tower,owo_torb_home,owo_anubis_temple,owo_numbani,owo_havana,owo_busan;owo_asia,owo_australia,owo_n_america,owo_africa;;owo_winston|COL
+owo_oasis_entry;Oasis Entry;owo_africa;owo_gibralta,owo_oasis_laboratories;;;,owo_symmetra|CONCENTRATED
+owo_oasis_laboratories;Oasis Laboratories;owo_africa;owo_oasis_entry,owo_talon_hq;owo_hidden;;,owo_sigma,,,owo_moira|CONCENTRATED
+owo_junker_outback;Junkertown Outback;owo_australia;owo_gibralta,owo_junker_arena;;;owo_roadhog,owo_junkrat|CONCENTRATED
+owo_junker_arena;Junkertown Arena;owo_australia;owo_junker_outback;;;,owo_wb|COL
+owo_london;London;owo_europe;owo_gibralta;;;,owo_tracer|CONCENTRATED
+owo_talon_hq;Talon HQ;owo_hidden;owo_oasis_laboratories;;;owo_doomfist,owo_reaper,,,owo_widowmaker|CONCENTRATED
+owo_dorado_streets;Dorado Streets;owo_n_america;owo_gibralta,owo_dorado_hideout;;;owo_soldier76,,,owo_ana|CONCENTRATED
+owo_dorado_hideout;Dorado Hideout;owo_n_america;owo_dorado_streets;;;owo_sombra|CONCENTRATED
+owo_nepal;Nepal Sanctum;owo_asia;owo_gibralta;;;owo_genji,,,owo_zenyatta|COL
+owo_deadlock_hideout;Deadlock Hideout;owo_n_america;owo_route66;;;,owo_bob,,,owo_ashe|CONCENTRATED
+owo_route66;Route 66;owo_n_america;owo_gibralta,owo_deadlock_hideout;;;owo_mccree,owo_echo|CONCENTRATED
+owo_hanamura_castle;Hanamura Castle;owo_asia;owo_gibralta;;;owo_hanzo|CONCENTRATED
+owo_volskaya_industries;Volskaya Industries;owo_europe;owo_gibralta;;;owo_zarya|CONCENTRATED
+owo_lijiang_tower;Lijiang Tower;owo_asia;owo_gibralta;;;,owo_mei|ROW
+owo_torb_home;Torbjörn's Workshop;owo_europe;owo_gibralta;;;owo_reinhardt,owo_brigitte,,owo_bastion,owo_torbjoern|CONCENTRATED
+owo_anubis_temple;Temple of Anubis;owo_africa;owo_gibralta;;;,owo_pharah|CONCENTRATED
+owo_numbani;Numbani;owo_africa;owo_gibralta;;;owo_orisa,,,owo_lucio|CONCENTRATED
+owo_havana;Havana;owo_n_america;owo_gibralta;;;owo_baptiste|CONCENTRATED
+owo_busan;Busan;owo_asia;owo_gibralta;;;owo_dva|CONCENTRATED

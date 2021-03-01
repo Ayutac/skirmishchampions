@@ -1,1 +1,6 @@
-owo_earth;Earth;owo;owo_gibralta
+owo_hidden;Undisclosed Location;owo;owo_talon_hq
+owo_asia;Asia;owo;owo_busan
+owo_australia;Australia;owo;owo_junker_outback
+owo_europe;Europe;owo;owo_gibralta
+owo_africa;Africa;owo;owo_numbani
+owo_n_america;Northern America;owo;owo_route66
