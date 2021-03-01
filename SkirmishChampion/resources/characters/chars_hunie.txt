@@ -1,0 +1,11 @@
+hunie_kyu;Kyu Sugardust;hunie;Fae;40,70,90,70,200,100,30,60;4;2
+hunie_beli;Beli Lapran;hunie;Humans;40,60,50,60,40,70,10,50;5;2
+hunie_jessie;Jessie Maye;hunie;Humans;40,60,40,50,80,50,30,50;4;2
+hunie_aiko;Aiko Yumi;hunie;Humans;40,60,80,50,60,50,20,55;2;1
+hunie_tiffany;Tiffany Maye;hunie;Humans;40,70,50,30,30,50,10,54;5;2
+hunie_nikki;Nikki Ann-Marie;hunie;Humans;40,60,60,60,30,40,20,51;2;1
+hunie_lola;Lola Rembrite;hunie;Humans;40,50,50,40,50,50,10,50;5;2
+// she thinks she is charismatic, when she is in fact not
+hunie_audrey;Audrey Belrose;hunie;Humans;40,50,40,30,40,30,40,50;5;2
+hunie_kyanna;Kyanna Delrio;hunie;Humans;60,70,50,50,50,50,10,60;1;0
+hunie_venus;Venus;hunie;Fae,Gods;150,200,100,200,500,350,100,100;4;2

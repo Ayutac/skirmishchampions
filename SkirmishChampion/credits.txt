@@ -13,6 +13,9 @@ for more information on TWI, especially reading it, visit https://wanderinginn.c
 # Overwatch is owned by Blizzard Entertainment Inc.
 for more information on Overwatch, especially playing it, visit https://playoverwatch.com/
 
+# HuniePop is owned by HuniePot
+for more information on HuniePop, especially playing it, visit https://www.gog.com/game/huniepop
+
 ## Art:
 
 # For the logo and title screen, public domain SVG images were used:
@@ -149,3 +152,7 @@ Winston: https://overwatch.fandom.com/wiki/Winston/Gallery?file=Winston_Overwatc
 Wrecking Ball: https://overwatch.fandom.com/wiki/Wrecking_Ball?file=Wrecking_Ball_classic.png
 Zarya: https://overwatch.fandom.com/wiki/Zarya/Gallery?file=Zarya_03.jpg
 Zenyatta: https://overwatch.fandom.com/wiki/Zenyatta/Gallery?file=Zenyatta_Overwatch_008.jpg
+
+# HuniePop
+all images are from personal screenshots
+

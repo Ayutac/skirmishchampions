@@ -1,0 +1,8 @@
+hunie_mall;Shopping Mall;hunie_town;hunie_campus,hunie_cafe,hunie_fitness,hunie_park,hunie_casino;;;hunie_audrey|ROW
+hunie_casino;Gold Falls Casino;hunie_town;hunie_mall,hunie_overlook;;;hunie_jessie|ROW
+hunie_overlook;Scenic Overlook;hunie_town;hunie_garden,hunie_casino;;;hunie_kyu|ROW
+hunie_campus;University Campus;hunie_town;hunie_mall;;;hunie_tiffany|ROW
+hunie_cafe;Nutmeg Cafe;hunie_town;hunie_mall;;;hunie_lola|ROW
+hunie_fitness;Fitness Club;hunie_town;hunie_mall;;;hunie_kyanna|ROW
+hunie_park;Dawnwood Park;hunie_town;hunie_mall;;;hunie_beli,hunie_aiko|ROW
+hunie_garden;Botanical Garden;hunie_town;hunie_overlook;;;hunie_venus|ROW
