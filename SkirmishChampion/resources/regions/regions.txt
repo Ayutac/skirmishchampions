@@ -1,1 +1,2 @@
+// contains regions of fandoms with up to 3 regions each 
 hunie_town;Hunie Town;hunie;hunie_mall
