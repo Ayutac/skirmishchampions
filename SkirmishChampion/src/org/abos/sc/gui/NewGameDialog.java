@@ -3,6 +3,8 @@ package org.abos.sc.gui;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Window;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.swing.ButtonGroup;
@@ -110,9 +112,15 @@ public class NewGameDialog extends JDialog {
 		if (FandomBase.FANDOMS.isEmpty())
 			throw new IllegalStateException("No fandoms found!");
 		fandomChooseLabel = new JLabel("Start Fandom:");
-		fandomSelector = new ContentComboBox<>(FandomBase.FANDOMS.stream()
-				.map(base -> new Fandom(base)).collect(Collectors.toList()),
-				Name.createNameComparator());
+		List<Fandom> fandoms = FandomBase.FANDOMS.stream()
+				.map(base -> new Fandom(base)).collect(Collectors.toList());
+		fandomSelector = new ContentComboBox<>(fandoms, Name.createNameComparator());
+		FandomBase defaultFandom = FandomBase.getDefaultFandom();
+		if (defaultFandom != null) {
+			// sorting is required so we get the correct index
+			Collections.sort(fandoms, Name.createNameComparator());
+			fandomSelector.setSelectedIndex(fandoms.indexOf(new Fandom(defaultFandom)));
+		}
 		Difficulty[] difficulties = Difficulty.values();
 		difficultyChooseLabel = new JLabel("What is at steak?");
 		difficultyButtons = new JRadioButton[difficulties.length];

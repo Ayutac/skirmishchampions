@@ -298,5 +298,15 @@ public class FandomBase implements IdCloneable, Name, SaveString {
 	public static FandomBase parse(String s) {
 		return parse(s, true);
 	}
+	
+	/**
+	 * Returns the default fandom as given by {@link #DEFAULT_FANDOM_ID}. Same as calling
+	 * <code>FandomBase.FANDOMS.lookup(FandomBase.DEFAULT_FANDOM_ID)</code>.
+	 * @return The fandom base of {@value #DEFAULT_FANDOM_ID} or <code>null</code> if it isn't registered.
+	 * @see #DEFAULT_FANDOM_ID
+	 */
+	public static FandomBase getDefaultFandom() {
+		return FANDOMS.lookup(DEFAULT_FANDOM_ID);
+	}
 
 }
