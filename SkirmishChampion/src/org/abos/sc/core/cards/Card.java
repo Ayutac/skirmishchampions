@@ -1,7 +1,17 @@
 package org.abos.sc.core.cards;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.abos.util.AbstractNamedComparator;
+import org.abos.util.Id;
 import org.abos.util.Name;
+import org.abos.util.Utilities;
 
 /**
  * The interface for cards.
@@ -9,7 +19,7 @@ import org.abos.util.Name;
  * @version %I%
  * @since 0.7
  */
-public interface Card extends Name {
+public interface Card extends Id, Name {
 
 	/**
 	 * Returns the rarity of this card.
@@ -52,6 +62,30 @@ public interface Card extends Name {
 				return o1.getRarity().compareTo(o2.getRarity());
 			}
 		};
+	}
+	
+	public static <T extends Card> Map<Rarity, Collection<T>> toRarityMap(Iterable<T> cards) {
+		Utilities.requireNonNull(cards, "cards");
+		Map<Rarity, Collection<T>> mutableMap = new EnumMap<>(Rarity.class);
+		mutableMap.put(null, new LinkedList<>());
+		for (Rarity rarity : Rarity.values()) {
+			mutableMap.put(rarity, new LinkedList<>());
+		}
+		// add all cards
+		Iterator<T> it = cards.iterator();
+		T current = null;
+		while (it.hasNext()) {
+			current = it.next();
+			if (current == null)
+				throw new NullPointerException("All entries of cards must be non null!");
+			mutableMap.get(current.getRarity()).add(current);
+			mutableMap.get(null).add(current);
+		}
+		// make the entries immutable
+		for (Rarity rarity : Rarity.values()) {
+			mutableMap.put(rarity, Collections.unmodifiableList((List<? extends T>)mutableMap.get(rarity)));
+		}
+		return Collections.unmodifiableMap(mutableMap);
 	}
 	
 }

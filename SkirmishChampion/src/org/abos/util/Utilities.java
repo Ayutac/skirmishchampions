@@ -8,9 +8,15 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
@@ -413,6 +419,97 @@ public class Utilities {
 			if (!check[i])
 				return false;
 		return true;
+	}
+	
+	/**
+	 * Chooses a random element of a collection.
+	 * @param <T> the object type to choose from
+	 * @param collection the collection to choose from, not <code>null</code>.
+	 * @param rng The RNG to use. If <code>null</code>, one will be created.
+	 * @return one element of <code>collection</code> chosen at random.
+	 * @throws NullPointerException If <code>collection</code> refers to <code>null</code>.
+	 * @throws IllegalArgumentException If <code>collection</code> is empty.
+	 * @see #randomlyChoose(List, Random)
+	 * @see #randomlyChoose(Map, Random)
+	 */
+	public static <T> T randomlyChoose(Collection<T> collection, Random rng) {
+		requireNonNull(collection, "collection");
+		if (collection.size() == 0)
+			throw new IllegalArgumentException("distribution can't be empty!");
+		if (rng == null)
+			rng = new Random();
+		int choosenIndex = rng.nextInt(collection.size());
+		// find the selected element
+		Iterator<T> it = collection.iterator();
+		for (int k = 0; k < choosenIndex; k++)
+			it.next();
+		return it.next();
+	}
+	
+	/**
+	 * Chooses a random element of a list.
+	 * @param <T> the object type to choose from
+	 * @param list the list to choose from, not <code>null</code>.
+	 * @param rng The RNG to use. If <code>null</code>, one will be created.
+	 * @return one element of <code>list</code> chosen at random.
+	 * @throws NullPointerException If <code>list</code> refers to <code>null</code>.
+	 * @throws IllegalArgumentException If <code>list</code> is empty.
+	 * @see #randomlyChoose(Collection, Random)
+	 * @see #randomlyChoose(Map, Random)
+	 */
+	public static <T> T randomlyChoose(List<T> list, Random rng) {
+		requireNonNull(list, "collection");
+		if (list.size() == 0)
+			throw new IllegalArgumentException("distribution can't be empty!");
+		if (rng == null)
+			rng = new Random();
+		return list.get(rng.nextInt(list.size()));
+	}
+	
+	/**
+	 * Chooses a random key of a map with the entries being weights.
+	 * @param <T> the object type to choose from
+	 * @param distribution the distribution to choose from, not <code>null</code> and without negative entry values.
+	 * @param rng The RNG to use. If <code>null</code>, one will be created.
+	 * @return one of the keys from <code>distribution</code> chosen at random with the weights respected.
+	 * @throws NullPointerException If <code>distribution</code> refers to <code>null</code>.
+	 * @throws IllegalArgumentException If <code>distribution</code> is empty OR any value of <code>distribution</code> is negative OR
+	 * if the sum of the weights causes an overflow.
+	 * @see #randomlyChoose(Collection, Random)
+	 * @see #randomlyChoose(List, Random)
+	 */
+	public static <T> T randomlyChoose(Map<T,Integer> distribution, Random rng) {
+		requireNonNull(distribution, "distribution");
+		if (distribution.size() == 0)
+			throw new IllegalArgumentException("distribution can't be empty!");
+		if (rng == null)
+			rng = new Random();
+		// converted to list to ensure the iteration stays the same
+		List<Entry<T,Integer>> entries = new ArrayList<>(distribution.entrySet());
+		// calculate cumulative sum
+		int[] culSum = new int[entries.size()];
+		Integer currentValue = entries.get(0).getValue();
+		culSum[0] = currentValue == null ? 0 : currentValue;
+		for (int i = 1; i < culSum.length; i++) {
+			currentValue = entries.get(i).getValue();
+			if (currentValue == null)
+				currentValue = 0;
+			else if (currentValue < 0)
+				throw new IllegalArgumentException("No weight can be negative!");
+			culSum[i] = addWithoutOverflow(culSum[i-1], currentValue);
+			if ((currentValue != 0 && culSum[i] == culSum[i-1]) || (culSum[i-1] != 0 && culSum[i] == currentValue)) 
+				throw new IllegalArgumentException("Overflow in weights detected! Reduce weights!");
+		}
+		// draw random
+		int chosen = rng.nextInt(culSum[culSum.length-1]);
+		// find entry of draw
+		int chosenIndex = 0;
+		while (chosenIndex < culSum.length && chosen >= culSum[chosenIndex])
+			chosenIndex++;
+		// the first condition of the while loop should ALWAYS be fulfilled, but if not the endless loop will be hard to detect without it
+		// hence the condition and assertion
+		assert chosenIndex < culSum.length;
+		return entries.get(chosenIndex).getKey();
 	}
 	
 	/**
