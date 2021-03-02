@@ -127,8 +127,19 @@ twi_ressa;Ressa;twi;Izril,Maids,Assassins;80,500,150,100,50,70,60,100;1;0
 twi_ferin;Ferin;twi;Izril,Assassins;90,500,220,180,70,90,100,100;1;0
 // based on Tracer; this is ryoka at start of book8
 twi_ryoka_courier;Ryoka Griffin;twi;Humans,Runners,Earthers;70,70,70,80,60,40,30,180;2;1
-// fierre after being cured
+// Fierre after being cured
 twi_fierre_pure;Serafierre val Lischelle-Drakle;twi;Humans,Vampires;500,500,90,50,70,50,20,150;0;0
+// king of the minotaurs
+twi_inreza;Inreza of Minos;twi;Minotaurs;700,400,230,200,120,300,100,140;0;0
+twi_fetohep;Fetohep;twi;Humans,Undead;600,550,300,500,50,400,100,170;3;1
+twi_trey;Trey Atlas;twi;Humans;50,50,70,60,20,60,20,60;2;1
+// based on Saliss 
+twi_cognita;Cognita;twi;Golems,Wistram;1000,1000,500,700,100,250,100,250;0;0
+// based on Feor and Shorthilt
+twi_azkerash;Az'Kerash;twi;Humans,Mages;150,600,600,300,90,360,90,250;2;0
+twi_domehead;Domehead;twi;Golems;200,150,70,20,10,40,20,100;0;0
+// based on Pride
+twi_nsiia;Nsiia;twi;Humans,Chandrar;90,150,180,170,150,500,100,120;5;2
 // Chess club
 twi_knight;Knight;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
 twi_bishop;Bishop;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1

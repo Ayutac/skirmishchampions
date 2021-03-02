@@ -12,4 +12,5 @@ twi_baleros;Baleros;twi;twi_elvallian
 twi_talenqual;Baleros: Talenqual;twi;twi_talenqual_entry
 twi_terandria;Terandria;twi;twi_seasons_hq
 twi_chandrar;Chandrar;twi;twi_reim
+twi_minos;The House of Minos;twi;twi_minos_palace
 twi_wistram;Wistram;twi;twi_wistram_port
