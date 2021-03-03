@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.abos.sc.core.Valuable;
 import org.abos.util.AbstractNamedComparator;
 import org.abos.util.Id;
 import org.abos.util.Name;
@@ -19,7 +20,12 @@ import org.abos.util.Utilities;
  * @version %I%
  * @since 0.7
  */
-public interface Card extends Id, Name {
+public interface Card extends Id, Name, Valuable {
+	
+	/**
+	 * How many identical cards are usually needed to get a single card of higher rarity. 
+	 */
+	public final static int DEFAULT_COMBINATION_SIZE = 5;
 
 	/**
 	 * Returns the rarity of this card.
@@ -32,6 +38,24 @@ public interface Card extends Id, Name {
 	 * @return the flavour text of this card
 	 */
 	public String getFlavourText();
+	
+	/**
+	 * Returns the gold value of this card, by default the gold value of its rarity.
+	 * @see Rarity#getValueGold()
+	 */
+	@Override
+	public default int getValueGold() {
+		return getRarity().getValueGold();
+	}
+	
+	/**
+	 * Returns the diamond value of this card, by default the diamond value of its rarity.
+	 * @see Rarity#getValueDiamonds()
+	 */
+	@Override
+	public default int getValueDiamonds() {
+		return getRarity().getValueDiamonds();
+	}
 	
 	/**
 	 * Returns a comparator that sorts cards by their rarity starting with the most common one.
@@ -66,10 +90,10 @@ public interface Card extends Id, Name {
 	
 	public static <T extends Card> Map<Rarity, Collection<T>> toRarityMap(Iterable<T> cards) {
 		Utilities.requireNonNull(cards, "cards");
-		Map<Rarity, Collection<T>> mutableMap = new EnumMap<>(Rarity.class);
-		mutableMap.put(null, new LinkedList<>());
+		Map<Rarity, Collection<T>> map = new EnumMap<>(Rarity.class);
+		map.put(null, new LinkedList<>());
 		for (Rarity rarity : Rarity.values()) {
-			mutableMap.put(rarity, new LinkedList<>());
+			map.put(rarity, new LinkedList<>());
 		}
 		// add all cards
 		Iterator<T> it = cards.iterator();
@@ -78,14 +102,10 @@ public interface Card extends Id, Name {
 			current = it.next();
 			if (current == null)
 				throw new NullPointerException("All entries of cards must be non null!");
-			mutableMap.get(current.getRarity()).add(current);
-			mutableMap.get(null).add(current);
+			map.get(current.getRarity()).add(current);
+			map.get(null).add(current);
 		}
-		// make the entries immutable
-		for (Rarity rarity : Rarity.values()) {
-			mutableMap.put(rarity, Collections.unmodifiableList((List<? extends T>)mutableMap.get(rarity)));
-		}
-		return Collections.unmodifiableMap(mutableMap);
+		return map;
 	}
 	
 }

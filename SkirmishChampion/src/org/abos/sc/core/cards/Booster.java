@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.abos.sc.core.CharacterBase;
+import org.abos.sc.core.FandomBase;
+import org.abos.sc.core.Valuable;
 import org.abos.util.Id;
 import org.abos.util.Name;
 import org.abos.util.Utilities;
@@ -21,20 +24,33 @@ import org.abos.util.Utilities;
  * @param <T> the card type this booster is for
  * @since 0.7
  */
-public class Booster<T extends Card> implements Id, Name {
+public class Booster<T extends Card> implements Id, Name, Valuable {
+	
+	/**
+	 * How many cards are usually within a booster pack.
+	 * @see #packSize() 
+	 */
+	public final static int DEFAULT_PACK_SIZE = 5;
 	
 	protected final String id;
 	
 	protected final String name;
 	
+	protected final int valueGold;
+	
+	protected final int valueDiamonds;
+	
 	protected final Map<Rarity, Collection<T>> availableCards;
 	
 	protected final Collection<Map<Rarity, Integer>> distributions;
 	
-	public Booster(String id, String name, Map<Rarity, Collection<T>> availableCards, Collection<Map<Rarity, Integer>> distributions) {
+	public Booster(String id, String name, int valueGold, int valueDiamonds, 
+			Map<Rarity, Collection<T>> availableCards, Collection<Map<Rarity, Integer>> distributions) {
 		// TODO exceptions
 		this.id = id;
 		this.name = name;
+		this.valueGold = valueGold;
+		this.valueDiamonds = valueDiamonds;
 		Map<Rarity, Collection<T>> acCopy = new EnumMap<>(Rarity.class);
 		for (Entry<Rarity, Collection<T>> entry : availableCards.entrySet())
 			acCopy.put(entry.getKey(), Collections.unmodifiableCollection(entry.getValue()));
@@ -53,6 +69,16 @@ public class Booster<T extends Card> implements Id, Name {
 	@Override
 	public String getName() {
 		return name;
+	}
+	
+	@Override
+	public int getValueGold() {
+		return valueGold;
+	}
+	
+	@Override
+	public int getValueDiamonds() {
+		return valueDiamonds;
 	}
 
 	/**
@@ -115,6 +141,27 @@ public class Booster<T extends Card> implements Id, Name {
 	public static Collection<Map<Rarity, Integer>> createSingleDistribution(int packSize, Map<Rarity, Integer> rareDistribution) {
 		// TODO exceptions
 		return Collections.nCopies(packSize, rareDistribution);
+	}
+	
+	public static Booster<CharacterBase> createBoosterBasic(FandomBase fandom) {
+		Utilities.requireNonNull(fandom, "fandom");
+		return new Booster<>("booster_basic_"+fandom.getId(), fandom.getName()+" Basic", 30, 0, 
+				Card.toRarityMap(fandom.collectAssociatedCharacters()),
+				createSingletonDistribution(DEFAULT_PACK_SIZE, Utilities.intArrayToEnumMap(new int[] {0,79,20,1}, Rarity.class)));
+	}
+	
+	public static Booster<CharacterBase> createBoosterGold(FandomBase fandom) {
+		Utilities.requireNonNull(fandom, "fandom");
+		return new Booster<>("booster_gold_"+fandom.getId(), fandom.getName()+" Gold", 120, 0, 
+				Card.toRarityMap(fandom.collectAssociatedCharacters()),
+				createSingleDistribution(DEFAULT_PACK_SIZE, Utilities.intArrayToEnumMap(new int[] {0,50,35,15}, Rarity.class)));
+	}
+	
+	public static Booster<CharacterBase> createBoosterDiamond(FandomBase fandom) {
+		Utilities.requireNonNull(fandom, "fandom");
+		return new Booster<>("booster_diamond_"+fandom.getId(), fandom.getName()+" Diamond", 120, 0, 
+				Card.toRarityMap(fandom.collectAssociatedCharacters()),
+				createSingleDistribution(DEFAULT_PACK_SIZE, Utilities.intArrayToEnumMap(new int[] {0,0,2,3}, Rarity.class)));
 	}
 	
 }

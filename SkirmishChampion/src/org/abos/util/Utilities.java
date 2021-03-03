@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -419,6 +420,24 @@ public class Utilities {
 			if (!check[i])
 				return false;
 		return true;
+	}
+	
+	public static <K extends Enum<K>> EnumMap<K, Integer> intArrayToEnumMap(int[] array, Class<K> enumClass) {
+		requireNonNull(array, "array");
+		requireNonNull(enumClass, "enumClass");
+		K[] constants = enumClass.getEnumConstants();
+		if (constants == null) // shouldn't happen because of the type specification
+			throw new IllegalArgumentException("Specified class is not an enumeration!");
+		if (array.length > constants.length+1)
+			throw new IllegalArgumentException(String.format("array of length %d is too big, maximum is %d!", array.length, constants.length+1));
+		// create map
+		EnumMap<K, Integer> map = new EnumMap<>(enumClass);
+		for (int i = 0; i < array.length && i < constants.length; i++) {
+			map.put(constants[i], array[i]);
+		}
+		if (array.length == constants.length+1)
+			map.put(null, array[constants.length]);
+		return map;
 	}
 	
 	/**

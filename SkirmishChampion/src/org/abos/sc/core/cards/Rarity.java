@@ -1,5 +1,6 @@
 package org.abos.sc.core.cards;
 
+import org.abos.sc.core.Valuable;
 import org.abos.util.IllegalArgumentRangeException;
 import org.abos.util.Name;
 import org.abos.util.SaveString;
@@ -15,7 +16,7 @@ import org.abos.util.Utilities;
  * @see #EPIC
  * @see #LEGENDARY
  */
-public enum Rarity implements Name, SaveString {
+public enum Rarity implements Name, SaveString, Valuable {
 
 	/**
 	 * Common rarity.
@@ -75,6 +76,25 @@ public enum Rarity implements Name, SaveString {
 	}
 	
 	/**
+	 * The default gold value of a card of this rarity. Equals ({@link Card.DEFAULT_COMBINATION_SIZE}+1)^({@link #ordinal()}).
+	 */
+	@Override
+	public final int getValueGold() {
+		int value = 1;
+		for (int i = 0; i < ordinal(); i++)
+			value *= (Card.DEFAULT_COMBINATION_SIZE+1);
+		return value;
+	}
+	
+	/**
+	 * The default diamond value of a card of this rarity. Equals 0.
+	 */
+	@Override
+	public final int getValueDiamonds() {
+		return 0;
+	}
+	
+	/**
 	 * Saves the rarity to a string builder.
 	 * @param s the string builder to append to
 	 * @throws NullPointerException If <code>s</code> refers to <code>null</code>.
@@ -82,7 +102,7 @@ public enum Rarity implements Name, SaveString {
 	 * @see #parse(String)
 	 */
 	@Override
-	public void toSaveString(StringBuilder s) {
+	public final void toSaveString(StringBuilder s) {
 		Utilities.requireNonNull(s, "s");
 		s.append(getName());
 	}

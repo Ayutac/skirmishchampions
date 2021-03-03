@@ -159,6 +159,17 @@ public class FandomBase implements IdCloneable, Name, SaveString {
 	}
 	
 	/**
+	 * Returns a set of all character bases that list the ID of this fandom as their fandom ID
+	 * by going through {@link CharacterBase#CHARACTERS}.
+	 * @return a set of of all character bases that list the ID of this fandom as their fandom ID
+	 */
+	public Set<CharacterBase> collectAssociatedCharacters() {
+		return CharacterBase.CHARACTERS.stream()
+				.filter(base -> id.equals(base.getFandomId()))
+				.collect(Collectors.toSet());
+	}
+	
+	/**
 	 * Returns a deep copy of this fandom base by calling the copy constructor.
 	 * @see #FandomBase(FandomBase)
 	 */
