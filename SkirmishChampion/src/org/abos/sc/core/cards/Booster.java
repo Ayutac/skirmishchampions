@@ -2,8 +2,12 @@ package org.abos.sc.core.cards;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.abos.util.Id;
@@ -19,14 +23,36 @@ import org.abos.util.Utilities;
  */
 public class Booster<T extends Card> implements Id, Name {
 	
+	protected final String id;
+	
+	protected final String name;
+	
+	protected final Map<Rarity, Collection<T>> availableCards;
+	
+	protected final Collection<Map<Rarity, Integer>> distributions;
+	
+	public Booster(String id, String name, Map<Rarity, Collection<T>> availableCards, Collection<Map<Rarity, Integer>> distributions) {
+		// TODO exceptions
+		this.id = id;
+		this.name = name;
+		Map<Rarity, Collection<T>> acCopy = new EnumMap<>(Rarity.class);
+		for (Entry<Rarity, Collection<T>> entry : availableCards.entrySet())
+			acCopy.put(entry.getKey(), Collections.unmodifiableCollection(entry.getValue()));
+		this.availableCards = Collections.unmodifiableMap(acCopy);
+		Collection<Map<Rarity, Integer>> dCopy = new LinkedList<>();
+		for (Map<Rarity, Integer> distribution : distributions)
+			dCopy.add(Collections.unmodifiableMap(distribution));
+		this.distributions = Collections.unmodifiableCollection(dCopy);
+	}
+	
 	@Override
 	public String getId() {
-		throw new UnsupportedOperationException("Not yet implemented!");
+		return id;
 	}
 	
 	@Override
 	public String getName() {
-		throw new UnsupportedOperationException("Not yet implemented!");
+		return name;
 	}
 
 	/**
@@ -35,7 +61,7 @@ public class Booster<T extends Card> implements Id, Name {
 	 * @return A mapping from a rarity to the booster cards of that rarity. The map and the mapped collections are immutable.
 	 */
 	public Map<Rarity, Collection<T>> getAvailableCards() {
-		throw new UnsupportedOperationException("Not yet implemented!");
+		return availableCards;
 	}
 	
 	/**
@@ -43,7 +69,7 @@ public class Booster<T extends Card> implements Id, Name {
 	 * @return distribution for each place in a booster pack
 	 */
 	public Collection<Map<Rarity, Integer>> getDistributions() {
-		throw new UnsupportedOperationException("Not yet implemented!");
+		return distributions;
 	}
 	
 	/**
@@ -72,6 +98,23 @@ public class Booster<T extends Card> implements Id, Name {
 			result.add(Utilities.randomlyChoose(getAvailableCards().get(Utilities.randomlyChoose(distribution, rng)), rng));
 		}
 		return result;
+	}
+	
+	public static Collection<Map<Rarity, Integer>> createSingletonDistribution(int packSize, Map<Rarity, Integer> rareDistribution) {
+		// TODO exceptions
+		Collection<Map<Rarity, Integer>> distributions = new ArrayList<>(packSize);
+		Map<Rarity, Integer> commonConstant = new EnumMap<>(Rarity.class);
+		commonConstant.put(Rarity.COMMON, 1);
+		for (int i = 1; i < packSize; i++) {
+			distributions.add(commonConstant);
+		}
+		distributions.add(rareDistribution);
+		return distributions;
+	}
+	
+	public static Collection<Map<Rarity, Integer>> createSingleDistribution(int packSize, Map<Rarity, Integer> rareDistribution) {
+		// TODO exceptions
+		return Collections.nCopies(packSize, rareDistribution);
 	}
 	
 }
