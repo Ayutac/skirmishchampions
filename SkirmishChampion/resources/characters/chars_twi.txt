@@ -2,28 +2,28 @@
 // character line is given as follow:
 // ID (must be unique); displayed name; fandom ID; group associations (divided by ,);STR,DEX,INT,WIS,ROM,CHA,SPE,SPD;attack stat;damage stat 
 // Liscor
-twi_erin;Erin Solstice;twi;Humans,Earthers,Liscor,Innfamily;50,40,40,40,10,60,80,30;5;2
-twi_mrsha;Mrsha;twi;Gnolls,Liscor,Innfamily;20,20,20,10,0,30,40,50;5;2
-twi_lyon;Lyonette du Marquin;twi;Humans,Nobility,du Marquin,Liscor,Innfamily;50,40,50,50,50,60,30,30;5;2
-twi_bird;Bird;twi;Antinium,Free Antinium,Liscor,Innfamily;80,300,30,20,10,30,60,200;1;0
-twi_pawn;Pawn;twi;Antinium,Free Antinium,Liscor;50,50,80,70,70,90,70,60;5;2
-twi_drassi;Drassi Tewing;twi;Drakes,Liscor;40,50,50,50,40,80,20,40;5;2
-twi_ishkr;Ishkr Silverfang;twi;Gnolls,Silverfang,Liscor;50,50,60,60,40,70,20,40;5;2
-twi_selys;Selys Shivertail;twi;Drakes,Liscor,Shivertail;40,40,70,50,70,80,10,50;5;2
-twi_krshia;Krshia Silverfang;twi;Gnolls,Silverfang,Liscor,Liscor's Council;70,90,110,80,80,120,20,70;5;2
-twi_olesm;Olesm Swifttail;twi;Drakes,Swifttail,Strategists,Liscor;40,40,120,70,60,60,50,60;2;1
+twi_erin;Erin Solstice;twi;Humans,Earthers,Liscor,Innfamily;50,40,40,40,10,60,80,30;5;2;S
+twi_mrsha;Mrsha;twi;Gnolls,Liscor,Innfamily;20,20,20,10,0,30,40,50;5;2;S
+twi_lyon;Lyonette du Marquin;twi;Humans,Nobility,du Marquin,Liscor,Innfamily;50,40,50,50,50,60,30,30;5;2;S
+twi_bird;Bird;twi;Antinium,Free Antinium,Liscor,Innfamily;80,300,30,20,10,30,60,200;1;0;L
+twi_pawn;Pawn;twi;Antinium,Free Antinium,Liscor;50,50,80,70,70,90,70,60;5;2;L
+twi_drassi;Drassi Tewing;twi;Drakes,Liscor;40,50,50,50,40,80,20,40;5;2;R
+twi_ishkr;Ishkr Silverfang;twi;Gnolls,Silverfang,Liscor;50,50,60,60,40,70,20,40;5;2;R
+twi_selys;Selys Shivertail;twi;Drakes,Liscor,Shivertail;40,40,70,50,70,80,10,50;5;2;R
+twi_krshia;Krshia Silverfang;twi;Gnolls,Silverfang,Liscor,Liscor's Council;70,90,110,80,80,120,20,70;5;2;R
+twi_olesm;Olesm Swifttail;twi;Drakes,Swifttail,Strategists,Liscor;40,40,120,70,60,60,50,60;2;1;R
 twi_lism;Lism Swifttail;twi;Drakes,Swifttail,Liscor,Liscor's Council;40,50,100,70,60,130,20,50;5;2
-twi_calruz;Calruz of Hammerad;twi;Minotaurs,Liscor;300,150,70,70,60,50,40,80;0;0
+twi_calruz;Calruz of Hammerad;twi;Minotaurs,Liscor;300,150,70,70,60,50,40,80;0;0;R
 twi_haldagaz;Haldagaz;twi;Rats,Liscor;10,10,10,10,40,10,10,100;0;0
 twi_rhata;Rhata;twi;Rats,Liscor;10,10,10,10,40,10,10,100;0;0
-twi_visma;Visma;twi;Drakes,Liscor;10,20,10,0,0,20,10,40;5;2
-twi_ekirra;Ekirra Silverfang;twi;Gnolls,Silverfang,Liscor;20,20,10,0,0,20,10,50;5;2
+twi_visma;Visma;twi;Drakes,Liscor;10,20,10,0,0,20,10,40;5;2;R
+twi_ekirra;Ekirra Silverfang;twi;Gnolls,Silverfang,Liscor;20,20,10,0,0,20,10,50;5;2;R
 // Redfang Five
-twi_headscratcher;Headscratcher;twi;Goblins,Hobgoblins,Warriors,Redfangs,Redfang,Redfang Five,Innfamily,Liscor;220,150,40,40,20,20,80,120;0;0
-twi_shorthilt;Shorthilt;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;200,180,40,40,20,20,50,150;0;0
-twi_rabbiteater;Rabbiteater;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;180,160,50,50,20,80,30,130;0;0
-twi_numbtongue;Numbtongue;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;170,170,60,50,20,120,70,140;0;0
-twi_badarrow;Badarrow;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;150,220,40,40,20,50,40,160;1;0
+twi_headscratcher;Headscratcher;twi;Goblins,Hobgoblins,Warriors,Redfangs,Redfang,Redfang Five,Innfamily,Liscor;220,150,40,40,20,20,80,120;0;0;E
+twi_shorthilt;Shorthilt;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;200,180,40,40,20,20,50,150;0;0;E
+twi_rabbiteater;Rabbiteater;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;180,160,50,50,20,80,30,130;0;0;E
+twi_numbtongue;Numbtongue;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;170,170,60,50,20,120,70,140;0;0;E
+twi_badarrow;Badarrow;twi;Goblins,Hobgoblins,Warriors,Redfang,Redfang Five,Innfamily,Liscor;150,220,40,40,20,50,40,160;1;0;E
 // UGH
 twi_imani;Imani;twi;Humans,Earthers,UGH;30,40,40,30,20,40,20,30;2;1
 twi_joseph;Joseph Ortega;twi;Humans,Earthers,UGH;40,50,40,30,20,40,20,40;2;1
@@ -33,113 +33,113 @@ twi_troy;Troydel;twi;Humans,Earthers,UGH;40,30,30,10,20,20,10,30;2;1
 twi_leon;Leon;twi;Humans,Earthers,UGH;40,30,30,10,20,20,10,30;2;1
 twi_galina;Galina;twi;Humans,Earthers,UGH;30,40,40,20,20,30,20,30;2;1
 // Horns of Hammerad
-twi_ceria;Ceria Springwalker;twi;Half-Elves,Horns,Mages,Adventurers;40,70,150,80,50,70,50,70;2;0
-twi_pisces;Pisces Jealnet;twi;Humans,Mages,Horns,Necromancers,Adventurers;60,70,140,100,70,80,80,80;2;0
-twi_yvlon;Yvlon Byres;twi;Humans,Nobility,Byres,Horns,Warriors,Adventurers;150,100,70,60,40,70,30,50;0;0
-twi_ksmvr;Ksmvr;twi;Antinium,Free Antinium,Warriors,Horns,Adventurers;100,150,50,30,10,50,50,80;1;0
+twi_ceria;Ceria Springwalker;twi;Half-Elves,Horns,Mages,Adventurers;40,70,150,80,50,70,50,70;2;0;E
+twi_pisces;Pisces Jealnet;twi;Humans,Mages,Horns,Necromancers,Adventurers;60,70,140,100,70,80,80,80;2;0;E
+twi_yvlon;Yvlon Byres;twi;Humans,Nobility,Byres,Horns,Warriors,Adventurers;150,100,70,60,40,70,30,50;0;0;E
+twi_ksmvr;Ksmvr;twi;Antinium,Free Antinium,Warriors,Horns,Adventurers;100,150,50,30,10,50,50,80;1;0;E
 // Silver Swords
-twi_ylawes;Ylawes Byres;twi;Humans,Nobility,Silver Swords,Warriors,Adventurers;300,250,60,50,20,200,40,100;0;0
-twi_falene;Falene Skystrall;twi;Half-Elves,Silver Swords,Mages,Adventurers;50,80,300,180,40,100,40,100;2;0
-twi_dawil;Dawil Ironbreaker;twi;Dwarves,Silver Swords,Warriors,Adventurers;250,220,80,90,50,70,40,70;0;0
+twi_ylawes;Ylawes Byres;twi;Humans,Nobility,Silver Swords,Warriors,Adventurers;300,250,60,50,20,200,40,100;0;0;R
+twi_falene;Falene Skystrall;twi;Half-Elves,Silver Swords,Mages,Adventurers;50,80,300,180,40,100,40,100;2;0;R
+twi_dawil;Dawil Ironbreaker;twi;Dwarves,Silver Swords,Warriors,Adventurers;250,220,80,90,50,70,40,70;0;0;R
 // Griffon Hunt
-twi_halrac;Halrac Everam;twi;Humans,Griffon Hunt,Adventurers;110,270,100,80,40,70,40,180;1;0
-twi_revi;Revi;twi;Stitch-Folk,Griffon Hunt,Adventurers;50,90,260,90,60,70,100,100;2;0
-twi_typhenous;Typhenous;twi;Humans,Griffon Hunt,Adventurers;40,70,340,260,100,120,50,120;2;0
+twi_halrac;Halrac Everam;twi;Humans,Griffon Hunt,Adventurers;110,270,100,80,40,70,40,180;1;0;E
+twi_revi;Revi;twi;Stitch-Folk,Griffon Hunt,Adventurers;50,90,260,90,60,70,100,100;2;0;R
+twi_typhenous;Typhenous;twi;Humans,Griffon Hunt,Adventurers;40,70,340,260,100,120,50,120;2;0;R
 // Liscor Watch
 twi_tkrn;Tkrn Silverfang;twi;Gnolls,Liscor,Silverfang,Watch;70,60,40,30,50,40,20,40;0;0
 twi_jerci;Jerci;twi;Drakes,Liscor,Watch;50,50,40,30,40,40,20,40;0;0
-twi_relc;Relc Grasstongue;twi;Drakes,Liscor,Watch;550,650,60,60,100,20,30,200;1;0
-twi_klbkch;Klbkchhezeim;twi;Antinium,Centinum,Liscor,Watch;700,800,300,300,10,80,100,250;1;0
-twi_zevara;Zevara Sunderscale;twi;Drakes,Liscor,Watch;130,110,120,130,60,90,100,70;0;0
+twi_relc;Relc Grasstongue;twi;Drakes,Liscor,Watch;550,650,60,60,100,20,30,200;1;0;L
+twi_klbkch;Klbkchhezeim;twi;Antinium,Centinum,Liscor,Watch;700,800,300,300,10,80,100,250;1;0;L
+twi_zevara;Zevara Sunderscale;twi;Drakes,Liscor,Watch;130,110,120,130,60,90,100,70;0;0;R
 // Dungeon
-twi_facestealer;Facestealer;twi;Monsters,Liscor,Dungeon;800,200,100,50,80,10,10,30;0;0
-twi_skinner;Skinner;twi;Monsters,Liscor,Dungeon;500,400,150,80,100,10,10,80;0;0
+twi_facestealer;Facestealer;twi;Monsters,Liscor,Dungeon;800,200,100,50,80,10,10,30;0;0;E
+twi_skinner;Skinner;twi;Monsters,Liscor,Dungeon;500,400,150,80,100,10,10,80;0;0;E
 // Players of Celum
-twi_wesle;Wesle Salkis;twi;Humans,Players of Celum;60,60,50,60,40,300,50,90;5;2
-twi_jasi;Jasi Redigal;twi;Drakes,Players of Celum;40,40,50,50,40,330,50,80;5;2
+twi_wesle;Wesle Salkis;twi;Humans,Players of Celum;60,60,50,60,40,300,50,90;5;2;L
+twi_jasi;Jasi Redigal;twi;Drakes,Players of Celum;40,40,50,50,40,330,50,80;5;2;L
 twi_emme;Emme;twi;Dwarfs,Humans,Players of Celum;50,40,80,50,40,120,40,70;5;2
 twi_grev;Grev Redigal;twi;Humans,Players of Celum;40,90,80,50,60,60,30,60;1;0
 twi_temile;Temile;twi;Humans,Players of Celum;40,50,70,50,50,250,40,70;5;2
 twi_kilkran;Kilkran;twi;Players of Celum;40,50,70,50,50,280,40,70;5;2
 // Pallass
-twi_kel;Kel;twi;Drakes,Pallass,Watch;80,80,60,80,40,60,50,70;0;0
+twi_kel;Kel;twi;Drakes,Pallass,Watch;80,80,60,80,40,60,50,70;0;0;R
 twi_lorent;Lorent;twi;Dullahans,Pallass;50,90,60,60,40,50,10,50;1;0
 twi_noass;Noass;twi;Drakes,Pallass;40,40,60,50,40,70,10,40;5;2
 twi_relz;Sir Relz;twi;Drakes,Nobility,Pallass;40,40,60,50,40,70,10,40;5;2
-twi_saliss;Saliss Oliwing;twi;Drakes,Pallass;1000,1000,300,300,100,50,100,300;1;0
-twi_chaldion;Chaldion Oliwing;twi;Drakes,Pallass;40,60,800,700,80,280,80,80;2;1
+twi_saliss;Saliss Oliwing;twi;Drakes,Pallass;1000,1000,300,300,100,50,100,300;1;0;L
+twi_chaldion;Chaldion Oliwing;twi;Drakes,Pallass;40,60,800,700,80,280,80,80;2;1;E
 // Reizmelt
 twi_madain;Madain;twi;Humans,Warriors,Adventurers;120,90,50,70,40,10,20,70;0;0
 // Riverfarm
-twi_durene;Durene;twi;Half-Trolls,Unseen Empire,Warriors;150,120,30,30,30,50,30,40;0;0
-twi_laken;Laken Godart;twi;Nobility,Humans,Izril,Unseen Empire,Earthers;30,40,250,150,80,350,50,80;2;1
+twi_durene;Durene;twi;Half-Trolls,Unseen Empire,Warriors;150,120,30,30,30,50,30,40;0;0;R
+twi_laken;Laken Godart;twi;Nobility,Humans,Izril,Unseen Empire,Earthers;30,40,250,150,80,350,50,80;2;1;L
 twi_beniar;Beniar;twi;Humans,Izril,Unseen Empire;100,80,50,40,60,50,60,70;0;0
 // Northern Izril
-twi_magnolia;Magnolia Reinhardt;twi;Nobility,Humans,Izril;40,80,280,180,150,500,100,90;5;2
-twi_bethal;Bethal Walchais;twi;Nobility,Humans,Izril;40,70,140,100,250,400,70,60;5;2
-twi_pryde;Pryde Ulta;twi;Nobility,Humans,Izril;70,70,160,120,180,380,70,70;5;2
-twi_wuvren;Wuvren Sitil;twi;Nobility,Humans,Izril;40,90,160,120,300,380,60,70;5;2
-twi_termin;Termin;twi;Humans;40,40,50,60,40,40,10,70;5;2
-twi_gresaria;Gresaria Wellfar;twi;Nobility,Humans,Izril;120,100,180,150,180,300,100,90;5;2
-twi_gralton;Gralton Radivaek;twi;Nobility,Humans,Izril;200,140,140,130,120,80,70,120;0;0
+twi_magnolia;Magnolia Reinhardt;twi;Nobility,Humans,Izril;40,80,280,180,150,500,100,90;5;2;L
+twi_bethal;Bethal Walchais;twi;Nobility,Humans,Izril;40,70,140,100,250,400,70,60;5;2;R
+twi_pryde;Pryde Ulta;twi;Nobility,Humans,Izril;70,70,160,120,180,380,70,70;5;2;R
+twi_wuvren;Wuvren Sitil;twi;Nobility,Humans,Izril;40,90,160,120,300,380,60,70;5;2;R
+twi_termin;Termin;twi;Humans;40,40,50,60,40,40,10,70;5;2;E
+twi_gresaria;Gresaria Wellfar;twi;Nobility,Humans,Izril;120,100,180,150,180,300,100,90;5;2;R
+twi_gralton;Gralton Radivaek;twi;Nobility,Humans,Izril;200,140,140,130,120,80,70,120;0;0;R
 // High Passes
-twi_teriarch;Teriarch;twi;Dragons,High Passes;2000,1900,2000,2200,100,200,100,400;0;0
+twi_teriarch;Teriarch;twi;Dragons,High Passes;2000,1900,2000,2200,100,200,100,400;0;0;L
 // Baleros
-twi_niers;Niers Astoragon;twi;Fraerling,Forgotten Wing Company;40,60,1000,800,40,200,100,100;2;1
-twi_foliana;Foliana;twi;Beastkin,Forgotten Wing Company;750,850,350,250,50,100,150,250;1;0
-twi_xol;Xol of Ingrilt;twi;Dullahan,Warriors;600,300,100,80,70,100,80,150;0;0
+twi_niers;Niers Astoragon;twi;Fraerling,Forgotten Wing Company;40,60,1000,800,40,200,100,100;2;1;L
+twi_foliana;Foliana;twi;Beastkin,Forgotten Wing Company;750,850,350,250,50,100,150,250;1;0;E
+twi_xol;Xol of Ingrilt;twi;Dullahan,Warriors;600,300,100,80,70,100,80,150;0;0;R
 // Wistram
-twi_feor;Feor;twi;Half-Elves,Mages,Wistram;60,90,400,200,50,110,90,70;2;0
+twi_feor;Feor;twi;Half-Elves,Mages,Wistram;60,90,400,200,50,110,90,70;2;0;E
 // UN
-twi_geneva;Geneva Scala;twi;Humans,Earthers,UN;40,90,120,90,60,120,40,60;2;1
-twi_kenjiro;Kenjiro Murata;twi;Humans,Earthers,UN;40,40,100,70,30,200,20,60;5;2
-twi_aiko;Aiko Nonomura;twi;Humans,Earthers,UN;40,70,60,40,30,30,20,50;1;1
-twi_luan;Luan Khumalo;twi;Humans,Earthers,UN,Runners;80,70,60,60,60,70,30,100;0;0
-twi_daly;Daly Sullivan;twi;Humans,Earthers,UN,Adventurers;60,80,60,50,50,50,10,50;1;0
+twi_geneva;Geneva Scala;twi;Humans,Earthers,UN;40,90,120,90,60,120,40,60;2;1;E
+twi_kenjiro;Kenjiro Murata;twi;Humans,Earthers,UN;40,40,100,70,30,200,20,60;5;2;E
+twi_aiko;Aiko Nonomura;twi;Humans,Earthers,UN;40,70,60,40,30,30,20,50;1;1;R
+twi_luan;Luan Khumalo;twi;Humans,Earthers,UN,Runners;80,70,60,60,60,70,30,100;0;0;R
+twi_daly;Daly Sullivan;twi;Humans,Earthers,UN,Adventurers;60,80,60,50,50,50,10,50;1;0;R
 twi_kirana;Kirana;twi;Humans,Earthers,UN;40,50,60,50,20,40,10,40;2;1
 twi_priya;Priya;twi;Humans,Earthers,UN;40,50,50,50,20,40,10,40;2;1
 // other gobbos
-twi_rags;Rags;twi;Goblins,Flooded Plains Tribe;40,60,120,50,10,60,80,60;1;0
-twi_pyrite;Pyrite;twi;Goblins,Hobgoblins,Warriors;350,220,70,140,40,60,80,50;0;0
-twi_garen;Garen Redfang;twi;Goblins,Redfangs,Hobgoblins,Warriors;420,380,50,60,90,10,20,200;0;0
-twi_grunter;Grunter;twi;Goblins,Redfangs,Hobgoblins,Warriors;150,120,60,60,50,50,30,40;0;0
+twi_rags;Rags;twi;Goblins,Flooded Plains Tribe;40,60,120,50,10,60,80,60;1;0;L
+twi_pyrite;Pyrite;twi;Goblins,Hobgoblins,Warriors;350,220,70,140,40,60,80,50;0;0;E
+twi_garen;Garen Redfang;twi;Goblins,Redfangs,Hobgoblins,Warriors;420,380,50,60,90,10,20,200;0;0;L
+twi_grunter;Grunter;twi;Goblins,Redfangs,Hobgoblins,Warriors;150,120,60,60,50,50,30,40;0;0;R
 // misc
 twi_flower_girl;Flower Girl;twi;Monsters;90,100,40,30,50,20,30,50;0;0
 twi_todi;Todi;twi;Humans,Todi's Elites,Warriors,Adventurers;220,180,60,50,60,80,40,80;0;0
 twi_jewel;Jewel;twi;Humans,Glitterblade,Warriors,Adventurers;200,160,90,70,60,100,40,90;0;0
 twi_talia;Talia Kallinad;twi;Humans,Knights,Summer Knights,Order of Seasons;200,160,60,50,40,100,30,80;0;0
-twi_maviola;Maviola El (young);twi;Nobility,Humans,Izril;150,100,200,180,200,350,100,100;5;2
-twi_maviola_old;Maviola El (old);twi;Nobility,Humans,Izril;80,20,200,180,180,300,100,80;5;2
+twi_maviola;Maviola El (young);twi;Nobility,Humans,Izril;150,100,200,180,200,350,100,100;5;2;L
+twi_maviola_old;Maviola El (old);twi;Nobility,Humans,Izril;80,20,200,180,180,300,100,80;5;2;R
 // Gazi based on Klbkch
-twi_gazi;Gazi Pathseeker;twi;Chandrar,Half-Gazer,Flos;700,800,300,300,50,100,100,250;1;0
-twi_ilvriss;Ilvriss Gemscale;twi;Drakes,Nobility;350,300,250,150,150,350,50,100;0;0
-twi_ieka;Ieka Imarris;twi;Nobility,Humans,Izril;40,90,190,140,220,350,60,70;5;2
-twi_cara;Cara O'Sulliven;twi;Earters,Humans,Terandria;40,70,250,100,70,480,100,100;5;2
+twi_gazi;Gazi Pathseeker;twi;Chandrar,Half-Gazer,Flos;700,800,300,300,50,100,100,250;1;0;E
+twi_ilvriss;Ilvriss Gemscale;twi;Drakes,Nobility;350,300,250,150,150,350,50,100;0;0;E
+twi_ieka;Ieka Imarris;twi;Nobility,Humans,Izril;40,90,190,140,220,350,60,70;5;2;R
+twi_cara;Cara O'Sulliven;twi;Earters,Humans,Terandria;40,70,250,100,70,480,100,100;5;2;L
 // ------------------------------------------------
 // down here are the characters I only invested 20% of my brain into :'(
 // ------------------------------------------------
-twi_healing_slime;Healing Slime;twi;Slimes;10,10,20,20,10,80,10,70;5;2
+twi_healing_slime;Healing Slime;twi;Slimes;10,10,20,20,10,80,10,70;5;2;R
 // copied from Daly, speeded up
 twi_theofore;Theofore;twi;Humans,Assassins;60,80,60,50,50,50,10,80;1;0
 // copied from Bird, with social stats add
-twi_ressa;Ressa;twi;Izril,Maids,Assassins;80,500,150,100,50,70,60,100;1;0
+twi_ressa;Ressa;twi;Izril,Maids,Assassins;80,500,150,100,50,70,60,100;1;0;R
 // copied from Ressa with a bit improvement
-twi_ferin;Ferin;twi;Izril,Assassins;90,500,220,180,70,90,100,100;1;0
+twi_ferin;Ferin;twi;Izril,Assassins;90,500,220,180,70,90,100,100;1;0;E
 // based on Tracer; this is ryoka at start of book8
-twi_ryoka_courier;Ryoka Griffin;twi;Humans,Runners,Earthers;70,70,70,80,60,40,30,180;2;1
+twi_ryoka_courier;Ryoka Griffin;twi;Humans,Runners,Earthers;70,70,70,80,60,40,30,180;2;1;E
 // Fierre after being cured
-twi_fierre_pure;Serafierre val Lischelle-Drakle;twi;Humans,Vampires;500,500,90,50,70,50,20,150;0;0
+twi_fierre_pure;Serafierre val Lischelle-Drakle;twi;Humans,Vampires;500,500,90,50,70,50,20,150;0;0;E
 // king of the minotaurs
-twi_inreza;Inreza of Minos;twi;Minotaurs;700,400,230,200,120,300,100,140;0;0
-twi_fetohep;Fetohep;twi;Humans,Undead;600,550,300,500,50,400,100,170;3;1
-twi_trey;Trey Atlas;twi;Humans;50,50,70,60,20,60,20,60;2;1
+twi_inreza;Inreza of Minos;twi;Minotaurs;700,400,230,200,120,300,100,140;0;0;L
+twi_fetohep;Fetohep;twi;Humans,Undead;600,550,300,500,50,400,100,170;3;1;L
+twi_trey;Trey Atlas;twi;Humans;50,50,70,60,20,60,20,60;2;1;R
 // based on Saliss 
-twi_cognita;Cognita;twi;Golems,Wistram;1000,1000,500,700,100,250,100,250;0;0
+twi_cognita;Cognita;twi;Golems,Wistram;1000,1000,500,700,100,250,100,250;0;0;L
 // based on Feor and Shorthilt
-twi_azkerash;Az'Kerash;twi;Humans,Mages;150,600,600,300,90,360,90,250;2;0
-twi_domehead;Domehead;twi;Golems;200,150,70,20,10,40,20,100;0;0
+twi_azkerash;Az'Kerash;twi;Humans,Mages;150,600,600,300,90,360,90,250;2;0;L
+twi_domehead;Domehead;twi;Golems;200,150,70,20,10,40,20,100;0;0;R
 // based on Pride
-twi_nsiia;Nsiia;twi;Humans,Chandrar;90,150,180,170,150,500,100,120;5;2
+twi_nsiia;Nsiia;twi;Humans,Chandrar;90,150,180,170,150,500,100,120;5;2;E
 // Chess club
 twi_knight;Knight;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1
 twi_bishop;Bishop;twi;Antinium,Chessclub;50,60,60,10,10,10,10,40;2;1

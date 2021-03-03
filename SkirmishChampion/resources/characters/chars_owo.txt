@@ -1,33 +1,33 @@
-owo_mercy;Mercy;owo;Humans,Overwatch,Scientists;50,80,320,70,70,120,20,90;2;1
+owo_mercy;Mercy;owo;Humans,Overwatch,Scientists;50,80,320,70,70,120,20,90;2;1;R
 owo_winston;Winston;owo;Gorillas,Overwatch,Scientists,Engineers;250,120,350,70,10,100,30,70;2;1
 owo_moira;Moira;owo;Humans,Talon,Scientists;70,60,330,70,70,100,70,120;2;1
 owo_sigma;Sigma;owo;Humans,Talon,Scientists;250,150,450,100,40,50,50,50;2;1
 owo_symmetra;Symmetra;owo;Humans,Vishkar,Scientists;70,150,300,100,80,100,70,80;2;1
-owo_wb;Wrecking Ball;owo;Hamsters,Junker,Engineers;250,90,200,50,10,60,70,150;0;0
+owo_wb;Wrecking Ball;owo;Hamsters,Junker,Engineers;250,90,200,50,10,60,70,150;0;0;L
 owo_tracer;Tracer;owo;Humans,Overwatch;70,130,70,80,100,100,30,200;1;0
 owo_reaper;Reaper;owo;Humans,Talon;90,250,60,90,40,150,60,100;1;0
-owo_widowmaker;Widowmaker;owo;Humans,Talon;90,500,70,60,300,220,20,40;1;0
+owo_widowmaker;Widowmaker;owo;Humans,Talon;90,500,70,60,300,220,20,40;1;0;E
 owo_sombra;Sombra;owo;Humans,Talon;60,100,220,60,100,150,50,150;2;1
 owo_doomfist;Doomfist;owo;Humans,Talon;500,90,150,120,90,170,50,40;0;0
 owo_roadhog;Roadhog;owo;Humans,Junker;150,300,70,60,90,90,30,40;1;0
 owo_junkrat;Junkrat;owo;Humans,Junker;50,200,100,40,30,40,100,90;1;0
-owo_zenyatta;Zenyatta;owo;Omnics;50,120,90,350,40,160,50,60;3;1
-owo_ashe;Ashe;owo;Humans;90,250,100,90,130,200,20,70;1;0
-owo_bob;Bob;owo;Omnics;250,400,40,30,40,40,30,60;1;0
+owo_zenyatta;Zenyatta;owo;Omnics;50,120,90,350,40,160,50,60;3;1;E
+owo_ashe;Ashe;owo;Humans;90,250,100,90,130,200,20,70;1;0;R
+owo_bob;Bob;owo;Omnics;250,400,40,30,40,40,30,60;1;0;E
 owo_hanzo;Hanzo;owo;Humans,Assassins;110,250,100,90,40,80,80,80;1;0
 owo_zarya;Zarya;owo;Humans;250,150,50,70,120,100,70,60;0;0
-owo_torbjoern;Torbjörn;owo;Humans,Overwatch,Engineers;80,200,270,90,110,80,80,50;2;1
+owo_torbjoern;Torbjörn;owo;Humans,Overwatch,Engineers;80,200,270,90,110,80,80,50;2;1;R
 owo_mccree;McCree;owo;Humans,Overwatch;110,230,80,90,150,150,40,90;1;0
 owo_soldier76;Soldier: 76;owo;Humans,Overwatch;120,180,70,70,50,90,50,120;1;0
-owo_bastion;Bastion;owo;Omnics;80,300,60,20,20,30,40,90;1;0
+owo_bastion;Bastion;owo;Omnics;80,300,60,20,20,30,40,90;1;0;L
 owo_pharah;Pharah;owo;Humans;100,200,100,60,60,90,60,90;1;0
 owo_orisa;Orisa;owo;Omnics;150,250,80,30,20,40,60,70;1;0
-owo_reinhardt;Reinhardt;owo;Humans,Overwatch;300,100,60,110,110,120,70,60;0;0
-owo_mei;Mei;owo;Humans,Overwatch,Scientists,Engineer;50,100,250,90,50,70,70,70;2;1
+owo_reinhardt;Reinhardt;owo;Humans,Overwatch;300,100,60,110,110,120,70,60;0;0;R
+owo_mei;Mei;owo;Humans,Overwatch,Scientists,Engineer;50,100,250,90,50,70,70,70;2;1;L
 owo_brigitte;Brigitte;owo;Humans,Overwatch,Engineers;150,100,180,60,40,60,30,80;2;1
-owo_lucio;Lúcio;owo;Humans;120,150,150,90,100,200,40,150;5;2
+owo_lucio;Lúcio;owo;Humans;120,150,150,90,100,200,40,150;5;2;R
 owo_genji;Genji;owo;Humans,Assassins,Overwatch,Cyborgs;110,250,70,120,80,110,80,110;1;0
 owo_echo;Echo;owo;Overwatch;80,180,100,70,70,70,100,100;1;0
 owo_ana;Ana;owo;Humans,Assassins,Overwatch;50,350,120,130,130,250,50,60;1;0
-owo_baptiste;Baptiste;owo;Humans;100,100,80,100,130,100,70,80;4;2
-owo_dva;D.Va;owo;Humans;130,260,80,70,30,200,100,130;1;0
+owo_baptiste;Baptiste;owo;Humans;100,100,80,100,130,100,70,80;4;2;L
+owo_dva;D.Va;owo;Humans;130,260,80,70,30,200,100,130;1;0;E
